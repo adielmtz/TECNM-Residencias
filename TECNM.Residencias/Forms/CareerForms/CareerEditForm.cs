@@ -7,7 +7,7 @@ namespace TECNM.Residencias.Forms.CareerForms
 {
     public sealed partial class CareerEditForm : Form
     {
-        private Career career = new Career();
+        private Career _career = new Career();
 
         public CareerEditForm()
         {
@@ -18,9 +18,9 @@ namespace TECNM.Residencias.Forms.CareerForms
         {
             if (entity != null)
             {
-                career = entity;
-                tb_CareerName.Text = career.Name;
-                chk_CareerEnabled.Checked = career.Enabled;
+                _career = entity;
+                tb_CareerName.Text = _career.Name;
+                chk_CareerEnabled.Checked = _career.Enabled;
             }
         }
 
@@ -40,19 +40,19 @@ namespace TECNM.Residencias.Forms.CareerForms
 
         private void Save()
         {
-            career.Name = tb_CareerName.Text;
-            career.Enabled = chk_CareerEnabled.Checked;
+            _career.Name = tb_CareerName.Text;
+            _career.Enabled = chk_CareerEnabled.Checked;
 
             using var context = new AppDbContext();
-            if (career.Id > 0)
+            if (_career.Id > 0)
             {
-                context.Careers.Update(career);
+                context.Careers.Update(_career);
             }
             else
             {
                 try
                 {
-                    context.Careers.Insert(career);
+                    context.Careers.Insert(_career);
                 }
                 catch (SqliteException e)
                 {
