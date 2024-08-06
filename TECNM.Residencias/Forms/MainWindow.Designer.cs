@@ -28,13 +28,25 @@
         /// </summary>
         private void InitializeComponent()
         {
+            button1 = new System.Windows.Forms.Button();
             SuspendLayout();
+            // 
+            // button1
+            // 
+            button1.Location = new System.Drawing.Point(188, 138);
+            button1.Name = "button1";
+            button1.Size = new System.Drawing.Size(99, 87);
+            button1.TabIndex = 0;
+            button1.Text = "Carreras";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += ShowCareers_Click;
             // 
             // MainWindow
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(1264, 681);
+            Controls.Add(button1);
             Name = "MainWindow";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "MainWindow";
@@ -44,5 +56,7 @@
         }
 
         #endregion
+
+        private System.Windows.Forms.Button button1;
     }
 }
