@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
+using TECNM.Residencias.Forms.SpecialtyForms;
+using TECNM.Residencias.Services;
 
 namespace TECNM.Residencias.Forms.CareerForms
 {
@@ -32,7 +34,8 @@ namespace TECNM.Residencias.Forms.CareerForms
 
                 if (e.ColumnIndex == 5)
                 {
-                    //await DisplaySpecialtyListViewForm(career);
+                    using var dialog = new SpecialtyListViewForm(career);
+                    dialog.ShowDialog();
                 }
             }
         }

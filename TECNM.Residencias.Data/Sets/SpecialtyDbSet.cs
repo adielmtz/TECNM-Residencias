@@ -43,7 +43,7 @@ namespace TECNM.Residencias.Data.Sets
         public IList<Specialty> GetSpecialtiesByCareer(long careerId)
         {
             using var command = Context.Database.CreateCommand();
-            command.CommandText = "SELECT id, career_id, name, enabled, updated_on, created_on FROM itcm_specialty WHERE career_id = $p0";
+            command.CommandText = "SELECT id, career_id, name, enabled, updated_on, created_on FROM itcm_specialty WHERE career_id = $p0 ORDER BY name";
             command.Parameters.Add("$p0", SqliteType.Integer).Value = careerId;
             using var reader = command.ExecuteReader();
 

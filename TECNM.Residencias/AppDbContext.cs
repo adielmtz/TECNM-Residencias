@@ -14,6 +14,9 @@ namespace TECNM.Residencias
         private CareerDbSet? _careers;
         public CareerDbSet Careers => _careers ??= new CareerDbSet(this);
 
+        private SpecialtyDbSet? _specialties;
+        public SpecialtyDbSet Specialties => _specialties ??= new SpecialtyDbSet(this);
+
         public AppDbContext()
         {
             _connection = App.Database.Open();
