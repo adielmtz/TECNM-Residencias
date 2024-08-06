@@ -7,7 +7,7 @@ namespace TECNM.Residencias.Data
     {
         public SqliteConnection Database { get; }
 
-        public void Save();
+        public void Commit();
 
         public void Rollback();
     }
