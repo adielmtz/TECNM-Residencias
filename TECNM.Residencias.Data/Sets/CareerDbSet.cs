@@ -12,6 +12,28 @@ namespace TECNM.Residencias.Data.Sets
         {
         }
 
+        public Career? GetCareerById(long id)
+        {
+            using var command = Context.Database.CreateCommand();
+            command.CommandText = "SELECT id, name, enabled, updated_on, created_on FROM itcm_career WHERE id = $id";
+            command.Parameters.Add("$id", SqliteType.Integer).Value = id;
+            using var reader = command.ExecuteReader();
+
+            if (!reader.Read())
+            {
+                return null;
+            }
+
+            return new Career
+            {
+                Id        = reader.GetInt64(0),
+                Name      = reader.GetString(1),
+                Enabled   = reader.GetBoolean(2),
+                UpdatedOn = reader.GetDateTime(3),
+                CreatedOn = reader.GetDateTime(4),
+            };
+        }
+
         public IList<Career> GetCareers()
         {
             using var command = Context.Database.CreateCommand();
