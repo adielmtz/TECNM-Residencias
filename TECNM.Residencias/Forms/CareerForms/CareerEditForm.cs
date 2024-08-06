@@ -54,7 +54,7 @@ namespace TECNM.Residencias.Forms.CareerForms
                 {
                     context.Careers.Insert(_career);
                 }
-                catch (SqliteException e)
+                catch (SqliteException)
                 {
                     MessageBox.Show(
                         "Ya existe un registro con el mismo nombre.",
