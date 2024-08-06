@@ -13,6 +13,7 @@ namespace TECNM.Residencias.Forms.SpecialtyForms
     public sealed partial class SpecialtyEditForm : Form
     {
         private readonly AbstractValidator<Specialty> _validator = new SpecialtyValidator();
+        private Career _career = new Career();
         private Specialty _specialty = new Specialty();
 
         public SpecialtyEditForm()
@@ -20,8 +21,10 @@ namespace TECNM.Residencias.Forms.SpecialtyForms
             InitializeComponent();
         }
 
-        public SpecialtyEditForm(Specialty? entity) : this()
+        public SpecialtyEditForm(Career career, Specialty? entity) : this()
         {
+            _career = career;
+
             if (entity != null)
             {
                 _specialty = entity;
@@ -38,7 +41,7 @@ namespace TECNM.Residencias.Forms.SpecialtyForms
             foreach (Career career in careers)
             {
                 int index = cb_SpecialtyCareer.Items.Add(career);
-                if (career.Id == _specialty.CareerId)
+                if (career.Id == _career.Id)
                 {
                     cb_SpecialtyCareer.SelectedIndex = index;
                 }
