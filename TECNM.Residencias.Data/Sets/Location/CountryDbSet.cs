@@ -1,6 +1,7 @@
 using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
 using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Data.Sets.Common;
@@ -31,12 +32,7 @@ namespace TECNM.Residencias.Data.Sets.Location
 
             if (reader.Read())
             {
-                country = new Country
-                {
-                    Id   = reader.GetInt64(0),
-                    Name = reader.GetString(1),
-                };
-
+                country = HydrateObject(reader);
                 _countries[country.Id] = country;
                 return country;
             }
@@ -57,12 +53,7 @@ namespace TECNM.Residencias.Data.Sets.Location
 
             while (reader.Read())
             {
-                var country = new Country
-                {
-                    Id   = reader.GetInt64(0),
-                    Name = reader.GetString(1),
-                };
-
+                var country = HydrateObject(reader);
                 _countries.TryAdd(country.Id, country);
             }
 
@@ -88,6 +79,16 @@ namespace TECNM.Residencias.Data.Sets.Location
         public override bool InsertOrUpdate(Country entity)
         {
             throw new NotSupportedException();
+        }
+
+        protected override Country HydrateObject(IDataReader reader)
+        {
+            Debug.Assert(reader.FieldCount == 2);
+            return new Country
+            {
+                Id   = reader.GetInt64(0),
+                Name = reader.GetString(1),
+            };
         }
     }
 }

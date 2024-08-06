@@ -1,4 +1,4 @@
-using Microsoft.Data.Sqlite;
+using System.Data;
 
 namespace TECNM.Residencias.Data.Sets.Common
 {
@@ -20,5 +20,7 @@ namespace TECNM.Residencias.Data.Sets.Common
         public abstract int Delete(T entity);
 
         public abstract bool InsertOrUpdate(T entity);
+
+        protected abstract T HydrateObject(IDataReader reader);
     }
 }

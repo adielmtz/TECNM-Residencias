@@ -1,6 +1,8 @@
 using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Diagnostics;
 using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Data.Sets.Common;
 
@@ -24,14 +26,7 @@ namespace TECNM.Residencias.Data.Sets
                 return null;
             }
 
-            return new Career
-            {
-                Id        = reader.GetInt64(0),
-                Name      = reader.GetString(1),
-                Enabled   = reader.GetBoolean(2),
-                UpdatedOn = reader.GetDateTime(3),
-                CreatedOn = reader.GetDateTime(4),
-            };
+            return HydrateObject(reader);
         }
 
         public IList<Career> GetCareers()
@@ -43,14 +38,8 @@ namespace TECNM.Residencias.Data.Sets
             var result = new List<Career>(10);
             while (reader.Read())
             {
-                result.Add(new Career
-                {
-                    Id        = reader.GetInt64(0),
-                    Name      = reader.GetString(1),
-                    Enabled   = reader.GetBoolean(2),
-                    UpdatedOn = reader.GetDateTime(3),
-                    CreatedOn = reader.GetDateTime(4),
-                });
+                Career career = HydrateObject(reader);
+                result.Add(career);
             }
 
             return result;
@@ -66,14 +55,8 @@ namespace TECNM.Residencias.Data.Sets
             var result = new List<Career>(10);
             while (reader.Read())
             {
-                result.Add(new Career
-                {
-                    Id        = reader.GetInt64(0),
-                    Name      = reader.GetString(1),
-                    Enabled   = reader.GetBoolean(2),
-                    UpdatedOn = reader.GetDateTime(3),
-                    CreatedOn = reader.GetDateTime(4),
-                });
+                Career career = HydrateObject(reader);
+                result.Add(career);
             }
 
             return result;
@@ -127,6 +110,19 @@ namespace TECNM.Residencias.Data.Sets
 
             entity.Id = Convert.ToInt64(result);
             return result != null;
+        }
+
+        protected override Career HydrateObject(IDataReader reader)
+        {
+            Debug.Assert(reader.FieldCount == 5);
+            return new Career
+            {
+                Id        = reader.GetInt64(0),
+                Name      = reader.GetString(1),
+                Enabled   = reader.GetBoolean(2),
+                UpdatedOn = reader.GetDateTime(3),
+                CreatedOn = reader.GetDateTime(4),
+            };
         }
     }
 }

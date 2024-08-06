@@ -1,6 +1,8 @@
 using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Diagnostics;
 using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Data.Sets.Common;
 
@@ -24,15 +26,7 @@ namespace TECNM.Residencias.Data.Sets
                 return null;
             }
 
-            return new Specialty
-            {
-                Id        = reader.GetInt64(0),
-                CareerId  = reader.GetInt64(1),
-                Name      = reader.GetString(2),
-                Enabled   = reader.GetBoolean(3),
-                UpdatedOn = reader.GetDateTime(4),
-                CreatedOn = reader.GetDateTime(5),
-            };
+            return HydrateObject(reader);
         }
 
         public IList<Specialty> GetSpecialtiesByCareer(Career career)
@@ -50,15 +44,8 @@ namespace TECNM.Residencias.Data.Sets
             var result = new List<Specialty>(10);
             while (reader.Read())
             {
-                result.Add(new Specialty
-                {
-                    Id        = reader.GetInt64(0),
-                    CareerId  = reader.GetInt64(1),
-                    Name      = reader.GetString(2),
-                    Enabled   = reader.GetBoolean(3),
-                    UpdatedOn = reader.GetDateTime(4),
-                    CreatedOn = reader.GetDateTime(5),
-                });
+                Specialty specialty = HydrateObject(reader);
+                result.Add(specialty);
             }
 
             return result;
@@ -115,6 +102,20 @@ namespace TECNM.Residencias.Data.Sets
 
             entity.Id = Convert.ToInt64(result);
             return result != null;
+        }
+
+        protected override Specialty HydrateObject(IDataReader reader)
+        {
+            Debug.Assert(reader.FieldCount == 6);
+            return new Specialty
+            {
+                Id        = reader.GetInt64(0),
+                CareerId  = reader.GetInt64(1),
+                Name      = reader.GetString(2),
+                Enabled   = reader.GetBoolean(3),
+                UpdatedOn = reader.GetDateTime(4),
+                CreatedOn = reader.GetDateTime(5),
+            };
         }
     }
 }
