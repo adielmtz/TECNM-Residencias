@@ -1,13 +1,18 @@
+using FluentValidation;
+using FluentValidation.Results;
 using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
+using TECNM.Residencias.Data.Validators;
 
 namespace TECNM.Residencias.Forms.SpecialtyForms
 {
     public sealed partial class SpecialtyEditForm : Form
     {
+        private readonly AbstractValidator<Specialty> _validator = new SpecialtyValidator();
         private Specialty _specialty = new Specialty();
 
         public SpecialtyEditForm()
@@ -56,10 +61,19 @@ namespace TECNM.Residencias.Forms.SpecialtyForms
 
         private void Save()
         {
-            Career career = (Career) cb_SpecialtyCareer.SelectedItem!;
-            _specialty.CareerId = career.Id;
+            Career? career = (Career?) cb_SpecialtyCareer.SelectedItem;
+            _specialty.CareerId = career == null ? 0 : career.Id;
             _specialty.Name = tb_SpecialtyName.Text;
             _specialty.Enabled = chk_SpecialtyEnabled.Checked;
+
+            ValidationResult result = _validator.Validate(_specialty);
+
+            if (!result.IsValid)
+            {
+                Debug.Assert(result.Errors.Count == 1);
+                MessageBox.Show(result.Errors[0].ErrorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
 
             using var context = new AppDbContext();
             if (_specialty.Id > 0)

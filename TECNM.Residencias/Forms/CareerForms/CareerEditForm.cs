@@ -1,12 +1,17 @@
+using FluentValidation;
+using FluentValidation.Results;
 using Microsoft.Data.Sqlite;
 using System;
+using System.Diagnostics;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
+using TECNM.Residencias.Data.Validators;
 
 namespace TECNM.Residencias.Forms.CareerForms
 {
     public sealed partial class CareerEditForm : Form
     {
+        private readonly AbstractValidator<Career> _validator = new CareerValidator();
         private Career _career = new Career();
 
         public CareerEditForm()
@@ -42,6 +47,15 @@ namespace TECNM.Residencias.Forms.CareerForms
         {
             _career.Name = tb_CareerName.Text;
             _career.Enabled = chk_CareerEnabled.Checked;
+
+            ValidationResult result = _validator.Validate(_career);
+
+            if (!result.IsValid)
+            {
+                Debug.Assert(result.Errors.Count == 1);
+                MessageBox.Show(result.Errors[0].ErrorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
 
             using var context = new AppDbContext();
             if (_career.Id > 0)
