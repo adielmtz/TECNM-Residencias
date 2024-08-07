@@ -47,6 +47,8 @@
             tb_SearchQuery = new System.Windows.Forms.TextBox();
             button2 = new System.Windows.Forms.Button();
             button3 = new System.Windows.Forms.Button();
+            btn_PagePrev = new System.Windows.Forms.Button();
+            btn_PageNext = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize) dgv_ListView).BeginInit();
             SuspendLayout();
             // 
@@ -213,6 +215,7 @@
             // 
             // button3
             // 
+            button3.Anchor =  System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             button3.Location = new System.Drawing.Point(1131, 5);
             button3.Name = "button3";
             button3.Size = new System.Drawing.Size(121, 23);
@@ -221,11 +224,35 @@
             button3.UseVisualStyleBackColor = true;
             button3.Click += ShowAllRows_Click;
             // 
+            // btn_PagePrev
+            // 
+            btn_PagePrev.Anchor =  System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            btn_PagePrev.Location = new System.Drawing.Point(12, 646);
+            btn_PagePrev.Name = "btn_PagePrev";
+            btn_PagePrev.Size = new System.Drawing.Size(23, 23);
+            btn_PagePrev.TabIndex = 6;
+            btn_PagePrev.Text = "<";
+            btn_PagePrev.UseVisualStyleBackColor = true;
+            btn_PagePrev.Click += PagePrev_Click;
+            // 
+            // btn_PageNext
+            // 
+            btn_PageNext.Anchor =  System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            btn_PageNext.Location = new System.Drawing.Point(41, 646);
+            btn_PageNext.Name = "btn_PageNext";
+            btn_PageNext.Size = new System.Drawing.Size(23, 23);
+            btn_PageNext.TabIndex = 7;
+            btn_PageNext.Text = ">";
+            btn_PageNext.UseVisualStyleBackColor = true;
+            btn_PageNext.Click += PageNext_Click;
+            // 
             // CompanyListViewForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(1264, 681);
+            Controls.Add(btn_PageNext);
+            Controls.Add(btn_PagePrev);
             Controls.Add(button3);
             Controls.Add(button2);
             Controls.Add(tb_SearchQuery);
@@ -264,5 +291,7 @@
         private System.Windows.Forms.TextBox tb_SearchQuery;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btn_PagePrev;
+        private System.Windows.Forms.Button btn_PageNext;
     }
 }

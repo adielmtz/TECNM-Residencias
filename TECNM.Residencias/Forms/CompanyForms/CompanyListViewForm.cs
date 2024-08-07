@@ -10,6 +10,9 @@ namespace TECNM.Residencias.Forms.CompanyForms
 {
     public sealed partial class CompanyListViewForm : Form
     {
+        private readonly int _rowsPerPage = 100;
+        private int _currentPage = 1;
+
         public CompanyListViewForm()
         {
             InitializeComponent();
@@ -53,6 +56,19 @@ namespace TECNM.Residencias.Forms.CompanyForms
 
         private void ShowAllRows_Click(object sender, EventArgs e)
         {
+            _currentPage = 1;
+            RefreshList();
+        }
+
+        private void PagePrev_Click(object sender, EventArgs e)
+        {
+            _currentPage = Math.Max(0, _currentPage - 1);
+            RefreshList();
+        }
+
+        private void PageNext_Click(object sender, EventArgs e)
+        {
+            _currentPage++;
             RefreshList();
         }
 
@@ -66,13 +82,18 @@ namespace TECNM.Residencias.Forms.CompanyForms
         private void RefreshList()
         {
             using var context = new AppDbContext();
-            IList<Company> companies = context.Companies.GetCompanies();
+            IList<Company> companies = context.Companies.GetCompanies(_rowsPerPage, _currentPage);
             PopulateTable(companies, context);
         }
 
         private void Search()
         {
             string query = tb_SearchQuery.Text.Trim();
+            if (query.Length == 0)
+            {
+                return;
+            }
+
             using var context = new AppDbContext();
             IList<CompanySearchDto> searchResult = context.Companies.SearchCompany(query);
 
@@ -115,6 +136,8 @@ namespace TECNM.Residencias.Forms.CompanyForms
             }
 
             dgv_ListView.ClearSelection();
+            btn_PagePrev.Enabled = _currentPage > 1;
+            btn_PageNext.Enabled = companies.Count == _rowsPerPage;
         }
 
         private string TranslateCompanyType(CompanyType type)

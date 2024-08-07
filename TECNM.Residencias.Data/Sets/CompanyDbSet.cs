@@ -31,14 +31,16 @@ namespace TECNM.Residencias.Data.Sets
             return HydrateObject(reader);
         }
 
-        public IList<CompanySearchDto> SearchCompany(string query)
+        public IList<CompanySearchDto> SearchCompany(string query, int count = 100, int page = 1)
         {
             using var command = Context.Database.CreateCommand();
-            command.CommandText = "SELECT rowid, rfc, name FROM itcm_company_search WHERE itcm_company_search MATCH $query ORDER BY rank LIMIT 20";
+            command.CommandText = "SELECT rowid, rfc, name FROM itcm_company_search WHERE itcm_company_search MATCH $query ORDER BY rank LIMIT $p0 OFFSET $p1";
             command.Parameters.Add("$query", SqliteType.Text).Value = query.ToFtsQuery();
+            command.Parameters.Add("$p0", SqliteType.Integer).Value = count;
+            command.Parameters.Add("$p1", SqliteType.Integer).Value = (page - 1) * count;
             using var reader = command.ExecuteReader();
 
-            var result = new List<CompanySearchDto>(20);
+            var result = new List<CompanySearchDto>(count);
             while (reader.Read())
             {
                 result.Add(new CompanySearchDto
@@ -52,13 +54,15 @@ namespace TECNM.Residencias.Data.Sets
             return result;
         }
 
-        public IList<Company> GetCompanies()
+        public IList<Company> GetCompanies(int count = 100, int page = 1)
         {
             using var command = Context.Database.CreateCommand();
-            command.CommandText = "SELECT id, type, rfc, name, email, phone, address, locality, postcode, city_id, enabled, updated_on, created_on FROM itcm_company ORDER BY name";
+            command.CommandText = "SELECT id, type, rfc, name, email, phone, address, locality, postcode, city_id, enabled, updated_on, created_on FROM itcm_company ORDER BY name LIMIT $p0 OFFSET $p1";
+            command.Parameters.Add("$p0", SqliteType.Integer).Value = count;
+            command.Parameters.Add("$p1", SqliteType.Integer).Value = (page - 1) * count;
             using var reader = command.ExecuteReader();
 
-            var result = new List<Company>();
+            var result = new List<Company>(count);
             while (reader.Read())
             {
                 Company company = HydrateObject(reader);
