@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Data.Entities.DataObjects;
+using TECNM.Residencias.Extensions;
 
 namespace TECNM.Residencias.Forms.CompanyForms
 {
@@ -13,6 +14,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
         {
             InitializeComponent();
             Text = $"Listado de empresas | {App.Name}";
+            dgv_ListView.DoubleBuffered(true);
         }
 
         private void CompanyListViewForm_Load(object sender, EventArgs e)
