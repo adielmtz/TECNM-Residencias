@@ -1,4 +1,4 @@
-namespace TECNM.Residencias.Forms.CompanyForms
+﻿namespace TECNM.Residencias.Forms.CompanyForms
 {
     partial class CompanyListViewForm
     {
@@ -33,6 +33,8 @@ namespace TECNM.Residencias.Forms.CompanyForms
             CompanyName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             CompanyRfc = new System.Windows.Forms.DataGridViewTextBoxColumn();
             CompanyType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            CompanyEmail = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            CompanyPhone = new System.Windows.Forms.DataGridViewTextBoxColumn();
             CompanyAddress = new System.Windows.Forms.DataGridViewTextBoxColumn();
             CompanyLocality = new System.Windows.Forms.DataGridViewTextBoxColumn();
             CompanyPostalCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -51,7 +53,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
             dgv_ListView.AllowUserToResizeRows = false;
             dgv_ListView.Anchor =  System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             dgv_ListView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgv_ListView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { CompanyName, CompanyRfc, CompanyType, CompanyAddress, CompanyLocality, CompanyPostalCode, CompanyCity, CompanyEnabled, CompanyUpdatedOn, CompanyCreatedOn, CompanyEdit });
+            dgv_ListView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { CompanyName, CompanyRfc, CompanyType, CompanyEmail, CompanyPhone, CompanyAddress, CompanyLocality, CompanyPostalCode, CompanyCity, CompanyEnabled, CompanyUpdatedOn, CompanyCreatedOn, CompanyEdit });
             dgv_ListView.Location = new System.Drawing.Point(12, 12);
             dgv_ListView.MultiSelect = false;
             dgv_ListView.Name = "dgv_ListView";
@@ -95,6 +97,22 @@ namespace TECNM.Residencias.Forms.CompanyForms
             CompanyType.Name = "CompanyType";
             CompanyType.ReadOnly = true;
             CompanyType.Width = 54;
+            // 
+            // CompanyEmail
+            // 
+            CompanyEmail.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            CompanyEmail.HeaderText = "Correo";
+            CompanyEmail.Name = "CompanyEmail";
+            CompanyEmail.ReadOnly = true;
+            CompanyEmail.Width = 68;
+            // 
+            // CompanyPhone
+            // 
+            CompanyPhone.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            CompanyPhone.HeaderText = "Teléfono";
+            CompanyPhone.Name = "CompanyPhone";
+            CompanyPhone.ReadOnly = true;
+            CompanyPhone.Width = 77;
             // 
             // CompanyAddress
             // 
@@ -185,6 +203,8 @@ namespace TECNM.Residencias.Forms.CompanyForms
         private System.Windows.Forms.DataGridViewTextBoxColumn CompanyName;
         private System.Windows.Forms.DataGridViewTextBoxColumn CompanyRfc;
         private System.Windows.Forms.DataGridViewTextBoxColumn CompanyType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CompanyEmail;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CompanyPhone;
         private System.Windows.Forms.DataGridViewTextBoxColumn CompanyAddress;
         private System.Windows.Forms.DataGridViewTextBoxColumn CompanyLocality;
         private System.Windows.Forms.DataGridViewTextBoxColumn CompanyPostalCode;

@@ -25,11 +25,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
             if (grid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
             {
                 var company = (Company) grid.Rows[e.RowIndex].Tag!;
-
-                if (e.ColumnIndex == 10)
-                {
-                    ShowEditCompanyDialog(company);
-                }
+                ShowEditCompanyDialog(company);
             }
         }
 
@@ -65,13 +61,15 @@ namespace TECNM.Residencias.Forms.CompanyForms
                 row.Cells[0].Value = company.Name;
                 row.Cells[1].Value = company.Rfc;
                 row.Cells[2].Value = TranslateCompanyType(company.Type);
-                row.Cells[3].Value = company.Address;
-                row.Cells[4].Value = company.Locality;
-                row.Cells[5].Value = company.PostalCode;
-                row.Cells[6].Value = $"{city}, {state}, {country}";
-                row.Cells[7].Value = company.Enabled;
-                row.Cells[8].Value = company.UpdatedOn;
-                row.Cells[9].Value = company.CreatedOn;
+                row.Cells[3].Value = company.Email;
+                row.Cells[4].Value = company.Phone;
+                row.Cells[5].Value = company.Address;
+                row.Cells[6].Value = company.Locality;
+                row.Cells[7].Value = company.PostalCode;
+                row.Cells[8].Value = $"{city}, {state}, {country}";
+                row.Cells[9].Value = company.Enabled;
+                row.Cells[10].Value = company.UpdatedOn;
+                row.Cells[11].Value = company.CreatedOn;
             }
 
             dgv_ListView.ClearSelection();

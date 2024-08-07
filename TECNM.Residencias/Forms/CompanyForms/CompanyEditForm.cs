@@ -28,6 +28,8 @@ namespace TECNM.Residencias.Forms.CompanyForms
                 cb_CompanyType.SelectedIndex = (int) entity.Type;
                 tb_CompanyRfc.Text = entity.Rfc;
                 tb_CompanyName.Text = entity.Name;
+                tb_CompanyEmail.Text = entity.Email;
+                tb_CompanyPhone.Text = entity.Phone;
                 tb_CompanyAddress.Text = entity.Address;
                 tb_CompanyLocality.Text = entity.Locality;
                 tb_CompanyPostalCode.Text = entity.PostalCode;
@@ -150,6 +152,8 @@ namespace TECNM.Residencias.Forms.CompanyForms
             _company.Type = (CompanyType) cb_CompanyType.SelectedIndex;
             _company.Rfc = tb_CompanyRfc.Text;
             _company.Name = tb_CompanyName.Text;
+            _company.Email = tb_CompanyEmail.Text;
+            _company.Phone = tb_CompanyPhone.Text;
             _company.Address = tb_CompanyAddress.Text;
             _company.Locality = tb_CompanyLocality.Text;
             _company.PostalCode = tb_CompanyPostalCode.Text;
