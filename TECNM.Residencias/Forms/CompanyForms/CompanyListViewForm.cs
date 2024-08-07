@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
+using TECNM.Residencias.Data.Entities.DataObjects;
 
 namespace TECNM.Residencias.Forms.CompanyForms
 {
@@ -34,6 +35,25 @@ namespace TECNM.Residencias.Forms.CompanyForms
             ShowEditCompanyDialog();
         }
 
+        private void SearchQuery_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char) Keys.Enter)
+            {
+                Search();
+                e.Handled = true;
+            }
+        }
+
+        private void RunQuerySearch_Click(object sender, EventArgs e)
+        {
+            Search();
+        }
+
+        private void ShowAllRows_Click(object sender, EventArgs e)
+        {
+            RefreshList();
+        }
+
         private void ShowEditCompanyDialog(Company? company = null)
         {
             using var dialog = new CompanyEditForm(company);
@@ -45,7 +65,27 @@ namespace TECNM.Residencias.Forms.CompanyForms
         {
             using var context = new AppDbContext();
             IList<Company> companies = context.Companies.GetCompanies();
+            PopulateTable(companies, context);
+        }
 
+        private void Search()
+        {
+            string query = tb_SearchQuery.Text.Trim();
+            using var context = new AppDbContext();
+            IList<CompanySearchDto> searchResult = context.Companies.SearchCompany(query);
+
+            var companies = new List<Company>(searchResult.Count);
+            foreach (CompanySearchDto result in searchResult)
+            {
+                Company company = context.Companies.GetCompanyById(result.Id)!;
+                companies.Add(company);
+            }
+
+            PopulateTable(companies, context);
+        }
+
+        private void PopulateTable(IList<Company> companies, AppDbContext context)
+        {
             dgv_ListView.Rows.Clear();
 
             foreach (Company company in companies)
