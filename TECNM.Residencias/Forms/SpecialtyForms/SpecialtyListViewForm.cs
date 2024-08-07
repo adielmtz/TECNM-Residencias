@@ -68,6 +68,8 @@ namespace TECNM.Residencias.Forms.SpecialtyForms
                 row.Cells[2].Value = specialty.UpdatedOn;
                 row.Cells[3].Value = specialty.CreatedOn;
             }
+
+            dgv_ListView.ClearSelection();
         }
     }
 }

@@ -73,6 +73,8 @@ namespace TECNM.Residencias.Forms.CompanyForms
                 row.Cells[8].Value = company.UpdatedOn;
                 row.Cells[9].Value = company.CreatedOn;
             }
+
+            dgv_ListView.ClearSelection();
         }
 
         private string TranslateCompanyType(CompanyType type)

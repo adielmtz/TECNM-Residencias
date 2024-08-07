@@ -1,4 +1,4 @@
-﻿namespace TECNM.Residencias.Forms.CompanyForms
+namespace TECNM.Residencias.Forms.CompanyForms
 {
     partial class CompanyListViewForm
     {
@@ -48,13 +48,16 @@
             // 
             dgv_ListView.AllowUserToAddRows = false;
             dgv_ListView.AllowUserToDeleteRows = false;
+            dgv_ListView.AllowUserToResizeRows = false;
             dgv_ListView.Anchor =  System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             dgv_ListView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgv_ListView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { CompanyName, CompanyRfc, CompanyType, CompanyAddress, CompanyLocality, CompanyPostalCode, CompanyCity, CompanyEnabled, CompanyUpdatedOn, CompanyCreatedOn, CompanyEdit });
             dgv_ListView.Location = new System.Drawing.Point(12, 12);
+            dgv_ListView.MultiSelect = false;
             dgv_ListView.Name = "dgv_ListView";
             dgv_ListView.ReadOnly = true;
             dgv_ListView.RowHeadersVisible = false;
+            dgv_ListView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             dgv_ListView.Size = new System.Drawing.Size(1240, 619);
             dgv_ListView.TabIndex = 0;
             dgv_ListView.CellContentClick += ListView_CellContentClick;

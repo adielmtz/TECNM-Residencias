@@ -69,6 +69,8 @@ namespace TECNM.Residencias.Forms.CareerForms
                 row.Cells[2].Value = career.UpdatedOn;
                 row.Cells[3].Value = career.CreatedOn;
             }
+
+            dgv_ListView.ClearSelection();
         }
     }
 }
