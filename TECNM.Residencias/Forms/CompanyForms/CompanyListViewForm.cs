@@ -12,6 +12,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
     {
         private readonly int _rowsPerPage = 100;
         private int _currentPage = 1;
+        private bool _refreshFromSearch = false;
 
         public CompanyListViewForm()
         {
@@ -54,9 +55,10 @@ namespace TECNM.Residencias.Forms.CompanyForms
             Search();
         }
 
-        private void ShowAllRows_Click(object sender, EventArgs e)
+        private void ResetSearch_Click(object sender, EventArgs e)
         {
             _currentPage = 1;
+            _refreshFromSearch = false;
             RefreshList();
         }
 
@@ -81,6 +83,12 @@ namespace TECNM.Residencias.Forms.CompanyForms
 
         private void RefreshList()
         {
+            if (_refreshFromSearch)
+            {
+                Search();
+                return;
+            }
+
             using var context = new AppDbContext();
             IList<Company> companies = context.Companies.GetCompanies(_rowsPerPage, _currentPage);
             PopulateTable(companies, context);
@@ -95,7 +103,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
             }
 
             using var context = new AppDbContext();
-            IList<CompanySearchDto> searchResult = context.Companies.SearchCompany(query);
+            IList<CompanySearchDto> searchResult = context.Companies.SearchCompany(query, _rowsPerPage, _currentPage);
 
             var companies = new List<Company>(searchResult.Count);
             foreach (CompanySearchDto result in searchResult)
@@ -104,6 +112,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
                 companies.Add(company);
             }
 
+            _refreshFromSearch = true;
             PopulateTable(companies, context);
         }
 

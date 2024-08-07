@@ -222,14 +222,14 @@
             button3.TabIndex = 5;
             button3.Text = "Mostrar todo";
             button3.UseVisualStyleBackColor = true;
-            button3.Click += ShowAllRows_Click;
+            button3.Click += ResetSearch_Click;
             // 
             // btn_PagePrev
             // 
             btn_PagePrev.Anchor =  System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
-            btn_PagePrev.Location = new System.Drawing.Point(12, 646);
+            btn_PagePrev.Location = new System.Drawing.Point(12, 637);
             btn_PagePrev.Name = "btn_PagePrev";
-            btn_PagePrev.Size = new System.Drawing.Size(23, 23);
+            btn_PagePrev.Size = new System.Drawing.Size(32, 32);
             btn_PagePrev.TabIndex = 6;
             btn_PagePrev.Text = "<";
             btn_PagePrev.UseVisualStyleBackColor = true;
@@ -238,9 +238,9 @@
             // btn_PageNext
             // 
             btn_PageNext.Anchor =  System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
-            btn_PageNext.Location = new System.Drawing.Point(41, 646);
+            btn_PageNext.Location = new System.Drawing.Point(50, 637);
             btn_PageNext.Name = "btn_PageNext";
-            btn_PageNext.Size = new System.Drawing.Size(23, 23);
+            btn_PageNext.Size = new System.Drawing.Size(32, 32);
             btn_PageNext.TabIndex = 7;
             btn_PageNext.Text = ">";
             btn_PageNext.UseVisualStyleBackColor = true;
