@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             button1 = new System.Windows.Forms.Button();
+            button2 = new System.Windows.Forms.Button();
             SuspendLayout();
             // 
             // button1
@@ -41,11 +42,22 @@
             button1.UseVisualStyleBackColor = true;
             button1.Click += ShowCareers_Click;
             // 
+            // button2
+            // 
+            button2.Location = new System.Drawing.Point(293, 138);
+            button2.Name = "button2";
+            button2.Size = new System.Drawing.Size(99, 87);
+            button2.TabIndex = 1;
+            button2.Text = "Empresas";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += ShowCompanies_Click;
+            // 
             // MainWindow
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(1264, 681);
+            Controls.Add(button2);
             Controls.Add(button1);
             Name = "MainWindow";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -58,5 +70,6 @@
         #endregion
 
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
     }
 }

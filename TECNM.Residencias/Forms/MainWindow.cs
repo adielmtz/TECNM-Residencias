@@ -1,6 +1,7 @@
 using System;
 using System.Windows.Forms;
 using TECNM.Residencias.Forms.CareerForms;
+using TECNM.Residencias.Forms.CompanyForms;
 using TECNM.Residencias.Services;
 
 namespace TECNM.Residencias.Forms
@@ -25,6 +26,7 @@ namespace TECNM.Residencias.Forms
 
         private void ShowCompanies_Click(object sender, EventArgs e)
         {
+            FormManagerService.OpenForm<CompanyListViewForm>();
         }
     }
 }
