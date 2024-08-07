@@ -45,7 +45,7 @@ namespace TECNM.Residencias.Forms.CareerForms
 
         private void Save()
         {
-            _career.Name = tb_CareerName.Text;
+            _career.Name = tb_CareerName.Text.Trim();
             _career.Enabled = chk_CareerEnabled.Checked;
 
             ValidationResult result = _validator.Validate(_career);

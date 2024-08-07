@@ -66,7 +66,7 @@ namespace TECNM.Residencias.Forms.SpecialtyForms
         {
             Career? career = (Career?) cb_SpecialtyCareer.SelectedItem;
             _specialty.CareerId = career == null ? 0 : career.Id;
-            _specialty.Name = tb_SpecialtyName.Text;
+            _specialty.Name = tb_SpecialtyName.Text.Trim();
             _specialty.Enabled = chk_SpecialtyEnabled.Checked;
 
             ValidationResult result = _validator.Validate(_specialty);

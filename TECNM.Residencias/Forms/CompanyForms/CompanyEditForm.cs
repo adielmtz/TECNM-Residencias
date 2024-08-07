@@ -150,13 +150,13 @@ namespace TECNM.Residencias.Forms.CompanyForms
         private void Save()
         {
             _company.Type = (CompanyType) cb_CompanyType.SelectedIndex;
-            _company.Rfc = tb_CompanyRfc.Text;
-            _company.Name = tb_CompanyName.Text;
-            _company.Email = tb_CompanyEmail.Text;
-            _company.Phone = tb_CompanyPhone.Text;
-            _company.Address = tb_CompanyAddress.Text;
-            _company.Locality = tb_CompanyLocality.Text;
-            _company.PostalCode = tb_CompanyPostalCode.Text;
+            _company.Rfc = tb_CompanyRfc.Text.Trim();
+            _company.Name = tb_CompanyName.Text.Trim();
+            _company.Email = tb_CompanyEmail.Text.Trim();
+            _company.Phone = tb_CompanyPhone.Text.Trim();
+            _company.Address = tb_CompanyAddress.Text.Trim();
+            _company.Locality = tb_CompanyLocality.Text.Trim();
+            _company.PostalCode = tb_CompanyPostalCode.Text.Trim();
             _company.Enabled = chk_CompanyEnabled.Checked;
 
             City? city = (City?) cb_CompanyCity.SelectedItem;
