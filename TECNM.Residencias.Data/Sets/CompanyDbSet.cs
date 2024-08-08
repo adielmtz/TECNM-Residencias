@@ -202,7 +202,7 @@ namespace TECNM.Residencias.Data.Sets
             return new Company
             {
                 Id         = reader.GetInt64(0),
-                Type       = Enum.Parse<CompanyType>(reader.GetString(1)),
+                Type       = reader.GetEnum<CompanyType>(1),
                 Rfc        = reader.GetString(2),
                 Name       = reader.GetString(3),
                 Email      = reader.GetString(4),
