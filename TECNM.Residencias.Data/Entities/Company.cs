@@ -7,9 +7,9 @@ namespace TECNM.Residencias.Data.Entities
     {
         public long Id { get; set; }
 
-        public CompanyType Type { get; set; }
-
         public string Rfc { get; set; } = "";
+
+        public CompanyType Type { get; set; }
 
         public string Name { get; set; } = "";
 

@@ -15,11 +15,11 @@ namespace TECNM.Residencias.Data.Entities
 
         public string Email { get; set; } = "";
 
+        public string Phone { get; set; } = "";
+
         public Gender Gender { get; set; }
 
-        public string Semestre { get; set; } = "";
-
-        public DateTime RegisterDate { get; set; }
+        public string Semester { get; set; } = "";
 
         public DateTime StartDate { get; set; }
 
