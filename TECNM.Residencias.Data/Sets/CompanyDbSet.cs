@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using TECNM.Residencias.Data.Entities;
-using TECNM.Residencias.Data.Entities.DataObjects;
 using TECNM.Residencias.Data.Extensions;
 using TECNM.Residencias.Data.Sets.Common;
 
@@ -12,6 +11,9 @@ namespace TECNM.Residencias.Data.Sets
 {
     public sealed class CompanyDbSet : DbSet<Company>
     {
+        public const int DEFAULT_ROWS_PER_PAGE = 100;
+        public const int DEFAULT_INITIAL_PAGE = 1;
+
         public CompanyDbSet(IDbContext context) : base(context)
         {
         }
@@ -31,41 +33,29 @@ namespace TECNM.Residencias.Data.Sets
             return HydrateObject(reader);
         }
 
-        public IList<CompanySearchDto> SearchCompany(string query, int count = 100, int page = 1)
+        public IEnumerable<Company> Search(string query, int count = DEFAULT_ROWS_PER_PAGE, int page = DEFAULT_INITIAL_PAGE)
         {
             using var command = Context.Database.CreateCommand();
-            command.CommandText = "SELECT rowid, rfc, name FROM itcm_company_search WHERE itcm_company_search MATCH $query ORDER BY rank LIMIT $p0 OFFSET $p1";
+            command.CommandText = "SELECT rowid FROM itcm_company_search WHERE itcm_company_search MATCH $query ORDER BY rank LIMIT $p0 OFFSET $p1";
             command.Parameters.Add("$query", SqliteType.Text).Value = query.ToFtsQuery();
             command.Parameters.Add("$p0", SqliteType.Integer).Value = count;
             command.Parameters.Add("$p1", SqliteType.Integer).Value = (page - 1) * count;
             using var reader = command.ExecuteReader();
 
-            var result = new List<CompanySearchDto>(count);
             while (reader.Read())
             {
-                result.Add(new CompanySearchDto
-                {
-                    Id   = reader.GetInt64(0),
-                    Rfc  = reader.GetString(1),
-                    Name = reader.GetString(2),
-                });
+                long rowid = reader.GetInt64(0);
+                Company company = GetCompanyById(rowid)!;
+                yield return company;
             }
-
-            return result;
         }
 
-        public IList<Company> GetCompanies(int count = 100, int page = 1)
+        public IList<Company> GetCompanies(int count = DEFAULT_ROWS_PER_PAGE, int page = DEFAULT_INITIAL_PAGE)
         {
-            using var command = Context.Database.CreateCommand();
-            command.CommandText = "SELECT id, type, rfc, name, email, phone, address, locality, postcode, city_id, enabled, updated_on, created_on FROM itcm_company ORDER BY name LIMIT $p0 OFFSET $p1";
-            command.Parameters.Add("$p0", SqliteType.Integer).Value = count;
-            command.Parameters.Add("$p1", SqliteType.Integer).Value = (page - 1) * count;
-            using var reader = command.ExecuteReader();
-
             var result = new List<Company>(count);
-            while (reader.Read())
+
+            foreach (Company company in EnumerateCompanies(count, page))
             {
-                Company company = HydrateObject(reader);
                 result.Add(company);
             }
 
@@ -87,6 +77,21 @@ namespace TECNM.Residencias.Data.Sets
             }
 
             return result;
+        }
+
+        public IEnumerable<Company> EnumerateCompanies(int count = DEFAULT_ROWS_PER_PAGE, int page = DEFAULT_INITIAL_PAGE)
+        {
+            using var command = Context.Database.CreateCommand();
+            command.CommandText = "SELECT id, type, rfc, name, email, phone, address, locality, postcode, city_id, enabled, updated_on, created_on FROM itcm_company ORDER BY name LIMIT $p0 OFFSET $p1";
+            command.Parameters.Add("$p0", SqliteType.Integer).Value = count;
+            command.Parameters.Add("$p1", SqliteType.Integer).Value = (page - 1) * count;
+            using var reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Company company = HydrateObject(reader);
+                yield return company;
+            }
         }
 
         public override bool Insert(Company entity)

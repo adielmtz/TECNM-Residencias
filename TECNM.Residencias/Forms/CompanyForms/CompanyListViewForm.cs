@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
-using TECNM.Residencias.Data.Entities.DataObjects;
+using TECNM.Residencias.Data.Sets;
 using TECNM.Residencias.Extensions;
 
 namespace TECNM.Residencias.Forms.CompanyForms
 {
     public sealed partial class CompanyListViewForm : Form
     {
-        private readonly int _rowsPerPage = 100;
-        private int _currentPage = 1;
+        private readonly int _rowsPerPage = CompanyDbSet.DEFAULT_ROWS_PER_PAGE;
+        private int _currentPage = CompanyDbSet.DEFAULT_INITIAL_PAGE;
         private bool _refreshFromSearch = false;
 
         public CompanyListViewForm()
@@ -45,19 +45,19 @@ namespace TECNM.Residencias.Forms.CompanyForms
         {
             if (e.KeyChar == (char) Keys.Enter)
             {
-                Search();
+                SearchCompanies();
                 e.Handled = true;
             }
         }
 
         private void RunQuerySearch_Click(object sender, EventArgs e)
         {
-            Search();
+            SearchCompanies();
         }
 
         private void ResetSearch_Click(object sender, EventArgs e)
         {
-            _currentPage = 1;
+            _currentPage = CompanyDbSet.DEFAULT_INITIAL_PAGE;
             _refreshFromSearch = false;
             RefreshList();
         }
@@ -85,16 +85,16 @@ namespace TECNM.Residencias.Forms.CompanyForms
         {
             if (_refreshFromSearch)
             {
-                Search();
+                SearchCompanies();
                 return;
             }
 
             using var context = new AppDbContext();
-            IList<Company> companies = context.Companies.GetCompanies(_rowsPerPage, _currentPage);
-            PopulateTable(companies, context);
+            IEnumerable<Company> companies = context.Companies.EnumerateCompanies(_rowsPerPage, _currentPage);
+            PopulateTable(context, companies);
         }
 
-        private void Search()
+        private void SearchCompanies()
         {
             string query = tb_SearchQuery.Text.Trim();
             if (query.Length == 0)
@@ -102,23 +102,16 @@ namespace TECNM.Residencias.Forms.CompanyForms
                 return;
             }
 
-            using var context = new AppDbContext();
-            IList<CompanySearchDto> searchResult = context.Companies.SearchCompany(query, _rowsPerPage, _currentPage);
-
-            var companies = new List<Company>(searchResult.Count);
-            foreach (CompanySearchDto result in searchResult)
-            {
-                Company company = context.Companies.GetCompanyById(result.Id)!;
-                companies.Add(company);
-            }
-
             _refreshFromSearch = true;
-            PopulateTable(companies, context);
+            using var context = new AppDbContext();
+            IEnumerable<Company> companies = context.Companies.Search(query, _rowsPerPage, _currentPage);
+            PopulateTable(context, companies);
         }
 
-        private void PopulateTable(IList<Company> companies, AppDbContext context)
+        private void PopulateTable(AppDbContext context, IEnumerable<Company> companies)
         {
             dgv_ListView.Rows.Clear();
+            int count = 0;
 
             foreach (Company company in companies)
             {
@@ -142,11 +135,12 @@ namespace TECNM.Residencias.Forms.CompanyForms
                 row.Cells[9].Value = company.Enabled;
                 row.Cells[10].Value = company.UpdatedOn;
                 row.Cells[11].Value = company.CreatedOn;
+                count++;
             }
 
             dgv_ListView.ClearSelection();
             btn_PagePrev.Enabled = _currentPage > 1;
-            btn_PageNext.Enabled = companies.Count == _rowsPerPage;
+            btn_PageNext.Enabled = count == _rowsPerPage;
         }
 
         private string TranslateCompanyType(CompanyType type)
