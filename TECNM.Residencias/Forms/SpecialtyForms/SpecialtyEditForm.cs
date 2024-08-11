@@ -35,17 +35,9 @@ namespace TECNM.Residencias.Forms.SpecialtyForms
 
         private void SpecialtyEditForm_Load(object sender, EventArgs e)
         {
-            using var context = new AppDbContext();
-            IList<Career> careers = context.Careers.GetCareers(enabled: true);
-
-            foreach (Career career in careers)
-            {
-                int index = cb_SpecialtyCareer.Items.Add(career);
-                if (career.Id == _career.Id)
-                {
-                    cb_SpecialtyCareer.SelectedIndex = index;
-                }
-            }
+            cb_SpecialtyCareer.Items.Add(_career);
+            cb_SpecialtyCareer.SelectedIndex = 0;
+            cb_SpecialtyCareer.Enabled = false;
         }
 
         private void SpecialtyName_KeyPress(object sender, KeyPressEventArgs e)
