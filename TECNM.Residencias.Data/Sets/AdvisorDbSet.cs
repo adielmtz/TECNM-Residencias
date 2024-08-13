@@ -67,7 +67,7 @@ namespace TECNM.Residencias.Data.Sets
             """;
 
             command.Parameters.Add("$p0", SqliteType.Integer).Value = entity.CompanyId;
-            command.Parameters.Add("$p1", SqliteType.Text).Value = entity.Type;
+            command.Parameters.Add("$p1", SqliteType.Text).Value = entity.Type.ToString();
             command.Parameters.Add("$p2", SqliteType.Text).Value = entity.Name;
             command.Parameters.Add("$p3", SqliteType.Text).Value = entity.Section;
             command.Parameters.Add("$p4", SqliteType.Text).Value = entity.Role;
@@ -98,7 +98,7 @@ namespace TECNM.Residencias.Data.Sets
             """;
 
             command.Parameters.Add("$p0", SqliteType.Integer).Value = entity.CompanyId;
-            command.Parameters.Add("$p1", SqliteType.Text).Value = entity.Type;
+            command.Parameters.Add("$p1", SqliteType.Text).Value = entity.Type.ToString();
             command.Parameters.Add("$p2", SqliteType.Text).Value = entity.Name;
             command.Parameters.Add("$p3", SqliteType.Text).Value = entity.Section;
             command.Parameters.Add("$p4", SqliteType.Text).Value = entity.Role;

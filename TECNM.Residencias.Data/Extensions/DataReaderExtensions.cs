@@ -1,5 +1,6 @@
 using System;
 using System.Data;
+using System.Diagnostics;
 
 namespace TECNM.Residencias.Data.Extensions
 {
@@ -17,6 +18,7 @@ namespace TECNM.Residencias.Data.Extensions
 
         public static T GetEnum<T>(this IDataReader reader, int ordinal) where T : struct
         {
+            Debug.Assert(reader.GetDataTypeName(ordinal) == "TEXT");
             string value = reader.GetString(ordinal);
             return Enum.Parse<T>(value);
         }

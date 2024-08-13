@@ -83,7 +83,7 @@ namespace TECNM.Residencias.Data.Sets
             """;
 
             command.Parameters.Add("$p0", SqliteType.Text).Value = entity.Rfc;
-            command.Parameters.Add("$p1", SqliteType.Text).Value = entity.Type;
+            command.Parameters.Add("$p1", SqliteType.Text).Value = entity.Type.ToString();
             command.Parameters.Add("$p2", SqliteType.Text).Value = entity.Name;
             command.Parameters.Add("$p3", SqliteType.Text).Value = entity.Email;
             command.Parameters.Add("$p4", SqliteType.Text).Value = entity.Phone;
@@ -118,7 +118,7 @@ namespace TECNM.Residencias.Data.Sets
             """;
 
             command.Parameters.Add("$p0", SqliteType.Text).Value = entity.Rfc;
-            command.Parameters.Add("$p1", SqliteType.Text).Value = entity.Type;
+            command.Parameters.Add("$p1", SqliteType.Text).Value = entity.Type.ToString();
             command.Parameters.Add("$p2", SqliteType.Text).Value = entity.Name;
             command.Parameters.Add("$p3", SqliteType.Text).Value = entity.Email;
             command.Parameters.Add("$p4", SqliteType.Text).Value = entity.Phone;
@@ -160,7 +160,7 @@ namespace TECNM.Residencias.Data.Sets
             """;
 
             command.Parameters.Add("$p0", SqliteType.Text).Value = entity.Rfc;
-            command.Parameters.Add("$p1", SqliteType.Text).Value = entity.Type;
+            command.Parameters.Add("$p1", SqliteType.Text).Value = entity.Type.ToString();
             command.Parameters.Add("$p2", SqliteType.Text).Value = entity.Name;
             command.Parameters.Add("$p3", SqliteType.Text).Value = entity.Email;
             command.Parameters.Add("$p4", SqliteType.Text).Value = entity.Phone;
