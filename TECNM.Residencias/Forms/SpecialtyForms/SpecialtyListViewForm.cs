@@ -33,17 +33,17 @@ namespace TECNM.Residencias.Forms.SpecialtyForms
                 var specialty = (Specialty) grid.Rows[e.RowIndex].Tag!;
                 if (e.ColumnIndex == 4)
                 {
-                    ShowSpecialtyDialog(_career, specialty);
+                    ShowSpecialtyEditDialog(_career, specialty);
                 }
             }
         }
 
         private void AddNewSpecialty_Click(object sender, EventArgs e)
         {
-            ShowSpecialtyDialog(_career);
+            ShowSpecialtyEditDialog(_career);
         }
 
-        private void ShowSpecialtyDialog(Career career, Specialty? specialty = null)
+        private void ShowSpecialtyEditDialog(Career career, Specialty? specialty = null)
         {
             using var dialog = new SpecialtyEditForm(career, specialty);
             dialog.ShowDialog();

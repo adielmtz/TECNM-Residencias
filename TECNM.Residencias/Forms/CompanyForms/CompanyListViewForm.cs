@@ -36,7 +36,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
 
                 if (e.ColumnIndex == 12)
                 {
-                    ShowEditCompanyDialog(company);
+                    ShowCompanyEditDialog(company);
                 }
                 else if (e.ColumnIndex == 13)
                 {
@@ -48,7 +48,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
 
         private void AddNewCompany_Click(object sender, EventArgs e)
         {
-            ShowEditCompanyDialog();
+            ShowCompanyEditDialog();
         }
 
         private void SearchQuery_KeyPress(object sender, KeyPressEventArgs e)
@@ -84,7 +84,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
             RefreshList();
         }
 
-        private void ShowEditCompanyDialog(Company? company = null)
+        private void ShowCompanyEditDialog(Company? company = null)
         {
             using var dialog = new CompanyEditForm(company);
             dialog.ShowDialog();

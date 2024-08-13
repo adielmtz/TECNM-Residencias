@@ -29,13 +29,6 @@
         private void InitializeComponent()
         {
             dgv_ListView = new System.Windows.Forms.DataGridView();
-            button1 = new System.Windows.Forms.Button();
-            label1 = new System.Windows.Forms.Label();
-            tb_SearchQuery = new System.Windows.Forms.TextBox();
-            button2 = new System.Windows.Forms.Button();
-            button3 = new System.Windows.Forms.Button();
-            btn_PagePrev = new System.Windows.Forms.Button();
-            btn_PageNext = new System.Windows.Forms.Button();
             ListCompanyName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ListCompanyRfc = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ListCompanyType = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -50,6 +43,13 @@
             ListCompanyCreatedOn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ListCompanyEdit = new System.Windows.Forms.DataGridViewButtonColumn();
             ListCompanyAdvisors = new System.Windows.Forms.DataGridViewButtonColumn();
+            button1 = new System.Windows.Forms.Button();
+            label1 = new System.Windows.Forms.Label();
+            tb_SearchQuery = new System.Windows.Forms.TextBox();
+            button2 = new System.Windows.Forms.Button();
+            button3 = new System.Windows.Forms.Button();
+            btn_PagePrev = new System.Windows.Forms.Button();
+            btn_PageNext = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize) dgv_ListView).BeginInit();
             SuspendLayout();
             // 
@@ -70,77 +70,6 @@
             dgv_ListView.Size = new System.Drawing.Size(1240, 596);
             dgv_ListView.TabIndex = 0;
             dgv_ListView.CellContentClick += ListView_CellContentClick;
-            // 
-            // button1
-            // 
-            button1.Anchor =  System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
-            button1.Location = new System.Drawing.Point(1131, 637);
-            button1.Name = "button1";
-            button1.Size = new System.Drawing.Size(121, 32);
-            button1.TabIndex = 1;
-            button1.Text = "Añadir nueva";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += AddNewCompany_Click;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(12, 9);
-            label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(170, 15);
-            label1.TabIndex = 2;
-            label1.Text = "Buscar empresa (nombre o rfc)";
-            // 
-            // tb_SearchQuery
-            // 
-            tb_SearchQuery.Location = new System.Drawing.Point(188, 6);
-            tb_SearchQuery.Name = "tb_SearchQuery";
-            tb_SearchQuery.Size = new System.Drawing.Size(363, 23);
-            tb_SearchQuery.TabIndex = 3;
-            tb_SearchQuery.KeyPress += SearchQuery_KeyPress;
-            // 
-            // button2
-            // 
-            button2.Location = new System.Drawing.Point(557, 6);
-            button2.Name = "button2";
-            button2.Size = new System.Drawing.Size(75, 23);
-            button2.TabIndex = 4;
-            button2.Text = "Buscar";
-            button2.UseVisualStyleBackColor = true;
-            button2.Click += RunQuerySearch_Click;
-            // 
-            // button3
-            // 
-            button3.Anchor =  System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            button3.Location = new System.Drawing.Point(1131, 5);
-            button3.Name = "button3";
-            button3.Size = new System.Drawing.Size(121, 23);
-            button3.TabIndex = 5;
-            button3.Text = "Mostrar todo";
-            button3.UseVisualStyleBackColor = true;
-            button3.Click += ResetSearch_Click;
-            // 
-            // btn_PagePrev
-            // 
-            btn_PagePrev.Anchor =  System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
-            btn_PagePrev.Location = new System.Drawing.Point(12, 637);
-            btn_PagePrev.Name = "btn_PagePrev";
-            btn_PagePrev.Size = new System.Drawing.Size(32, 32);
-            btn_PagePrev.TabIndex = 6;
-            btn_PagePrev.Text = "<";
-            btn_PagePrev.UseVisualStyleBackColor = true;
-            btn_PagePrev.Click += PagePrev_Click;
-            // 
-            // btn_PageNext
-            // 
-            btn_PageNext.Anchor =  System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
-            btn_PageNext.Location = new System.Drawing.Point(50, 637);
-            btn_PageNext.Name = "btn_PageNext";
-            btn_PageNext.Size = new System.Drawing.Size(32, 32);
-            btn_PageNext.TabIndex = 7;
-            btn_PageNext.Text = ">";
-            btn_PageNext.UseVisualStyleBackColor = true;
-            btn_PageNext.Click += PageNext_Click;
             // 
             // ListCompanyName
             // 
@@ -203,7 +132,7 @@
             ListCompanyPostalCode.HeaderText = "Código Postal";
             ListCompanyPostalCode.Name = "ListCompanyPostalCode";
             ListCompanyPostalCode.ReadOnly = true;
-            ListCompanyPostalCode.Width = 106;
+            ListCompanyPostalCode.Width = 97;
             // 
             // ListCompanyCity
             // 
@@ -256,6 +185,77 @@
             ListCompanyAdvisors.Text = "Ver asesores";
             ListCompanyAdvisors.UseColumnTextForButtonValue = true;
             ListCompanyAdvisors.Width = 59;
+            // 
+            // button1
+            // 
+            button1.Anchor =  System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
+            button1.Location = new System.Drawing.Point(1131, 637);
+            button1.Name = "button1";
+            button1.Size = new System.Drawing.Size(121, 32);
+            button1.TabIndex = 1;
+            button1.Text = "Añadir nueva";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += AddNewCompany_Click;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new System.Drawing.Point(12, 9);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(170, 15);
+            label1.TabIndex = 2;
+            label1.Text = "Buscar empresa (nombre o rfc)";
+            // 
+            // tb_SearchQuery
+            // 
+            tb_SearchQuery.Location = new System.Drawing.Point(188, 6);
+            tb_SearchQuery.Name = "tb_SearchQuery";
+            tb_SearchQuery.Size = new System.Drawing.Size(360, 23);
+            tb_SearchQuery.TabIndex = 3;
+            tb_SearchQuery.KeyPress += SearchQuery_KeyPress;
+            // 
+            // button2
+            // 
+            button2.Location = new System.Drawing.Point(554, 6);
+            button2.Name = "button2";
+            button2.Size = new System.Drawing.Size(75, 23);
+            button2.TabIndex = 4;
+            button2.Text = "Buscar";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += RunQuerySearch_Click;
+            // 
+            // button3
+            // 
+            button3.Anchor =  System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            button3.Location = new System.Drawing.Point(1132, 6);
+            button3.Name = "button3";
+            button3.Size = new System.Drawing.Size(120, 23);
+            button3.TabIndex = 5;
+            button3.Text = "Mostrar todo";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += ResetSearch_Click;
+            // 
+            // btn_PagePrev
+            // 
+            btn_PagePrev.Anchor =  System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            btn_PagePrev.Location = new System.Drawing.Point(12, 637);
+            btn_PagePrev.Name = "btn_PagePrev";
+            btn_PagePrev.Size = new System.Drawing.Size(32, 32);
+            btn_PagePrev.TabIndex = 6;
+            btn_PagePrev.Text = "<";
+            btn_PagePrev.UseVisualStyleBackColor = true;
+            btn_PagePrev.Click += PagePrev_Click;
+            // 
+            // btn_PageNext
+            // 
+            btn_PageNext.Anchor =  System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            btn_PageNext.Location = new System.Drawing.Point(50, 637);
+            btn_PageNext.Name = "btn_PageNext";
+            btn_PageNext.Size = new System.Drawing.Size(32, 32);
+            btn_PageNext.TabIndex = 7;
+            btn_PageNext.Text = ">";
+            btn_PageNext.UseVisualStyleBackColor = true;
+            btn_PageNext.Click += PageNext_Click;
             // 
             // CompanyListViewForm
             // 

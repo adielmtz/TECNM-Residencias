@@ -33,16 +33,16 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             if (grid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
             {
                 var advisor = (Advisor) grid.Rows[e.RowIndex].Tag!;
-                ShowAdvisorDialog(advisor);
+                ShowAdvisorEditDialog(advisor);
             }
         }
 
         private void AddNewAdvisor_Click(object sender, EventArgs e)
         {
-            ShowAdvisorDialog();
+            ShowAdvisorEditDialog();
         }
 
-        private void ShowAdvisorDialog(Advisor? advisor = null)
+        private void ShowAdvisorEditDialog(Advisor? advisor = null)
         {
             using var dialog = new AdvisorEditForm(_company, advisor);
             dialog.ShowDialog();
