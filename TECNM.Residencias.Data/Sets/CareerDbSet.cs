@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using TECNM.Residencias.Data.Entities;
+using TECNM.Residencias.Data.Extensions;
 using TECNM.Residencias.Data.Sets.Common;
 
 namespace TECNM.Residencias.Data.Sets
@@ -100,8 +101,8 @@ namespace TECNM.Residencias.Data.Sets
                 Id        = reader.GetInt64(0),
                 Name      = reader.GetString(1),
                 Enabled   = reader.GetBoolean(2),
-                UpdatedOn = reader.GetDateTime(3),
-                CreatedOn = reader.GetDateTime(4),
+                UpdatedOn = reader.GetLocalDateTime(3),
+                CreatedOn = reader.GetLocalDateTime(4),
             };
         }
     }

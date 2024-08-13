@@ -143,8 +143,8 @@ namespace TECNM.Residencias.Data.Sets
                 Email     = reader.GetString(6),
                 Phone     = reader.GetString(7),
                 Enabled   = reader.GetBoolean(8),
-                UpdatedOn = reader.GetDateTime(9),
-                CreatedOn = reader.GetDateTime(10),
+                UpdatedOn = reader.GetLocalDateTime(9),
+                CreatedOn = reader.GetLocalDateTime(10),
             };
         }
     }

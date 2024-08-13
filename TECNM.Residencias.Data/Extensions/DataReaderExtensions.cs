@@ -16,6 +16,13 @@ namespace TECNM.Residencias.Data.Extensions
             return reader.IsDBNull(ordinal) ? null : reader.GetString(ordinal);
         }
 
+        public static DateTime GetLocalDateTime(this IDataReader reader, int ordinal)
+        {
+            Debug.Assert(reader.GetDataTypeName(ordinal) == "TEXT");
+            DateTime value = reader.GetDateTime(ordinal);
+            return DateTime.SpecifyKind(value, DateTimeKind.Utc).ToLocalTime();
+        }
+
         public static T GetEnum<T>(this IDataReader reader, int ordinal) where T : struct
         {
             Debug.Assert(reader.GetDataTypeName(ordinal) == "TEXT");

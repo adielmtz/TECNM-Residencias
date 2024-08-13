@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using TECNM.Residencias.Data.Entities;
+using TECNM.Residencias.Data.Extensions;
 using TECNM.Residencias.Data.Sets.Common;
 
 namespace TECNM.Residencias.Data.Sets
@@ -110,8 +111,8 @@ namespace TECNM.Residencias.Data.Sets
                 CareerId  = reader.GetInt64(1),
                 Name      = reader.GetString(2),
                 Enabled   = reader.GetBoolean(3),
-                UpdatedOn = reader.GetDateTime(4),
-                CreatedOn = reader.GetDateTime(5),
+                UpdatedOn = reader.GetLocalDateTime(4),
+                CreatedOn = reader.GetLocalDateTime(5),
             };
         }
     }

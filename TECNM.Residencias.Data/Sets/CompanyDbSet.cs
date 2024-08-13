@@ -191,8 +191,8 @@ namespace TECNM.Residencias.Data.Sets
                 PostalCode = reader.GetString(8),
                 CityId     = reader.GetInt64(9),
                 Enabled    = reader.GetBoolean(10),
-                UpdatedOn  = reader.GetDateTime(11),
-                CreatedOn  = reader.GetDateTime(12),
+                UpdatedOn  = reader.GetLocalDateTime(11),
+                CreatedOn  = reader.GetLocalDateTime(12),
             };
         }
     }
