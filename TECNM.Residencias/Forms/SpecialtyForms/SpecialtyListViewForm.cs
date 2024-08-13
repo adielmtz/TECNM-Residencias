@@ -28,7 +28,7 @@ namespace TECNM.Residencias.Forms.SpecialtyForms
         private void ListView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             var grid = (DataGridView) sender;
-            if (grid.Columns[e.ColumnIndex] is DataGridViewColumn && e.RowIndex >= 0)
+            if (grid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
             {
                 var specialty = (Specialty) grid.Rows[e.RowIndex].Tag!;
                 if (e.ColumnIndex == 4)
