@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using TECNM.Residencias.Data;
+using TECNM.Residencias.Data.Migrations;
 
 namespace TECNM.Residencias
 {
@@ -49,8 +50,16 @@ namespace TECNM.Residencias
             {
                 Directory.CreateDirectory(RootDataDirectory);
                 Directory.CreateDirectory(DocumentArchiveDirectory);
+                InitializeDatabase();
                 s_initialized = true;
             }
+        }
+
+        private static void InitializeDatabase()
+        {
+            using var sqlite = Database.Open();
+            using var migrator = new DatabaseMigrator(sqlite);
+            migrator.Migrate();
         }
     }
 }

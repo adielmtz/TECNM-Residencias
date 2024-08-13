@@ -38,16 +38,7 @@ namespace TECNM.Residencias.Data
         {
             var sqlite = new SqliteConnection(ConnectionString);
             sqlite.Open();
-            ConfigureDatabase(sqlite);
             return sqlite;
-        }
-
-        private void ConfigureDatabase(SqliteConnection sqlite)
-        {
-            Debug.Assert(sqlite.State == ConnectionState.Open);
-            using var command = sqlite.CreateCommand();
-            command.CommandText = "PRAGMA journal_mode=wal;";
-            command.ExecuteNonQuery();
         }
     }
 }

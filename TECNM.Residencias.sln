@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35122.118
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TECNM.Residencias", "TECNM.Residencias\TECNM.Residencias.csproj", "{B4A91531-A4ED-4681-A9A3-96A37FD5ED0E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TECNM.Residencias", "TECNM.Residencias\TECNM.Residencias.csproj", "{B4A91531-A4ED-4681-A9A3-96A37FD5ED0E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TECNM.Residencias.Data", "TECNM.Residencias.Data\TECNM.Residencias.Data.csproj", "{023B4F90-F1EE-45CA-9589-3DE3A9FC3985}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TECNM.Residencias.Data", "TECNM.Residencias.Data\TECNM.Residencias.Data.csproj", "{023B4F90-F1EE-45CA-9589-3DE3A9FC3985}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TECNM.Residencias.Data.Migrations", "TECNM.Residencias.Data.Migrations\TECNM.Residencias.Data.Migrations.csproj", "{984A87AD-0EE0-4801-90CC-82958091BAB7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{023B4F90-F1EE-45CA-9589-3DE3A9FC3985}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{023B4F90-F1EE-45CA-9589-3DE3A9FC3985}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{023B4F90-F1EE-45CA-9589-3DE3A9FC3985}.Release|Any CPU.Build.0 = Release|Any CPU
+		{984A87AD-0EE0-4801-90CC-82958091BAB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{984A87AD-0EE0-4801-90CC-82958091BAB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{984A87AD-0EE0-4801-90CC-82958091BAB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{984A87AD-0EE0-4801-90CC-82958091BAB7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TECNM.Residencias.Data.Migrations\TECNM.Residencias.Data.Migrations.csproj" />
     <ProjectReference Include="..\TECNM.Residencias.Data\TECNM.Residencias.Data.csproj" />
   </ItemGroup>
 
