@@ -2,7 +2,6 @@ using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.Data.Sqlite;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
@@ -56,8 +55,7 @@ namespace TECNM.Residencias.Forms.SpecialtyForms
 
         private void Save()
         {
-            Career? career = (Career?) cb_SpecialtyCareer.SelectedItem;
-            _specialty.CareerId = career == null ? 0 : career.Id;
+            _specialty.CareerId = _career.Id;
             _specialty.Name = tb_SpecialtyName.Text.Trim();
             _specialty.Enabled = chk_SpecialtyEnabled.Checked;
 
