@@ -53,8 +53,16 @@ namespace TECNM.Residencias
 
         public void Dispose()
         {
+            Optimize();
             _transaction.Dispose();
             _connection.Dispose();
+        }
+
+        private void Optimize()
+        {
+            using var command = _connection.CreateCommand();
+            command.CommandText = "PRAGMA optimize;";
+            command.ExecuteNonQuery();
         }
     }
 }
