@@ -29,26 +29,23 @@ namespace TECNM.Residencias.Data.Sets
             return HydrateObject(reader);
         }
 
-        public IList<Specialty> GetSpecialtiesByCareer(Career career)
+        public IEnumerable<Specialty> EnumerateSpecialtiesByCareer(Career career)
         {
-            return GetSpecialtiesByCareer(career.Id);
+            return EnumerateSpecialtiesByCareer(career.Id);
         }
 
-        public IList<Specialty> GetSpecialtiesByCareer(long careerId)
+        public IEnumerable<Specialty> EnumerateSpecialtiesByCareer(long careerId)
         {
             using var command = Context.Database.CreateCommand();
             command.CommandText = "SELECT id, career_id, name, enabled, updated_on, created_on FROM itcm_specialty WHERE career_id = $p0 ORDER BY name";
             command.Parameters.Add("$p0", SqliteType.Integer).Value = careerId;
             using var reader = command.ExecuteReader();
 
-            var result = new List<Specialty>(10);
             while (reader.Read())
             {
                 Specialty specialty = HydrateObject(reader);
-                result.Add(specialty);
+                yield return specialty;
             }
-
-            return result;
         }
 
         public override bool Insert(Specialty entity)

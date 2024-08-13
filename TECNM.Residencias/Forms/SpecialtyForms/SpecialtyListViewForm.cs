@@ -53,7 +53,7 @@ namespace TECNM.Residencias.Forms.SpecialtyForms
         private void RefreshList()
         {
             using var context = new AppDbContext();
-            IList<Specialty> specialties = context.Specialties.GetSpecialtiesByCareer(_career);
+            IEnumerable<Specialty> specialties = context.Specialties.EnumerateSpecialtiesByCareer(_career);
 
             dgv_ListView.Rows.Clear();
 

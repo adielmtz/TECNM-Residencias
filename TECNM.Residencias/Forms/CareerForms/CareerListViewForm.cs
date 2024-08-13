@@ -54,7 +54,7 @@ namespace TECNM.Residencias.Forms.CareerForms
         private void RefreshList()
         {
             using var context = new AppDbContext();
-            IList<Career> careers = context.Careers.GetCareers();
+            IEnumerable<Career> careers = context.Careers.EnumerateCareers();
 
             dgv_ListView.Rows.Clear();
 

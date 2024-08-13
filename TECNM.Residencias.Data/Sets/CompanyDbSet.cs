@@ -1,7 +1,6 @@
 using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
 using System.Data;
 using System.Diagnostics;
 using TECNM.Residencias.Data.Entities;
@@ -57,35 +56,6 @@ namespace TECNM.Residencias.Data.Sets
                 Company company = GetCompanyById(rowid)!;
                 yield return company;
             }
-        }
-
-        public IList<Company> GetCompanies(int count = DEFAULT_ROWS_PER_PAGE, int page = DEFAULT_INITIAL_PAGE)
-        {
-            var result = new List<Company>(count);
-
-            foreach (Company company in EnumerateCompanies(count, page))
-            {
-                result.Add(company);
-            }
-
-            return result;
-        }
-
-        public IList<Company> GetCompanies(bool enabled)
-        {
-            using var command = Context.Database.CreateCommand();
-            command.CommandText = "SELECT id, type, rfc, name, email, phone, address, locality, postal_code, city_id, enabled, updated_on, created_on FROM itcm_company WHERE enabled = $p0 ORDER BY name";
-            command.Parameters.Add("$p0", SqliteType.Integer).Value = enabled;
-            using var reader = command.ExecuteReader();
-
-            var result = new List<Company>();
-            while (reader.Read())
-            {
-                Company company = HydrateObject(reader);
-                result.Add(company);
-            }
-
-            return result;
         }
 
         public IEnumerable<Company> EnumerateCompanies(int count = DEFAULT_ROWS_PER_PAGE, int page = DEFAULT_INITIAL_PAGE)

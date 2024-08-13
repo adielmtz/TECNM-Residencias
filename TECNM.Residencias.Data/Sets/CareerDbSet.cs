@@ -29,37 +29,17 @@ namespace TECNM.Residencias.Data.Sets
             return HydrateObject(reader);
         }
 
-        public IList<Career> GetCareers()
+        public IEnumerable<Career> EnumerateCareers()
         {
             using var command = Context.Database.CreateCommand();
             command.CommandText = "SELECT id, name, enabled, updated_on, created_on FROM itcm_career ORDER BY name";
             using var reader = command.ExecuteReader();
 
-            var result = new List<Career>(10);
             while (reader.Read())
             {
                 Career career = HydrateObject(reader);
-                result.Add(career);
+                yield return career;
             }
-
-            return result;
-        }
-
-        public IList<Career> GetCareers(bool enabled)
-        {
-            using var command = Context.Database.CreateCommand();
-            command.CommandText = "SELECT id, name, enabled, updated_on, created_on FROM itcm_career WHERE enabled = $p0 ORDER BY name";
-            command.Parameters.Add("$p0", SqliteType.Integer).Value = enabled;
-            using var reader = command.ExecuteReader();
-
-            var result = new List<Career>(10);
-            while (reader.Read())
-            {
-                Career career = HydrateObject(reader);
-                result.Add(career);
-            }
-
-            return result;
         }
 
         public override bool Insert(Career entity)
