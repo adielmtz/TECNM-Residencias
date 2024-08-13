@@ -33,6 +33,9 @@ namespace TECNM.Residencias
 
         private AdvisorDbSet? _advisors;
         public AdvisorDbSet Advisors => _advisors ??= new AdvisorDbSet(this);
+
+        private StudentDbSet? _students;
+        public StudentDbSet Students => _students ??= new StudentDbSet(this);
         #endregion
 
         public AppDbContext()
