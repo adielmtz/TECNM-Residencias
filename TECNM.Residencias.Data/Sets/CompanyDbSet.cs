@@ -1,6 +1,7 @@
 using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Data;
 using System.Diagnostics;
 using TECNM.Residencias.Data.Entities;
@@ -31,6 +32,14 @@ namespace TECNM.Residencias.Data.Sets
             }
 
             return HydrateObject(reader);
+        }
+
+        public string? GetCompanyNameById(long id)
+        {
+            using var command = Context.Database.CreateCommand();
+            command.CommandText = "SELECT name FROM itcm_company WHERE id = $id";
+            command.Parameters.Add("$id", SqliteType.Integer).Value = id;
+            return (string?) command.ExecuteScalar();
         }
 
         public IEnumerable<Company> Search(string query, int count = DEFAULT_ROWS_PER_PAGE, int page = DEFAULT_INITIAL_PAGE)

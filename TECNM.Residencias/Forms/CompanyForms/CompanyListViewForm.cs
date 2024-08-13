@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Data.Sets;
 using TECNM.Residencias.Extensions;
+using TECNM.Residencias.Forms.AdvisorForms;
 
 namespace TECNM.Residencias.Forms.CompanyForms
 {
@@ -32,7 +33,16 @@ namespace TECNM.Residencias.Forms.CompanyForms
             if (grid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
             {
                 var company = (Company) grid.Rows[e.RowIndex].Tag!;
-                ShowEditCompanyDialog(company);
+
+                if (e.ColumnIndex == 12)
+                {
+                    ShowEditCompanyDialog(company);
+                }
+                else if (e.ColumnIndex == 13)
+                {
+                    using var dialog = new AdvisorListViewForm(company);
+                    dialog.ShowDialog();
+                }
             }
         }
 

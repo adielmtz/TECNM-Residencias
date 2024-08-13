@@ -30,6 +30,9 @@ namespace TECNM.Residencias
 
         private CompanyDbSet? _companies;
         public CompanyDbSet Companies => _companies ??= new CompanyDbSet(this);
+
+        private AdvisorDbSet? _advisors;
+        public AdvisorDbSet Advisors => _advisors ??= new AdvisorDbSet(this);
         #endregion
 
         public AppDbContext()

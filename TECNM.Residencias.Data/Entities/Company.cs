@@ -30,6 +30,11 @@ namespace TECNM.Residencias.Data.Entities
         public DateTime UpdatedOn { get; set; }
 
         public DateTime CreatedOn { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 
     public enum CompanyType
