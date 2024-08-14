@@ -119,9 +119,10 @@ namespace TECNM.Residencias.Forms.StudentForms
                 DataGridViewRow row = dgv_ListView.Rows[index];
 
                 Specialty specialty = context.Specialties.GetSpecialtyById(student.SpecialtyId)!;
-                Advisor? internAdvisor;
-                Advisor? externAdvisor;
-                Advisor? reviewer;
+                Advisor? internAdvisor = context.Advisors.GetAdvisorById(student.InternalAsesorId ?? 0);
+                Advisor? externAdvisor = context.Advisors.GetAdvisorById(student.ExternalAsesorId ?? 0);
+                Advisor? reviewer = context.Advisors.GetAdvisorById(student.ReviewerAsesorId ?? 0);
+                Company company = context.Companies.GetCompanyById(student.CompanyId)!;
 
                 row.Tag = student;
                 row.Cells[0].Value = student.Id;
@@ -132,6 +133,16 @@ namespace TECNM.Residencias.Forms.StudentForms
                 row.Cells[5].Value = student.Semester;
                 row.Cells[6].Value = student.StartDate;
                 row.Cells[7].Value = student.EndDate;
+                row.Cells[8].Value = internAdvisor?.Name ?? "SIN ASIGNAR";
+                row.Cells[9].Value = externAdvisor?.Name ?? "SIN ASIGNAR";
+                row.Cells[10].Value = reviewer?.Name ?? "SIN ASIGNAR";
+                row.Cells[11].Value = company.Name;
+                row.Cells[12].Value = student.Department;
+                row.Cells[13].Value = student.Schedule;
+                row.Cells[14].Value = student.Closed;
+                row.Cells[15].Value = student.Notes;
+                row.Cells[16].Value = student.UpdatedOn;
+                row.Cells[17].Value = student.CreatedOn;
                 count++;
             }
 

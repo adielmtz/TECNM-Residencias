@@ -29,13 +29,6 @@
         private void InitializeComponent()
         {
             dgv_ListView = new System.Windows.Forms.DataGridView();
-            label1 = new System.Windows.Forms.Label();
-            tb_SearchQuery = new System.Windows.Forms.TextBox();
-            button1 = new System.Windows.Forms.Button();
-            button2 = new System.Windows.Forms.Button();
-            btn_PagePrev = new System.Windows.Forms.Button();
-            btn_PageNext = new System.Windows.Forms.Button();
-            button3 = new System.Windows.Forms.Button();
             StudentId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             StudentName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             StudentGender = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -55,6 +48,13 @@
             StudentUpdatedOn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             StudentCreatedOn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ListStudentEdit = new System.Windows.Forms.DataGridViewButtonColumn();
+            label1 = new System.Windows.Forms.Label();
+            tb_SearchQuery = new System.Windows.Forms.TextBox();
+            button1 = new System.Windows.Forms.Button();
+            button2 = new System.Windows.Forms.Button();
+            btn_PagePrev = new System.Windows.Forms.Button();
+            btn_PageNext = new System.Windows.Forms.Button();
+            button3 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize) dgv_ListView).BeginInit();
             SuspendLayout();
             // 
@@ -74,77 +74,7 @@
             dgv_ListView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             dgv_ListView.Size = new System.Drawing.Size(1240, 596);
             dgv_ListView.TabIndex = 0;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(12, 9);
-            label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(93, 15);
-            label1.TabIndex = 1;
-            label1.Text = "Buscar residente";
-            // 
-            // tb_SearchQuery
-            // 
-            tb_SearchQuery.Location = new System.Drawing.Point(111, 6);
-            tb_SearchQuery.Name = "tb_SearchQuery";
-            tb_SearchQuery.Size = new System.Drawing.Size(360, 23);
-            tb_SearchQuery.TabIndex = 2;
-            tb_SearchQuery.KeyPress += SearchQuery_KeyPress;
-            // 
-            // button1
-            // 
-            button1.Location = new System.Drawing.Point(477, 6);
-            button1.Name = "button1";
-            button1.Size = new System.Drawing.Size(75, 23);
-            button1.TabIndex = 3;
-            button1.Text = "Buscar";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += RunQuerySearch_Click;
-            // 
-            // button2
-            // 
-            button2.Anchor =  System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            button2.Location = new System.Drawing.Point(1132, 6);
-            button2.Name = "button2";
-            button2.Size = new System.Drawing.Size(120, 23);
-            button2.TabIndex = 4;
-            button2.Text = "Mostrar todo";
-            button2.UseVisualStyleBackColor = true;
-            button2.Click += ResetSearch_Click;
-            // 
-            // btn_PagePrev
-            // 
-            btn_PagePrev.Anchor =  System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
-            btn_PagePrev.Location = new System.Drawing.Point(12, 637);
-            btn_PagePrev.Name = "btn_PagePrev";
-            btn_PagePrev.Size = new System.Drawing.Size(32, 32);
-            btn_PagePrev.TabIndex = 5;
-            btn_PagePrev.Text = "<";
-            btn_PagePrev.UseVisualStyleBackColor = true;
-            btn_PagePrev.Click += PagePrev_Click;
-            // 
-            // btn_PageNext
-            // 
-            btn_PageNext.Anchor =  System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
-            btn_PageNext.Location = new System.Drawing.Point(50, 637);
-            btn_PageNext.Name = "btn_PageNext";
-            btn_PageNext.Size = new System.Drawing.Size(32, 32);
-            btn_PageNext.TabIndex = 6;
-            btn_PageNext.Text = ">";
-            btn_PageNext.UseVisualStyleBackColor = true;
-            btn_PageNext.Click += PageNext_Click;
-            // 
-            // button3
-            // 
-            button3.Anchor =  System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
-            button3.Location = new System.Drawing.Point(1131, 637);
-            button3.Name = "button3";
-            button3.Size = new System.Drawing.Size(121, 32);
-            button3.TabIndex = 7;
-            button3.Text = "Registrar nuevo";
-            button3.UseVisualStyleBackColor = true;
-            button3.Click += AddNewCompany_Click;
+            dgv_ListView.CellContentClick += ListView_CellContentClick;
             // 
             // StudentId
             // 
@@ -152,7 +82,7 @@
             StudentId.HeaderText = "N° Control";
             StudentId.Name = "StudentId";
             StudentId.ReadOnly = true;
-            StudentId.Width = 89;
+            StudentId.Width = 82;
             // 
             // StudentName
             // 
@@ -200,7 +130,7 @@
             StudentStartDate.HeaderText = "Fecha de inicio";
             StudentStartDate.Name = "StudentStartDate";
             StudentStartDate.ReadOnly = true;
-            StudentStartDate.Width = 111;
+            StudentStartDate.Width = 102;
             // 
             // StudentEndDate
             // 
@@ -299,6 +229,77 @@
             ListStudentEdit.Text = "Editar";
             ListStudentEdit.UseColumnTextForButtonValue = true;
             ListStudentEdit.Width = 61;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new System.Drawing.Point(12, 9);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(93, 15);
+            label1.TabIndex = 1;
+            label1.Text = "Buscar residente";
+            // 
+            // tb_SearchQuery
+            // 
+            tb_SearchQuery.Location = new System.Drawing.Point(111, 6);
+            tb_SearchQuery.Name = "tb_SearchQuery";
+            tb_SearchQuery.Size = new System.Drawing.Size(360, 23);
+            tb_SearchQuery.TabIndex = 2;
+            tb_SearchQuery.KeyPress += SearchQuery_KeyPress;
+            // 
+            // button1
+            // 
+            button1.Location = new System.Drawing.Point(477, 6);
+            button1.Name = "button1";
+            button1.Size = new System.Drawing.Size(75, 23);
+            button1.TabIndex = 3;
+            button1.Text = "Buscar";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += RunQuerySearch_Click;
+            // 
+            // button2
+            // 
+            button2.Anchor =  System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            button2.Location = new System.Drawing.Point(1132, 6);
+            button2.Name = "button2";
+            button2.Size = new System.Drawing.Size(120, 23);
+            button2.TabIndex = 4;
+            button2.Text = "Mostrar todo";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += ResetSearch_Click;
+            // 
+            // btn_PagePrev
+            // 
+            btn_PagePrev.Anchor =  System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            btn_PagePrev.Location = new System.Drawing.Point(12, 637);
+            btn_PagePrev.Name = "btn_PagePrev";
+            btn_PagePrev.Size = new System.Drawing.Size(32, 32);
+            btn_PagePrev.TabIndex = 5;
+            btn_PagePrev.Text = "<";
+            btn_PagePrev.UseVisualStyleBackColor = true;
+            btn_PagePrev.Click += PagePrev_Click;
+            // 
+            // btn_PageNext
+            // 
+            btn_PageNext.Anchor =  System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            btn_PageNext.Location = new System.Drawing.Point(50, 637);
+            btn_PageNext.Name = "btn_PageNext";
+            btn_PageNext.Size = new System.Drawing.Size(32, 32);
+            btn_PageNext.TabIndex = 6;
+            btn_PageNext.Text = ">";
+            btn_PageNext.UseVisualStyleBackColor = true;
+            btn_PageNext.Click += PageNext_Click;
+            // 
+            // button3
+            // 
+            button3.Anchor =  System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
+            button3.Location = new System.Drawing.Point(1131, 637);
+            button3.Name = "button3";
+            button3.Size = new System.Drawing.Size(121, 32);
+            button3.TabIndex = 7;
+            button3.Text = "Registrar nuevo";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += AddNewCompany_Click;
             // 
             // StudentListViewForm
             // 
