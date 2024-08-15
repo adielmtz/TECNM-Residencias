@@ -37,9 +37,9 @@ namespace TECNM.Residencias.Data.Entities
 
         public string Schedule { get; set; } = "";
 
-        public bool Closed { get; set; }
-
         public string Notes { get; set; } = "";
+
+        public bool Enabled { get; set; }
 
         public DateTime UpdatedOn { get; set; }
 

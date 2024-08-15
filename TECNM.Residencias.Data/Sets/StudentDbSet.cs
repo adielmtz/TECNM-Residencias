@@ -106,7 +106,7 @@ namespace TECNM.Residencias.Data.Sets
                 CompanyId        = reader.GetInt64(13),
                 Department       = reader.GetString(14),
                 Schedule         = reader.GetString(15),
-                Closed           = reader.GetBoolean(16),
+                Enabled           = reader.GetBoolean(16),
                 Notes            = reader.GetString(17),
                 UpdatedOn        = reader.GetLocalDateTime(18),
                 CreatedOn        = reader.GetLocalDateTime(19),
