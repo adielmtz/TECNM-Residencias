@@ -1,7 +1,8 @@
 using System;
 using System.Data;
 using System.Diagnostics;
-using TECNM.Residencias.Data.Migrations.Properties;
+using System.IO;
+using System.Reflection;
 
 namespace TECNM.Residencias.Data.Migrations
 {
@@ -85,14 +86,22 @@ namespace TECNM.Residencias.Data.Migrations
 
         private void ApplyMigration(long version)
         {
-            string? sql = Resources.ResourceManager.GetString($"migration_{version}");
-            Debug.Assert(sql != null);
-
+            string sql = GetStringResource(version);
             using var command = _connection.CreateCommand();
-            command.CommandText = sql!;
+            command.CommandText = sql;
             command.ExecuteNonQuery();
 
             UserVersion = version;
+        }
+
+        private string GetStringResource(long version)
+        {
+            Assembly assembly = typeof(DatabaseMigrator).Assembly;
+            using var stream = assembly.GetManifestResourceStream($"TECNM.Residencias.Data.Migrations.Resources.migration_{version}.sql");
+            Debug.Assert(stream != null);
+
+            using var reader = new StreamReader(stream);
+            return reader.ReadToEnd();
         }
     }
 }
