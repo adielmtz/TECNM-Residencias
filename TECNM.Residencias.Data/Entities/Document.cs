@@ -19,6 +19,8 @@ namespace TECNM.Residencias.Data.Entities
 
         public string Checksum { get; set; } = "";
 
+        public bool Enabled { get; set; }
+
         public DateTime UpdatedOn { get; set; }
 
         public DateTime CreatedOn { get; set; }

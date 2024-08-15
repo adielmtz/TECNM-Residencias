@@ -6,6 +6,8 @@ namespace TECNM.Residencias.Data.Entities.Common
     {
         public T Id { get; set; }
 
+        public bool Enabled { get; set; }
+
         public DateTime UpdatedOn { get; set; }
 
         public DateTime CreatedOn { get; set; }
