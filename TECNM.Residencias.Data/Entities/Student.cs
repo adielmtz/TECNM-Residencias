@@ -39,6 +39,16 @@ namespace TECNM.Residencias.Data.Entities
 
         public string Notes { get; set; } = "";
 
+        public bool HasSocialServiceCetificate { get; set; }
+
+        public bool HasInternshipApplication { get; set; }
+
+        public bool HasPresentationLetter { get; set; }
+
+        public bool HasAcceptanceLetter { get; set; }
+
+        public bool HasProjectDocument { get; set; }
+
         public bool Enabled { get; set; }
 
         public DateTime UpdatedOn { get; set; }
