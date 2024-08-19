@@ -11,13 +11,18 @@ namespace TECNM.Residencias.Data.Validators.Common
 
             foreach (char c in input)
             {
-                if (!char.IsDigit(c) && c != '+' && c != ' ')
+                if (!IsValidPhoneChar(c))
                 {
                     return false;
                 }
             }
 
             return true;
+        }
+
+        private static bool IsValidPhoneChar(char c)
+        {
+            return char.IsDigit(c) || c == ' ' || c == '+' || c == '-';
         }
     }
 }
