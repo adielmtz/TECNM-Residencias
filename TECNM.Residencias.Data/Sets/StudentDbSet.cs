@@ -21,7 +21,7 @@ namespace TECNM.Residencias.Data.Sets
         public Student? GetStudentById(long id)
         {
             using var command = Context.Database.CreateCommand();
-            command.CommandText = "SELECT id, specialty_id, first_name, last_name, email, phone, gender, semester, start_date, end_date, internal_advisor_id, external_advisor_id, reviewer_advisor_id, company_id, department, schedule, closed, notes, updated_on, created_on FROM itcm_student WHERE id = $id";
+            command.CommandText = "SELECT id, specialty_id, first_name, last_name, email, phone, gender, semester, start_date, end_date, internal_advisor_id, external_advisor_id, reviewer_advisor_id, company_id, department, schedule, notes, enabled, updated_on, created_on FROM itcm_student WHERE id = $id";
             command.Parameters.Add("$id", SqliteType.Integer).Value = id;
             using var reader = command.ExecuteReader();
 
@@ -53,7 +53,7 @@ namespace TECNM.Residencias.Data.Sets
         public IEnumerable<Student> EnumerateStudents(int count = DEFAULT_ROWS_PER_PAGE, int page = DEFAULT_INITIAL_PAGE)
         {
             using var command = Context.Database.CreateCommand();
-            command.CommandText = "SELECT id, specialty_id, first_name, last_name, email, phone, gender, semester, start_date, end_date, internal_advisor_id, external_advisor_id, reviewer_advisor_id, company_id, department, schedule, closed, notes, updated_on, created_on FROM itcm_student ORDER BY id LIMIT $p0 OFFSET $p1";
+            command.CommandText = "SELECT id, specialty_id, first_name, last_name, email, phone, gender, semester, start_date, end_date, internal_advisor_id, external_advisor_id, reviewer_advisor_id, company_id, department, schedule, notes, enabled, updated_on, created_on FROM itcm_student ORDER BY id LIMIT $p0 OFFSET $p1";
             command.Parameters.Add("$p0", SqliteType.Integer).Value = count;
             command.Parameters.Add("$p1", SqliteType.Integer).Value = (page - 1) * count;
             using var reader = command.ExecuteReader();
@@ -106,8 +106,8 @@ namespace TECNM.Residencias.Data.Sets
                 CompanyId        = reader.GetInt64(13),
                 Department       = reader.GetString(14),
                 Schedule         = reader.GetString(15),
-                Enabled           = reader.GetBoolean(16),
-                Notes            = reader.GetString(17),
+                Notes            = reader.GetString(16),
+                Enabled          = reader.GetBoolean(17),
                 UpdatedOn        = reader.GetLocalDateTime(18),
                 CreatedOn        = reader.GetLocalDateTime(19),
             };
