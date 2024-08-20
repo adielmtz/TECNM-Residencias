@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             dgv_ListView = new System.Windows.Forms.DataGridView();
+            button1 = new System.Windows.Forms.Button();
             ListAdvisorName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ListAdvisorType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ListAdvisorCompany = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ListAdvisorSection = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ListAdvisorRole = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ListAdvisorEmail = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -40,7 +40,6 @@
             ListAdvisorUpdatedOn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ListAdvisorCreatedOn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ListAdvisorActions = new System.Windows.Forms.DataGridViewButtonColumn();
-            button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize) dgv_ListView).BeginInit();
             SuspendLayout();
             // 
@@ -51,7 +50,7 @@
             dgv_ListView.AllowUserToResizeRows = false;
             dgv_ListView.Anchor =  System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             dgv_ListView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgv_ListView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { ListAdvisorName, ListAdvisorType, ListAdvisorCompany, ListAdvisorSection, ListAdvisorRole, ListAdvisorEmail, ListAdvisorPhone, ListAdvisorEnabled, ListAdvisorUpdatedOn, ListAdvisorCreatedOn, ListAdvisorActions });
+            dgv_ListView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { ListAdvisorName, ListAdvisorType, ListAdvisorSection, ListAdvisorRole, ListAdvisorEmail, ListAdvisorPhone, ListAdvisorEnabled, ListAdvisorUpdatedOn, ListAdvisorCreatedOn, ListAdvisorActions });
             dgv_ListView.Location = new System.Drawing.Point(12, 12);
             dgv_ListView.Name = "dgv_ListView";
             dgv_ListView.ReadOnly = true;
@@ -60,6 +59,17 @@
             dgv_ListView.Size = new System.Drawing.Size(1240, 619);
             dgv_ListView.TabIndex = 0;
             dgv_ListView.CellContentClick += ListView_CellContentClick;
+            // 
+            // button1
+            // 
+            button1.Anchor =  System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
+            button1.Location = new System.Drawing.Point(1131, 637);
+            button1.Name = "button1";
+            button1.Size = new System.Drawing.Size(121, 32);
+            button1.TabIndex = 1;
+            button1.Text = "Añadir nueva";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += AddNewAdvisor_Click;
             // 
             // ListAdvisorName
             // 
@@ -75,14 +85,6 @@
             ListAdvisorType.Name = "ListAdvisorType";
             ListAdvisorType.ReadOnly = true;
             ListAdvisorType.Width = 55;
-            // 
-            // ListAdvisorCompany
-            // 
-            ListAdvisorCompany.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            ListAdvisorCompany.HeaderText = "Empresa";
-            ListAdvisorCompany.Name = "ListAdvisorCompany";
-            ListAdvisorCompany.ReadOnly = true;
-            ListAdvisorCompany.Width = 77;
             // 
             // ListAdvisorSection
             // 
@@ -148,17 +150,6 @@
             ListAdvisorActions.Text = "Editar";
             ListAdvisorActions.UseColumnTextForButtonValue = true;
             // 
-            // button1
-            // 
-            button1.Anchor =  System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
-            button1.Location = new System.Drawing.Point(1131, 637);
-            button1.Name = "button1";
-            button1.Size = new System.Drawing.Size(121, 32);
-            button1.TabIndex = 1;
-            button1.Text = "Añadir nueva";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += AddNewAdvisor_Click;
-            // 
             // AdvisorListViewForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -177,9 +168,9 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dgv_ListView;
+        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.DataGridViewTextBoxColumn ListAdvisorName;
         private System.Windows.Forms.DataGridViewTextBoxColumn ListAdvisorType;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ListAdvisorCompany;
         private System.Windows.Forms.DataGridViewTextBoxColumn ListAdvisorSection;
         private System.Windows.Forms.DataGridViewTextBoxColumn ListAdvisorRole;
         private System.Windows.Forms.DataGridViewTextBoxColumn ListAdvisorEmail;
@@ -188,6 +179,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ListAdvisorUpdatedOn;
         private System.Windows.Forms.DataGridViewTextBoxColumn ListAdvisorCreatedOn;
         private System.Windows.Forms.DataGridViewButtonColumn ListAdvisorActions;
-        private System.Windows.Forms.Button button1;
     }
 }

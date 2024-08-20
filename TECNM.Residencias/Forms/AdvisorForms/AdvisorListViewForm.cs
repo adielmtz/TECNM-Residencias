@@ -69,14 +69,13 @@ namespace TECNM.Residencias.Forms.AdvisorForms
                 row.Tag = advisor;
                 row.Cells[0].Value = advisor.Name;
                 row.Cells[1].Value = TranslateAdvisorTypeEnum(advisor.Type);
-                row.Cells[2].Value = context.Companies.GetCompanyNameById(advisor.CompanyId);
-                row.Cells[3].Value = advisor.Section;
-                row.Cells[4].Value = advisor.Role;
-                row.Cells[5].Value = advisor.Email;
-                row.Cells[6].Value = advisor.Phone;
-                row.Cells[7].Value = advisor.Enabled;
-                row.Cells[8].Value = advisor.UpdatedOn;
-                row.Cells[9].Value = advisor.CreatedOn;
+                row.Cells[2].Value = advisor.Section;
+                row.Cells[3].Value = advisor.Role;
+                row.Cells[4].Value = advisor.Email;
+                row.Cells[5].Value = advisor.Phone;
+                row.Cells[6].Value = advisor.Enabled;
+                row.Cells[7].Value = advisor.UpdatedOn;
+                row.Cells[8].Value = advisor.CreatedOn;
                 count++;
             }
 
