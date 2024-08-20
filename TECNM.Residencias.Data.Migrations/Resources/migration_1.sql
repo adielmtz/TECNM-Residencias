@@ -110,7 +110,7 @@ STRICT;
 CREATE TABLE Student (
     Id                          INTEGER PRIMARY KEY
                                         NOT NULL,
-    SpecialtyId                 INTEGER REFERENCES itcm_specialty (id) ON DELETE RESTRICT
+    SpecialtyId                 INTEGER REFERENCES Specialty (Id) ON DELETE RESTRICT
                                         NOT NULL,
     FirstName                   TEXT    NOT NULL,
     LastName                    TEXT    NOT NULL,
@@ -121,10 +121,10 @@ CREATE TABLE Student (
     Semester                    TEXT    NOT NULL,
     StartDate                   TEXT    NOT NULL,
     EndDate                     TEXT    NOT NULL,
-    InternalAdvisorId           INTEGER REFERENCES itcm_advisor (id) ON DELETE RESTRICT,
-    ExternalAdvisorId           INTEGER REFERENCES itcm_advisor (id) ON DELETE RESTRICT,
-    ReviewerAdvisorId           INTEGER REFERENCES itcm_advisor (id) ON DELETE RESTRICT,
-    CompanyId                   INTEGER REFERENCES itcm_company (id) ON DELETE RESTRICT
+    InternalAdvisorId           INTEGER REFERENCES Advisor (Id) ON DELETE RESTRICT,
+    ExternalAdvisorId           INTEGER REFERENCES Advisor (Id) ON DELETE RESTRICT,
+    ReviewerAdvisorId           INTEGER REFERENCES Advisor (Id) ON DELETE RESTRICT,
+    CompanyId                   INTEGER REFERENCES Company (Id) ON DELETE RESTRICT
                                         NOT NULL,
     Department                  TEXT    NOT NULL,
     Schedule                    TEXT    NOT NULL,
