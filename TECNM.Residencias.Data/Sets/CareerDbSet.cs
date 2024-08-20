@@ -18,7 +18,7 @@ namespace TECNM.Residencias.Data.Sets
         public Career? GetCareerById(long id)
         {
             using var command = Context.Database.CreateCommand();
-            command.CommandText = "SELECT id, name, enabled, updated_on, created_on FROM itcm_career WHERE id = $id";
+            command.CommandText = "SELECT Id, Name, Enabled, UpdatedOn, CreatedOn FROM Career WHERE Id = $id";
             command.Parameters.Add("$id", SqliteType.Integer).Value = id;
             using var reader = command.ExecuteReader();
 
@@ -33,7 +33,7 @@ namespace TECNM.Residencias.Data.Sets
         public IEnumerable<Career> EnumerateCareers()
         {
             using var command = Context.Database.CreateCommand();
-            command.CommandText = "SELECT id, name, enabled, updated_on, created_on FROM itcm_career ORDER BY name";
+            command.CommandText = "SELECT Id, Name, Enabled, UpdatedOn, CreatedOn FROM Career ORDER BY Name";
             using var reader = command.ExecuteReader();
 
             while (reader.Read())
@@ -46,7 +46,7 @@ namespace TECNM.Residencias.Data.Sets
         public override bool Insert(Career entity)
         {
             using var command = Context.Database.CreateCommand();
-            command.CommandText = "INSERT INTO itcm_career (name, enabled, updated_on) VALUES ($p0, $p1, CURRENT_TIMESTAMP) RETURNING id";
+            command.CommandText = "INSERT INTO Career (Name, Enabled, UpdatedOn) VALUES ($p0, $p1, CURRENT_TIMESTAMP) RETURNING Id";
             command.Parameters.Add("$p0", SqliteType.Text).Value = entity.Name;
             command.Parameters.Add("$p1", SqliteType.Integer).Value = entity.Enabled;
             object? result = command.ExecuteScalar();
@@ -58,17 +58,17 @@ namespace TECNM.Residencias.Data.Sets
         public override int Update(Career entity)
         {
             using var command = Context.Database.CreateCommand();
-            command.CommandText = "UPDATE itcm_career SET name = $p0, enabled = $p1, updated_on = CURRENT_TIMESTAMP WHERE id = $p2";
+            command.CommandText = "UPDATE Career SET Name = $p0, Enabled = $p1, UpdatedOn = CURRENT_TIMESTAMP WHERE Id = $id";
             command.Parameters.Add("$p0", SqliteType.Text).Value = entity.Name;
             command.Parameters.Add("$p1", SqliteType.Integer).Value = entity.Enabled;
-            command.Parameters.Add("$p2", SqliteType.Integer).Value = entity.Id;
+            command.Parameters.Add("$id", SqliteType.Integer).Value = entity.Id;
             return command.ExecuteNonQuery();
         }
 
         public override int Delete(Career entity)
         {
             using var command = Context.Database.CreateCommand();
-            command.CommandText = "DELETE FROM itcm_career WHERE id = $id";
+            command.CommandText = "DELETE FROM Career WHERE Id = $id";
             command.Parameters.Add("$id", SqliteType.Integer).Value = entity.Id;
             return command.ExecuteNonQuery();
         }
@@ -77,12 +77,12 @@ namespace TECNM.Residencias.Data.Sets
         {
             using var command = Context.Database.CreateCommand();
             command.CommandText = """
-            INSERT INTO itcm_career (name, enabled, updated_on)
+            INSERT INTO Career (Name, Enabled, UpdatedOn)
             VALUES ($p0, $p1, CURRENT_TIMESTAMP)
-            ON CONFLICT(name) DO UPDATE
-            SET enabled    = excluded.enabled,
-                updated_on = excluded.updated_on
-            RETURNING id
+            ON CONFLICT(Name) DO UPDATE
+            SET Enabled   = excluded.Enabled,
+                UpdatedOn = excluded.UpdatedOn
+            RETURNING Id
             """;
 
             command.Parameters.Add("$p0", SqliteType.Text).Value = entity.Name;

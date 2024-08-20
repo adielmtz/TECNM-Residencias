@@ -18,7 +18,7 @@ namespace TECNM.Residencias.Data.Sets
         public Advisor? GetAdvisorById(long id)
         {
             using var command = Context.Database.CreateCommand();
-            command.CommandText = "SELECT id, company_id, type, name, section, role, email, phone, enabled, updated_on, created_on FROM itcm_advisor WHERE id = $id";
+            command.CommandText = "SELECT Id, CompanyId, Type, Name, Section, Role, Email, Phone, Enabled, UpdatedOn, CreatedOn FROM Advisor WHERE Id = $id";
             command.Parameters.Add("$id", SqliteType.Integer).Value = id;
             using var reader = command.ExecuteReader();
 
@@ -33,7 +33,7 @@ namespace TECNM.Residencias.Data.Sets
         public IEnumerable<Advisor> EnumerateAdvisorsByCompany(long companyId)
         {
             using var command = Context.Database.CreateCommand();
-            command.CommandText = "SELECT id, company_id, type, name, section, role, email, phone, enabled, updated_on, created_on FROM itcm_advisor WHERE company_id = $p0 ORDER BY name";
+            command.CommandText = "SELECT Id, CompanyId, Type, Name, Section, Role, Email, Phone, Enabled, UpdatedOn, CreatedOn FROM Advisor WHERE CompanyId = $p0 ORDER BY Name";
             command.Parameters.Add("$p0", SqliteType.Integer).Value = companyId;
             using var reader = command.ExecuteReader();
 
@@ -47,7 +47,7 @@ namespace TECNM.Residencias.Data.Sets
         public IEnumerable<Advisor> EnumerateAdvisors()
         {
             using var command = Context.Database.CreateCommand();
-            command.CommandText = "SELECT id, company_id, type, name, section, role, email, phone, enabled, updated_on, created_on FROM itcm_advisor";
+            command.CommandText = "SELECT Id, CompanyId, Type, Name, Section, Role, Email, Phone, Enabled, UpdatedOn, CreatedOn FROM Advisor";
             using var reader = command.ExecuteReader();
 
             while (reader.Read())
@@ -61,9 +61,9 @@ namespace TECNM.Residencias.Data.Sets
         {
             using var command = Context.Database.CreateCommand();
             command.CommandText = """
-            INSERT INTO itcm_advisor (company_id, type, name, section, role, email, phone, enabled, updated_on)
+            INSERT INTO Advisor (CompanyId, Type, Name, Section, Role, Email, Phone, Enabled, UpdatedOn)
             VALUES ($p0, $p1, $p2, $p3, $p4, $p5, $p6, $p7, CURRENT_TIMESTAMP)
-            RETURNING id
+            RETURNING Id
             """;
 
             command.Parameters.Add("$p0", SqliteType.Integer).Value = entity.CompanyId;
@@ -84,17 +84,17 @@ namespace TECNM.Residencias.Data.Sets
         {
             using var command = Context.Database.CreateCommand();
             command.CommandText = """
-            UPDATE itcm_advisor
-            SET company_id = $p0,
-                type       = $p1,
-                name       = $p2,
-                section    = $p3,
-                role       = $p4,
-                email      = $p5,
-                phone      = $p6,
-                enabled    = $p7,
-                updated_on = CURRENT_TIMESTAMP
-            WHERE id = $id
+            UPDATE Advisor
+            SET CompanyId = $p0,
+                Type      = $p1,
+                Name      = $p2,
+                Section   = $p3,
+                Role      = $p4,
+                Email     = $p5,
+                Phone     = $p6,
+                Enabled   = $p7,
+                UpdatedOn = CURRENT_TIMESTAMP
+            WHERE Id = $id;
             """;
 
             command.Parameters.Add("$p0", SqliteType.Integer).Value = entity.CompanyId;
@@ -112,7 +112,7 @@ namespace TECNM.Residencias.Data.Sets
         public override int Delete(Advisor entity)
         {
             using var command = Context.Database.CreateCommand();
-            command.CommandText = "DELETE FROM itcm_advisor WHERE id = $id";
+            command.CommandText = "DELETE FROM Advisor WHERE Id = $id";
             command.Parameters.Add("$id", SqliteType.Integer).Value = entity.Id;
             return command.ExecuteNonQuery();
         }

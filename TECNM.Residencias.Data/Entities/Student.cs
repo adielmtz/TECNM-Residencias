@@ -25,11 +25,11 @@ namespace TECNM.Residencias.Data.Entities
 
         public DateTime EndDate { get; set; }
 
-        public long? InternalAsesorId { get; set; }
+        public long? InternalAdvisorId { get; set; }
 
-        public long? ExternalAsesorId { get; set; }
+        public long? ExternalAdvisorId { get; set; }
 
-        public long? ReviewerAsesorId { get; set; }
+        public long? ReviewerAdvisorId { get; set; }
 
         public long CompanyId { get; set; }
 
@@ -39,7 +39,7 @@ namespace TECNM.Residencias.Data.Entities
 
         public string Notes { get; set; } = "";
 
-        public bool HasSocialServiceCetificate { get; set; }
+        public bool HasSocialServiceCertificate { get; set; }
 
         public bool HasInternshipApplication { get; set; }
 

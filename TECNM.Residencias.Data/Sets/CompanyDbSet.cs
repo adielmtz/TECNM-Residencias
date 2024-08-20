@@ -21,7 +21,7 @@ namespace TECNM.Residencias.Data.Sets
         public Company? GetCompanyById(long id)
         {
             using var command = Context.Database.CreateCommand();
-            command.CommandText = "SELECT id, rfc, type, name, email, phone, address, locality, postal_code, city_id, enabled, updated_on, created_on FROM itcm_company WHERE id = $id";
+            command.CommandText = "SELECT Id, Rfc, Type, Name, Email, Phone, Address, Locality, PostalCode, CityId, Enabled, UpdatedOn, CreatedOn FROM Company WHERE Id = $id";
             command.Parameters.Add("$id", SqliteType.Integer).Value = id;
             using var reader = command.ExecuteReader();
 
@@ -36,7 +36,7 @@ namespace TECNM.Residencias.Data.Sets
         public string? GetCompanyNameById(long id)
         {
             using var command = Context.Database.CreateCommand();
-            command.CommandText = "SELECT name FROM itcm_company WHERE id = $id";
+            command.CommandText = "SELECT Name FROM Company WHERE Id = $id";
             command.Parameters.Add("$id", SqliteType.Integer).Value = id;
             return (string?) command.ExecuteScalar();
         }
@@ -44,7 +44,7 @@ namespace TECNM.Residencias.Data.Sets
         public IEnumerable<Company> Search(string query, int count = DEFAULT_ROWS_PER_PAGE, int page = DEFAULT_INITIAL_PAGE)
         {
             using var command = Context.Database.CreateCommand();
-            command.CommandText = "SELECT rowid FROM itcm_company_search WHERE itcm_company_search MATCH $query ORDER BY rank LIMIT $p0 OFFSET $p1";
+            command.CommandText = "SELECT rowid FROM CompanySearch WHERE CompanySearch MATCH $query ORDER BY rank LIMIT $p0 OFFSET $p1";
             command.Parameters.Add("$query", SqliteType.Text).Value = query.ToFtsQuery();
             command.Parameters.Add("$p0", SqliteType.Integer).Value = count;
             command.Parameters.Add("$p1", SqliteType.Integer).Value = (page - 1) * count;
@@ -61,7 +61,7 @@ namespace TECNM.Residencias.Data.Sets
         public IEnumerable<Company> EnumerateCompanies(int count = DEFAULT_ROWS_PER_PAGE, int page = DEFAULT_INITIAL_PAGE)
         {
             using var command = Context.Database.CreateCommand();
-            command.CommandText = "SELECT id, rfc, type, name, email, phone, address, locality, postal_code, city_id, enabled, updated_on, created_on FROM itcm_company ORDER BY name LIMIT $p0 OFFSET $p1";
+            command.CommandText = "SELECT Id, Rfc, Type, Name, Email, Phone, Address, Locality, PostalCode, CityId, Enabled, UpdatedOn, CreatedOn FROM Company ORDER BY Name LIMIT $p0 OFFSET $p1";
             command.Parameters.Add("$p0", SqliteType.Integer).Value = count;
             command.Parameters.Add("$p1", SqliteType.Integer).Value = (page - 1) * count;
             using var reader = command.ExecuteReader();
@@ -77,9 +77,9 @@ namespace TECNM.Residencias.Data.Sets
         {
             using var command = Context.Database.CreateCommand();
             command.CommandText = """
-            INSERT INTO itcm_company (rfc, type, name, email, phone, address, locality, postal_code, city_id, enabled, updated_on)
+            INSERT INTO Company (Rfc, Type, Name, Email, Phone, Address, Locality, PostalCode, CityId, Enabled, UpdatedOn)
             VALUES ($p0, $p1, $p2, $p3, $p4, $p5, $p6, $p7, $p8, $p9, CURRENT_TIMESTAMP)
-            RETURNING id
+            RETURNING Id
             """;
 
             command.Parameters.Add("$p0", SqliteType.Text).Value = entity.Rfc;
@@ -102,19 +102,19 @@ namespace TECNM.Residencias.Data.Sets
         {
             using var command = Context.Database.CreateCommand();
             command.CommandText = """
-            UPDATE itcm_company
-            SET rfc         = $p0,
-                type        = $p1,
-                name        = $p2,
-                email       = $p3,
-                phone       = $p4,
-                address     = $p5,
-                locality    = $p6,
-                postal_code = $p7,
-                city_id     = $p8,
-                enabled     = $p9,
-                updated_on  = CURRENT_TIMESTAMP
-            WHERE id = $id
+            UPDATE Company
+            SET Rfc        = $p0,
+                Type       = $p1,
+                Name       = $p2,
+                Email      = $p3,
+                Phone      = $p4,
+                Address    = $p5,
+                Locality   = $p6,
+                PostalCode = $p7,
+                CityId     = $p8,
+                Enabled    = $p9,
+                UpdatedOn  = CURRENT_TIMESTAMP
+            WHERE Id = $id
             """;
 
             command.Parameters.Add("$p0", SqliteType.Text).Value = entity.Rfc;
@@ -134,7 +134,7 @@ namespace TECNM.Residencias.Data.Sets
         public override int Delete(Company entity)
         {
             using var command = Context.Database.CreateCommand();
-            command.CommandText = "DELETE FROM itcm_company WHERE id = $id";
+            command.CommandText = "DELETE FROM Company WHERE Id = $id";
             command.Parameters.Add("$id", SqliteType.Integer).Value = entity.Id;
             return command.ExecuteNonQuery();
         }
@@ -143,20 +143,20 @@ namespace TECNM.Residencias.Data.Sets
         {
             using var command = Context.Database.CreateCommand();
             command.CommandText = """
-            INSERT INTO itcm_company (rfc, type, name, email, phone, address, locality, postal_code, city_id, enabled, updated_on)
+            INSERT INTO Company (Rfc, Type, Name, Email, Phone, Address, Locality, PostalCode, CityId, Enabled, UpdatedOn)
             VALUES ($p0, $p1, $p2, $p3, $p4, $p5, $p6, $p7, $p8, $p9, CURRENT_TIMESTAMP)
-            ON CONFLICT(rfc) DO UPDATE
-            SET type        = excluded.type,
-                name        = excluded.name,
-                email       = excluded.email,
-                phone       = excluded.phone,
-                address     = excluded.address,
-                locality    = excluded.locality,
-                postal_code = excluded.postal_code,
-                city_id     = excluded.city_id,
-                enabled     = excluded.enabled,
-                updated_on  = excluded.updated_on
-            RETURNING id
+            ON CONFLICT(Rfc) DO UPDATE
+            SET Type       = excluded.Type,
+                Name       = excluded.Name,
+                Email      = excluded.Email,
+                Phone      = excluded.Phone,
+                Address    = excluded.Address,
+                Locality   = excluded.Locality,
+                PostalCode = excluded.PostalCode,
+                CityId     = excluded.CityId,
+                Enabled    = excluded.Enabled,
+                UpdatedOn  = excluded.UpdatedOn
+            RETURNING Id
             """;
 
             command.Parameters.Add("$p0", SqliteType.Text).Value = entity.Rfc;

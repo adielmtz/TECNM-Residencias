@@ -26,7 +26,7 @@ namespace TECNM.Residencias.Data.Sets.Location
             }
 
             using var command = Context.Database.CreateCommand();
-            command.CommandText = "SELECT id, state_id, name FROM loc_city WHERE id = $id";
+            command.CommandText = "SELECT Id, StateId, Name FROM City WHERE Id = $id";
             command.Parameters.Add("$id", SqliteType.Integer).Value = id;
             using var reader = command.ExecuteReader();
 
@@ -53,7 +53,7 @@ namespace TECNM.Residencias.Data.Sets.Location
             }
 
             using var command = Context.Database.CreateCommand();
-            command.CommandText = "SELECT id, state_id, name FROM loc_city WHERE state_id = $p0 ORDER BY name";
+            command.CommandText = "SELECT Id, StateId, Name FROM City WHERE StateId = $p0 ORDER BY Name";
             command.Parameters.Add("$p0", SqliteType.Integer).Value = stateId;
             using var reader = command.ExecuteReader();
 
