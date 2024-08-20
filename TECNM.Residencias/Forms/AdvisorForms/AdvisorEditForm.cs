@@ -1,6 +1,5 @@
 using FluentValidation;
 using FluentValidation.Results;
-using Microsoft.Data.Sqlite;
 using System;
 using System.Diagnostics;
 using System.Windows.Forms;

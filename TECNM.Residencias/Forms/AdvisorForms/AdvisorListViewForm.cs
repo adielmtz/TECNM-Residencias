@@ -13,7 +13,6 @@ namespace TECNM.Residencias.Forms.AdvisorForms
         public AdvisorListViewForm()
         {
             InitializeComponent();
-            Text = $"Listado de asesores | DEBUG COMPANY | {App.Name}";
         }
 
         public AdvisorListViewForm(Company company) : this()
