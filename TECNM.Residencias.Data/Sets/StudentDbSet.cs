@@ -46,8 +46,9 @@ namespace TECNM.Residencias.Data.Sets
         public IEnumerable<Student> Search(string query, int count = DEFAULT_ROWS_PER_PAGE, int page = DEFAULT_INITIAL_PAGE)
         {
             using var command = Context.Database.CreateCommand();
-            command.CommandText = "SELECT rowid FROM StudentSearch WHERE StudentSearch MATCH $query ORDER BY rank LIMIT $p0 OFFSET $p1";
+            command.CommandText = "SELECT rowid FROM StudentSearch WHERE StudentSearch MATCH $query OR rowid = $rid ORDER BY rank LIMIT $p0 OFFSET $p1";
             command.Parameters.Add("$query", SqliteType.Text).Value = query.ToFtsQuery();
+            command.Parameters.Add("$rid", SqliteType.Integer).Value = TryConvertToId(query);
             command.Parameters.Add("$p0", SqliteType.Integer).Value = count;
             command.Parameters.Add("$p1", SqliteType.Integer).Value = (page - 1) * count;
             using var reader = command.ExecuteReader();
@@ -135,6 +136,16 @@ namespace TECNM.Residencias.Data.Sets
                 UpdatedOn                   = reader.GetLocalDateTime(23),
                 CreatedOn                   = reader.GetLocalDateTime(24),
             };
+        }
+
+        private long TryConvertToId(string text)
+        {
+            if (long.TryParse(text, out long result))
+            {
+                return result;
+            }
+
+            return 0;
         }
     }
 }
