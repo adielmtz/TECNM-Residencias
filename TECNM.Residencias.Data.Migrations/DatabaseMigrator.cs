@@ -8,7 +8,7 @@ namespace TECNM.Residencias.Data.Migrations
 {
     public sealed class DatabaseMigrator : IDisposable
     {
-        private const long CURRENT_VERSION = 6;
+        private const long CURRENT_VERSION = 2;
 
         private readonly IDbConnection _connection;
         private IDbTransaction? _transaction;
