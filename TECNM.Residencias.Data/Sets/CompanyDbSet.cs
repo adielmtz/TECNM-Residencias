@@ -11,9 +11,6 @@ namespace TECNM.Residencias.Data.Sets
 {
     public sealed class CompanyDbSet : DbSet<Company>
     {
-        public const int DEFAULT_ROWS_PER_PAGE = 100;
-        public const int DEFAULT_INITIAL_PAGE = 1;
-
         public CompanyDbSet(IDbContext context) : base(context)
         {
         }
@@ -41,7 +38,7 @@ namespace TECNM.Residencias.Data.Sets
             return (string?) command.ExecuteScalar();
         }
 
-        public IEnumerable<Company> Search(string query, int count = DEFAULT_ROWS_PER_PAGE, int page = DEFAULT_INITIAL_PAGE)
+        public IEnumerable<Company> Search(string query, int count, int page)
         {
             using var command = Context.Database.CreateCommand();
             command.CommandText = "SELECT rowid FROM CompanySearch WHERE CompanySearch MATCH $query ORDER BY rank LIMIT $p0 OFFSET $p1";
@@ -58,7 +55,7 @@ namespace TECNM.Residencias.Data.Sets
             }
         }
 
-        public IEnumerable<Company> EnumerateCompanies(int count = DEFAULT_ROWS_PER_PAGE, int page = DEFAULT_INITIAL_PAGE)
+        public IEnumerable<Company> EnumerateCompanies(int count, int page)
         {
             using var command = Context.Database.CreateCommand();
             command.CommandText = "SELECT Id, Rfc, Type, Name, Email, Phone, Address, Locality, PostalCode, CityId, Enabled, UpdatedOn, CreatedOn FROM Company ORDER BY Name LIMIT $p0 OFFSET $p1";

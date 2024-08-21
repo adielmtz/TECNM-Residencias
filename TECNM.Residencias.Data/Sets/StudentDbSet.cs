@@ -1,10 +1,7 @@
 using Microsoft.Data.Sqlite;
-using System;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
 using System.Data;
 using System.Diagnostics;
-using System.Numerics;
 using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Data.Extensions;
 using TECNM.Residencias.Data.Sets.Common;
@@ -13,9 +10,6 @@ namespace TECNM.Residencias.Data.Sets
 {
     public sealed class StudentDbSet : DbSet<Student>
     {
-        public const int DEFAULT_ROWS_PER_PAGE = 100;
-        public const int DEFAULT_INITIAL_PAGE = 1;
-
         public StudentDbSet(IDbContext context) : base(context)
         {
         }
@@ -43,7 +37,7 @@ namespace TECNM.Residencias.Data.Sets
             return HydrateObject(reader);
         }
 
-        public IEnumerable<Student> Search(string query, int count = DEFAULT_ROWS_PER_PAGE, int page = DEFAULT_INITIAL_PAGE)
+        public IEnumerable<Student> Search(string query, int count, int page)
         {
             using var command = Context.Database.CreateCommand();
             command.CommandText = "SELECT rowid FROM StudentSearch WHERE StudentSearch MATCH $query OR rowid = $rid ORDER BY rank LIMIT $p0 OFFSET $p1";
@@ -61,7 +55,7 @@ namespace TECNM.Residencias.Data.Sets
             }
         }
 
-        public IEnumerable<Student> EnumerateStudents(int count = DEFAULT_ROWS_PER_PAGE, int page = DEFAULT_INITIAL_PAGE)
+        public IEnumerable<Student> EnumerateStudents(int count, int page)
         {
             using var command = Context.Database.CreateCommand();
             command.CommandText = """

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
-using TECNM.Residencias.Data.Sets;
 using TECNM.Residencias.Extensions;
 using TECNM.Residencias.Forms.AdvisorForms;
 
@@ -11,8 +10,8 @@ namespace TECNM.Residencias.Forms.CompanyForms
 {
     public sealed partial class CompanyListViewForm : Form
     {
-        private readonly int _rowsPerPage = CompanyDbSet.DEFAULT_ROWS_PER_PAGE;
-        private int _currentPage = CompanyDbSet.DEFAULT_INITIAL_PAGE;
+        private readonly int _rowsPerPage = App.DefaultRowsPerPage;
+        private int _currentPage = App.DefaultInitialPage;
         private bool _refreshFromSearch = false;
 
         public CompanyListViewForm()
@@ -67,7 +66,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
 
         private void ResetSearch_Click(object sender, EventArgs e)
         {
-            _currentPage = CompanyDbSet.DEFAULT_INITIAL_PAGE;
+            _currentPage = App.DefaultInitialPage;
             _refreshFromSearch = false;
             RefreshList();
         }

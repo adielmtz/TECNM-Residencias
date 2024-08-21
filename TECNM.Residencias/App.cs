@@ -13,6 +13,10 @@ namespace TECNM.Residencias
 
         public static string Name => "Archivo de residencias | TECNM";
 
+        public static int DefaultRowsPerPage => 100;
+
+        public static int DefaultInitialPage => 1;
+
         public static string RootDataDirectory
         {
             get
