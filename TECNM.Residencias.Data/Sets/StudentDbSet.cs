@@ -87,22 +87,173 @@ namespace TECNM.Residencias.Data.Sets
 
         public override bool Insert(Student entity)
         {
-            throw new NotImplementedException();
+            using var command = Context.Database.CreateCommand();
+            command.CommandText = """
+            INSERT INTO Student
+                (Id, SpecialtyId, FirstName, LastName, Email, Phone, Gender, Semester,
+                StartDate, EndDate, InternalAdvisorId, ExternalAdvisorId, ReviewerAdvisorId,
+                CompanyId, Department, Schedule, Notes, HasSocialServiceCertificate,
+                HasInternshipApplication, HasPresentationLetter, HasAcceptanceLetter,
+                HasProjectDocument, Enabled, UpdatedOn)
+            VALUES ($p00, $p01, $p02, $p03, $p04, $p05, $p06, $p07, $p08, $p09, $p10, $p11,
+                    $p12, $p13, $p14, $p15, $p16, $p17, $p18, $p19, $p20, $p21, $p22 CURRENT_TIMESTAMP)
+            """;
+
+            // TODO: Use reflection for this?
+
+            command.Parameters.Add("$p00", SqliteType.Integer).Value = entity.Id;
+            command.Parameters.Add("$p01", SqliteType.Integer).Value = entity.SpecialtyId;
+            command.Parameters.Add("$p02", SqliteType.Text).Value = entity.FirstName;
+            command.Parameters.Add("$p03", SqliteType.Text).Value = entity.LastName;
+            command.Parameters.Add("$p04", SqliteType.Text).Value = entity.Email;
+            command.Parameters.Add("$p05", SqliteType.Text).Value = entity.Phone;
+            command.Parameters.Add("$p06", SqliteType.Text).Value = entity.Gender;
+            command.Parameters.Add("$p07", SqliteType.Text).Value = entity.Semester;
+            command.Parameters.Add("$p08", SqliteType.Text).Value = entity.StartDate.TOISOStringUTC();
+            command.Parameters.Add("$p09", SqliteType.Text).Value = entity.EndDate.TOISOStringUTC();
+            command.Parameters.Add("$p10", SqliteType.Integer).Value = entity.InternalAdvisorId;
+            command.Parameters.Add("$p11", SqliteType.Integer).Value = entity.ExternalAdvisorId;
+            command.Parameters.Add("$p12", SqliteType.Integer).Value = entity.ReviewerAdvisorId;
+            command.Parameters.Add("$p13", SqliteType.Integer).Value = entity.CompanyId;
+            command.Parameters.Add("$p14", SqliteType.Text).Value = entity.Department;
+            command.Parameters.Add("$p15", SqliteType.Text).Value = entity.Schedule;
+            command.Parameters.Add("$p16", SqliteType.Text).Value = entity.Notes;
+            command.Parameters.Add("$p17", SqliteType.Integer).Value = entity.HasSocialServiceCertificate;
+            command.Parameters.Add("$p18", SqliteType.Integer).Value = entity.HasInternshipApplication;
+            command.Parameters.Add("$p19", SqliteType.Integer).Value = entity.HasPresentationLetter;
+            command.Parameters.Add("$p20", SqliteType.Integer).Value = entity.HasAcceptanceLetter;
+            command.Parameters.Add("$p21", SqliteType.Integer).Value = entity.HasProjectDocument;
+            command.Parameters.Add("$p22", SqliteType.Integer).Value = entity.Enabled;
+            return command.ExecuteNonQuery() > 0;
         }
 
         public override int Update(Student entity)
         {
-            throw new NotImplementedException();
+            using var command = Context.Database.CreateCommand();
+            command.CommandText = """
+            UPDATE Student
+            SET SpecialtyId                 = $p00,
+                FirstName                   = $p01,
+                LastName                    = $p02,
+                Email                       = $p03,
+                Phone                       = $p04,
+                Gender                      = $p05,
+                Semester                    = $p06,
+                StartDate                   = $p07,
+                EndDate                     = $p08,
+                InternalAdvisorId           = $p09,
+                ExternalAdvisorId           = $p10,
+                ReviewerAdvisorId           = $p11,
+                CompanyId                   = $p12,
+                Department                  = $p13,
+                Schedule                    = $p14,
+                Notes                       = $p15,
+                HasSocialServiceCertificate = $p16,
+                HasInternshipApplication    = $p17,
+                HasPresentationLetter       = $p18,
+                HasAcceptanceLetter         = $p19,
+                HasProjectDocument          = $p20,
+                Enabled                     = $p21,
+                UpdatedOn                   = CURRENT_TIMESTAMP
+            WHERE Id = $id
+            """;
+
+            command.Parameters.Add("$p00", SqliteType.Integer).Value = entity.SpecialtyId;
+            command.Parameters.Add("$p01", SqliteType.Text).Value = entity.FirstName;
+            command.Parameters.Add("$p02", SqliteType.Text).Value = entity.LastName;
+            command.Parameters.Add("$p03", SqliteType.Text).Value = entity.Email;
+            command.Parameters.Add("$p04", SqliteType.Text).Value = entity.Phone;
+            command.Parameters.Add("$p05", SqliteType.Text).Value = entity.Gender;
+            command.Parameters.Add("$p06", SqliteType.Text).Value = entity.Semester;
+            command.Parameters.Add("$p07", SqliteType.Text).Value = entity.StartDate.TOISOStringUTC();
+            command.Parameters.Add("$p08", SqliteType.Text).Value = entity.EndDate.TOISOStringUTC();
+            command.Parameters.Add("$p09", SqliteType.Integer).Value = entity.InternalAdvisorId;
+            command.Parameters.Add("$p10", SqliteType.Integer).Value = entity.ExternalAdvisorId;
+            command.Parameters.Add("$p11", SqliteType.Integer).Value = entity.ReviewerAdvisorId;
+            command.Parameters.Add("$p12", SqliteType.Integer).Value = entity.CompanyId;
+            command.Parameters.Add("$p13", SqliteType.Text).Value = entity.Department;
+            command.Parameters.Add("$p14", SqliteType.Text).Value = entity.Schedule;
+            command.Parameters.Add("$p15", SqliteType.Text).Value = entity.Notes;
+            command.Parameters.Add("$p16", SqliteType.Integer).Value = entity.HasSocialServiceCertificate;
+            command.Parameters.Add("$p17", SqliteType.Integer).Value = entity.HasInternshipApplication;
+            command.Parameters.Add("$p18", SqliteType.Integer).Value = entity.HasPresentationLetter;
+            command.Parameters.Add("$p19", SqliteType.Integer).Value = entity.HasAcceptanceLetter;
+            command.Parameters.Add("$p20", SqliteType.Integer).Value = entity.HasProjectDocument;
+            command.Parameters.Add("$p21", SqliteType.Integer).Value = entity.Enabled;
+            command.Parameters.Add("$id", SqliteType.Integer).Value = entity.Id;
+            return command.ExecuteNonQuery();
         }
 
         public override int Delete(Student entity)
         {
-            throw new NotImplementedException();
+            using var command = Context.Database.CreateCommand();
+            command.CommandText = "DELETE FROM Student WHERE Id = $id";
+            command.Parameters.Add("$id", SqliteType.Integer).Value = entity.Id;
+            return command.ExecuteNonQuery();
         }
 
         public override bool InsertOrUpdate(Student entity)
         {
-            throw new NotImplementedException();
+            using var command = Context.Database.CreateCommand();
+            command.CommandText = """
+            INSERT INTO Student
+                (Id, SpecialtyId, FirstName, LastName, Email, Phone, Gender, Semester,
+                StartDate, EndDate, InternalAdvisorId, ExternalAdvisorId, ReviewerAdvisorId,
+                CompanyId, Department, Schedule, Notes, HasSocialServiceCertificate,
+                HasInternshipApplication, HasPresentationLetter, HasAcceptanceLetter,
+                HasProjectDocument, Enabled, UpdatedOn)
+            VALUES ($p00, $p01, $p02, $p03, $p04, $p05, $p06, $p07, $p08, $p09, $p10, $p11,
+                    $p12, $p13, $p14, $p15, $p16, $p17, $p18, $p19, $p20, $p21, $p22, CURRENT_TIMESTAMP)
+            ON CONFLICT(Id) DO UPDATE
+            SET SpecialtyId                 = excluded.SpecialtyId,
+                FirstName                   = excluded.FirstName,
+                LastName                    = excluded.LastName,
+                Email                       = excluded.Email,
+                Phone                       = excluded.Phone,
+                Gender                      = excluded.Gender,
+                Semester                    = excluded.Semester,
+                StartDate                   = excluded.StartDate,
+                EndDate                     = excluded.EndDate,
+                InternalAdvisorId           = excluded.InternalAdvisorId,
+                ExternalAdvisorId           = excluded.ExternalAdvisorId,
+                ReviewerAdvisorId           = excluded.ReviewerAdvisorId,
+                CompanyId                   = excluded.CompanyId,
+                Department                  = excluded.Department,
+                Schedule                    = excluded.Schedule,
+                Notes                       = excluded.Notes,
+                HasSocialServiceCertificate = excluded.HasSocialServiceCertificate,
+                HasInternshipApplication    = excluded.HasInternshipApplication,
+                HasPresentationLetter       = excluded.HasPresentationLetter,
+                HasAcceptanceLetter         = excluded.HasAcceptanceLetter,
+                HasProjectDocument          = excluded.HasProjectDocument,
+                Enabled                     = excluded.Enabled,
+                UpdatedOn                   = excluded.UpdatedOn,
+            """;
+
+            command.Parameters.Add("$p00", SqliteType.Integer).Value = entity.Id;
+            command.Parameters.Add("$p01", SqliteType.Integer).Value = entity.SpecialtyId;
+            command.Parameters.Add("$p02", SqliteType.Text).Value = entity.FirstName;
+            command.Parameters.Add("$p03", SqliteType.Text).Value = entity.LastName;
+            command.Parameters.Add("$p04", SqliteType.Text).Value = entity.Email;
+            command.Parameters.Add("$p05", SqliteType.Text).Value = entity.Phone;
+            command.Parameters.Add("$p06", SqliteType.Text).Value = entity.Gender;
+            command.Parameters.Add("$p07", SqliteType.Text).Value = entity.Semester;
+            command.Parameters.Add("$p08", SqliteType.Text).Value = entity.StartDate.TOISOStringUTC();
+            command.Parameters.Add("$p09", SqliteType.Text).Value = entity.EndDate.TOISOStringUTC();
+            command.Parameters.Add("$p10", SqliteType.Integer).Value = entity.InternalAdvisorId;
+            command.Parameters.Add("$p11", SqliteType.Integer).Value = entity.ExternalAdvisorId;
+            command.Parameters.Add("$p12", SqliteType.Integer).Value = entity.ReviewerAdvisorId;
+            command.Parameters.Add("$p13", SqliteType.Integer).Value = entity.CompanyId;
+            command.Parameters.Add("$p14", SqliteType.Text).Value = entity.Department;
+            command.Parameters.Add("$p15", SqliteType.Text).Value = entity.Schedule;
+            command.Parameters.Add("$p16", SqliteType.Text).Value = entity.Notes;
+            command.Parameters.Add("$p17", SqliteType.Integer).Value = entity.HasSocialServiceCertificate;
+            command.Parameters.Add("$p18", SqliteType.Integer).Value = entity.HasInternshipApplication;
+            command.Parameters.Add("$p19", SqliteType.Integer).Value = entity.HasPresentationLetter;
+            command.Parameters.Add("$p20", SqliteType.Integer).Value = entity.HasAcceptanceLetter;
+            command.Parameters.Add("$p21", SqliteType.Integer).Value = entity.HasProjectDocument;
+            command.Parameters.Add("$p22", SqliteType.Integer).Value = entity.Enabled;
+            return command.ExecuteNonQuery() > 0;
         }
 
         protected override Student HydrateObject(IDataReader reader)
