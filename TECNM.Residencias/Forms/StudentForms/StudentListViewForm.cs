@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
-using TECNM.Residencias.Data.Sets;
 using TECNM.Residencias.Extensions;
 
 namespace TECNM.Residencias.Forms.StudentForms
 {
     public sealed partial class StudentListViewForm : Form
     {
-        private readonly int _rowsPerPage = StudentDbSet.DEFAULT_ROWS_PER_PAGE;
-        private int _currentPage = StudentDbSet.DEFAULT_INITIAL_PAGE;
+        private readonly int _rowsPerPage = App.DefaultRowsPerPage;
+        private int _currentPage = App.DefaultInitialPage;
         private bool _refreshFromSearch = false;
 
         public StudentListViewForm()
@@ -57,7 +56,7 @@ namespace TECNM.Residencias.Forms.StudentForms
 
         private void ResetSearch_Click(object sender, EventArgs e)
         {
-            _currentPage = StudentDbSet.DEFAULT_INITIAL_PAGE;
+            _currentPage = App.DefaultInitialPage;
             _refreshFromSearch = false;
             RefreshList();
         }
@@ -119,9 +118,9 @@ namespace TECNM.Residencias.Forms.StudentForms
                 DataGridViewRow row = dgv_ListView.Rows[index];
 
                 Specialty specialty = context.Specialties.GetSpecialtyById(student.SpecialtyId)!;
-                Advisor? internAdvisor = context.Advisors.GetAdvisorById(student.InternalAsesorId ?? 0);
-                Advisor? externAdvisor = context.Advisors.GetAdvisorById(student.ExternalAsesorId ?? 0);
-                Advisor? reviewer = context.Advisors.GetAdvisorById(student.ReviewerAsesorId ?? 0);
+                Advisor? internAdvisor = context.Advisors.GetAdvisorById(student.InternalAdvisorId ?? 0);
+                Advisor? externAdvisor = context.Advisors.GetAdvisorById(student.ExternalAdvisorId ?? 0);
+                Advisor? reviewer = context.Advisors.GetAdvisorById(student.ReviewerAdvisorId ?? 0);
                 Company company = context.Companies.GetCompanyById(student.CompanyId)!;
 
                 row.Tag = student;

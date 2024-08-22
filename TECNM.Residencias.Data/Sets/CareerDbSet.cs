@@ -43,6 +43,20 @@ namespace TECNM.Residencias.Data.Sets
             }
         }
 
+        public IEnumerable<Career> EnumerateCareers(bool enabled)
+        {
+            using var command = Context.Database.CreateCommand();
+            command.CommandText = "SELECT Id, Name, Enabled, UpdatedOn, CreatedOn FROM Career WHERE Enabled = $p0 ORDER BY Name";
+            command.Parameters.Add("$p0", SqliteType.Integer).Value = enabled;
+            using var reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Career career = HydrateObject(reader);
+                yield return career;
+            }
+        }
+
         public override bool Insert(Career entity)
         {
             using var command = Context.Database.CreateCommand();

@@ -30,15 +30,23 @@ namespace TECNM.Residencias.Data.Sets
             return HydrateObject(reader);
         }
 
-        public IEnumerable<Specialty> EnumerateSpecialtiesByCareer(Career career)
+        public IEnumerable<Specialty> EnumerateSpecialtiesByCareer(Career career, bool? enabled = null)
         {
-            return EnumerateSpecialtiesByCareer(career.Id);
+            return EnumerateSpecialtiesByCareer(career.Id, enabled);
         }
 
-        public IEnumerable<Specialty> EnumerateSpecialtiesByCareer(long careerId)
+        public IEnumerable<Specialty> EnumerateSpecialtiesByCareer(long careerId, bool? enabled = null)
         {
             using var command = Context.Database.CreateCommand();
-            command.CommandText = "SELECT Id, CareerId, Name, Enabled, UpdatedOn, CreatedOn FROM Specialty WHERE CareerId = $p0 ORDER BY Name";
+            string query = "SELECT Id, CareerId, Name, Enabled, UpdatedOn, CreatedOn FROM Specialty WHERE CareerId = $p0 ";
+
+            if (enabled != null)
+            {
+                query += "AND Enabled = $p1 ";
+                command.Parameters.Add("$p1", SqliteType.Integer).Value = enabled!;
+            }
+
+            command.CommandText = query + "ORDER BY Name";
             command.Parameters.Add("$p0", SqliteType.Integer).Value = careerId;
             using var reader = command.ExecuteReader();
 
