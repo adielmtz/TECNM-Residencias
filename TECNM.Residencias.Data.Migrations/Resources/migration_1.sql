@@ -121,6 +121,7 @@ CREATE TABLE Student (
     Semester                    TEXT    NOT NULL,
     StartDate                   TEXT    NOT NULL,
     EndDate                     TEXT    NOT NULL,
+    Project                     TEXT    NOT NULL,
     InternalAdvisorId           INTEGER REFERENCES Advisor (Id) ON DELETE RESTRICT,
     ExternalAdvisorId           INTEGER REFERENCES Advisor (Id) ON DELETE RESTRICT,
     ReviewerAdvisorId           INTEGER REFERENCES Advisor (Id) ON DELETE RESTRICT,

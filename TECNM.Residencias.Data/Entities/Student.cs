@@ -25,6 +25,8 @@ namespace TECNM.Residencias.Data.Entities
 
         public DateTime EndDate { get; set; }
 
+        public string Project { get; set; } = "";
+
         public long? InternalAdvisorId { get; set; }
 
         public long? ExternalAdvisorId { get; set; }
