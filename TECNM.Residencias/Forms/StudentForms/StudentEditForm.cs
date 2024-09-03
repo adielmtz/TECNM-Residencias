@@ -31,6 +31,8 @@ namespace TECNM.Residencias.Forms.StudentForms
 
                 /// INFORMACIÓN GENERAL
                 tb_StudentId.Text = entity.Id.ToString();
+                tb_StudentId.Enabled = false;
+
                 tb_StudentFirstName.Text = entity.FirstName;
                 tb_StudentLastName.Text = entity.LastName;
                 cb_StudentGender.SelectedIndex = (int) entity.Gender;
