@@ -1,4 +1,5 @@
 using FluentValidation;
+using System.Text.RegularExpressions;
 using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Data.Validators.Common;
 
@@ -9,6 +10,7 @@ namespace TECNM.Residencias.Data.Validators
         public StudentValidator()
         {
             ClassLevelCascadeMode = CascadeMode.Stop;
+            RuleFor(s => s.Id).Must(BeAValidStudentId).WithMessage("El número de control no es correcto.");
             RuleFor(s => s.SpecialtyId).GreaterThan(0).WithMessage("Debe asignar una carrera y especialidad.");
             RuleFor(s => s.FirstName).NotEmpty().WithMessage("El campo de nombre no puede estar vacío.");
             RuleFor(s => s.LastName).NotEmpty().WithMessage("El campo de apellidos no puede estar vacío.");
@@ -17,6 +19,11 @@ namespace TECNM.Residencias.Data.Validators
             RuleFor(s => s.Gender).IsInEnum();
             RuleFor(s => s.EndDate).GreaterThan(s => s.StartDate).WithMessage("La fecha de finalización debe ser después de la fecha de inicio.");
             RuleFor(s => s.CompanyId).GreaterThan(0).WithMessage("Debe asignar una empresa para la residencia.");
+        }
+
+        private bool BeAValidStudentId(long id)
+        {
+            return Regex.IsMatch(id.ToString(), @"\d{2}07\d{4}");
         }
     }
 }

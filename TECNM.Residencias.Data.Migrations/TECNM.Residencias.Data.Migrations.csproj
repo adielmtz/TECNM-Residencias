@@ -9,11 +9,13 @@
   <ItemGroup>
     <None Remove="Resources\migration_1.sql" />
     <None Remove="Resources\migration_2.sql" />
+    <None Remove="Resources\migration_3.sql" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Resources\migration_1.sql" />
     <EmbeddedResource Include="Resources\migration_2.sql" />
+    <EmbeddedResource Include="Resources\migration_3.sql" />
   </ItemGroup>
 
 </Project>

@@ -36,6 +36,9 @@ namespace TECNM.Residencias
 
         private StudentDbSet? _students;
         public StudentDbSet Students => _students ??= new StudentDbSet(this);
+
+        private DocumentDbSet? _documents;
+        public DocumentDbSet Documents => _documents ??= new DocumentDbSet(this);
         #endregion
 
         public AppDbContext()

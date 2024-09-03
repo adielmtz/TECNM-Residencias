@@ -130,15 +130,28 @@ CREATE TABLE Student (
     Department                  TEXT    NOT NULL,
     Schedule                    TEXT    NOT NULL,
     Notes                       TEXT    NOT NULL,
-    HasSocialServiceCertificate INTEGER NOT NULL,
-    HasInternshipApplication    INTEGER NOT NULL,
-    HasPresentationLetter       INTEGER NOT NULL,
-    HasAcceptanceLetter         INTEGER NOT NULL,
-    HasProjectDocument          INTEGER NOT NULL,
     Enabled                     INTEGER NOT NULL,
     UpdatedOn                   TEXT    NOT NULL,
     CreatedOn                   TEXT    NOT NULL
                                 DEFAULT (CURRENT_TIMESTAMP)
+)
+STRICT;
+
+
+CREATE TABLE Document (
+    Id           INTEGER PRIMARY KEY
+                         NOT NULL,
+    StudentId    INTEGER REFERENCES Student (Id) ON DELETE CASCADE
+                         NOT NULL,
+    Type         INTEGER NOT NULL,
+    FullPath     TEXT    NOT NULL,
+    OriginalName TEXT    NOT NULL,
+    Size         INTEGER NOT NULL,
+    Hash         TEXT    NOT NULL,
+    Enabled      INTEGER NOT NULL,
+    UpdatedOn    TEXT    NOT NULL,
+    CreatedOn    TEXT    NOT NULL
+                         DEFAULT (CURRENT_TIMESTAMP)
 )
 STRICT;
 
@@ -159,72 +172,3 @@ CREATE VIRTUAL TABLE StudentSearch USING fts5 (
     contentless_delete = 1,
     tokenize = 'unicode61 remove_diacritics 2'
 );
-
-
-CREATE INDEX IX_Advisor_By_Company_Lookup ON Advisor (
-    CompanyId,
-    Name
-);
-
-
-CREATE INDEX IX_Company_Sort ON Company (
-    Name
-);
-
-
-CREATE INDEX IX_Student_Lookup_By_Semester_Expr ON Student (
-    Semester,
-    strftime('%Y', StartDate)
-);
-
-
-CREATE TRIGGER TGG_Company_After_Insert
-AFTER INSERT ON Company
-BEGIN
-    INSERT INTO CompanySearch (rowid, Rfc, Name)
-    VALUES (NEW.Id, NEW.Rfc, NEW.Name);
-END;
-
-
-CREATE TRIGGER TGG_Company_After_Update
-AFTER UPDATE ON Company
-WHEN NEW.Rfc != OLD.Rfc OR NEW.Name != OLD.Name
-BEGIN
-    UPDATE CompanySearch
-    SET Rfc = NEW.Rfc, Name = NEW.Name
-    WHERE rowid = NEW.Id;
-END;
-
-
-CREATE TRIGGER TGG_Company_After_Delete
-AFTER DELETE ON Company
-BEGIN
-    DELETE FROM CompanySearch
-    WHERE rowid = OLD.Id;
-END;
-
-
-CREATE TRIGGER TGG_Student_After_Insert
-AFTER INSERT ON Student
-BEGIN
-    INSERT INTO StudentSearch (rowid, FirstName, LastName)
-    VALUES (NEW.Id, NEW.FirstName, NEW.LastName);
-END;
-
-
-CREATE TRIGGER TGG_Student_After_Update
-AFTER UPDATE ON Student
-WHEN NEW.FirstName != OLD.FirstName OR NEW.LastName != OLD.LastName
-BEGIN
-    UPDATE StudentSearch
-    SET FirstName = NEW.FirstName, LastName = NEW.LastName
-    WHERE rowid = NEW.Id;
-END;
-
-
-CREATE TRIGGER TGG_Student_After_Delete
-AFTER DELETE ON Student
-BEGIN
-    DELETE FROM StudentSearch
-    WHERE rowid = OLD.Id;
-END;

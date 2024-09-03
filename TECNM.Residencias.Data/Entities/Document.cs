@@ -9,15 +9,15 @@ namespace TECNM.Residencias.Data.Entities
 
         public long StudentId { get; set; }
 
-        public string Type { get; set; } = "";
+        public int Type { get; set; }
 
-        public string CurrentName { get; set; } = "";
+        public string FullPath { get; set; } = "";
 
         public string OriginalName { get; set; } = "";
 
         public long Size { get; set; }
 
-        public string Checksum { get; set; } = "";
+        public string Hash { get; set; } = "";
 
         public bool Enabled { get; set; }
 

@@ -18,14 +18,13 @@ namespace TECNM.Residencias.Data.Sets
         {
             using var command = Context.Database.CreateCommand();
             command.CommandText = """
-            SELECT Id, SpecialtyId, FirstName, LastName, Email, Phone, Gender, Semester,
-                   StartDate, EndDate, Project, InternalAdvisorId, ExternalAdvisorId,
-                   ReviewerAdvisorId, CompanyId, Department, Schedule, Notes,
-                   HasSocialServiceCertificate, HasInternshipApplication, HasPresentationLetter,
-                   HasAcceptanceLetter, HasProjectDocument, Enabled, UpdatedOn, CreatedOn
+            SELECT Id, SpecialtyId, FirstName, LastName, Email, Phone, Gender, Semester, StartDate, EndDate,
+                   Project, InternalAdvisorId, ExternalAdvisorId, ReviewerAdvisorId, CompanyId, Department,
+                   Schedule, Notes, Enabled, UpdatedOn, CreatedOn
             FROM Student
             WHERE Id = $id
             """;
+
             command.Parameters.Add("$id", SqliteType.Integer).Value = id;
             using var reader = command.ExecuteReader();
 
@@ -59,9 +58,9 @@ namespace TECNM.Residencias.Data.Sets
         {
             using var command = Context.Database.CreateCommand();
             command.CommandText = """
-            SELECT Id, SpecialtyId, FirstName, LastName, Email, Phone, Gender, Semester, StartDate, EndDate, InternalAdvisorId, ExternalAdvisorId,
-            ReviewerAdvisorId, CompanyId, Department, Schedule, Notes, HasSocialServiceCertificate, HasInternshipApplication, HasPresentationLetter,
-            HasAcceptanceLetter, HasProjectDocument, Enabled, UpdatedOn, CreatedOn
+            SELECT Id, SpecialtyId, FirstName, LastName, Email, Phone, Gender, Semester, StartDate, EndDate,
+                   Project, InternalAdvisorId, ExternalAdvisorId, ReviewerAdvisorId, CompanyId, Department,
+                   Schedule, Notes, Enabled, UpdatedOn, CreatedOn
             FROM Student
             ORDER BY Id
             LIMIT $p0 OFFSET $p1
@@ -81,41 +80,33 @@ namespace TECNM.Residencias.Data.Sets
         {
             using var command = Context.Database.CreateCommand();
             command.CommandText = """
-            INSERT INTO Student
-            (Id, SpecialtyId, FirstName, LastName, Email, Phone, Gender, Semester, StartDate, EndDate, Project, InternalAdvisorId,
-            ExternalAdvisorId, ReviewerAdvisorId, CompanyId, Department, Schedule, Notes, HasSocialServiceCertificate, HasInternshipApplication,
-            HasPresentationLetter, HasAcceptanceLetter, HasProjectDocument, Enabled, UpdatedOn)
-            VALUES
-            ($p00, $p01, $p02, $p03, $p04, $p05, $p06, $p07, $p08, $p09, $p10, $p11, $p12, $p13, $p14, $p15, $p16, $p17, $p18, $p19, $p20,
-            $p21, $p22, $p23, CURRENT_TIMESTAMP)
+            INSERT INTO Student (
+                Id, SpecialtyId, FirstName, LastName, Email, Phone, Gender, Semester, StartDate, EndDate,
+                Project, InternalAdvisorId, ExternalAdvisorId, ReviewerAdvisorId, CompanyId, Department,
+                Schedule, Notes, Enabled, UpdatedOn
+            )
+            VALUES ($pid, $p00, $p01, $p02, $p03, $p04, $p05, $p06, $p07, $p08, $p09, $p10, $p11, $p12, $p13, $p14, $p15, $p16, $p17, CURRENT_TIMESTAMP)
             """;
 
-            // TODO: Use reflection for this?
-
-            command.Parameters.Add("$p00", SqliteType.Integer).Value = entity.Id;
-            command.Parameters.Add("$p01", SqliteType.Integer).Value = entity.SpecialtyId;
-            command.Parameters.Add("$p02", SqliteType.Text).Value = entity.FirstName;
-            command.Parameters.Add("$p03", SqliteType.Text).Value = entity.LastName;
-            command.Parameters.Add("$p04", SqliteType.Text).Value = entity.Email;
-            command.Parameters.Add("$p05", SqliteType.Text).Value = entity.Phone;
-            command.Parameters.Add("$p06", SqliteType.Text).Value = entity.Gender;
-            command.Parameters.Add("$p07", SqliteType.Text).Value = entity.Semester;
-            command.Parameters.Add("$p08", SqliteType.Text).Value = entity.StartDate.TOISOStringUTC();
-            command.Parameters.Add("$p09", SqliteType.Text).Value = entity.EndDate.TOISOStringUTC();
-            command.Parameters.Add("$p10", SqliteType.Text).Value = entity.Project;
-            command.Parameters.Add("$p11", SqliteType.Integer).Value = entity.InternalAdvisorId;
-            command.Parameters.Add("$p12", SqliteType.Integer).Value = entity.ExternalAdvisorId;
-            command.Parameters.Add("$p13", SqliteType.Integer).Value = entity.ReviewerAdvisorId;
-            command.Parameters.Add("$p14", SqliteType.Integer).Value = entity.CompanyId;
-            command.Parameters.Add("$p15", SqliteType.Text).Value = entity.Department;
-            command.Parameters.Add("$p16", SqliteType.Text).Value = entity.Schedule;
-            command.Parameters.Add("$p17", SqliteType.Text).Value = entity.Notes;
-            command.Parameters.Add("$p18", SqliteType.Integer).Value = entity.HasSocialServiceCertificate;
-            command.Parameters.Add("$p19", SqliteType.Integer).Value = entity.HasInternshipApplication;
-            command.Parameters.Add("$p20", SqliteType.Integer).Value = entity.HasPresentationLetter;
-            command.Parameters.Add("$p21", SqliteType.Integer).Value = entity.HasAcceptanceLetter;
-            command.Parameters.Add("$p22", SqliteType.Integer).Value = entity.HasProjectDocument;
-            command.Parameters.Add("$p23", SqliteType.Integer).Value = entity.Enabled;
+            command.Parameters.Add("$pid", SqliteType.Integer).Value = entity.Id;
+            command.Parameters.Add("$p00", SqliteType.Integer).Value = entity.SpecialtyId;
+            command.Parameters.Add("$p01", SqliteType.Text).Value = entity.FirstName;
+            command.Parameters.Add("$p02", SqliteType.Text).Value = entity.LastName;
+            command.Parameters.Add("$p03", SqliteType.Text).Value = entity.Email;
+            command.Parameters.Add("$p04", SqliteType.Text).Value = entity.Phone;
+            command.Parameters.Add("$p05", SqliteType.Text).Value = entity.Gender;
+            command.Parameters.Add("$p06", SqliteType.Text).Value = entity.Semester;
+            command.Parameters.Add("$p07", SqliteType.Text).Value = entity.StartDate.TOISOStringUTC();
+            command.Parameters.Add("$p08", SqliteType.Text).Value = entity.EndDate.TOISOStringUTC();
+            command.Parameters.Add("$p09", SqliteType.Text).Value = entity.Project;
+            command.Parameters.Add("$p10", SqliteType.Integer).Value = entity.InternalAdvisorId;
+            command.Parameters.Add("$p11", SqliteType.Integer).Value = entity.ExternalAdvisorId;
+            command.Parameters.Add("$p12", SqliteType.Integer).Value = entity.ReviewerAdvisorId;
+            command.Parameters.Add("$p13", SqliteType.Integer).Value = entity.CompanyId;
+            command.Parameters.Add("$p14", SqliteType.Text).Value = entity.Department;
+            command.Parameters.Add("$p15", SqliteType.Text).Value = entity.Schedule;
+            command.Parameters.Add("$p16", SqliteType.Text).Value = entity.Notes;
+            command.Parameters.Add("$p17", SqliteType.Integer).Value = entity.Enabled;
             return command.ExecuteNonQuery() > 0;
         }
 
@@ -124,30 +115,25 @@ namespace TECNM.Residencias.Data.Sets
             using var command = Context.Database.CreateCommand();
             command.CommandText = """
             UPDATE Student
-            SET SpecialtyId                 = $p00,
-                FirstName                   = $p01,
-                LastName                    = $p02,
-                Email                       = $p03,
-                Phone                       = $p04,
-                Gender                      = $p05,
-                Semester                    = $p06,
-                StartDate                   = $p07,
-                EndDate                     = $p08,
-                Project                     = $p09,
-                InternalAdvisorId           = $p10,
-                ExternalAdvisorId           = $p11,
-                ReviewerAdvisorId           = $p12,
-                CompanyId                   = $p13,
-                Department                  = $p14,
-                Schedule                    = $p15,
-                Notes                       = $p16,
-                HasSocialServiceCertificate = $p17,
-                HasInternshipApplication    = $p18,
-                HasPresentationLetter       = $p19,
-                HasAcceptanceLetter         = $p20,
-                HasProjectDocument          = $p21,
-                Enabled                     = $p22,
-                UpdatedOn                   = CURRENT_TIMESTAMP
+            SET SpecialtyId       = $p00,
+                FirstName         = $p01,
+                LastName          = $p02,
+                Email             = $p03,
+                Phone             = $p04,
+                Gender            = $p05,
+                Semester          = $p06,
+                StartDate         = $p07,
+                EndDate           = $p08,
+                Project           = $p09,
+                InternalAdvisorId = $p10,
+                ExternalAdvisorId = $p11,
+                ReviewerAdvisorId = $p12,
+                CompanyId         = $p13,
+                Department        = $p14,
+                Schedule          = $p15,
+                Notes             = $p16,
+                Enabled           = $p17,
+                UpdatedOn         = CURRENT_TIMESTAMP
             WHERE Id = $id
             """;
 
@@ -168,12 +154,7 @@ namespace TECNM.Residencias.Data.Sets
             command.Parameters.Add("$p14", SqliteType.Text).Value = entity.Department;
             command.Parameters.Add("$p15", SqliteType.Text).Value = entity.Schedule;
             command.Parameters.Add("$p16", SqliteType.Text).Value = entity.Notes;
-            command.Parameters.Add("$p17", SqliteType.Integer).Value = entity.HasSocialServiceCertificate;
-            command.Parameters.Add("$p18", SqliteType.Integer).Value = entity.HasInternshipApplication;
-            command.Parameters.Add("$p19", SqliteType.Integer).Value = entity.HasPresentationLetter;
-            command.Parameters.Add("$p20", SqliteType.Integer).Value = entity.HasAcceptanceLetter;
-            command.Parameters.Add("$p21", SqliteType.Integer).Value = entity.HasProjectDocument;
-            command.Parameters.Add("$p22", SqliteType.Integer).Value = entity.Enabled;
+            command.Parameters.Add("$p17", SqliteType.Integer).Value = entity.Enabled;
             command.Parameters.Add("$id", SqliteType.Integer).Value = entity.Id;
             return command.ExecuteNonQuery();
         }
@@ -190,98 +171,82 @@ namespace TECNM.Residencias.Data.Sets
         {
             using var command = Context.Database.CreateCommand();
             command.CommandText = """
-            INSERT INTO Student
-            (Id, SpecialtyId, FirstName, LastName, Email, Phone, Gender, Semester, StartDate, EndDate, Project, InternalAdvisorId,
-            ExternalAdvisorId, ReviewerAdvisorId, CompanyId, Department, Schedule, Notes, HasSocialServiceCertificate, HasInternshipApplication,
-            HasPresentationLetter, HasAcceptanceLetter, HasProjectDocument, Enabled, UpdatedOn)
-            VALUES
-            ($p00, $p01, $p02, $p03, $p04, $p05, $p06, $p07, $p08, $p09, $p10, $p11, $p12, $p13, $p14, $p15, $p16, $p17, $p18, $p19, $p20,
-            $p21, $p22, $p23, CURRENT_TIMESTAMP)
+            INSERT INTO Student (
+                Id, SpecialtyId, FirstName, LastName, Email, Phone, Gender, Semester, StartDate, EndDate,
+                Project, InternalAdvisorId, ExternalAdvisorId, ReviewerAdvisorId, CompanyId, Department,
+                Schedule, Notes, Enabled, UpdatedOn
+            )
+            VALUES ($pid, $p00, $p01, $p02, $p03, $p04, $p05, $p06, $p07, $p08, $p09, $p10, $p11, $p12, $p13, $p14, $p15, $p16, $p17, CURRENT_TIMESTAMP)
             ON CONFLICT(Id) DO UPDATE
-            SET SpecialtyId                 = excluded.SpecialtyId,
-                FirstName                   = excluded.FirstName,
-                LastName                    = excluded.LastName,
-                Email                       = excluded.Email,
-                Phone                       = excluded.Phone,
-                Gender                      = excluded.Gender,
-                Semester                    = excluded.Semester,
-                StartDate                   = excluded.StartDate,
-                EndDate                     = excluded.EndDate,
-                Project                     = excluded.Project,
-                InternalAdvisorId           = excluded.InternalAdvisorId,
-                ExternalAdvisorId           = excluded.ExternalAdvisorId,
-                ReviewerAdvisorId           = excluded.ReviewerAdvisorId,
-                CompanyId                   = excluded.CompanyId,
-                Department                  = excluded.Department,
-                Schedule                    = excluded.Schedule,
-                Notes                       = excluded.Notes,
-                HasSocialServiceCertificate = excluded.HasSocialServiceCertificate,
-                HasInternshipApplication    = excluded.HasInternshipApplication,
-                HasPresentationLetter       = excluded.HasPresentationLetter,
-                HasAcceptanceLetter         = excluded.HasAcceptanceLetter,
-                HasProjectDocument          = excluded.HasProjectDocument,
-                Enabled                     = excluded.Enabled,
-                UpdatedOn                   = excluded.UpdatedOn,
+            SET SpecialtyId       = excluded.SpecialtyId,
+                FirstName         = excluded.FirstName,
+                LastName          = excluded.LastName,
+                Email             = excluded.Email,
+                Phone             = excluded.Phone,
+                Gender            = excluded.Gender,
+                Semester          = excluded.Semester,
+                StartDate         = excluded.StartDate,
+                EndDate           = excluded.EndDate,
+                Project           = excluded.Project,
+                InternalAdvisorId = excluded.InternalAdvisorId,
+                ExternalAdvisorId = excluded.ExternalAdvisorId,
+                ReviewerAdvisorId = excluded.ReviewerAdvisorId,
+                CompanyId         = excluded.CompanyId,
+                Department        = excluded.Department,
+                Schedule          = excluded.Schedule,
+                Notes             = excluded.Notes,
+                Enabled           = excluded.Enabled,
+                UpdatedOn         = excluded.UpdatedOn
             """;
 
-            command.Parameters.Add("$p00", SqliteType.Integer).Value = entity.Id;
-            command.Parameters.Add("$p01", SqliteType.Integer).Value = entity.SpecialtyId;
-            command.Parameters.Add("$p02", SqliteType.Text).Value = entity.FirstName;
-            command.Parameters.Add("$p03", SqliteType.Text).Value = entity.LastName;
-            command.Parameters.Add("$p04", SqliteType.Text).Value = entity.Email;
-            command.Parameters.Add("$p05", SqliteType.Text).Value = entity.Phone;
-            command.Parameters.Add("$p06", SqliteType.Text).Value = entity.Gender;
-            command.Parameters.Add("$p07", SqliteType.Text).Value = entity.Semester;
-            command.Parameters.Add("$p08", SqliteType.Text).Value = entity.StartDate.TOISOStringUTC();
-            command.Parameters.Add("$p09", SqliteType.Text).Value = entity.EndDate.TOISOStringUTC();
-            command.Parameters.Add("$p10", SqliteType.Text).Value = entity.Project;
-            command.Parameters.Add("$p11", SqliteType.Integer).Value = entity.InternalAdvisorId;
-            command.Parameters.Add("$p12", SqliteType.Integer).Value = entity.ExternalAdvisorId;
-            command.Parameters.Add("$p13", SqliteType.Integer).Value = entity.ReviewerAdvisorId;
-            command.Parameters.Add("$p14", SqliteType.Integer).Value = entity.CompanyId;
-            command.Parameters.Add("$p15", SqliteType.Text).Value = entity.Department;
-            command.Parameters.Add("$p16", SqliteType.Text).Value = entity.Schedule;
-            command.Parameters.Add("$p17", SqliteType.Text).Value = entity.Notes;
-            command.Parameters.Add("$p18", SqliteType.Integer).Value = entity.HasSocialServiceCertificate;
-            command.Parameters.Add("$p19", SqliteType.Integer).Value = entity.HasInternshipApplication;
-            command.Parameters.Add("$p20", SqliteType.Integer).Value = entity.HasPresentationLetter;
-            command.Parameters.Add("$p21", SqliteType.Integer).Value = entity.HasAcceptanceLetter;
-            command.Parameters.Add("$p22", SqliteType.Integer).Value = entity.HasProjectDocument;
-            command.Parameters.Add("$p23", SqliteType.Integer).Value = entity.Enabled;
+            command.Parameters.Add("$pid", SqliteType.Integer).Value = entity.Id;
+            command.Parameters.Add("$p00", SqliteType.Integer).Value = entity.SpecialtyId;
+            command.Parameters.Add("$p01", SqliteType.Text).Value = entity.FirstName;
+            command.Parameters.Add("$p02", SqliteType.Text).Value = entity.LastName;
+            command.Parameters.Add("$p03", SqliteType.Text).Value = entity.Email;
+            command.Parameters.Add("$p04", SqliteType.Text).Value = entity.Phone;
+            command.Parameters.Add("$p05", SqliteType.Text).Value = entity.Gender;
+            command.Parameters.Add("$p06", SqliteType.Text).Value = entity.Semester;
+            command.Parameters.Add("$p07", SqliteType.Text).Value = entity.StartDate.TOISOStringUTC();
+            command.Parameters.Add("$p08", SqliteType.Text).Value = entity.EndDate.TOISOStringUTC();
+            command.Parameters.Add("$p09", SqliteType.Text).Value = entity.Project;
+            command.Parameters.Add("$p10", SqliteType.Integer).Value = entity.InternalAdvisorId;
+            command.Parameters.Add("$p11", SqliteType.Integer).Value = entity.ExternalAdvisorId;
+            command.Parameters.Add("$p12", SqliteType.Integer).Value = entity.ReviewerAdvisorId;
+            command.Parameters.Add("$p13", SqliteType.Integer).Value = entity.CompanyId;
+            command.Parameters.Add("$p14", SqliteType.Text).Value = entity.Department;
+            command.Parameters.Add("$p15", SqliteType.Text).Value = entity.Schedule;
+            command.Parameters.Add("$p16", SqliteType.Text).Value = entity.Notes;
+            command.Parameters.Add("$p17", SqliteType.Integer).Value = entity.Enabled;
             return command.ExecuteNonQuery() > 0;
         }
 
         protected override Student HydrateObject(IDataReader reader)
         {
-            Debug.Assert(reader.FieldCount == 26);
+            Debug.Assert(reader.FieldCount == 21);
             return new Student
             {
-                Id                          = reader.GetInt64(0),
-                SpecialtyId                 = reader.GetInt64(1),
-                FirstName                   = reader.GetString(2),
-                LastName                    = reader.GetString(3),
-                Email                       = reader.GetString(4),
-                Phone                       = reader.GetString(5),
-                Gender                      = reader.GetEnum<Gender>(6),
-                Semester                    = reader.GetString(7),
-                StartDate                   = reader.GetDateTime(8),
-                EndDate                     = reader.GetDateTime(9),
-                Project                     = reader.GetString(10),
-                InternalAdvisorId           = reader.GetNullableInt64(11),
-                ExternalAdvisorId           = reader.GetNullableInt64(12),
-                ReviewerAdvisorId           = reader.GetNullableInt64(13),
-                CompanyId                   = reader.GetInt64(14),
-                Department                  = reader.GetString(15),
-                Schedule                    = reader.GetString(16),
-                Notes                       = reader.GetString(17),
-                HasSocialServiceCertificate = reader.GetBoolean(18),
-                HasInternshipApplication    = reader.GetBoolean(19),
-                HasPresentationLetter       = reader.GetBoolean(20),
-                HasAcceptanceLetter         = reader.GetBoolean(21),
-                HasProjectDocument          = reader.GetBoolean(22),
-                Enabled                     = reader.GetBoolean(23),
-                UpdatedOn                   = reader.GetLocalDateTime(24),
-                CreatedOn                   = reader.GetLocalDateTime(25),
+                Id                = reader.GetInt64(0),
+                SpecialtyId       = reader.GetInt64(1),
+                FirstName         = reader.GetString(2),
+                LastName          = reader.GetString(3),
+                Email             = reader.GetString(4),
+                Phone             = reader.GetString(5),
+                Gender            = reader.GetEnum<Gender>(6),
+                Semester          = reader.GetString(7),
+                StartDate         = reader.GetLocalDateTime(8),
+                EndDate           = reader.GetLocalDateTime(9),
+                Project           = reader.GetString(10),
+                InternalAdvisorId = reader.GetNullableInt64(11),
+                ExternalAdvisorId = reader.GetNullableInt64(12),
+                ReviewerAdvisorId = reader.GetNullableInt64(13),
+                CompanyId         = reader.GetInt64(14),
+                Department        = reader.GetString(15),
+                Schedule          = reader.GetString(16),
+                Notes             = reader.GetString(17),
+                Enabled           = reader.GetBoolean(18),
+                UpdatedOn         = reader.GetLocalDateTime(19),
+                CreatedOn         = reader.GetLocalDateTime(20),
             };
         }
 
