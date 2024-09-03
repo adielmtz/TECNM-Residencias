@@ -44,6 +44,20 @@ namespace TECNM.Residencias.Data.Sets
             }
         }
 
+        public IEnumerable<Advisor> EnumerateAdvisorsByType(AdvisorType type)
+        {
+            using var command = Context.Database.CreateCommand();
+            command.CommandText = "SELECT Id, CompanyId, Type, Name, Section, Role, Email, Phone, Enabled, UpdatedOn, CreatedOn FROM Advisor WHERE Type = $p0 ORDER BY Name";
+            command.Parameters.Add("$p0", SqliteType.Text).Value = type.ToString();
+            using var reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Advisor advisor = HydrateObject(reader);
+                yield return advisor;
+            }
+        }
+
         public IEnumerable<Advisor> EnumerateAdvisors()
         {
             using var command = Context.Database.CreateCommand();
