@@ -1,6 +1,4 @@
 using Microsoft.Data.Sqlite;
-using System.Data;
-using System.Diagnostics;
 
 namespace TECNM.Residencias.Data
 {
