@@ -59,10 +59,27 @@ namespace TECNM.Residencias.Controls
 
         private async void UploadFile_Click(object sender, EventArgs e)
         {
+            DialogResult result;
+
+            if (!_isNewFile || !string.IsNullOrEmpty(_filename))
+            {
+                result = MessageBox.Show(
+                    "Se sobreescribirá el archivo actual. ¿Continuar?",
+                    "Confirmar acción",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning
+                );
+
+                if (result != DialogResult.Yes)
+                {
+                    return;
+                }
+            }
+
             using var dialog = new OpenFileDialog();
             dialog.Multiselect = false;
             dialog.RestoreDirectory = true;
-            DialogResult result = dialog.ShowDialog();
+            result = dialog.ShowDialog();
 
             if (result == DialogResult.OK)
             {
