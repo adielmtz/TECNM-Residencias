@@ -159,6 +159,8 @@
             // chk_AdvisorEnabled
             // 
             chk_AdvisorEnabled.AutoSize = true;
+            chk_AdvisorEnabled.Checked = true;
+            chk_AdvisorEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
             chk_AdvisorEnabled.Location = new System.Drawing.Point(12, 276);
             chk_AdvisorEnabled.Name = "chk_AdvisorEnabled";
             chk_AdvisorEnabled.Size = new System.Drawing.Size(71, 19);
