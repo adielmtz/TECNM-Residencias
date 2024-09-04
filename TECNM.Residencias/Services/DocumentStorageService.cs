@@ -6,7 +6,7 @@ namespace TECNM.Residencias.Services
 {
     internal static class DocumentStorageService
     {
-        public static void SaveFile(Student student, Document document, string filename)
+        public static void SaveFile(Student student, Document document, string filename, string typeName)
         {
             Debug.Assert(student.Id > 0);
             document.StudentId = student.Id;
@@ -14,7 +14,7 @@ namespace TECNM.Residencias.Services
             string yearComponent = student.StartDate.Year.ToString();
             string semesterComponent = student.Semester;
             string extension = Path.GetExtension(filename);
-            string targetName = $"{student.Id}_{document.Type}_{document.Hash.Substring(0, 8)}{extension}";
+            string targetName = $"{student.Id}_{typeName}_{document.Hash.Substring(0, 8)}{extension}";
 
             string targetFile = Path.Combine(App.DocumentArchiveDirectory, yearComponent, semesterComponent, $"{student.Id}", targetName);
             string directory = Path.GetDirectoryName(targetFile)!;

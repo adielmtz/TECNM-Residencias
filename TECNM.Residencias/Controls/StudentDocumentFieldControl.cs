@@ -19,6 +19,21 @@ namespace TECNM.Residencias.Controls
 
         public string SelectedFile => _filename;
 
+        public string TypeName
+        {
+            get
+            {
+                int index = cb_DocumentType.SelectedIndex;
+
+                if (index == -1)
+                {
+                    return "";
+                }
+
+                return (string) cb_DocumentType.Items[index]!;
+            }
+        }
+
         public bool IsNewFile => _isNewFile;
 
         public EventHandler? Removed;

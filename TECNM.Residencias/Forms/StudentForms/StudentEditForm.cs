@@ -195,7 +195,7 @@ namespace TECNM.Residencias.Forms.StudentForms
 
                 if (control.IsNewFile)
                 {
-                    DocumentStorageService.SaveFile(_student, document, control.SelectedFile);
+                    DocumentStorageService.SaveFile(_student, document, control.SelectedFile, control.TypeName);
                 }
 
                 context.Documents.InsertOrUpdate(document);
