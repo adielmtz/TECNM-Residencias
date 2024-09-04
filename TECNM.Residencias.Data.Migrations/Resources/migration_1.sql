@@ -144,7 +144,8 @@ CREATE TABLE Document (
     StudentId    INTEGER REFERENCES Student (Id) ON DELETE CASCADE
                          NOT NULL,
     Type         INTEGER NOT NULL,
-    FullPath     TEXT    NOT NULL,
+    FullPath     TEXT    UNIQUE
+                         NOT NULL,
     OriginalName TEXT    NOT NULL,
     Size         INTEGER NOT NULL,
     Hash         TEXT    NOT NULL,
