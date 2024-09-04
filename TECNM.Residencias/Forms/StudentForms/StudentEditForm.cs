@@ -3,6 +3,7 @@ using FluentValidation.Results;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Windows.Forms;
 using TECNM.Residencias.Controls;
 using TECNM.Residencias.Data.Entities;
@@ -141,11 +142,17 @@ namespace TECNM.Residencias.Forms.StudentForms
         {
             Debug.Assert(sender != null);
             var control = (StudentDocumentFieldControl) sender;
+            Document document = control.Document;
             flp_Documents.Controls.Remove(control);
 
             using var context = new AppDbContext();
-            context.Documents.Delete(control.Document);
+            int result = context.Documents.Delete(document);
             context.Commit();
+
+            if (result > 0 && File.Exists(document.FullPath))
+            {
+                File.Delete(document.FullPath);
+            }
         }
 
         private void SaveEdit_Click(object sender, EventArgs e)
