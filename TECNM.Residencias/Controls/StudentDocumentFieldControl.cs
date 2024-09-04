@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
@@ -36,6 +35,11 @@ namespace TECNM.Residencias.Controls
             lbl_DocumentName.Text = entity.OriginalName;
             _filename = entity.FullPath;
             _isNewFile = false;
+        }
+
+        private void DocumentType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _document.Type = cb_DocumentType.SelectedIndex;
         }
 
         private async void UploadFile_Click(object sender, EventArgs e)
