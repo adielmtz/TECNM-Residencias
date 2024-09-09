@@ -32,7 +32,13 @@
             groupBox1 = new System.Windows.Forms.GroupBox();
             button2 = new System.Windows.Forms.Button();
             button1 = new System.Windows.Forms.Button();
+            groupBox2 = new System.Windows.Forms.GroupBox();
+            label3 = new System.Windows.Forms.Label();
+            label2 = new System.Windows.Forms.Label();
+            label1 = new System.Windows.Forms.Label();
+            button3 = new System.Windows.Forms.Button();
             groupBox1.SuspendLayout();
+            groupBox2.SuspendLayout();
             SuspendLayout();
             // 
             // lbl_SqliteVersion
@@ -46,11 +52,12 @@
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(button3);
             groupBox1.Controls.Add(button2);
             groupBox1.Controls.Add(button1);
             groupBox1.Location = new System.Drawing.Point(12, 12);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new System.Drawing.Size(236, 59);
+            groupBox1.Size = new System.Drawing.Size(236, 83);
             groupBox1.TabIndex = 1;
             groupBox1.TabStop = false;
             groupBox1.Text = "Base de datos";
@@ -75,11 +82,61 @@
             button1.UseVisualStyleBackColor = true;
             button1.Click += DatabaseOptimize_Click;
             // 
+            // groupBox2
+            // 
+            groupBox2.Controls.Add(label3);
+            groupBox2.Controls.Add(label2);
+            groupBox2.Controls.Add(label1);
+            groupBox2.Location = new System.Drawing.Point(496, 366);
+            groupBox2.Name = "groupBox2";
+            groupBox2.Size = new System.Drawing.Size(292, 72);
+            groupBox2.TabIndex = 2;
+            groupBox2.TabStop = false;
+            groupBox2.Text = "Créditos";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new System.Drawing.Point(6, 34);
+            label3.Name = "label3";
+            label3.Size = new System.Drawing.Size(184, 15);
+            label3.TabIndex = 5;
+            label3.Text = "20070517 : Rafael García Mendoza";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new System.Drawing.Point(6, 49);
+            label2.Name = "label2";
+            label2.Size = new System.Drawing.Size(179, 15);
+            label2.TabIndex = 4;
+            label2.Text = "20070525 : Samuel Alva Segundo";
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new System.Drawing.Point(6, 19);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(232, 15);
+            label1.TabIndex = 3;
+            label1.Text = "18070602 : Luis Adiel Jesús Martínez Garcés";
+            // 
+            // button3
+            // 
+            button3.Location = new System.Drawing.Point(6, 51);
+            button3.Name = "button3";
+            button3.Size = new System.Drawing.Size(132, 23);
+            button3.TabIndex = 3;
+            button3.Text = "Copia de seguridad";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += DatabaseBackup_Click;
+            // 
             // SettingsForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(800, 450);
+            Controls.Add(groupBox2);
             Controls.Add(groupBox1);
             Controls.Add(lbl_SqliteVersion);
             Name = "SettingsForm";
@@ -87,6 +144,8 @@
             Text = "SettingsForm";
             Load += SettingsForm_Load;
             groupBox1.ResumeLayout(false);
+            groupBox2.ResumeLayout(false);
+            groupBox2.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -97,5 +156,10 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button button3;
     }
 }

@@ -50,13 +50,9 @@ namespace TECNM.Residencias
 
         public static void Initialize()
         {
-            if (!s_initialized)
-            {
-                Directory.CreateDirectory(RootDataDirectory);
-                Directory.CreateDirectory(DocumentArchiveDirectory);
-                InitializeDatabase();
-                s_initialized = true;
-            }
+            Directory.CreateDirectory(RootDataDirectory);
+            Directory.CreateDirectory(DocumentArchiveDirectory);
+            InitializeDatabase();
         }
 
         private static void InitializeDatabase()
