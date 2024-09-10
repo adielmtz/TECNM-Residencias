@@ -151,7 +151,11 @@ namespace TECNM.Residencias.Forms.StudentForms
 
             if (result > 0 && File.Exists(document.FullPath))
             {
-                File.Delete(document.FullPath);
+                // Only delete files within Archive Directory root
+                if (document.FullPath.StartsWith(App.DocumentArchiveDirectory, StringComparison.OrdinalIgnoreCase))
+                {
+                    File.Delete(document.FullPath);
+                }
             }
         }
 
