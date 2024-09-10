@@ -1,7 +1,7 @@
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
-using TECNM.Residencias.Data.Migrations;
 
 namespace TECNM.Residencias.Forms
 {
@@ -115,6 +115,17 @@ namespace TECNM.Residencias.Forms
             }
 
             return "unknown version";
+        }
+
+        private void SourceCodeGitHub_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            var info = new ProcessStartInfo
+            {
+                FileName = "https://github.com/adielmtz/TECNM-Residencias",
+                UseShellExecute = true,
+            };
+
+            Process.Start(info);
         }
     }
 }

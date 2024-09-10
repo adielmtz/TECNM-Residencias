@@ -30,13 +30,14 @@
         {
             lbl_SqliteVersion = new System.Windows.Forms.Label();
             groupBox1 = new System.Windows.Forms.GroupBox();
+            button3 = new System.Windows.Forms.Button();
             button2 = new System.Windows.Forms.Button();
             button1 = new System.Windows.Forms.Button();
             groupBox2 = new System.Windows.Forms.GroupBox();
             label3 = new System.Windows.Forms.Label();
             label2 = new System.Windows.Forms.Label();
             label1 = new System.Windows.Forms.Label();
-            button3 = new System.Windows.Forms.Button();
+            linkLabel1 = new System.Windows.Forms.LinkLabel();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             SuspendLayout();
@@ -61,6 +62,16 @@
             groupBox1.TabIndex = 1;
             groupBox1.TabStop = false;
             groupBox1.Text = "Base de datos";
+            // 
+            // button3
+            // 
+            button3.Location = new System.Drawing.Point(6, 51);
+            button3.Name = "button3";
+            button3.Size = new System.Drawing.Size(132, 23);
+            button3.TabIndex = 3;
+            button3.Text = "Copia de seguridad";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += DatabaseBackup_Click;
             // 
             // button2
             // 
@@ -87,9 +98,9 @@
             groupBox2.Controls.Add(label3);
             groupBox2.Controls.Add(label2);
             groupBox2.Controls.Add(label1);
-            groupBox2.Location = new System.Drawing.Point(496, 366);
+            groupBox2.Location = new System.Drawing.Point(541, 351);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new System.Drawing.Size(292, 72);
+            groupBox2.Size = new System.Drawing.Size(247, 72);
             groupBox2.TabIndex = 2;
             groupBox2.TabStop = false;
             groupBox2.Text = "Créditos";
@@ -121,21 +132,23 @@
             label1.TabIndex = 3;
             label1.Text = "18070602 : Luis Adiel Jesús Martínez Garcés";
             // 
-            // button3
+            // linkLabel1
             // 
-            button3.Location = new System.Drawing.Point(6, 51);
-            button3.Name = "button3";
-            button3.Size = new System.Drawing.Size(132, 23);
-            button3.TabIndex = 3;
-            button3.Text = "Copia de seguridad";
-            button3.UseVisualStyleBackColor = true;
-            button3.Click += DatabaseBackup_Click;
+            linkLabel1.AutoSize = true;
+            linkLabel1.Location = new System.Drawing.Point(705, 426);
+            linkLabel1.Name = "linkLabel1";
+            linkLabel1.Size = new System.Drawing.Size(83, 15);
+            linkLabel1.TabIndex = 3;
+            linkLabel1.TabStop = true;
+            linkLabel1.Text = "Código fuente";
+            linkLabel1.LinkClicked += SourceCodeGitHub_LinkClicked;
             // 
             // SettingsForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(800, 450);
+            Controls.Add(linkLabel1);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
             Controls.Add(lbl_SqliteVersion);
@@ -161,5 +174,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.LinkLabel linkLabel1;
     }
 }
