@@ -172,28 +172,29 @@ namespace TECNM.Residencias.Forms.CompanyForms
             }
 
             using var context = new AppDbContext();
-            if (_company.Id > 0)
+
+            try
             {
-                context.Companies.Update(_company);
-            }
-            else
-            {
-                try
+                if (_company.Id > 0)
+                {
+                    context.Companies.Update(_company);
+                }
+                else
                 {
                     context.Companies.Insert(_company);
                 }
-                catch (SqliteException)
-                {
-                    MessageBox.Show(
-                        "Ya existe un registro con el mismo RFC.",
-                        "Error al guardar la información",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error
-                    );
+            }
+            catch (SqliteException)
+            {
+                MessageBox.Show(
+                    "Ya existe un registro con el mismo RFC.",
+                    "Error al guardar la información",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
 
-                    context.Rollback();
-                    return;
-                }
+                context.Rollback();
+                return;
             }
 
             context.Commit();
