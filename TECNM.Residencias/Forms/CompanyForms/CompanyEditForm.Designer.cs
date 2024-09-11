@@ -28,6 +28,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CompanyEditForm));
             label1 = new System.Windows.Forms.Label();
             cb_CompanyCountry = new System.Windows.Forms.ComboBox();
             label2 = new System.Windows.Forms.Label();
@@ -312,6 +313,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
             Controls.Add(label2);
             Controls.Add(cb_CompanyCountry);
             Controls.Add(label1);
+            Icon = (System.Drawing.Icon) resources.GetObject("$this.Icon");
             Name = "CompanyEditForm";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "Editar información";

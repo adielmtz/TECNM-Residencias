@@ -1,4 +1,4 @@
-﻿namespace TECNM.Residencias.Forms
+namespace TECNM.Residencias.Forms
 {
     partial class MainWindow
     {
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             button1 = new System.Windows.Forms.Button();
             button2 = new System.Windows.Forms.Button();
             button3 = new System.Windows.Forms.Button();
@@ -100,6 +101,7 @@
             Controls.Add(button3);
             Controls.Add(button2);
             Controls.Add(button1);
+            Icon = (System.Drawing.Icon) resources.GetObject("$this.Icon");
             Name = "MainWindow";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "MainWindow";

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CompanyQuickSearchForm));
             label1 = new System.Windows.Forms.Label();
             tb_SearchQuery = new System.Windows.Forms.TextBox();
             button1 = new System.Windows.Forms.Button();
@@ -114,6 +115,7 @@
             Controls.Add(button1);
             Controls.Add(tb_SearchQuery);
             Controls.Add(label1);
+            Icon = (System.Drawing.Icon) resources.GetObject("$this.Icon");
             Name = "CompanyQuickSearchForm";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "Buscar empresa";

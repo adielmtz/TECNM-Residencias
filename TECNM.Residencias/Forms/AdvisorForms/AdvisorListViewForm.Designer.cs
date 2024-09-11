@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdvisorListViewForm));
             dgv_ListView = new System.Windows.Forms.DataGridView();
-            button1 = new System.Windows.Forms.Button();
             ListAdvisorName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ListAdvisorType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ListAdvisorSection = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -40,6 +40,7 @@
             ListAdvisorUpdatedOn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ListAdvisorCreatedOn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ListAdvisorActions = new System.Windows.Forms.DataGridViewButtonColumn();
+            button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize) dgv_ListView).BeginInit();
             SuspendLayout();
             // 
@@ -59,17 +60,6 @@
             dgv_ListView.Size = new System.Drawing.Size(1240, 619);
             dgv_ListView.TabIndex = 0;
             dgv_ListView.CellContentClick += ListView_CellContentClick;
-            // 
-            // button1
-            // 
-            button1.Anchor =  System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
-            button1.Location = new System.Drawing.Point(1131, 637);
-            button1.Name = "button1";
-            button1.Size = new System.Drawing.Size(121, 32);
-            button1.TabIndex = 1;
-            button1.Text = "Añadir nueva";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += AddNewAdvisor_Click;
             // 
             // ListAdvisorName
             // 
@@ -150,6 +140,17 @@
             ListAdvisorActions.Text = "Editar";
             ListAdvisorActions.UseColumnTextForButtonValue = true;
             // 
+            // button1
+            // 
+            button1.Anchor =  System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
+            button1.Location = new System.Drawing.Point(1131, 637);
+            button1.Name = "button1";
+            button1.Size = new System.Drawing.Size(121, 32);
+            button1.TabIndex = 1;
+            button1.Text = "Añadir nueva";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += AddNewAdvisor_Click;
+            // 
             // AdvisorListViewForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -157,6 +158,7 @@
             ClientSize = new System.Drawing.Size(1264, 681);
             Controls.Add(button1);
             Controls.Add(dgv_ListView);
+            Icon = (System.Drawing.Icon) resources.GetObject("$this.Icon");
             Name = "AdvisorListViewForm";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "AdvisorListViewForm";

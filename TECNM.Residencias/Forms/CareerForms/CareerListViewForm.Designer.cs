@@ -28,6 +28,7 @@ namespace TECNM.Residencias.Forms.CareerForms
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CareerListViewForm));
             dgv_ListView = new System.Windows.Forms.DataGridView();
             CareerName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             CareerEnabled = new System.Windows.Forms.DataGridViewCheckBoxColumn();
@@ -128,6 +129,7 @@ namespace TECNM.Residencias.Forms.CareerForms
             ClientSize = new System.Drawing.Size(838, 441);
             Controls.Add(button1);
             Controls.Add(dgv_ListView);
+            Icon = (System.Drawing.Icon) resources.GetObject("$this.Icon");
             Name = "CareerListViewForm";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "CareerListViewForm";

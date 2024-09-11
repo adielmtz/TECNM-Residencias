@@ -28,6 +28,7 @@ namespace TECNM.Residencias.Forms.StudentForms
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StudentEditForm));
             btn_CancelEdit = new System.Windows.Forms.Button();
             groupBox1 = new System.Windows.Forms.GroupBox();
             label8 = new System.Windows.Forms.Label();
@@ -556,6 +557,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             Controls.Add(groupBox1);
             Controls.Add(btn_CancelEdit);
             DoubleBuffered = true;
+            Icon = (System.Drawing.Icon) resources.GetObject("$this.Icon");
             Name = "StudentEditForm";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "Editar información";

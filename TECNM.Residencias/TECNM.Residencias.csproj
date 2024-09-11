@@ -6,7 +6,12 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>disable</ImplicitUsings>
+    <ApplicationIcon>Resources\logo-itcm-v2.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\logo-itcm-v2.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\TECNM.Residencias.Data.Migrations\TECNM.Residencias.Data.Migrations.csproj" />

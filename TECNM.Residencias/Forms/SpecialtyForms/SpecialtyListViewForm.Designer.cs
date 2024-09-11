@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SpecialtyListViewForm));
             dgv_ListView = new System.Windows.Forms.DataGridView();
             SpecialtyName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             SpecialtyEnabled = new System.Windows.Forms.DataGridViewCheckBoxColumn();
@@ -117,6 +118,7 @@
             ClientSize = new System.Drawing.Size(838, 441);
             Controls.Add(button1);
             Controls.Add(dgv_ListView);
+            Icon = (System.Drawing.Icon) resources.GetObject("$this.Icon");
             Name = "SpecialtyListViewForm";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "SpecialtyListViewForm";

@@ -1,4 +1,4 @@
-﻿namespace TECNM.Residencias.Forms
+namespace TECNM.Residencias.Forms
 {
     partial class SettingsForm
     {
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
             lbl_SqliteVersion = new System.Windows.Forms.Label();
             groupBox1 = new System.Windows.Forms.GroupBox();
             button3 = new System.Windows.Forms.Button();
@@ -152,6 +153,7 @@
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
             Controls.Add(lbl_SqliteVersion);
+            Icon = (System.Drawing.Icon) resources.GetObject("$this.Icon");
             Name = "SettingsForm";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "SettingsForm";

@@ -28,6 +28,7 @@ namespace TECNM.Residencias.Forms.SpecialtyForms
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SpecialtyEditForm));
             label1 = new System.Windows.Forms.Label();
             cb_SpecialtyCareer = new System.Windows.Forms.ComboBox();
             btn_CancelEdit = new System.Windows.Forms.Button();
@@ -119,6 +120,7 @@ namespace TECNM.Residencias.Forms.SpecialtyForms
             Controls.Add(btn_CancelEdit);
             Controls.Add(cb_SpecialtyCareer);
             Controls.Add(label1);
+            Icon = (System.Drawing.Icon) resources.GetObject("$this.Icon");
             Name = "SpecialtyEditForm";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "Editar información";

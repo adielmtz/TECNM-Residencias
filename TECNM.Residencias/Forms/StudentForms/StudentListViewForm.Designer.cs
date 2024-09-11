@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StudentListViewForm));
             dgv_ListView = new System.Windows.Forms.DataGridView();
             StudentId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             StudentName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -314,6 +315,7 @@
             Controls.Add(tb_SearchQuery);
             Controls.Add(label1);
             Controls.Add(dgv_ListView);
+            Icon = (System.Drawing.Icon) resources.GetObject("$this.Icon");
             Name = "StudentListViewForm";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "StudentListViewForm";

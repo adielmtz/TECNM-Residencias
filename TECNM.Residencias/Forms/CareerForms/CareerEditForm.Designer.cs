@@ -28,6 +28,7 @@ namespace TECNM.Residencias.Forms.CareerForms
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CareerEditForm));
             label1 = new System.Windows.Forms.Label();
             tb_CareerName = new System.Windows.Forms.TextBox();
             chk_CareerEnabled = new System.Windows.Forms.CheckBox();
@@ -95,6 +96,7 @@ namespace TECNM.Residencias.Forms.CareerForms
             Controls.Add(chk_CareerEnabled);
             Controls.Add(tb_CareerName);
             Controls.Add(label1);
+            Icon = (System.Drawing.Icon) resources.GetObject("$this.Icon");
             Name = "CareerEditForm";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "Editar información";

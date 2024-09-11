@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdvisorEditForm));
             btn_CancelEdit = new System.Windows.Forms.Button();
             cb_AdvisorType = new System.Windows.Forms.ComboBox();
             label1 = new System.Windows.Forms.Label();
@@ -220,6 +221,7 @@
             Controls.Add(label1);
             Controls.Add(cb_AdvisorType);
             Controls.Add(btn_CancelEdit);
+            Icon = (System.Drawing.Icon) resources.GetObject("$this.Icon");
             Name = "AdvisorEditForm";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "Editar información";

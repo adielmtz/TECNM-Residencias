@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CompanyListViewForm));
             dgv_ListView = new System.Windows.Forms.DataGridView();
             ListCompanyName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ListCompanyRfc = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -271,6 +272,7 @@
             Controls.Add(button1);
             Controls.Add(dgv_ListView);
             DoubleBuffered = true;
+            Icon = (System.Drawing.Icon) resources.GetObject("$this.Icon");
             Name = "CompanyListViewForm";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "CompanyListViewForm";
