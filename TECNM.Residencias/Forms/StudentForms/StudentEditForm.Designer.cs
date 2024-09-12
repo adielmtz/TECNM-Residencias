@@ -49,12 +49,17 @@ namespace TECNM.Residencias.Forms.StudentForms
             label1 = new System.Windows.Forms.Label();
             button1 = new System.Windows.Forms.Button();
             groupBox3 = new System.Windows.Forms.GroupBox();
-            chk_StudentEnabled = new System.Windows.Forms.CheckBox();
-            cb_StudentReviewerAdvisor = new System.Windows.Forms.ComboBox();
+            btn_RemoveReviewerAdvisor = new System.Windows.Forms.Button();
+            btn_RemoveExternalAdvisor = new System.Windows.Forms.Button();
+            btn_RemoveInternalAdvisor = new System.Windows.Forms.Button();
+            tb_StudentReviewerAdvisor = new System.Windows.Forms.TextBox();
+            tb_StudentExternalAdvisor = new System.Windows.Forms.TextBox();
+            tb_StudentInternalAdvisor = new System.Windows.Forms.TextBox();
+            button6 = new System.Windows.Forms.Button();
+            btn_ChoseExternalAdvisor = new System.Windows.Forms.Button();
+            button4 = new System.Windows.Forms.Button();
             label18 = new System.Windows.Forms.Label();
-            cb_StudentExternalAdvisor = new System.Windows.Forms.ComboBox();
             label17 = new System.Windows.Forms.Label();
-            cb_StudentInternalAdvisor = new System.Windows.Forms.ComboBox();
             label16 = new System.Windows.Forms.Label();
             dtp_StudentEndDate = new System.Windows.Forms.DateTimePicker();
             label15 = new System.Windows.Forms.Label();
@@ -71,6 +76,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             tb_StudentProjectName = new System.Windows.Forms.TextBox();
             label9 = new System.Windows.Forms.Label();
             button2 = new System.Windows.Forms.Button();
+            chk_StudentEnabled = new System.Windows.Forms.CheckBox();
             groupBox9 = new System.Windows.Forms.GroupBox();
             tb_StudentNotes = new System.Windows.Forms.TextBox();
             groupBox2 = new System.Windows.Forms.GroupBox();
@@ -265,12 +271,17 @@ namespace TECNM.Residencias.Forms.StudentForms
             // 
             // groupBox3
             // 
-            groupBox3.Controls.Add(chk_StudentEnabled);
-            groupBox3.Controls.Add(cb_StudentReviewerAdvisor);
+            groupBox3.Controls.Add(btn_RemoveReviewerAdvisor);
+            groupBox3.Controls.Add(btn_RemoveExternalAdvisor);
+            groupBox3.Controls.Add(btn_RemoveInternalAdvisor);
+            groupBox3.Controls.Add(tb_StudentReviewerAdvisor);
+            groupBox3.Controls.Add(tb_StudentExternalAdvisor);
+            groupBox3.Controls.Add(tb_StudentInternalAdvisor);
+            groupBox3.Controls.Add(button6);
+            groupBox3.Controls.Add(btn_ChoseExternalAdvisor);
+            groupBox3.Controls.Add(button4);
             groupBox3.Controls.Add(label18);
-            groupBox3.Controls.Add(cb_StudentExternalAdvisor);
             groupBox3.Controls.Add(label17);
-            groupBox3.Controls.Add(cb_StudentInternalAdvisor);
             groupBox3.Controls.Add(label16);
             groupBox3.Controls.Add(dtp_StudentEndDate);
             groupBox3.Controls.Add(label15);
@@ -294,25 +305,99 @@ namespace TECNM.Residencias.Forms.StudentForms
             groupBox3.TabStop = false;
             groupBox3.Text = "Proyecto";
             // 
-            // chk_StudentEnabled
+            // btn_RemoveReviewerAdvisor
             // 
-            chk_StudentEnabled.AutoSize = true;
-            chk_StudentEnabled.Location = new System.Drawing.Point(432, 264);
-            chk_StudentEnabled.Name = "chk_StudentEnabled";
-            chk_StudentEnabled.Size = new System.Drawing.Size(127, 19);
-            chk_StudentEnabled.TabIndex = 18;
-            chk_StudentEnabled.Text = "Expediente cerrado";
-            chk_StudentEnabled.UseVisualStyleBackColor = true;
+            btn_RemoveReviewerAdvisor.Enabled = false;
+            btn_RemoveReviewerAdvisor.Location = new System.Drawing.Point(556, 305);
+            btn_RemoveReviewerAdvisor.Name = "btn_RemoveReviewerAdvisor";
+            btn_RemoveReviewerAdvisor.Size = new System.Drawing.Size(26, 24);
+            btn_RemoveReviewerAdvisor.TabIndex = 19;
+            btn_RemoveReviewerAdvisor.TabStop = false;
+            btn_RemoveReviewerAdvisor.Text = "X";
+            btn_RemoveReviewerAdvisor.UseVisualStyleBackColor = true;
+            btn_RemoveReviewerAdvisor.Click += RemoveReviewerAdvisor_Click;
             // 
-            // cb_StudentReviewerAdvisor
+            // btn_RemoveExternalAdvisor
             // 
-            cb_StudentReviewerAdvisor.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            cb_StudentReviewerAdvisor.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            cb_StudentReviewerAdvisor.FormattingEnabled = true;
-            cb_StudentReviewerAdvisor.Location = new System.Drawing.Point(6, 306);
-            cb_StudentReviewerAdvisor.Name = "cb_StudentReviewerAdvisor";
-            cb_StudentReviewerAdvisor.Size = new System.Drawing.Size(370, 23);
-            cb_StudentReviewerAdvisor.TabIndex = 17;
+            btn_RemoveExternalAdvisor.Enabled = false;
+            btn_RemoveExternalAdvisor.Location = new System.Drawing.Point(556, 261);
+            btn_RemoveExternalAdvisor.Name = "btn_RemoveExternalAdvisor";
+            btn_RemoveExternalAdvisor.Size = new System.Drawing.Size(26, 24);
+            btn_RemoveExternalAdvisor.TabIndex = 18;
+            btn_RemoveExternalAdvisor.TabStop = false;
+            btn_RemoveExternalAdvisor.Text = "X";
+            btn_RemoveExternalAdvisor.UseVisualStyleBackColor = true;
+            btn_RemoveExternalAdvisor.Click += RemoveExternalAdvisor_Click;
+            // 
+            // btn_RemoveInternalAdvisor
+            // 
+            btn_RemoveInternalAdvisor.Enabled = false;
+            btn_RemoveInternalAdvisor.Location = new System.Drawing.Point(556, 217);
+            btn_RemoveInternalAdvisor.Name = "btn_RemoveInternalAdvisor";
+            btn_RemoveInternalAdvisor.Size = new System.Drawing.Size(26, 24);
+            btn_RemoveInternalAdvisor.TabIndex = 0;
+            btn_RemoveInternalAdvisor.TabStop = false;
+            btn_RemoveInternalAdvisor.Text = "X";
+            btn_RemoveInternalAdvisor.UseVisualStyleBackColor = true;
+            btn_RemoveInternalAdvisor.Click += RemoveInternalAdvisor_Click;
+            // 
+            // tb_StudentReviewerAdvisor
+            // 
+            tb_StudentReviewerAdvisor.Enabled = false;
+            tb_StudentReviewerAdvisor.Location = new System.Drawing.Point(87, 306);
+            tb_StudentReviewerAdvisor.Name = "tb_StudentReviewerAdvisor";
+            tb_StudentReviewerAdvisor.Size = new System.Drawing.Size(463, 23);
+            tb_StudentReviewerAdvisor.TabIndex = 0;
+            tb_StudentReviewerAdvisor.Text = "SIN ASIGNAR";
+            // 
+            // tb_StudentExternalAdvisor
+            // 
+            tb_StudentExternalAdvisor.Enabled = false;
+            tb_StudentExternalAdvisor.Location = new System.Drawing.Point(87, 262);
+            tb_StudentExternalAdvisor.Name = "tb_StudentExternalAdvisor";
+            tb_StudentExternalAdvisor.Size = new System.Drawing.Size(463, 23);
+            tb_StudentExternalAdvisor.TabIndex = 0;
+            tb_StudentExternalAdvisor.Text = "SIN ASIGNAR";
+            // 
+            // tb_StudentInternalAdvisor
+            // 
+            tb_StudentInternalAdvisor.Enabled = false;
+            tb_StudentInternalAdvisor.Location = new System.Drawing.Point(87, 218);
+            tb_StudentInternalAdvisor.Name = "tb_StudentInternalAdvisor";
+            tb_StudentInternalAdvisor.Size = new System.Drawing.Size(463, 23);
+            tb_StudentInternalAdvisor.TabIndex = 0;
+            tb_StudentInternalAdvisor.Text = "SIN ASIGNAR";
+            // 
+            // button6
+            // 
+            button6.Location = new System.Drawing.Point(6, 306);
+            button6.Name = "button6";
+            button6.Size = new System.Drawing.Size(75, 23);
+            button6.TabIndex = 17;
+            button6.Text = "Seleccionar";
+            button6.UseVisualStyleBackColor = true;
+            button6.Click += ChoseReviewerAdvisor_Click;
+            // 
+            // btn_ChoseExternalAdvisor
+            // 
+            btn_ChoseExternalAdvisor.Enabled = false;
+            btn_ChoseExternalAdvisor.Location = new System.Drawing.Point(6, 262);
+            btn_ChoseExternalAdvisor.Name = "btn_ChoseExternalAdvisor";
+            btn_ChoseExternalAdvisor.Size = new System.Drawing.Size(75, 23);
+            btn_ChoseExternalAdvisor.TabIndex = 16;
+            btn_ChoseExternalAdvisor.Text = "Seleccionar";
+            btn_ChoseExternalAdvisor.UseVisualStyleBackColor = true;
+            btn_ChoseExternalAdvisor.Click += ChoseExternalAdvisor_Click;
+            // 
+            // button4
+            // 
+            button4.Location = new System.Drawing.Point(6, 218);
+            button4.Name = "button4";
+            button4.Size = new System.Drawing.Size(75, 23);
+            button4.TabIndex = 15;
+            button4.Text = "Seleccionar";
+            button4.UseVisualStyleBackColor = true;
+            button4.Click += ChoseInternalAdvisor_Click;
             // 
             // label18
             // 
@@ -323,17 +408,6 @@ namespace TECNM.Residencias.Forms.StudentForms
             label18.TabIndex = 0;
             label18.Text = "Revisor";
             // 
-            // cb_StudentExternalAdvisor
-            // 
-            cb_StudentExternalAdvisor.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            cb_StudentExternalAdvisor.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            cb_StudentExternalAdvisor.Enabled = false;
-            cb_StudentExternalAdvisor.FormattingEnabled = true;
-            cb_StudentExternalAdvisor.Location = new System.Drawing.Point(6, 262);
-            cb_StudentExternalAdvisor.Name = "cb_StudentExternalAdvisor";
-            cb_StudentExternalAdvisor.Size = new System.Drawing.Size(370, 23);
-            cb_StudentExternalAdvisor.TabIndex = 16;
-            // 
             // label17
             // 
             label17.AutoSize = true;
@@ -342,16 +416,6 @@ namespace TECNM.Residencias.Forms.StudentForms
             label17.Size = new System.Drawing.Size(85, 15);
             label17.TabIndex = 0;
             label17.Text = "Asesor externo";
-            // 
-            // cb_StudentInternalAdvisor
-            // 
-            cb_StudentInternalAdvisor.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            cb_StudentInternalAdvisor.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            cb_StudentInternalAdvisor.FormattingEnabled = true;
-            cb_StudentInternalAdvisor.Location = new System.Drawing.Point(6, 218);
-            cb_StudentInternalAdvisor.Name = "cb_StudentInternalAdvisor";
-            cb_StudentInternalAdvisor.Size = new System.Drawing.Size(370, 23);
-            cb_StudentInternalAdvisor.TabIndex = 15;
             // 
             // label16
             // 
@@ -494,6 +558,16 @@ namespace TECNM.Residencias.Forms.StudentForms
             button2.UseVisualStyleBackColor = true;
             button2.Click += ChoseCompany_Click;
             // 
+            // chk_StudentEnabled
+            // 
+            chk_StudentEnabled.AutoSize = true;
+            chk_StudentEnabled.Location = new System.Drawing.Point(121, 533);
+            chk_StudentEnabled.Name = "chk_StudentEnabled";
+            chk_StudentEnabled.Size = new System.Drawing.Size(127, 19);
+            chk_StudentEnabled.TabIndex = 18;
+            chk_StudentEnabled.Text = "Expediente cerrado";
+            chk_StudentEnabled.UseVisualStyleBackColor = true;
+            // 
             // groupBox9
             // 
             groupBox9.Controls.Add(tb_StudentNotes);
@@ -556,6 +630,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             Controls.Add(groupBox3);
             Controls.Add(button1);
             Controls.Add(groupBox1);
+            Controls.Add(chk_StudentEnabled);
             Controls.Add(btn_CancelEdit);
             DoubleBuffered = true;
             Icon = (System.Drawing.Icon) resources.GetObject("$this.Icon");
@@ -571,6 +646,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             groupBox9.PerformLayout();
             groupBox2.ResumeLayout(false);
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -611,10 +687,7 @@ namespace TECNM.Residencias.Forms.StudentForms
         private System.Windows.Forms.ComboBox cb_StudentSemester;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.ComboBox cb_StudentInternalAdvisor;
-        private System.Windows.Forms.ComboBox cb_StudentExternalAdvisor;
         private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.ComboBox cb_StudentReviewerAdvisor;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.GroupBox groupBox9;
         private System.Windows.Forms.TextBox tb_StudentNotes;
@@ -622,5 +695,14 @@ namespace TECNM.Residencias.Forms.StudentForms
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.FlowLayoutPanel flp_Documents;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button btn_ChoseExternalAdvisor;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.TextBox tb_StudentReviewerAdvisor;
+        private System.Windows.Forms.TextBox tb_StudentExternalAdvisor;
+        private System.Windows.Forms.TextBox tb_StudentInternalAdvisor;
+        private System.Windows.Forms.Button btn_RemoveInternalAdvisor;
+        private System.Windows.Forms.Button btn_RemoveReviewerAdvisor;
+        private System.Windows.Forms.Button btn_RemoveExternalAdvisor;
     }
 }

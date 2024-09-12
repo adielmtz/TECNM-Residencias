@@ -9,7 +9,7 @@ namespace TECNM.Residencias.Data.Validators
         public CompanyValidator()
         {
             ClassLevelCascadeMode = CascadeMode.Stop;
-            //RuleFor(c => c.Rfc).NotEmpty().WithMessage("Debe proporcionar el RFC de la empresa.");
+            RuleFor(c => c.Rfc).NotEmpty().When(c => c.Rfc != null).WithMessage("Debe proporcionar el RFC de la empresa.");
             RuleFor(c => c.Type).IsInEnum().WithMessage("Debe seleccionar el giro de la empresa.");
             RuleFor(c => c.Name).NotEmpty().WithMessage("El nombre de la empresa no puede estar vacío.");
             RuleFor(c => c.Email).EmailAddress().When(c => c.Email.Length > 0).WithMessage("Debe introducir una dirección de email válida.");

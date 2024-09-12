@@ -99,7 +99,7 @@ namespace TECNM.Residencias.Forms
             groupBox2.Controls.Add(label3);
             groupBox2.Controls.Add(label2);
             groupBox2.Controls.Add(label1);
-            groupBox2.Location = new System.Drawing.Point(541, 351);
+            groupBox2.Location = new System.Drawing.Point(541, 366);
             groupBox2.Name = "groupBox2";
             groupBox2.Size = new System.Drawing.Size(247, 72);
             groupBox2.TabIndex = 2;
@@ -136,7 +136,7 @@ namespace TECNM.Residencias.Forms
             // linkLabel1
             // 
             linkLabel1.AutoSize = true;
-            linkLabel1.Location = new System.Drawing.Point(705, 426);
+            linkLabel1.Location = new System.Drawing.Point(705, 348);
             linkLabel1.Name = "linkLabel1";
             linkLabel1.Size = new System.Drawing.Size(83, 15);
             linkLabel1.TabIndex = 3;

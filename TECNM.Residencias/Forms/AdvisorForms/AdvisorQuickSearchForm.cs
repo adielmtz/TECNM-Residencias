@@ -3,32 +3,34 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
 
-namespace TECNM.Residencias.Forms.CompanyForms
+namespace TECNM.Residencias.Forms.AdvisorForms
 {
-    public sealed partial class CompanyQuickSearchForm : Form
+    public sealed partial class AdvisorQuickSearchForm : Form
     {
-        public Company? SelectedCompany { get; private set; }
+        public Advisor? SelectedAdvisor { get; private set; }
+        public Company? FilterCompany { get; set; }
+        public AdvisorType? FilterType { get; set; }
 
-        public CompanyQuickSearchForm()
+        public AdvisorQuickSearchForm()
         {
             InitializeComponent();
         }
 
         private void RunSearch_Click(object sender, EventArgs e)
         {
-            SearchCompanies();
+            SearchAdvisors();
         }
 
         private void SearchQuery_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char) Keys.Enter)
             {
-                SearchCompanies();
+                SearchAdvisors();
                 e.Handled = true;
             }
         }
 
-        private void SearchCompanies()
+        private void SearchAdvisors()
         {
             string query = tb_SearchQuery.Text.Trim();
             if (query.Length == 0)
@@ -37,18 +39,27 @@ namespace TECNM.Residencias.Forms.CompanyForms
             }
 
             using var context = new AppDbContext();
-            IEnumerable<Company> companies = context.Companies.Search(query, 50, 1);
+            IEnumerable<Advisor> advisors = context.Advisors.Search(query, 50, 1);
 
             dgv_ListView.Rows.Clear();
 
-            foreach (Company company in companies)
+            foreach (Advisor advisor in advisors)
             {
+                if (FilterCompany != null && advisor.CompanyId != FilterCompany.Id)
+                {
+                    continue;
+                }
+
+                if (FilterType != null && advisor.Type != FilterType)
+                {
+                    continue;
+                }
+
                 int index = dgv_ListView.Rows.Add();
                 DataGridViewRow row = dgv_ListView.Rows[index];
 
-                row.Tag = company;
-                row.Cells[0].Value = company.Rfc;
-                row.Cells[1].Value = company.Name;
+                row.Tag = advisor;
+                row.Cells[0].Value = advisor.ToString();
             }
 
             dgv_ListView.ClearSelection();
@@ -59,7 +70,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
             var grid = (DataGridView) sender;
             if (grid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
             {
-                SelectedCompany = (Company) grid.Rows[e.RowIndex].Tag!;
+                SelectedAdvisor = (Advisor) grid.Rows[e.RowIndex].Tag!;
                 Close();
             }
         }

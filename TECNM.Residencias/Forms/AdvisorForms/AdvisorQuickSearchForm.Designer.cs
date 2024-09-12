@@ -1,6 +1,6 @@
-﻿namespace TECNM.Residencias.Forms.CompanyForms
+namespace TECNM.Residencias.Forms.AdvisorForms
 {
-    partial class CompanyQuickSearchForm
+    partial class AdvisorQuickSearchForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,14 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CompanyQuickSearchForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdvisorQuickSearchForm));
             label1 = new System.Windows.Forms.Label();
             tb_SearchQuery = new System.Windows.Forms.TextBox();
             button1 = new System.Windows.Forms.Button();
             dgv_ListView = new System.Windows.Forms.DataGridView();
-            ListCompanyRfc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ListCompanyName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ListCompanySelect = new System.Windows.Forms.DataGridViewButtonColumn();
+            ListAdvisorName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            ListAdvisorAction = new System.Windows.Forms.DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize) dgv_ListView).BeginInit();
             SuspendLayout();
             // 
@@ -44,15 +43,15 @@
             label1.AutoSize = true;
             label1.Location = new System.Drawing.Point(12, 9);
             label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(85, 15);
+            label1.Size = new System.Drawing.Size(51, 15);
             label1.TabIndex = 0;
-            label1.Text = "Nombre o RFC";
+            label1.Text = "Nombre";
             // 
             // tb_SearchQuery
             // 
-            tb_SearchQuery.Location = new System.Drawing.Point(103, 6);
+            tb_SearchQuery.Location = new System.Drawing.Point(69, 6);
             tb_SearchQuery.Name = "tb_SearchQuery";
-            tb_SearchQuery.Size = new System.Drawing.Size(352, 23);
+            tb_SearchQuery.Size = new System.Drawing.Size(386, 23);
             tb_SearchQuery.TabIndex = 1;
             tb_SearchQuery.KeyPress += SearchQuery_KeyPress;
             // 
@@ -72,7 +71,7 @@
             dgv_ListView.AllowUserToDeleteRows = false;
             dgv_ListView.AllowUserToResizeRows = false;
             dgv_ListView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgv_ListView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { ListCompanyRfc, ListCompanyName, ListCompanySelect });
+            dgv_ListView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { ListAdvisorName, ListAdvisorAction });
             dgv_ListView.Location = new System.Drawing.Point(12, 35);
             dgv_ListView.Name = "dgv_ListView";
             dgv_ListView.ReadOnly = true;
@@ -82,32 +81,24 @@
             dgv_ListView.TabIndex = 3;
             dgv_ListView.CellContentClick += ListView_CellContentClick;
             // 
-            // ListCompanyRfc
+            // ListAdvisorName
             // 
-            ListCompanyRfc.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            ListCompanyRfc.HeaderText = "RFC";
-            ListCompanyRfc.Name = "ListCompanyRfc";
-            ListCompanyRfc.ReadOnly = true;
-            ListCompanyRfc.Width = 53;
+            ListAdvisorName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            ListAdvisorName.HeaderText = "Nombre";
+            ListAdvisorName.Name = "ListAdvisorName";
+            ListAdvisorName.ReadOnly = true;
             // 
-            // ListCompanyName
+            // ListAdvisorAction
             // 
-            ListCompanyName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            ListCompanyName.HeaderText = "Nombre";
-            ListCompanyName.Name = "ListCompanyName";
-            ListCompanyName.ReadOnly = true;
+            ListAdvisorAction.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            ListAdvisorAction.HeaderText = "Acción";
+            ListAdvisorAction.Name = "ListAdvisorAction";
+            ListAdvisorAction.ReadOnly = true;
+            ListAdvisorAction.Text = "Seleccionar";
+            ListAdvisorAction.UseColumnTextForButtonValue = true;
+            ListAdvisorAction.Width = 50;
             // 
-            // ListCompanySelect
-            // 
-            ListCompanySelect.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            ListCompanySelect.HeaderText = "Acción";
-            ListCompanySelect.Name = "ListCompanySelect";
-            ListCompanySelect.ReadOnly = true;
-            ListCompanySelect.Text = "Seleccionar";
-            ListCompanySelect.UseColumnTextForButtonValue = true;
-            ListCompanySelect.Width = 50;
-            // 
-            // CompanyQuickSearchForm
+            // AdvisorQuickSearchForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -117,9 +108,9 @@
             Controls.Add(tb_SearchQuery);
             Controls.Add(label1);
             Icon = (System.Drawing.Icon) resources.GetObject("$this.Icon");
-            Name = "CompanyQuickSearchForm";
+            Name = "AdvisorQuickSearchForm";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            Text = "Buscar empresa";
+            Text = "Buscar asesor";
             ((System.ComponentModel.ISupportInitialize) dgv_ListView).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -131,8 +122,7 @@
         private System.Windows.Forms.TextBox tb_SearchQuery;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.DataGridView dgv_ListView;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ListCompanyRfc;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ListCompanyName;
-        private System.Windows.Forms.DataGridViewButtonColumn ListCompanySelect;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ListAdvisorName;
+        private System.Windows.Forms.DataGridViewButtonColumn ListAdvisorAction;
     }
 }

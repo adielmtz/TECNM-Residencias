@@ -130,8 +130,8 @@ namespace TECNM.Residencias.Forms.StudentForms
                 row.Cells[3].Value = student.Email;
                 row.Cells[4].Value = specialty.Name;
                 row.Cells[5].Value = student.Semester;
-                row.Cells[6].Value = student.StartDate;
-                row.Cells[7].Value = student.EndDate;
+                row.Cells[6].Value = student.StartDate.ToShortDateString();
+                row.Cells[7].Value = student.EndDate.ToShortDateString();
                 row.Cells[8].Value = internAdvisor?.ToString() ?? "SIN ASIGNAR";
                 row.Cells[9].Value = externAdvisor?.ToString() ?? "SIN ASIGNAR";
                 row.Cells[10].Value = reviewer?.ToString() ?? "SIN ASIGNAR";

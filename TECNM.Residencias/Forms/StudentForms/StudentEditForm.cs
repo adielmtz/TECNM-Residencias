@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using TECNM.Residencias.Controls;
 using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Data.Validators;
+using TECNM.Residencias.Forms.AdvisorForms;
 using TECNM.Residencias.Forms.CompanyForms;
 using TECNM.Residencias.Services;
 
@@ -19,13 +20,15 @@ namespace TECNM.Residencias.Forms.StudentForms
         private readonly FormConfirmClosingService closeConfirmService;
         private Student _student = new Student();
         private Company _company = new Company();
-        private bool _promptExitConfirm = false;
+        private Advisor? _internalAdvisor;
+        private Advisor? _externalAdvisor;
+        private Advisor? _reviewerAdvisor;
 
         public StudentEditForm()
         {
             InitializeComponent();
             closeConfirmService = new FormConfirmClosingService(this);
-    }
+        }
 
         public StudentEditForm(Student? entity) : this()
         {
@@ -66,14 +69,6 @@ namespace TECNM.Residencias.Forms.StudentForms
             }
 
             cb_StudentSpecialty.Enabled = false;
-
-            IEnumerable<Advisor> advisors = context.Advisors.EnumerateAdvisorsByType(AdvisorType.Internal);
-
-            foreach (Advisor advisor in advisors)
-            {
-                cb_StudentInternalAdvisor.Items.Add(advisor);
-                cb_StudentReviewerAdvisor.Items.Add(advisor);
-            }
 
             if (_student.Id > 0)
             {
@@ -134,6 +129,130 @@ namespace TECNM.Residencias.Forms.StudentForms
             }
         }
 
+        private void ChoseInternalAdvisor_Click(object sender, EventArgs e)
+        {
+            while (true)
+            {
+                using var dialog = new AdvisorQuickSearchForm();
+                dialog.FilterType = AdvisorType.Internal;
+                dialog.ShowDialog();
+
+                Advisor? selected = dialog.SelectedAdvisor;
+                if (selected != null)
+                {
+                    SetInternalAdvisor(selected);
+                    break;
+                }
+
+                DialogResult result = MessageBox.Show(
+                    "No se seleccionó ningún asesor.",
+                    "Información",
+                    MessageBoxButtons.RetryCancel,
+                    MessageBoxIcon.Information
+                );
+
+                if (result == DialogResult.Cancel)
+                {
+                    break;
+                }
+            }
+        }
+
+        private void ChoseExternalAdvisor_Click(object sender, EventArgs e)
+        {
+            while (true)
+            {
+                using var dialog = new AdvisorQuickSearchForm();
+                dialog.FilterCompany = _company;
+                dialog.ShowDialog();
+
+                Advisor? selected = dialog.SelectedAdvisor;
+                if (selected != null)
+                {
+                    SetExternalAdvisor(selected);
+                    break;
+                }
+
+                DialogResult result = MessageBox.Show(
+                    "No se seleccionó ningún asesor.",
+                    "Información",
+                    MessageBoxButtons.RetryCancel,
+                    MessageBoxIcon.Information
+                );
+
+                if (result == DialogResult.Cancel)
+                {
+                    break;
+                }
+            }
+        }
+
+        private void ChoseReviewerAdvisor_Click(object sender, EventArgs e)
+        {
+            while (true)
+            {
+                using var dialog = new AdvisorQuickSearchForm();
+                dialog.FilterType = AdvisorType.Internal;
+                dialog.ShowDialog();
+
+                Advisor? selected = dialog.SelectedAdvisor;
+                if (selected != null)
+                {
+                    SetReviewerAdvisor(selected);
+                    break;
+                }
+
+                DialogResult result = MessageBox.Show(
+                    "No se seleccionó ningún asesor.",
+                    "Información",
+                    MessageBoxButtons.RetryCancel,
+                    MessageBoxIcon.Information
+                );
+
+                if (result == DialogResult.Cancel)
+                {
+                    break;
+                }
+            }
+        }
+
+        private void RemoveInternalAdvisor_Click(object sender, EventArgs e)
+        {
+            if (ConfirmAdvisorRemovalDialog() == DialogResult.OK)
+            {
+                SetInternalAdvisor(null);
+                btn_RemoveInternalAdvisor.Enabled = false;
+            }
+        }
+
+        private void RemoveExternalAdvisor_Click(object sender, EventArgs e)
+        {
+            if (ConfirmAdvisorRemovalDialog() == DialogResult.OK)
+            {
+                SetExternalAdvisor(null);
+                btn_RemoveExternalAdvisor.Enabled = false;
+            }
+        }
+
+        private void RemoveReviewerAdvisor_Click(object sender, EventArgs e)
+        {
+            if (ConfirmAdvisorRemovalDialog() == DialogResult.OK)
+            {
+                SetReviewerAdvisor(null);
+                btn_RemoveReviewerAdvisor.Enabled = false;
+            }
+        }
+
+        private DialogResult ConfirmAdvisorRemovalDialog()
+        {
+            return MessageBox.Show(
+                "¿Eliminar este asesor?",
+                "Confirmar acción",
+                MessageBoxButtons.OKCancel,
+                MessageBoxIcon.Warning
+            );
+        }
+
         private void AddStudentDocument_Click(object sender, EventArgs e)
         {
             var control = new StudentDocumentFieldControl();
@@ -166,9 +285,6 @@ namespace TECNM.Residencias.Forms.StudentForms
         {
             Student _student = this._student;
             Specialty? specialty = (Specialty?) cb_StudentSpecialty.SelectedItem;
-            Advisor? internalAdvisor = (Advisor?) cb_StudentInternalAdvisor.SelectedItem;
-            Advisor? externalAdvisor = (Advisor?) cb_StudentExternalAdvisor.SelectedItem;
-            Advisor? reviewerAdvisor = (Advisor?) cb_StudentReviewerAdvisor.SelectedItem;
             string? semester = (string?) cb_StudentSemester.SelectedItem;
 
             _student.Id = TryConvertLong(tb_StudentId.Text.Trim());
@@ -182,9 +298,9 @@ namespace TECNM.Residencias.Forms.StudentForms
             _student.StartDate = dtp_StudentStartDate.Value.ToUniversalTime();
             _student.EndDate = dtp_StudentEndDate.Value.ToUniversalTime();
             _student.Project = tb_StudentProjectName.Text.Trim();
-            _student.InternalAdvisorId = internalAdvisor?.Id;
-            _student.ExternalAdvisorId = externalAdvisor?.Id;
-            _student.ReviewerAdvisorId = reviewerAdvisor?.Id;
+            _student.InternalAdvisorId = _internalAdvisor?.Id;
+            _student.ExternalAdvisorId = _externalAdvisor?.Id;
+            _student.ReviewerAdvisorId = _reviewerAdvisor?.Id;
             _student.CompanyId = _company.Id;
             _student.Department = tb_StudentDepartment.Text.Trim();
             _student.Schedule = tb_StudentSchedule.Text.Trim();
@@ -245,36 +361,25 @@ namespace TECNM.Residencias.Forms.StudentForms
 
             cb_StudentSpecialty.Enabled = cb_StudentSpecialty.Items.Count > 0;
 
-            Company? company = context.Companies.GetCompanyById(_student.CompanyId);
-            if (company != null)
-            {
-                SetCompany(company, context);
-            }
+            Company company = context.Companies.GetCompanyById(_student.CompanyId)!;
+            SetCompany(company);
 
             if (_student.InternalAdvisorId != null)
             {
-                for (int i = 0; i < cb_StudentInternalAdvisor.Items.Count; i++)
-                {
-                    Advisor advisor = (Advisor) cb_StudentInternalAdvisor.Items[i]!;
-                    if (advisor.Id == _student.InternalAdvisorId)
-                    {
-                        cb_StudentInternalAdvisor.SelectedIndex = i;
-                        break;
-                    }
-                }
+                Advisor? internalAdvisor = context.Advisors.GetAdvisorById((long) _student.InternalAdvisorId);
+                SetInternalAdvisor(internalAdvisor);
+            }
+
+            if (_student.ExternalAdvisorId != null)
+            {
+                Advisor? externalAdvisor = context.Advisors.GetAdvisorById((long) _student.ExternalAdvisorId);
+                SetExternalAdvisor(externalAdvisor);
             }
 
             if (_student.ReviewerAdvisorId != null)
             {
-                for (int i = 0; i < cb_StudentReviewerAdvisor.Items.Count; i++)
-                {
-                    Advisor advisor = (Advisor) cb_StudentReviewerAdvisor.Items[i]!;
-                    if (advisor.Id == _student.ReviewerAdvisorId)
-                    {
-                        cb_StudentReviewerAdvisor.SelectedIndex = i;
-                        break;
-                    }
-                }
+                Advisor? reviewAdvisor = context.Advisors.GetAdvisorById((long) _student.ReviewerAdvisorId);
+                SetReviewerAdvisor(reviewAdvisor);
             }
 
             /// Load documents
@@ -289,32 +394,30 @@ namespace TECNM.Residencias.Forms.StudentForms
 
         private void SetCompany(Company company)
         {
-            using var context = new AppDbContext();
-            SetCompany(company, context);
-        }
-
-        private void SetCompany(Company company, AppDbContext context)
-        {
             _company = company;
             tb_StudentCompany.Text = company.Name;
+            btn_ChoseExternalAdvisor.Enabled = true;
+        }
 
-            IEnumerable<Advisor> advisors = context.Advisors.EnumerateAdvisorsByCompany(company.Id);
+        private void SetInternalAdvisor(Advisor? advisor)
+        {
+            _internalAdvisor = advisor;
+            tb_StudentInternalAdvisor.Text = advisor != null ? advisor.ToString() : "SIN ASIGNAR";
+            btn_RemoveInternalAdvisor.Enabled = advisor != null;
+        }
 
-            cb_StudentExternalAdvisor.Enabled = false;
-            cb_StudentExternalAdvisor.Items.Clear();
-            cb_StudentExternalAdvisor.SelectedIndex = -1;
-            cb_StudentExternalAdvisor.ResetText();
+        private void SetExternalAdvisor(Advisor? advisor)
+        {
+            _externalAdvisor = advisor;
+            tb_StudentExternalAdvisor.Text = advisor != null ? advisor.ToString() : "SIN ASIGNAR";
+            btn_RemoveExternalAdvisor.Enabled = advisor != null;
+        }
 
-            foreach (Advisor advisor in advisors)
-            {
-                int index = cb_StudentExternalAdvisor.Items.Add(advisor);
-                if (advisor.Id == _student.ExternalAdvisorId)
-                {
-                    cb_StudentExternalAdvisor.SelectedIndex = index;
-                }
-            }
-
-            cb_StudentExternalAdvisor.Enabled = true;
+        private void SetReviewerAdvisor(Advisor? advisor)
+        {
+            _reviewerAdvisor = advisor;
+            tb_StudentReviewerAdvisor.Text = advisor != null ? advisor.ToString() : "SIN ASIGNAR";
+            btn_RemoveReviewerAdvisor.Enabled = advisor != null;
         }
 
         private long TryConvertLong(string input)
