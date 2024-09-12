@@ -10,6 +10,7 @@ using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Data.Validators;
 using TECNM.Residencias.Forms.AdvisorForms;
 using TECNM.Residencias.Forms.CompanyForms;
+using TECNM.Residencias.Properties;
 using TECNM.Residencias.Services;
 
 namespace TECNM.Residencias.Forms.StudentForms
@@ -63,12 +64,25 @@ namespace TECNM.Residencias.Forms.StudentForms
             using var context = new AppDbContext();
             IEnumerable<Career> careers = context.Careers.EnumerateCareers(enabled: true);
 
+            Career? prefetchCareer = null;
+
             foreach (Career career in careers)
             {
-                cb_StudentCareer.Items.Add(career);
+                int index = cb_StudentCareer.Items.Add(career);
+                if (AppSettings.Default.StudentDefaultCareer == career.Id)
+                {
+                    cb_StudentCareer.SelectedIndex = index;
+                    prefetchCareer = career;
+                }
             }
 
             cb_StudentSpecialty.Enabled = false;
+
+            if (prefetchCareer != null)
+            {
+                IEnumerable<Specialty> specialties = context.Specialties.EnumerateSpecialtiesByCareer(prefetchCareer);
+                PopulateSpecialtyCombobox(specialties);
+            }
 
             if (_student.Id > 0)
             {
@@ -86,12 +100,16 @@ namespace TECNM.Residencias.Forms.StudentForms
                 return;
             }
 
+            using var context = new AppDbContext();
+            IEnumerable<Specialty> specialties = context.Specialties.EnumerateSpecialtiesByCareer(career.Id, enabled: true);
+            PopulateSpecialtyCombobox(specialties);
+        }
+
+        private void PopulateSpecialtyCombobox(IEnumerable<Specialty> specialties)
+        {
             cb_StudentSpecialty.Enabled = false;
             cb_StudentSpecialty.Items.Clear();
             cb_StudentSpecialty.SelectedIndex = -1;
-
-            using var context = new AppDbContext();
-            IEnumerable<Specialty> specialties = context.Specialties.EnumerateSpecialtiesByCareer(career.Id, enabled: true);
 
             foreach (Specialty specialty in specialties)
             {

@@ -1,7 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
+using TECNM.Residencias.Data.Entities;
+using TECNM.Residencias.Properties;
 
 namespace TECNM.Residencias.Forms
 {
@@ -16,6 +19,7 @@ namespace TECNM.Residencias.Forms
         private void SettingsForm_Load(object sender, EventArgs e)
         {
             lbl_SqliteVersion.Text = "SQLite " + GetSqliteVersion();
+            LoadSavedSettings();
         }
 
         private void DatabaseOptimize_Click(object sender, EventArgs e)
@@ -24,9 +28,6 @@ namespace TECNM.Residencias.Forms
 
             using var sqlite = App.Database.Open();
             using var command = sqlite.CreateCommand();
-
-            command.CommandText = "VACUUM";
-            command.ExecuteNonQuery();
 
             command.CommandText = "ANALYZE";
             command.ExecuteNonQuery();
@@ -85,21 +86,52 @@ namespace TECNM.Residencias.Forms
             Enabled = true;
         }
 
-        private void RepairDatabase()
-        {
-            // Keep the original db but rename it
-            File.Move(App.DatabaseFile, App.DatabaseFile + ".corrupt");
-
-            // Create a brand new db
-            App.Initialize();
-        }
-
         private void DatabaseBackup_Click(object sender, EventArgs e)
         {
-            using var dialog = new FolderBrowserDialog();
-            DialogResult result = dialog.ShowDialog();
+            //using var dialog = new FolderBrowserDialog();
+            //DialogResult result = dialog.ShowDialog();
+            MessageBox.Show("¡Módulo en construcción!");
+        }
 
-            MessageBox.Show("En construcción!");
+        private void SourceCodeGitHub_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            var info = new ProcessStartInfo
+            {
+                FileName = "https://github.com/adielmtz/TECNM-Residencias",
+                UseShellExecute = true,
+            };
+
+            Process.Start(info);
+        }
+
+        private void SaveAppSettings_Click(object sender, EventArgs e)
+        {
+            AppSettings.Default.AdvisorDefaultType = cb_AdvisorType.SelectedIndex - 1;
+            AppSettings.Default.CompanyDefaultType = cb_CompanyType.SelectedIndex - 1;
+            AppSettings.Default.StudentDefaultCareer = ((Career) cb_StudentCareer.SelectedItem!).Id;
+            AppSettings.Default.Save();
+            Close();
+        }
+
+        private void LoadSavedSettings()
+        {
+            cb_AdvisorType.SelectedIndex = AppSettings.Default.AdvisorDefaultType + 1;
+            cb_CompanyType.SelectedIndex = AppSettings.Default.CompanyDefaultType + 1;
+
+            using var context = new AppDbContext();
+            IEnumerable<Career> careers = context.Careers.EnumerateCareers();
+
+            cb_StudentCareer.Items.Add(new Career { Id = -1, Name = "Ninguno" });
+            cb_StudentCareer.SelectedIndex = 0;
+
+            foreach (Career career in careers)
+            {
+                int index = cb_StudentCareer.Items.Add(career);
+                if (AppSettings.Default.StudentDefaultCareer == career.Id)
+                {
+                    cb_StudentCareer.SelectedIndex = index;
+                }
+            }
         }
 
         private string GetSqliteVersion()
@@ -117,15 +149,13 @@ namespace TECNM.Residencias.Forms
             return "unknown version";
         }
 
-        private void SourceCodeGitHub_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void RepairDatabase()
         {
-            var info = new ProcessStartInfo
-            {
-                FileName = "https://github.com/adielmtz/TECNM-Residencias",
-                UseShellExecute = true,
-            };
+            // Keep the original db but rename it
+            File.Move(App.DatabaseFile, App.DatabaseFile + ".corrupt");
 
-            Process.Start(info);
+            // Create a brand new db
+            App.Initialize();
         }
     }
 }

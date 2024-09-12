@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Data.Validators;
+using TECNM.Residencias.Properties;
 using TECNM.Residencias.Services;
 
 namespace TECNM.Residencias.Forms.AdvisorForms
@@ -20,7 +21,7 @@ namespace TECNM.Residencias.Forms.AdvisorForms
         {
             InitializeComponent();
             closeConfirmService = new FormConfirmClosingService(this);
-            cb_AdvisorType.SelectedIndex = 0;
+            cb_AdvisorType.SelectedIndex = AppSettings.Default.AdvisorDefaultType;
         }
 
         public AdvisorEditForm(Company company, Advisor? entity) : this()

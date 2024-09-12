@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Data.Validators;
+using TECNM.Residencias.Properties;
 using TECNM.Residencias.Services;
 
 namespace TECNM.Residencias.Forms.CompanyForms
@@ -22,6 +23,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
         {
             InitializeComponent();
             closeConfirmService = new FormConfirmClosingService(this);
+            cb_CompanyType.SelectedIndex = AppSettings.Default.CompanyDefaultType;
         }
 
         public CompanyEditForm(Company? entity) : this()
