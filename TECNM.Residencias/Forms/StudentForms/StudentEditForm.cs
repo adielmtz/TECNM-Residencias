@@ -16,13 +16,16 @@ namespace TECNM.Residencias.Forms.StudentForms
     public sealed partial class StudentEditForm : Form
     {
         private readonly AbstractValidator<Student> _validator = new StudentValidator();
+        private readonly FormConfirmClosingService closeConfirmService;
         private Student _student = new Student();
         private Company _company = new Company();
+        private bool _promptExitConfirm = false;
 
         public StudentEditForm()
         {
             InitializeComponent();
-        }
+            closeConfirmService = new FormConfirmClosingService(this);
+    }
 
         public StudentEditForm(Student? entity) : this()
         {

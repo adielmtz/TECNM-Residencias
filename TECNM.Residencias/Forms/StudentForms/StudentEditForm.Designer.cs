@@ -88,7 +88,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             btn_CancelEdit.Location = new System.Drawing.Point(960, 530);
             btn_CancelEdit.Name = "btn_CancelEdit";
             btn_CancelEdit.Size = new System.Drawing.Size(100, 23);
-            btn_CancelEdit.TabIndex = 5;
+            btn_CancelEdit.TabIndex = 21;
             btn_CancelEdit.Text = "Cancelar";
             btn_CancelEdit.UseVisualStyleBackColor = true;
             // 
@@ -113,7 +113,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             groupBox1.Location = new System.Drawing.Point(12, 12);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new System.Drawing.Size(588, 162);
-            groupBox1.TabIndex = 6;
+            groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             groupBox1.Text = "Información general";
             // 
@@ -123,7 +123,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             label8.Location = new System.Drawing.Point(6, 68);
             label8.Name = "label8";
             label8.Size = new System.Drawing.Size(32, 15);
-            label8.TabIndex = 15;
+            label8.TabIndex = 0;
             label8.Text = "Sexo";
             // 
             // cb_StudentGender
@@ -134,7 +134,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             cb_StudentGender.Location = new System.Drawing.Point(6, 86);
             cb_StudentGender.Name = "cb_StudentGender";
             cb_StudentGender.Size = new System.Drawing.Size(97, 23);
-            cb_StudentGender.TabIndex = 14;
+            cb_StudentGender.TabIndex = 4;
             // 
             // cb_StudentSpecialty
             // 
@@ -143,7 +143,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             cb_StudentSpecialty.Location = new System.Drawing.Point(310, 130);
             cb_StudentSpecialty.Name = "cb_StudentSpecialty";
             cb_StudentSpecialty.Size = new System.Drawing.Size(272, 23);
-            cb_StudentSpecialty.TabIndex = 13;
+            cb_StudentSpecialty.TabIndex = 8;
             // 
             // label7
             // 
@@ -151,7 +151,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             label7.Location = new System.Drawing.Point(310, 112);
             label7.Name = "label7";
             label7.Size = new System.Drawing.Size(72, 15);
-            label7.TabIndex = 12;
+            label7.TabIndex = 0;
             label7.Text = "Especialidad";
             // 
             // cb_StudentCareer
@@ -161,7 +161,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             cb_StudentCareer.Location = new System.Drawing.Point(6, 130);
             cb_StudentCareer.Name = "cb_StudentCareer";
             cb_StudentCareer.Size = new System.Drawing.Size(272, 23);
-            cb_StudentCareer.TabIndex = 11;
+            cb_StudentCareer.TabIndex = 7;
             // 
             // label6
             // 
@@ -169,7 +169,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             label6.Location = new System.Drawing.Point(6, 112);
             label6.Name = "label6";
             label6.Size = new System.Drawing.Size(45, 15);
-            label6.TabIndex = 10;
+            label6.TabIndex = 0;
             label6.Text = "Carrera";
             // 
             // tb_StudentPhone
@@ -177,7 +177,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             tb_StudentPhone.Location = new System.Drawing.Point(365, 86);
             tb_StudentPhone.Name = "tb_StudentPhone";
             tb_StudentPhone.Size = new System.Drawing.Size(217, 23);
-            tb_StudentPhone.TabIndex = 9;
+            tb_StudentPhone.TabIndex = 6;
             // 
             // label5
             // 
@@ -185,7 +185,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             label5.Location = new System.Drawing.Point(365, 68);
             label5.Name = "label5";
             label5.Size = new System.Drawing.Size(52, 15);
-            label5.TabIndex = 8;
+            label5.TabIndex = 0;
             label5.Text = "Teléfono";
             // 
             // tb_StudentEmail
@@ -193,7 +193,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             tb_StudentEmail.Location = new System.Drawing.Point(109, 86);
             tb_StudentEmail.Name = "tb_StudentEmail";
             tb_StudentEmail.Size = new System.Drawing.Size(250, 23);
-            tb_StudentEmail.TabIndex = 7;
+            tb_StudentEmail.TabIndex = 5;
             // 
             // label4
             // 
@@ -201,7 +201,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             label4.Location = new System.Drawing.Point(109, 68);
             label4.Name = "label4";
             label4.Size = new System.Drawing.Size(43, 15);
-            label4.TabIndex = 6;
+            label4.TabIndex = 0;
             label4.Text = "Correo";
             // 
             // tb_StudentLastName
@@ -209,7 +209,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             tb_StudentLastName.Location = new System.Drawing.Point(332, 42);
             tb_StudentLastName.Name = "tb_StudentLastName";
             tb_StudentLastName.Size = new System.Drawing.Size(250, 23);
-            tb_StudentLastName.TabIndex = 5;
+            tb_StudentLastName.TabIndex = 3;
             // 
             // label3
             // 
@@ -217,7 +217,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             label3.Location = new System.Drawing.Point(332, 24);
             label3.Name = "label3";
             label3.Size = new System.Drawing.Size(56, 15);
-            label3.TabIndex = 4;
+            label3.TabIndex = 0;
             label3.Text = "Apellidos";
             // 
             // label2
@@ -226,7 +226,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             label2.Location = new System.Drawing.Point(76, 24);
             label2.Name = "label2";
             label2.Size = new System.Drawing.Size(51, 15);
-            label2.TabIndex = 3;
+            label2.TabIndex = 0;
             label2.Text = "Nombre";
             // 
             // tb_StudentFirstName
@@ -258,7 +258,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             button1.Location = new System.Drawing.Point(12, 530);
             button1.Name = "button1";
             button1.Size = new System.Drawing.Size(100, 23);
-            button1.TabIndex = 8;
+            button1.TabIndex = 20;
             button1.Text = "Guardar";
             button1.UseVisualStyleBackColor = true;
             button1.Click += SaveEdit_Click;
@@ -290,7 +290,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             groupBox3.Location = new System.Drawing.Point(12, 180);
             groupBox3.Name = "groupBox3";
             groupBox3.Size = new System.Drawing.Size(588, 344);
-            groupBox3.TabIndex = 9;
+            groupBox3.TabIndex = 1;
             groupBox3.TabStop = false;
             groupBox3.Text = "Proyecto";
             // 
@@ -300,7 +300,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             chk_StudentEnabled.Location = new System.Drawing.Point(432, 264);
             chk_StudentEnabled.Name = "chk_StudentEnabled";
             chk_StudentEnabled.Size = new System.Drawing.Size(127, 19);
-            chk_StudentEnabled.TabIndex = 21;
+            chk_StudentEnabled.TabIndex = 18;
             chk_StudentEnabled.Text = "Expediente cerrado";
             chk_StudentEnabled.UseVisualStyleBackColor = true;
             // 
@@ -312,7 +312,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             cb_StudentReviewerAdvisor.Location = new System.Drawing.Point(6, 306);
             cb_StudentReviewerAdvisor.Name = "cb_StudentReviewerAdvisor";
             cb_StudentReviewerAdvisor.Size = new System.Drawing.Size(370, 23);
-            cb_StudentReviewerAdvisor.TabIndex = 20;
+            cb_StudentReviewerAdvisor.TabIndex = 17;
             // 
             // label18
             // 
@@ -320,7 +320,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             label18.Location = new System.Drawing.Point(6, 288);
             label18.Name = "label18";
             label18.Size = new System.Drawing.Size(45, 15);
-            label18.TabIndex = 19;
+            label18.TabIndex = 0;
             label18.Text = "Revisor";
             // 
             // cb_StudentExternalAdvisor
@@ -332,7 +332,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             cb_StudentExternalAdvisor.Location = new System.Drawing.Point(6, 262);
             cb_StudentExternalAdvisor.Name = "cb_StudentExternalAdvisor";
             cb_StudentExternalAdvisor.Size = new System.Drawing.Size(370, 23);
-            cb_StudentExternalAdvisor.TabIndex = 18;
+            cb_StudentExternalAdvisor.TabIndex = 16;
             // 
             // label17
             // 
@@ -340,7 +340,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             label17.Location = new System.Drawing.Point(6, 244);
             label17.Name = "label17";
             label17.Size = new System.Drawing.Size(85, 15);
-            label17.TabIndex = 17;
+            label17.TabIndex = 0;
             label17.Text = "Asesor externo";
             // 
             // cb_StudentInternalAdvisor
@@ -351,7 +351,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             cb_StudentInternalAdvisor.Location = new System.Drawing.Point(6, 218);
             cb_StudentInternalAdvisor.Name = "cb_StudentInternalAdvisor";
             cb_StudentInternalAdvisor.Size = new System.Drawing.Size(370, 23);
-            cb_StudentInternalAdvisor.TabIndex = 16;
+            cb_StudentInternalAdvisor.TabIndex = 15;
             // 
             // label16
             // 
@@ -359,12 +359,12 @@ namespace TECNM.Residencias.Forms.StudentForms
             label16.Location = new System.Drawing.Point(6, 200);
             label16.Name = "label16";
             label16.Size = new System.Drawing.Size(83, 15);
-            label16.TabIndex = 15;
+            label16.TabIndex = 0;
             label16.Text = "Asesor interno";
             // 
             // dtp_StudentEndDate
             // 
-            dtp_StudentEndDate.CustomFormat = "dd/MM/yyyy";
+            dtp_StudentEndDate.CustomFormat = "dd / MMM / yyyy";
             dtp_StudentEndDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             dtp_StudentEndDate.Location = new System.Drawing.Point(382, 174);
             dtp_StudentEndDate.Name = "dtp_StudentEndDate";
@@ -377,17 +377,17 @@ namespace TECNM.Residencias.Forms.StudentForms
             label15.Location = new System.Drawing.Point(382, 156);
             label15.Name = "label15";
             label15.Size = new System.Drawing.Size(86, 15);
-            label15.TabIndex = 13;
+            label15.TabIndex = 0;
             label15.Text = "Fecha de cierre";
             // 
             // dtp_StudentStartDate
             // 
-            dtp_StudentStartDate.CustomFormat = "dd/MM/yyyy";
+            dtp_StudentStartDate.CustomFormat = "dd / MMM / yyyy";
             dtp_StudentStartDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             dtp_StudentStartDate.Location = new System.Drawing.Point(176, 174);
             dtp_StudentStartDate.Name = "dtp_StudentStartDate";
             dtp_StudentStartDate.Size = new System.Drawing.Size(200, 23);
-            dtp_StudentStartDate.TabIndex = 12;
+            dtp_StudentStartDate.TabIndex = 13;
             // 
             // label14
             // 
@@ -395,7 +395,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             label14.Location = new System.Drawing.Point(176, 156);
             label14.Name = "label14";
             label14.Size = new System.Drawing.Size(86, 15);
-            label14.TabIndex = 11;
+            label14.TabIndex = 0;
             label14.Text = "Fecha de inicio";
             // 
             // cb_StudentSemester
@@ -406,7 +406,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             cb_StudentSemester.Location = new System.Drawing.Point(6, 174);
             cb_StudentSemester.Name = "cb_StudentSemester";
             cb_StudentSemester.Size = new System.Drawing.Size(146, 23);
-            cb_StudentSemester.TabIndex = 10;
+            cb_StudentSemester.TabIndex = 12;
             // 
             // label13
             // 
@@ -414,7 +414,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             label13.Location = new System.Drawing.Point(6, 156);
             label13.Name = "label13";
             label13.Size = new System.Drawing.Size(55, 15);
-            label13.TabIndex = 9;
+            label13.TabIndex = 0;
             label13.Text = "Semestre";
             // 
             // tb_StudentSchedule
@@ -422,7 +422,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             tb_StudentSchedule.Location = new System.Drawing.Point(432, 130);
             tb_StudentSchedule.Name = "tb_StudentSchedule";
             tb_StudentSchedule.Size = new System.Drawing.Size(150, 23);
-            tb_StudentSchedule.TabIndex = 8;
+            tb_StudentSchedule.TabIndex = 11;
             // 
             // label12
             // 
@@ -430,7 +430,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             label12.Location = new System.Drawing.Point(432, 112);
             label12.Name = "label12";
             label12.Size = new System.Drawing.Size(47, 15);
-            label12.TabIndex = 7;
+            label12.TabIndex = 0;
             label12.Text = "Horario";
             // 
             // tb_StudentDepartment
@@ -438,7 +438,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             tb_StudentDepartment.Location = new System.Drawing.Point(6, 130);
             tb_StudentDepartment.Name = "tb_StudentDepartment";
             tb_StudentDepartment.Size = new System.Drawing.Size(420, 23);
-            tb_StudentDepartment.TabIndex = 6;
+            tb_StudentDepartment.TabIndex = 10;
             // 
             // label11
             // 
@@ -446,7 +446,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             label11.Location = new System.Drawing.Point(6, 112);
             label11.Name = "label11";
             label11.Size = new System.Drawing.Size(83, 15);
-            label11.TabIndex = 5;
+            label11.TabIndex = 0;
             label11.Text = "Departamento";
             // 
             // tb_StudentCompany
@@ -455,7 +455,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             tb_StudentCompany.Location = new System.Drawing.Point(87, 86);
             tb_StudentCompany.Name = "tb_StudentCompany";
             tb_StudentCompany.Size = new System.Drawing.Size(495, 23);
-            tb_StudentCompany.TabIndex = 4;
+            tb_StudentCompany.TabIndex = 0;
             tb_StudentCompany.Text = "SIN ASIGNAR";
             // 
             // label10
@@ -464,7 +464,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             label10.Location = new System.Drawing.Point(6, 68);
             label10.Name = "label10";
             label10.Size = new System.Drawing.Size(52, 15);
-            label10.TabIndex = 3;
+            label10.TabIndex = 0;
             label10.Text = "Empresa";
             // 
             // tb_StudentProjectName
@@ -472,7 +472,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             tb_StudentProjectName.Location = new System.Drawing.Point(6, 42);
             tb_StudentProjectName.Name = "tb_StudentProjectName";
             tb_StudentProjectName.Size = new System.Drawing.Size(576, 23);
-            tb_StudentProjectName.TabIndex = 2;
+            tb_StudentProjectName.TabIndex = 9;
             // 
             // label9
             // 
@@ -480,7 +480,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             label9.Location = new System.Drawing.Point(6, 24);
             label9.Name = "label9";
             label9.Size = new System.Drawing.Size(120, 15);
-            label9.TabIndex = 1;
+            label9.TabIndex = 0;
             label9.Text = "Nombre del proyecto";
             // 
             // button2
@@ -489,6 +489,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             button2.Name = "button2";
             button2.Size = new System.Drawing.Size(75, 23);
             button2.TabIndex = 0;
+            button2.TabStop = false;
             button2.Text = "Seleccionar";
             button2.UseVisualStyleBackColor = true;
             button2.Click += ChoseCompany_Click;
@@ -499,7 +500,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             groupBox9.Location = new System.Drawing.Point(606, 383);
             groupBox9.Name = "groupBox9";
             groupBox9.Size = new System.Drawing.Size(453, 141);
-            groupBox9.TabIndex = 11;
+            groupBox9.TabIndex = 3;
             groupBox9.TabStop = false;
             groupBox9.Text = "Observaciones";
             // 
@@ -510,7 +511,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             tb_StudentNotes.Multiline = true;
             tb_StudentNotes.Name = "tb_StudentNotes";
             tb_StudentNotes.Size = new System.Drawing.Size(441, 113);
-            tb_StudentNotes.TabIndex = 0;
+            tb_StudentNotes.TabIndex = 19;
             // 
             // groupBox2
             // 
@@ -519,7 +520,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             groupBox2.Location = new System.Drawing.Point(606, 12);
             groupBox2.Name = "groupBox2";
             groupBox2.Size = new System.Drawing.Size(454, 365);
-            groupBox2.TabIndex = 12;
+            groupBox2.TabIndex = 2;
             groupBox2.TabStop = false;
             groupBox2.Text = "Documentos";
             // 

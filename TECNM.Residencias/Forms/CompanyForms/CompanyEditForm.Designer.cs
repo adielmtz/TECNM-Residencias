@@ -74,8 +74,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
             cb_CompanyCountry.Location = new System.Drawing.Point(12, 291);
             cb_CompanyCountry.Name = "cb_CompanyCountry";
             cb_CompanyCountry.Size = new System.Drawing.Size(121, 23);
-            cb_CompanyCountry.TabIndex = 1;
-            cb_CompanyCountry.TabStop = false;
+            cb_CompanyCountry.TabIndex = 9;
             // 
             // label2
             // 
@@ -83,7 +82,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
             label2.Location = new System.Drawing.Point(139, 273);
             label2.Name = "label2";
             label2.Size = new System.Drawing.Size(42, 15);
-            label2.TabIndex = 2;
+            label2.TabIndex = 0;
             label2.Text = "Estado";
             // 
             // cb_CompanyState
@@ -95,8 +94,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
             cb_CompanyState.Location = new System.Drawing.Point(139, 291);
             cb_CompanyState.Name = "cb_CompanyState";
             cb_CompanyState.Size = new System.Drawing.Size(121, 23);
-            cb_CompanyState.TabIndex = 3;
-            cb_CompanyState.TabStop = false;
+            cb_CompanyState.TabIndex = 10;
             // 
             // label3
             // 
@@ -104,7 +102,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
             label3.Location = new System.Drawing.Point(266, 273);
             label3.Name = "label3";
             label3.Size = new System.Drawing.Size(45, 15);
-            label3.TabIndex = 4;
+            label3.TabIndex = 0;
             label3.Text = "Ciudad";
             // 
             // cb_CompanyCity
@@ -116,15 +114,14 @@ namespace TECNM.Residencias.Forms.CompanyForms
             cb_CompanyCity.Location = new System.Drawing.Point(266, 291);
             cb_CompanyCity.Name = "cb_CompanyCity";
             cb_CompanyCity.Size = new System.Drawing.Size(121, 23);
-            cb_CompanyCity.TabIndex = 5;
-            cb_CompanyCity.TabStop = false;
+            cb_CompanyCity.TabIndex = 11;
             // 
             // btn_CancelEdit
             // 
             btn_CancelEdit.Location = new System.Drawing.Point(259, 345);
             btn_CancelEdit.Name = "btn_CancelEdit";
             btn_CancelEdit.Size = new System.Drawing.Size(128, 23);
-            btn_CancelEdit.TabIndex = 6;
+            btn_CancelEdit.TabIndex = 14;
             btn_CancelEdit.Text = "Cancelar";
             btn_CancelEdit.UseVisualStyleBackColor = true;
             // 
@@ -134,7 +131,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
             label4.Location = new System.Drawing.Point(12, 9);
             label4.Name = "label4";
             label4.Size = new System.Drawing.Size(29, 15);
-            label4.TabIndex = 7;
+            label4.TabIndex = 0;
             label4.Text = "Giro";
             // 
             // cb_CompanyType
@@ -145,7 +142,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
             cb_CompanyType.Location = new System.Drawing.Point(12, 27);
             cb_CompanyType.Name = "cb_CompanyType";
             cb_CompanyType.Size = new System.Drawing.Size(121, 23);
-            cb_CompanyType.TabIndex = 0;
+            cb_CompanyType.TabIndex = 1;
             // 
             // label5
             // 
@@ -153,7 +150,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
             label5.Location = new System.Drawing.Point(139, 9);
             label5.Name = "label5";
             label5.Size = new System.Drawing.Size(28, 15);
-            label5.TabIndex = 9;
+            label5.TabIndex = 0;
             label5.Text = "RFC";
             // 
             // tb_CompanyRfc
@@ -161,7 +158,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
             tb_CompanyRfc.Location = new System.Drawing.Point(139, 27);
             tb_CompanyRfc.Name = "tb_CompanyRfc";
             tb_CompanyRfc.Size = new System.Drawing.Size(248, 23);
-            tb_CompanyRfc.TabIndex = 1;
+            tb_CompanyRfc.TabIndex = 2;
             // 
             // label6
             // 
@@ -169,7 +166,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
             label6.Location = new System.Drawing.Point(12, 53);
             label6.Name = "label6";
             label6.Size = new System.Drawing.Size(51, 15);
-            label6.TabIndex = 11;
+            label6.TabIndex = 0;
             label6.Text = "Nombre";
             // 
             // tb_CompanyName
@@ -177,7 +174,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
             tb_CompanyName.Location = new System.Drawing.Point(12, 71);
             tb_CompanyName.Name = "tb_CompanyName";
             tb_CompanyName.Size = new System.Drawing.Size(375, 23);
-            tb_CompanyName.TabIndex = 2;
+            tb_CompanyName.TabIndex = 3;
             // 
             // label7
             // 
@@ -185,7 +182,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
             label7.Location = new System.Drawing.Point(12, 185);
             label7.Name = "label7";
             label7.Size = new System.Drawing.Size(57, 15);
-            label7.TabIndex = 13;
+            label7.TabIndex = 0;
             label7.Text = "Dirección";
             // 
             // tb_CompanyAddress
@@ -193,7 +190,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
             tb_CompanyAddress.Location = new System.Drawing.Point(12, 203);
             tb_CompanyAddress.Name = "tb_CompanyAddress";
             tb_CompanyAddress.Size = new System.Drawing.Size(375, 23);
-            tb_CompanyAddress.TabIndex = 5;
+            tb_CompanyAddress.TabIndex = 6;
             // 
             // label8
             // 
@@ -201,7 +198,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
             label8.Location = new System.Drawing.Point(12, 229);
             label8.Name = "label8";
             label8.Size = new System.Drawing.Size(48, 15);
-            label8.TabIndex = 15;
+            label8.TabIndex = 0;
             label8.Text = "Colonia";
             // 
             // tb_CompanyLocality
@@ -209,7 +206,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
             tb_CompanyLocality.Location = new System.Drawing.Point(12, 247);
             tb_CompanyLocality.Name = "tb_CompanyLocality";
             tb_CompanyLocality.Size = new System.Drawing.Size(248, 23);
-            tb_CompanyLocality.TabIndex = 6;
+            tb_CompanyLocality.TabIndex = 7;
             // 
             // label9
             // 
@@ -217,7 +214,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
             label9.Location = new System.Drawing.Point(266, 229);
             label9.Name = "label9";
             label9.Size = new System.Drawing.Size(81, 15);
-            label9.TabIndex = 17;
+            label9.TabIndex = 0;
             label9.Text = "Código postal";
             // 
             // tb_CompanyPostalCode
@@ -225,7 +222,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
             tb_CompanyPostalCode.Location = new System.Drawing.Point(266, 247);
             tb_CompanyPostalCode.Name = "tb_CompanyPostalCode";
             tb_CompanyPostalCode.Size = new System.Drawing.Size(121, 23);
-            tb_CompanyPostalCode.TabIndex = 7;
+            tb_CompanyPostalCode.TabIndex = 8;
             // 
             // chk_CompanyEnabled
             // 
@@ -235,7 +232,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
             chk_CompanyEnabled.Location = new System.Drawing.Point(12, 320);
             chk_CompanyEnabled.Name = "chk_CompanyEnabled";
             chk_CompanyEnabled.Size = new System.Drawing.Size(71, 19);
-            chk_CompanyEnabled.TabIndex = 8;
+            chk_CompanyEnabled.TabIndex = 12;
             chk_CompanyEnabled.Text = "Habilitar";
             chk_CompanyEnabled.UseVisualStyleBackColor = true;
             // 
@@ -244,7 +241,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
             button1.Location = new System.Drawing.Point(12, 345);
             button1.Name = "button1";
             button1.Size = new System.Drawing.Size(128, 23);
-            button1.TabIndex = 20;
+            button1.TabIndex = 13;
             button1.Text = "Guardar";
             button1.UseVisualStyleBackColor = true;
             button1.Click += SaveEdit_Click;
@@ -255,7 +252,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
             label10.Location = new System.Drawing.Point(12, 97);
             label10.Name = "label10";
             label10.Size = new System.Drawing.Size(43, 15);
-            label10.TabIndex = 21;
+            label10.TabIndex = 0;
             label10.Text = "Correo";
             // 
             // tb_CompanyEmail
@@ -263,7 +260,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
             tb_CompanyEmail.Location = new System.Drawing.Point(12, 115);
             tb_CompanyEmail.Name = "tb_CompanyEmail";
             tb_CompanyEmail.Size = new System.Drawing.Size(373, 23);
-            tb_CompanyEmail.TabIndex = 3;
+            tb_CompanyEmail.TabIndex = 4;
             // 
             // label11
             // 
@@ -271,7 +268,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
             label11.Location = new System.Drawing.Point(12, 141);
             label11.Name = "label11";
             label11.Size = new System.Drawing.Size(52, 15);
-            label11.TabIndex = 23;
+            label11.TabIndex = 0;
             label11.Text = "Teléfono";
             // 
             // tb_CompanyPhone
@@ -279,7 +276,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
             tb_CompanyPhone.Location = new System.Drawing.Point(12, 159);
             tb_CompanyPhone.Name = "tb_CompanyPhone";
             tb_CompanyPhone.Size = new System.Drawing.Size(373, 23);
-            tb_CompanyPhone.TabIndex = 4;
+            tb_CompanyPhone.TabIndex = 5;
             // 
             // CompanyEditForm
             // 

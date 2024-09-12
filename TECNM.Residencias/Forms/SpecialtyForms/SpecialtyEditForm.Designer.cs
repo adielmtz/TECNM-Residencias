@@ -55,7 +55,7 @@ namespace TECNM.Residencias.Forms.SpecialtyForms
             cb_SpecialtyCareer.Location = new System.Drawing.Point(12, 27);
             cb_SpecialtyCareer.Name = "cb_SpecialtyCareer";
             cb_SpecialtyCareer.Size = new System.Drawing.Size(272, 23);
-            cb_SpecialtyCareer.TabIndex = 0;
+            cb_SpecialtyCareer.TabIndex = 1;
             cb_SpecialtyCareer.TabStop = false;
             // 
             // btn_CancelEdit
@@ -63,7 +63,7 @@ namespace TECNM.Residencias.Forms.SpecialtyForms
             btn_CancelEdit.Location = new System.Drawing.Point(156, 125);
             btn_CancelEdit.Name = "btn_CancelEdit";
             btn_CancelEdit.Size = new System.Drawing.Size(128, 23);
-            btn_CancelEdit.TabIndex = 4;
+            btn_CancelEdit.TabIndex = 5;
             btn_CancelEdit.Text = "Cancelar";
             btn_CancelEdit.UseVisualStyleBackColor = true;
             // 
@@ -72,7 +72,7 @@ namespace TECNM.Residencias.Forms.SpecialtyForms
             btn_SaveEdit.Location = new System.Drawing.Point(12, 125);
             btn_SaveEdit.Name = "btn_SaveEdit";
             btn_SaveEdit.Size = new System.Drawing.Size(128, 23);
-            btn_SaveEdit.TabIndex = 3;
+            btn_SaveEdit.TabIndex = 4;
             btn_SaveEdit.Text = "Guardar";
             btn_SaveEdit.UseVisualStyleBackColor = true;
             btn_SaveEdit.Click += SaveEdit_Click;
@@ -83,7 +83,7 @@ namespace TECNM.Residencias.Forms.SpecialtyForms
             label2.Location = new System.Drawing.Point(12, 53);
             label2.Name = "label2";
             label2.Size = new System.Drawing.Size(147, 15);
-            label2.TabIndex = 4;
+            label2.TabIndex = 0;
             label2.Text = "Nombre de la especialidad";
             // 
             // tb_SpecialtyName
@@ -91,7 +91,7 @@ namespace TECNM.Residencias.Forms.SpecialtyForms
             tb_SpecialtyName.Location = new System.Drawing.Point(12, 71);
             tb_SpecialtyName.Name = "tb_SpecialtyName";
             tb_SpecialtyName.Size = new System.Drawing.Size(272, 23);
-            tb_SpecialtyName.TabIndex = 1;
+            tb_SpecialtyName.TabIndex = 2;
             tb_SpecialtyName.KeyPress += SpecialtyName_KeyPress;
             // 
             // chk_SpecialtyEnabled
@@ -102,7 +102,7 @@ namespace TECNM.Residencias.Forms.SpecialtyForms
             chk_SpecialtyEnabled.Location = new System.Drawing.Point(12, 100);
             chk_SpecialtyEnabled.Name = "chk_SpecialtyEnabled";
             chk_SpecialtyEnabled.Size = new System.Drawing.Size(71, 19);
-            chk_SpecialtyEnabled.TabIndex = 2;
+            chk_SpecialtyEnabled.TabIndex = 3;
             chk_SpecialtyEnabled.Text = "Habilitar";
             chk_SpecialtyEnabled.UseVisualStyleBackColor = true;
             // 

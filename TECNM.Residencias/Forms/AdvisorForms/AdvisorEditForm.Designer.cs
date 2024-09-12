@@ -59,7 +59,6 @@
             btn_CancelEdit.TabIndex = 11;
             btn_CancelEdit.Text = "Cancelar";
             btn_CancelEdit.UseVisualStyleBackColor = true;
-            btn_CancelEdit.Click += CancelEdit_Click;
             // 
             // cb_AdvisorType
             // 
@@ -246,7 +245,6 @@
             Name = "AdvisorEditForm";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "Editar información";
-            FormClosing += AdvisorEditForm_FormClosing;
             Load += AdvisorEditForm_Load;
             ResumeLayout(false);
             PerformLayout();

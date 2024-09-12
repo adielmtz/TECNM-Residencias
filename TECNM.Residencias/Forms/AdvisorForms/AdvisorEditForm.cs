@@ -5,19 +5,21 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Data.Validators;
+using TECNM.Residencias.Services;
 
 namespace TECNM.Residencias.Forms.AdvisorForms
 {
     public sealed partial class AdvisorEditForm : Form
     {
         private readonly AbstractValidator<Advisor> _validator = new AdvisorValidator();
+        private readonly FormConfirmClosingService closeConfirmService;
         private Company _company = new Company();
         private Advisor _advisor = new Advisor();
-        private bool _promptExitConfirm = false;
 
         public AdvisorEditForm()
         {
             InitializeComponent();
+            closeConfirmService = new FormConfirmClosingService(this);
         }
 
         public AdvisorEditForm(Company company, Advisor? entity) : this()
@@ -43,30 +45,6 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             cb_AdvisorCompany.Items.Add(_company);
             cb_AdvisorCompany.SelectedIndex = 0;
             cb_AdvisorCompany.Enabled = false;
-        }
-
-        private void AdvisorEditForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (_promptExitConfirm)
-            {
-                DialogResult result = MessageBox.Show(
-                    "¿Salir del formulario? Se perderán los cambios no guardados.",
-                    "Confirmar acción",
-                    MessageBoxButtons.OKCancel,
-                    MessageBoxIcon.Warning
-                );
-
-                if (result == DialogResult.Cancel)
-                {
-                    e.Cancel = true;
-                    _promptExitConfirm = false;
-                }
-            }
-        }
-
-        private void CancelEdit_Click(object sender, EventArgs e)
-        {
-            _promptExitConfirm = true;
         }
 
         private void SaveEdit_Click(object sender, EventArgs e)

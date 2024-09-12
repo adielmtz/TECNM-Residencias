@@ -6,19 +6,23 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Data.Validators;
+using TECNM.Residencias.Services;
 
 namespace TECNM.Residencias.Forms.SpecialtyForms
 {
     public sealed partial class SpecialtyEditForm : Form
     {
         private readonly AbstractValidator<Specialty> _validator = new SpecialtyValidator();
+        private readonly FormConfirmClosingService closeConfirmService;
         private Career _career = new Career();
         private Specialty _specialty = new Specialty();
+        private bool _promptExitConfirm = false;
 
         public SpecialtyEditForm()
         {
             InitializeComponent();
-        }
+            closeConfirmService = new FormConfirmClosingService(this);
+    }
 
         public SpecialtyEditForm(Career career, Specialty? entity) : this()
         {

@@ -7,17 +7,21 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Data.Validators;
+using TECNM.Residencias.Services;
 
 namespace TECNM.Residencias.Forms.CompanyForms
 {
     public sealed partial class CompanyEditForm : Form
     {
         private readonly AbstractValidator<Company> _validator = new CompanyValidator();
+        private readonly FormConfirmClosingService closeConfirmService;
         private Company _company = new Company();
+        private bool _promptExitConfirm = false;
 
         public CompanyEditForm()
         {
             InitializeComponent();
+            closeConfirmService = new FormConfirmClosingService(this);
         }
 
         public CompanyEditForm(Company? entity) : this()

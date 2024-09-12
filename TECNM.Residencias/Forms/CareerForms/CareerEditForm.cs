@@ -6,17 +6,21 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Data.Validators;
+using TECNM.Residencias.Services;
 
 namespace TECNM.Residencias.Forms.CareerForms
 {
     public sealed partial class CareerEditForm : Form
     {
         private readonly AbstractValidator<Career> _validator = new CareerValidator();
+        private readonly FormConfirmClosingService closeConfirmService;
         private Career _career = new Career();
+        private bool _promptExitConfirm = false;
 
         public CareerEditForm()
         {
             InitializeComponent();
+            closeConfirmService = new FormConfirmClosingService(this);
         }
 
         public CareerEditForm(Career? entity) : this()
@@ -29,6 +33,11 @@ namespace TECNM.Residencias.Forms.CareerForms
             }
         }
 
+        private void SaveEdit_Click(object sender, EventArgs e)
+        {
+            Save();
+        }
+
         private void CareerName_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char) Keys.Enter)
@@ -36,11 +45,6 @@ namespace TECNM.Residencias.Forms.CareerForms
                 Save();
                 e.Handled = true;
             }
-        }
-
-        private void SaveEdit_Click(object sender, EventArgs e)
-        {
-            Save();
         }
 
         private void Save()
