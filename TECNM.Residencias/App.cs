@@ -7,7 +7,6 @@ namespace TECNM.Residencias
 {
     internal static class App
     {
-        private static bool s_initialized = false;
         private static string? s_rootDataDirectory = null;
         private static DbFactory? s_factory = null;
 
