@@ -178,7 +178,7 @@ namespace TECNM.Residencias.Data.Sets
             return new Company
             {
                 Id         = reader.GetInt64(0),
-                Rfc        = reader.GetString(1),
+                Rfc        = reader.GetNullableString(1),
                 Type       = reader.GetEnum<CompanyType>(2),
                 Name       = reader.GetString(3),
                 Email      = reader.GetString(4),

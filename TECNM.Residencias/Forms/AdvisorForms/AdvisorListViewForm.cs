@@ -66,7 +66,7 @@ namespace TECNM.Residencias.Forms.AdvisorForms
                 DataGridViewRow row = dgv_ListView.Rows[index];
 
                 row.Tag = advisor;
-                row.Cells[0].Value = advisor.Name;
+                row.Cells[0].Value = advisor.ToString();
                 row.Cells[1].Value = TranslateAdvisorTypeEnum(advisor.Type);
                 row.Cells[2].Value = advisor.Section;
                 row.Cells[3].Value = advisor.Role;

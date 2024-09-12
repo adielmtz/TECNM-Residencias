@@ -13,6 +13,7 @@ namespace TECNM.Residencias.Forms.AdvisorForms
         private readonly AbstractValidator<Advisor> _validator = new AdvisorValidator();
         private Company _company = new Company();
         private Advisor _advisor = new Advisor();
+        private bool _promptExitConfirm = false;
 
         public AdvisorEditForm()
         {
@@ -27,7 +28,8 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             {
                 _advisor = entity;
                 cb_AdvisorType.SelectedIndex = (int) entity.Type;
-                tb_AdvisorName.Text = entity.Name;
+                tb_AdvisorFirstName.Text = entity.FirstName;
+                tb_AdvisorLastName.Text = entity.LastName;
                 tb_AdvisorSection.Text = entity.Section;
                 tb_AdvisorRole.Text = entity.Role;
                 tb_AdvisorEmail.Text = entity.Email;
@@ -43,11 +45,36 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             cb_AdvisorCompany.Enabled = false;
         }
 
+        private void AdvisorEditForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (_promptExitConfirm)
+            {
+                DialogResult result = MessageBox.Show(
+                    "¿Salir del formulario? Se perderán los cambios no guardados.",
+                    "Confirmar acción",
+                    MessageBoxButtons.OKCancel,
+                    MessageBoxIcon.Warning
+                );
+
+                if (result == DialogResult.Cancel)
+                {
+                    e.Cancel = true;
+                    _promptExitConfirm = false;
+                }
+            }
+        }
+
+        private void CancelEdit_Click(object sender, EventArgs e)
+        {
+            _promptExitConfirm = true;
+        }
+
         private void SaveEdit_Click(object sender, EventArgs e)
         {
             _advisor.CompanyId = _company.Id;
             _advisor.Type = (AdvisorType) cb_AdvisorType.SelectedIndex;
-            _advisor.Name = tb_AdvisorName.Text.Trim();
+            _advisor.FirstName = tb_AdvisorFirstName.Text.Trim();
+            _advisor.LastName = tb_AdvisorLastName.Text.Trim();
             _advisor.Section = tb_AdvisorSection.Text.Trim();
             _advisor.Role = tb_AdvisorRole.Text.Trim();
             _advisor.Email = tb_AdvisorEmail.Text.Trim();

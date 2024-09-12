@@ -11,7 +11,9 @@ namespace TECNM.Residencias.Data.Entities
 
         public AdvisorType Type { get; set; }
 
-        public string Name { get; set; } = "";
+        public string FirstName { get; set; } = "";
+
+        public string LastName { get; set; } = "";
 
         public string Section { get; set; } = "";
 
@@ -29,7 +31,7 @@ namespace TECNM.Residencias.Data.Entities
 
         public override string ToString()
         {
-            return Name;
+            return $"{FirstName} {LastName}";
         }
     }
 

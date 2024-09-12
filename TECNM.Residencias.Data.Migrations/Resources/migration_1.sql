@@ -69,8 +69,7 @@ STRICT;
 CREATE TABLE Company (
     Id         INTEGER PRIMARY KEY
                        NOT NULL,
-    Rfc        TEXT    UNIQUE
-                       NOT NULL,
+    Rfc        TEXT    UNIQUE,
     Type       TEXT    NOT NULL,
     Name       TEXT    NOT NULL,
     Email      TEXT    NOT NULL,
@@ -94,7 +93,8 @@ CREATE TABLE Advisor (
     CompanyId INTEGER REFERENCES Company (Id) ON DELETE RESTRICT
                       NOT NULL,
     Type      TEXT    NOT NULL,
-    Name      TEXT    NOT NULL,
+    FirstName TEXT    NOT NULL,
+    LastName  TEXT    NOT NULL,
     Section   TEXT    NOT NULL,
     Role      TEXT    NOT NULL,
     Email     TEXT    NOT NULL,
@@ -160,6 +160,15 @@ STRICT;
 CREATE VIRTUAL TABLE CompanySearch USING fts5 (
     Rfc,
     Name,
+    content = '',
+    contentless_delete = 1,
+    tokenize = 'unicode61 remove_diacritics 2'
+);
+
+
+CREATE VIRTUAL TABLE AdvisorSearch USING fts5 (
+    FirstName,
+    LastName,
     content = '',
     contentless_delete = 1,
     tokenize = 'unicode61 remove_diacritics 2'

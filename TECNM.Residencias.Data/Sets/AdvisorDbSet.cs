@@ -18,7 +18,7 @@ namespace TECNM.Residencias.Data.Sets
         public Advisor? GetAdvisorById(long id)
         {
             using var command = Context.Database.CreateCommand();
-            command.CommandText = "SELECT Id, CompanyId, Type, Name, Section, Role, Email, Phone, Enabled, UpdatedOn, CreatedOn FROM Advisor WHERE Id = $id";
+            command.CommandText = "SELECT Id, CompanyId, Type, FirstName, LastName, Section, Role, Email, Phone, Enabled, UpdatedOn, CreatedOn FROM Advisor WHERE Id = $id";
             command.Parameters.Add("$id", SqliteType.Integer).Value = id;
             using var reader = command.ExecuteReader();
 
@@ -30,10 +30,27 @@ namespace TECNM.Residencias.Data.Sets
             return HydrateObject(reader);
         }
 
+        public IEnumerable<Advisor> Search(string query, int count, int page)
+        {
+            using var command = Context.Database.CreateCommand();
+            command.CommandText = "SELECT rowid FROM AdvisorSearch WHERE AdvisorSearch MATCH $query ORDER BY rank LIMIT $p0 OFFSET $p1";
+            command.Parameters.Add("$query", SqliteType.Text).Value = query.ToFtsQuery();
+            command.Parameters.Add("$p0", SqliteType.Integer).Value = count;
+            command.Parameters.Add("$p1", SqliteType.Integer).Value = (page - 1) * count;
+            using var reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                long rowid = reader.GetInt64(0);
+                Advisor advisor = GetAdvisorById(rowid)!;
+                yield return advisor;
+            }
+        }
+
         public IEnumerable<Advisor> EnumerateAdvisorsByCompany(long companyId)
         {
             using var command = Context.Database.CreateCommand();
-            command.CommandText = "SELECT Id, CompanyId, Type, Name, Section, Role, Email, Phone, Enabled, UpdatedOn, CreatedOn FROM Advisor WHERE CompanyId = $p0 ORDER BY Name";
+            command.CommandText = "SELECT Id, CompanyId, Type, FirstName, LastName, Section, Role, Email, Phone, Enabled, UpdatedOn, CreatedOn FROM Advisor WHERE CompanyId = $p0 ORDER BY FirstName, LastName";
             command.Parameters.Add("$p0", SqliteType.Integer).Value = companyId;
             using var reader = command.ExecuteReader();
 
@@ -47,7 +64,7 @@ namespace TECNM.Residencias.Data.Sets
         public IEnumerable<Advisor> EnumerateAdvisorsByType(AdvisorType type)
         {
             using var command = Context.Database.CreateCommand();
-            command.CommandText = "SELECT Id, CompanyId, Type, Name, Section, Role, Email, Phone, Enabled, UpdatedOn, CreatedOn FROM Advisor WHERE Type = $p0 ORDER BY Name";
+            command.CommandText = "SELECT Id, CompanyId, Type, FirstName, LastName, Section, Role, Email, Phone, Enabled, UpdatedOn, CreatedOn FROM Advisor WHERE Type = $p0 ORDER BY FirstName, LastName";
             command.Parameters.Add("$p0", SqliteType.Text).Value = type.ToString();
             using var reader = command.ExecuteReader();
 
@@ -61,7 +78,7 @@ namespace TECNM.Residencias.Data.Sets
         public IEnumerable<Advisor> EnumerateAdvisors()
         {
             using var command = Context.Database.CreateCommand();
-            command.CommandText = "SELECT Id, CompanyId, Type, Name, Section, Role, Email, Phone, Enabled, UpdatedOn, CreatedOn FROM Advisor";
+            command.CommandText = "SELECT Id, CompanyId, Type, FirstName, LastName, Section, Role, Email, Phone, Enabled, UpdatedOn, CreatedOn FROM Advisor";
             using var reader = command.ExecuteReader();
 
             while (reader.Read())
@@ -75,19 +92,20 @@ namespace TECNM.Residencias.Data.Sets
         {
             using var command = Context.Database.CreateCommand();
             command.CommandText = """
-            INSERT INTO Advisor (CompanyId, Type, Name, Section, Role, Email, Phone, Enabled, UpdatedOn)
-            VALUES ($p0, $p1, $p2, $p3, $p4, $p5, $p6, $p7, CURRENT_TIMESTAMP)
+            INSERT INTO Advisor (CompanyId, Type, FirstName, LastName, Section, Role, Email, Phone, Enabled, UpdatedOn)
+            VALUES ($p0, $p1, $p2, $p3, $p4, $p5, $p6, $p7, $p8, CURRENT_TIMESTAMP)
             RETURNING Id
             """;
 
             command.Parameters.Add("$p0", SqliteType.Integer).Value = entity.CompanyId;
             command.Parameters.Add("$p1", SqliteType.Text).Value = entity.Type.ToString();
-            command.Parameters.Add("$p2", SqliteType.Text).Value = entity.Name;
-            command.Parameters.Add("$p3", SqliteType.Text).Value = entity.Section;
-            command.Parameters.Add("$p4", SqliteType.Text).Value = entity.Role;
-            command.Parameters.Add("$p5", SqliteType.Text).Value = entity.Email;
-            command.Parameters.Add("$p6", SqliteType.Text).Value = entity.Phone;
-            command.Parameters.Add("$p7", SqliteType.Integer).Value = entity.Enabled;
+            command.Parameters.Add("$p2", SqliteType.Text).Value = entity.FirstName;
+            command.Parameters.Add("$p3", SqliteType.Text).Value = entity.LastName;
+            command.Parameters.Add("$p4", SqliteType.Text).Value = entity.Section;
+            command.Parameters.Add("$p5", SqliteType.Text).Value = entity.Role;
+            command.Parameters.Add("$p6", SqliteType.Text).Value = entity.Email;
+            command.Parameters.Add("$p7", SqliteType.Text).Value = entity.Phone;
+            command.Parameters.Add("$p8", SqliteType.Integer).Value = entity.Enabled;
             object? result = command.ExecuteScalar();
 
             entity.Id = Convert.ToInt64(result);
@@ -101,24 +119,26 @@ namespace TECNM.Residencias.Data.Sets
             UPDATE Advisor
             SET CompanyId = $p0,
                 Type      = $p1,
-                Name      = $p2,
-                Section   = $p3,
-                Role      = $p4,
-                Email     = $p5,
-                Phone     = $p6,
-                Enabled   = $p7,
+                FirstName = $p2,
+                LastName  = $p3,
+                Section   = $p4,
+                Role      = $p5,
+                Email     = $p6,
+                Phone     = $p7,
+                Enabled   = $p8,
                 UpdatedOn = CURRENT_TIMESTAMP
-            WHERE Id = $id;
+            WHERE Id = $id
             """;
 
             command.Parameters.Add("$p0", SqliteType.Integer).Value = entity.CompanyId;
             command.Parameters.Add("$p1", SqliteType.Text).Value = entity.Type.ToString();
-            command.Parameters.Add("$p2", SqliteType.Text).Value = entity.Name;
-            command.Parameters.Add("$p3", SqliteType.Text).Value = entity.Section;
-            command.Parameters.Add("$p4", SqliteType.Text).Value = entity.Role;
-            command.Parameters.Add("$p5", SqliteType.Text).Value = entity.Email;
-            command.Parameters.Add("$p6", SqliteType.Text).Value = entity.Phone;
-            command.Parameters.Add("$p7", SqliteType.Integer).Value = entity.Enabled;
+            command.Parameters.Add("$p2", SqliteType.Text).Value = entity.FirstName;
+            command.Parameters.Add("$p3", SqliteType.Text).Value = entity.LastName;
+            command.Parameters.Add("$p4", SqliteType.Text).Value = entity.Section;
+            command.Parameters.Add("$p5", SqliteType.Text).Value = entity.Role;
+            command.Parameters.Add("$p6", SqliteType.Text).Value = entity.Email;
+            command.Parameters.Add("$p7", SqliteType.Text).Value = entity.Phone;
+            command.Parameters.Add("$p8", SqliteType.Integer).Value = entity.Enabled;
             command.Parameters.Add("$id", SqliteType.Integer).Value = entity.Id;
             return command.ExecuteNonQuery();
         }
@@ -145,20 +165,21 @@ namespace TECNM.Residencias.Data.Sets
 
         protected override Advisor HydrateObject(IDataReader reader)
         {
-            Debug.Assert(reader.FieldCount == 11);
+            Debug.Assert(reader.FieldCount == 12);
             return new Advisor
             {
                 Id        = reader.GetInt64(0),
                 CompanyId = reader.GetInt64(1),
                 Type      = reader.GetEnum<AdvisorType>(2),
-                Name      = reader.GetString(3),
-                Section   = reader.GetString(4),
-                Role      = reader.GetString(5),
-                Email     = reader.GetString(6),
-                Phone     = reader.GetString(7),
-                Enabled   = reader.GetBoolean(8),
-                UpdatedOn = reader.GetLocalDateTime(9),
-                CreatedOn = reader.GetLocalDateTime(10),
+                FirstName = reader.GetString(3),
+                LastName  = reader.GetString(4),
+                Section   = reader.GetString(5),
+                Role      = reader.GetString(6),
+                Email     = reader.GetString(7),
+                Phone     = reader.GetString(8),
+                Enabled   = reader.GetBoolean(9),
+                UpdatedOn = reader.GetLocalDateTime(10),
+                CreatedOn = reader.GetLocalDateTime(11),
             };
         }
     }
