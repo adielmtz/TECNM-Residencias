@@ -19,6 +19,7 @@ namespace TECNM.Residencias.Forms
         private void SettingsForm_Load(object sender, EventArgs e)
         {
             lbl_SqliteVersion.Text = "SQLite " + GetSqliteVersion();
+            lbl_AppVersion.Text = "Versión " + App.Version;
             LoadSavedSettings();
         }
 

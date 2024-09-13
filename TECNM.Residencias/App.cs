@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Reflection;
 using TECNM.Residencias.Data;
 using TECNM.Residencias.Data.Migrations;
 
@@ -9,8 +10,23 @@ namespace TECNM.Residencias
     {
         private static string? s_rootDataDirectory = null;
         private static DbFactory? s_factory = null;
+        private static Version? s_version = null;
 
         public static string Name => "Archivo de residencias | TECNM";
+
+        public static Version Version
+        {
+            get
+            {
+                if (s_version == null)
+                {
+                    AssemblyName name = typeof(App).Assembly.GetName();
+                    s_version = name.Version;
+                }
+
+                return s_version!;
+            }
+        }
 
         public static int DefaultRowsPerPage => 100;
 

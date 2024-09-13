@@ -35,6 +35,7 @@ namespace TECNM.Residencias.Forms
             button2 = new System.Windows.Forms.Button();
             button1 = new System.Windows.Forms.Button();
             groupBox2 = new System.Windows.Forms.GroupBox();
+            lbl_AppVersion = new System.Windows.Forms.Label();
             linkLabel1 = new System.Windows.Forms.LinkLabel();
             label3 = new System.Windows.Forms.Label();
             label2 = new System.Windows.Forms.Label();
@@ -112,21 +113,31 @@ namespace TECNM.Residencias.Forms
             // 
             // groupBox2
             // 
+            groupBox2.Controls.Add(lbl_AppVersion);
             groupBox2.Controls.Add(linkLabel1);
             groupBox2.Controls.Add(label3);
             groupBox2.Controls.Add(label2);
             groupBox2.Controls.Add(label1);
-            groupBox2.Location = new System.Drawing.Point(541, 351);
+            groupBox2.Location = new System.Drawing.Point(541, 334);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new System.Drawing.Size(247, 87);
+            groupBox2.Size = new System.Drawing.Size(247, 104);
             groupBox2.TabIndex = 2;
             groupBox2.TabStop = false;
             groupBox2.Text = "Créditos";
             // 
+            // lbl_AppVersion
+            // 
+            lbl_AppVersion.AutoSize = true;
+            lbl_AppVersion.Location = new System.Drawing.Point(6, 64);
+            lbl_AppVersion.Name = "lbl_AppVersion";
+            lbl_AppVersion.Size = new System.Drawing.Size(87, 15);
+            lbl_AppVersion.TabIndex = 6;
+            lbl_AppVersion.Text = "[APP VERSION]";
+            // 
             // linkLabel1
             // 
             linkLabel1.AutoSize = true;
-            linkLabel1.Location = new System.Drawing.Point(6, 64);
+            linkLabel1.Location = new System.Drawing.Point(6, 79);
             linkLabel1.Name = "linkLabel1";
             linkLabel1.Size = new System.Drawing.Size(83, 15);
             linkLabel1.TabIndex = 3;
@@ -323,5 +334,6 @@ namespace TECNM.Residencias.Forms
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.ComboBox cb_StudentCareer;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label lbl_AppVersion;
     }
 }
