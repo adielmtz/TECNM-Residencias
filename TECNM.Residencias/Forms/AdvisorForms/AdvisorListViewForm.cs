@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
+using TECNM.Residencias.Extensions;
 
 namespace TECNM.Residencias.Forms.AdvisorForms
 {
@@ -13,6 +14,7 @@ namespace TECNM.Residencias.Forms.AdvisorForms
         public AdvisorListViewForm()
         {
             InitializeComponent();
+            dgv_ListView.DoubleBuffered(true);
         }
 
         public AdvisorListViewForm(Company company) : this()
