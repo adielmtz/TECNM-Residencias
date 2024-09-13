@@ -313,8 +313,8 @@ namespace TECNM.Residencias.Forms.StudentForms
             _student.Phone = tb_StudentPhone.Text.Trim();
             _student.Gender = (Gender) cb_StudentGender.SelectedIndex;
             _student.Semester = semester ?? "";
-            _student.StartDate = dtp_StudentStartDate.Value.ToUniversalTime();
-            _student.EndDate = dtp_StudentEndDate.Value.ToUniversalTime();
+            _student.StartDate = dtp_StudentStartDate.Value;
+            _student.EndDate = dtp_StudentEndDate.Value;
             _student.Project = tb_StudentProjectName.Text.Trim();
             _student.InternalAdvisorId = _internalAdvisor?.Id;
             _student.ExternalAdvisorId = _externalAdvisor?.Id;

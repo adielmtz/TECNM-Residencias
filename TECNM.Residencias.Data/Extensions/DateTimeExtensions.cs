@@ -4,16 +4,27 @@ namespace TECNM.Residencias.Data.Extensions
 {
     internal static class DateTimeExtensions
     {
-        private const string ISO8601_FORMAT = "yyyy-MM-dd HH:mm:ss";
+        private const string ISO8601_LONG_FORMAT = "yyyy-MM-dd HH:mm:ss";
+        private const string ISO8601_SHORT_FORMAT = "yyyy-MM-dd";
 
-        public static string ToISOString(this DateTime dt)
+        public static string ToLongIsoString(this DateTime dt)
         {
-            return dt.ToString(ISO8601_FORMAT);
+            return dt.ToString(ISO8601_LONG_FORMAT);
         }
 
-        public static string TOISOStringUTC(this DateTime dt)
+        public static string ToShortIsoString(this DateTime dt)
         {
-            return dt.ToUniversalTime().ToISOString();
+            return dt.ToString(ISO8601_SHORT_FORMAT);
+        }
+
+        public static string ToLongIsoStringUtc(this DateTime dt)
+        {
+            return dt.ToUniversalTime().ToLongIsoString();
+        }
+
+        public static string ToShortIsoStringUtc(this DateTime dt)
+        {
+            return dt.ToUniversalTime().ToShortIsoString();
         }
     }
 }

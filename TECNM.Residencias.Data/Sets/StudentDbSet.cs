@@ -99,8 +99,8 @@ namespace TECNM.Residencias.Data.Sets
             command.Parameters.Add("$p04", SqliteType.Text).Value = entity.Phone;
             command.Parameters.Add("$p05", SqliteType.Text).Value = entity.Gender;
             command.Parameters.Add("$p06", SqliteType.Text).Value = entity.Semester;
-            command.Parameters.Add("$p07", SqliteType.Text).Value = entity.StartDate.TOISOStringUTC();
-            command.Parameters.Add("$p08", SqliteType.Text).Value = entity.EndDate.TOISOStringUTC();
+            command.Parameters.Add("$p07", SqliteType.Text).Value = entity.StartDate.ToLongIsoStringUtc();
+            command.Parameters.Add("$p08", SqliteType.Text).Value = entity.EndDate.ToLongIsoStringUtc();
             command.Parameters.Add("$p09", SqliteType.Text).Value = entity.Project;
             command.Parameters.Add("$p10", SqliteType.Integer).SetNullableValue(entity.InternalAdvisorId);
             command.Parameters.Add("$p11", SqliteType.Integer).SetNullableValue(entity.ExternalAdvisorId);
@@ -147,8 +147,8 @@ namespace TECNM.Residencias.Data.Sets
             command.Parameters.Add("$p04", SqliteType.Text).Value = entity.Phone;
             command.Parameters.Add("$p05", SqliteType.Text).Value = entity.Gender;
             command.Parameters.Add("$p06", SqliteType.Text).Value = entity.Semester;
-            command.Parameters.Add("$p07", SqliteType.Text).Value = entity.StartDate.TOISOStringUTC();
-            command.Parameters.Add("$p08", SqliteType.Text).Value = entity.EndDate.TOISOStringUTC();
+            command.Parameters.Add("$p07", SqliteType.Text).Value = entity.StartDate.ToLongIsoStringUtc();
+            command.Parameters.Add("$p08", SqliteType.Text).Value = entity.EndDate.ToLongIsoStringUtc();
             command.Parameters.Add("$p09", SqliteType.Text).Value = entity.Project;
             command.Parameters.Add("$p10", SqliteType.Integer).SetNullableValue(entity.InternalAdvisorId);
             command.Parameters.Add("$p11", SqliteType.Integer).SetNullableValue(entity.ExternalAdvisorId);
@@ -213,8 +213,8 @@ namespace TECNM.Residencias.Data.Sets
             command.Parameters.Add("$p04", SqliteType.Text).Value = entity.Phone;
             command.Parameters.Add("$p05", SqliteType.Text).Value = entity.Gender;
             command.Parameters.Add("$p06", SqliteType.Text).Value = entity.Semester;
-            command.Parameters.Add("$p07", SqliteType.Text).Value = entity.StartDate.TOISOStringUTC();
-            command.Parameters.Add("$p08", SqliteType.Text).Value = entity.EndDate.TOISOStringUTC();
+            command.Parameters.Add("$p07", SqliteType.Text).Value = entity.StartDate.ToLongIsoStringUtc();
+            command.Parameters.Add("$p08", SqliteType.Text).Value = entity.EndDate.ToLongIsoStringUtc();
             command.Parameters.Add("$p09", SqliteType.Text).Value = entity.Project;
             command.Parameters.Add("$p10", SqliteType.Integer).SetNullableValue(entity.InternalAdvisorId);
             command.Parameters.Add("$p11", SqliteType.Integer).SetNullableValue(entity.ExternalAdvisorId);
