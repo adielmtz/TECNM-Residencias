@@ -30,14 +30,6 @@ namespace TECNM.Residencias.Data.Sets
             return HydrateObject(reader);
         }
 
-        public string? GetCompanyNameById(long id)
-        {
-            using var command = Context.Database.CreateCommand();
-            command.CommandText = "SELECT Name FROM Company WHERE Id = $id";
-            command.Parameters.Add("$id", SqliteType.Integer).Value = id;
-            return (string?) command.ExecuteScalar();
-        }
-
         public IEnumerable<Company> Search(string query, int count, int page)
         {
             using var command = Context.Database.CreateCommand();
@@ -79,7 +71,7 @@ namespace TECNM.Residencias.Data.Sets
             RETURNING Id
             """;
 
-            command.Parameters.Add("$p0", SqliteType.Text).Value = entity.Rfc;
+            command.Parameters.Add("$p0", SqliteType.Text).SetNullableValue(entity.Rfc);
             command.Parameters.Add("$p1", SqliteType.Text).Value = entity.Type.ToString();
             command.Parameters.Add("$p2", SqliteType.Text).Value = entity.Name;
             command.Parameters.Add("$p3", SqliteType.Text).Value = entity.Email;
@@ -114,7 +106,7 @@ namespace TECNM.Residencias.Data.Sets
             WHERE Id = $id
             """;
 
-            command.Parameters.Add("$p0", SqliteType.Text).Value = entity.Rfc;
+            command.Parameters.Add("$p0", SqliteType.Text).SetNullableValue(entity.Rfc);
             command.Parameters.Add("$p1", SqliteType.Text).Value = entity.Type.ToString();
             command.Parameters.Add("$p2", SqliteType.Text).Value = entity.Name;
             command.Parameters.Add("$p3", SqliteType.Text).Value = entity.Email;

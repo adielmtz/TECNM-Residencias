@@ -85,7 +85,10 @@ namespace TECNM.Residencias.Data.Sets
                 Project, InternalAdvisorId, ExternalAdvisorId, ReviewerAdvisorId, CompanyId, Department,
                 Schedule, Notes, Enabled, UpdatedOn
             )
-            VALUES ($pid, $p00, $p01, $p02, $p03, $p04, $p05, $p06, $p07, $p08, $p09, $p10, $p11, $p12, $p13, $p14, $p15, $p16, $p17, CURRENT_TIMESTAMP)
+            VALUES (
+                $pid, $p00, $p01, $p02, $p03, $p04, $p05, $p06, $p07, $p08, $p09, $p10, $p11, $p12,
+                $p13, $p14, $p15, $p16, $p17, CURRENT_TIMESTAMP
+            )
             """;
 
             command.Parameters.Add("$pid", SqliteType.Integer).Value = entity.Id;
@@ -99,9 +102,9 @@ namespace TECNM.Residencias.Data.Sets
             command.Parameters.Add("$p07", SqliteType.Text).Value = entity.StartDate.TOISOStringUTC();
             command.Parameters.Add("$p08", SqliteType.Text).Value = entity.EndDate.TOISOStringUTC();
             command.Parameters.Add("$p09", SqliteType.Text).Value = entity.Project;
-            command.Parameters.Add("$p10", SqliteType.Integer).Value = entity.InternalAdvisorId;
-            command.Parameters.Add("$p11", SqliteType.Integer).Value = entity.ExternalAdvisorId;
-            command.Parameters.Add("$p12", SqliteType.Integer).Value = entity.ReviewerAdvisorId;
+            command.Parameters.Add("$p10", SqliteType.Integer).SetNullableValue(entity.InternalAdvisorId);
+            command.Parameters.Add("$p11", SqliteType.Integer).SetNullableValue(entity.ExternalAdvisorId);
+            command.Parameters.Add("$p12", SqliteType.Integer).SetNullableValue(entity.ReviewerAdvisorId);
             command.Parameters.Add("$p13", SqliteType.Integer).Value = entity.CompanyId;
             command.Parameters.Add("$p14", SqliteType.Text).Value = entity.Department;
             command.Parameters.Add("$p15", SqliteType.Text).Value = entity.Schedule;
@@ -134,7 +137,7 @@ namespace TECNM.Residencias.Data.Sets
                 Notes             = $p16,
                 Enabled           = $p17,
                 UpdatedOn         = CURRENT_TIMESTAMP
-            WHERE Id = $id
+            WHERE Id = $pid
             """;
 
             command.Parameters.Add("$p00", SqliteType.Integer).Value = entity.SpecialtyId;
@@ -147,15 +150,15 @@ namespace TECNM.Residencias.Data.Sets
             command.Parameters.Add("$p07", SqliteType.Text).Value = entity.StartDate.TOISOStringUTC();
             command.Parameters.Add("$p08", SqliteType.Text).Value = entity.EndDate.TOISOStringUTC();
             command.Parameters.Add("$p09", SqliteType.Text).Value = entity.Project;
-            command.Parameters.Add("$p10", SqliteType.Integer).Value = entity.InternalAdvisorId;
-            command.Parameters.Add("$p11", SqliteType.Integer).Value = entity.ExternalAdvisorId;
-            command.Parameters.Add("$p12", SqliteType.Integer).Value = entity.ReviewerAdvisorId;
+            command.Parameters.Add("$p10", SqliteType.Integer).SetNullableValue(entity.InternalAdvisorId);
+            command.Parameters.Add("$p11", SqliteType.Integer).SetNullableValue(entity.ExternalAdvisorId);
+            command.Parameters.Add("$p12", SqliteType.Integer).SetNullableValue(entity.ReviewerAdvisorId);
             command.Parameters.Add("$p13", SqliteType.Integer).Value = entity.CompanyId;
             command.Parameters.Add("$p14", SqliteType.Text).Value = entity.Department;
             command.Parameters.Add("$p15", SqliteType.Text).Value = entity.Schedule;
             command.Parameters.Add("$p16", SqliteType.Text).Value = entity.Notes;
             command.Parameters.Add("$p17", SqliteType.Integer).Value = entity.Enabled;
-            command.Parameters.Add("$id", SqliteType.Integer).Value = entity.Id;
+            command.Parameters.Add("$pid", SqliteType.Integer).Value = entity.Id;
             return command.ExecuteNonQuery();
         }
 
@@ -176,7 +179,10 @@ namespace TECNM.Residencias.Data.Sets
                 Project, InternalAdvisorId, ExternalAdvisorId, ReviewerAdvisorId, CompanyId, Department,
                 Schedule, Notes, Enabled, UpdatedOn
             )
-            VALUES ($pid, $p00, $p01, $p02, $p03, $p04, $p05, $p06, $p07, $p08, $p09, $p10, $p11, $p12, $p13, $p14, $p15, $p16, $p17, CURRENT_TIMESTAMP)
+            VALUES (
+                $pid, $p00, $p01, $p02, $p03, $p04, $p05, $p06, $p07, $p08, $p09, $p10, $p11, $p12,
+                $p13, $p14, $p15, $p16, $p17, CURRENT_TIMESTAMP
+            )
             ON CONFLICT(Id) DO UPDATE
             SET SpecialtyId       = excluded.SpecialtyId,
                 FirstName         = excluded.FirstName,
@@ -210,9 +216,9 @@ namespace TECNM.Residencias.Data.Sets
             command.Parameters.Add("$p07", SqliteType.Text).Value = entity.StartDate.TOISOStringUTC();
             command.Parameters.Add("$p08", SqliteType.Text).Value = entity.EndDate.TOISOStringUTC();
             command.Parameters.Add("$p09", SqliteType.Text).Value = entity.Project;
-            command.Parameters.Add("$p10", SqliteType.Integer).Value = entity.InternalAdvisorId;
-            command.Parameters.Add("$p11", SqliteType.Integer).Value = entity.ExternalAdvisorId;
-            command.Parameters.Add("$p12", SqliteType.Integer).Value = entity.ReviewerAdvisorId;
+            command.Parameters.Add("$p10", SqliteType.Integer).SetNullableValue(entity.InternalAdvisorId);
+            command.Parameters.Add("$p11", SqliteType.Integer).SetNullableValue(entity.ExternalAdvisorId);
+            command.Parameters.Add("$p12", SqliteType.Integer).SetNullableValue(entity.ReviewerAdvisorId);
             command.Parameters.Add("$p13", SqliteType.Integer).Value = entity.CompanyId;
             command.Parameters.Add("$p14", SqliteType.Text).Value = entity.Department;
             command.Parameters.Add("$p15", SqliteType.Text).Value = entity.Schedule;
