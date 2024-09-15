@@ -148,6 +148,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             dgv_ListView.ClearSelection();
             btn_PagePrev.Enabled = _currentPage > 1;
             btn_PageNext.Enabled = count == _rowsPerPage;
+            UpdateStatusLabel();
         }
 
         private string TranslateGenderEnum(Gender gender)
@@ -159,6 +160,11 @@ namespace TECNM.Residencias.Forms.StudentForms
                 Gender.Other => "Otro",
                 _ => throw new UnreachableException(),
             };
+        }
+
+        private void UpdateStatusLabel()
+        {
+            lbl_StatusLabel.Text = $"Página {_currentPage}    Número de registros: {dgv_ListView.RowCount}";
         }
     }
 }

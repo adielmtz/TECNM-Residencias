@@ -81,6 +81,7 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             }
 
             dgv_ListView.ClearSelection();
+            UpdateStatusLabel();
         }
 
         private string TranslateAdvisorTypeEnum(AdvisorType type)
@@ -91,6 +92,11 @@ namespace TECNM.Residencias.Forms.AdvisorForms
                 AdvisorType.External => "Externo",
                 _ => throw new UnreachableException(),
             };
+        }
+
+        private void UpdateStatusLabel()
+        {
+            lbl_StatusLabel.Text = $"Número de registros: {dgv_ListView.RowCount}";
         }
     }
 }

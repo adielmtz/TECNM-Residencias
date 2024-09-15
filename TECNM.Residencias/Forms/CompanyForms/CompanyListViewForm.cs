@@ -150,21 +150,27 @@ namespace TECNM.Residencias.Forms.CompanyForms
             dgv_ListView.ClearSelection();
             btn_PagePrev.Enabled = _currentPage > 1;
             btn_PageNext.Enabled = count == _rowsPerPage;
+            UpdateStatusLabel();
         }
 
         private string TranslateCompanyType(CompanyType type)
         {
             switch (type)
             {
-                case Data.Entities.CompanyType.Public:
+                case CompanyType.Public:
                     return "Pública";
-                case Data.Entities.CompanyType.Private:
+                case CompanyType.Private:
                     return "Privada";
-                case Data.Entities.CompanyType.Industrial:
+                case CompanyType.Industrial:
                     return "Industrial";
                 default:
                     throw new UnreachableException();
             }
+        }
+
+        private void UpdateStatusLabel()
+        {
+            lbl_StatusLabel.Text = $"Página {_currentPage}    Número de registros: {dgv_ListView.RowCount}";
         }
     }
 }

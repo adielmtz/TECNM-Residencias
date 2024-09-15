@@ -37,6 +37,7 @@ namespace TECNM.Residencias.Forms.CareerForms
             CareerEdit = new System.Windows.Forms.DataGridViewButtonColumn();
             CareerViewSpecialties = new System.Windows.Forms.DataGridViewButtonColumn();
             button1 = new System.Windows.Forms.Button();
+            lbl_StatusLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize) dgv_ListView).BeginInit();
             SuspendLayout();
             // 
@@ -122,11 +123,22 @@ namespace TECNM.Residencias.Forms.CareerForms
             button1.UseVisualStyleBackColor = true;
             button1.Click += AddNewCareer_Click;
             // 
+            // lbl_StatusLabel
+            // 
+            lbl_StatusLabel.Anchor =  System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            lbl_StatusLabel.AutoSize = true;
+            lbl_StatusLabel.Location = new System.Drawing.Point(12, 406);
+            lbl_StatusLabel.Name = "lbl_StatusLabel";
+            lbl_StatusLabel.Size = new System.Drawing.Size(53, 15);
+            lbl_StatusLabel.TabIndex = 2;
+            lbl_StatusLabel.Text = "[STATUS]";
+            // 
             // CareerListViewForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(838, 441);
+            Controls.Add(lbl_StatusLabel);
             Controls.Add(button1);
             Controls.Add(dgv_ListView);
             Icon = (System.Drawing.Icon) resources.GetObject("$this.Icon");
@@ -136,6 +148,7 @@ namespace TECNM.Residencias.Forms.CareerForms
             Load += CareerListViewForm_Load;
             ((System.ComponentModel.ISupportInitialize) dgv_ListView).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -148,5 +161,6 @@ namespace TECNM.Residencias.Forms.CareerForms
         private System.Windows.Forms.DataGridViewButtonColumn CareerEdit;
         private System.Windows.Forms.DataGridViewButtonColumn CareerViewSpecialties;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label lbl_StatusLabel;
     }
 }

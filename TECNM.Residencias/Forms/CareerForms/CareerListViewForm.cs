@@ -71,6 +71,12 @@ namespace TECNM.Residencias.Forms.CareerForms
             }
 
             dgv_ListView.ClearSelection();
+            UpdateStatusLabel();
+        }
+
+        private void UpdateStatusLabel()
+        {
+            lbl_StatusLabel.Text = $"Número de registros: {dgv_ListView.RowCount}";
         }
     }
 }

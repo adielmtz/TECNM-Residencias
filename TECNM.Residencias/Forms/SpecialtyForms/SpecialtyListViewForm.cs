@@ -70,6 +70,12 @@ namespace TECNM.Residencias.Forms.SpecialtyForms
             }
 
             dgv_ListView.ClearSelection();
+            UpdateStatusLabel();
+        }
+
+        private void UpdateStatusLabel()
+        {
+            lbl_StatusLabel.Text = $"Número de registros: {dgv_ListView.RowCount}";
         }
     }
 }

@@ -51,6 +51,7 @@
             button3 = new System.Windows.Forms.Button();
             btn_PagePrev = new System.Windows.Forms.Button();
             btn_PageNext = new System.Windows.Forms.Button();
+            lbl_StatusLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize) dgv_ListView).BeginInit();
             SuspendLayout();
             // 
@@ -258,11 +259,22 @@
             btn_PageNext.UseVisualStyleBackColor = true;
             btn_PageNext.Click += PageNext_Click;
             // 
+            // lbl_StatusLabel
+            // 
+            lbl_StatusLabel.Anchor =  System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            lbl_StatusLabel.AutoSize = true;
+            lbl_StatusLabel.Location = new System.Drawing.Point(88, 646);
+            lbl_StatusLabel.Name = "lbl_StatusLabel";
+            lbl_StatusLabel.Size = new System.Drawing.Size(53, 15);
+            lbl_StatusLabel.TabIndex = 8;
+            lbl_StatusLabel.Text = "[STATUS]";
+            // 
             // CompanyListViewForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(1264, 681);
+            Controls.Add(lbl_StatusLabel);
             Controls.Add(btn_PageNext);
             Controls.Add(btn_PagePrev);
             Controls.Add(button3);
@@ -307,5 +319,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ListCompanyCreatedOn;
         private System.Windows.Forms.DataGridViewButtonColumn ListCompanyEdit;
         private System.Windows.Forms.DataGridViewButtonColumn ListCompanyAdvisors;
+        private System.Windows.Forms.Label lbl_StatusLabel;
     }
 }
