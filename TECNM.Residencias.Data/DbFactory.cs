@@ -19,6 +19,7 @@ namespace TECNM.Residencias.Data
                     {
                         DataSource = DataSource,
                         ForeignKeys = true,
+                        DefaultTimeout = 10,
                         RecursiveTriggers = true,
                     }.ConnectionString;
                 }

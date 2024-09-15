@@ -44,7 +44,7 @@ namespace TECNM.Residencias
         public AppDbContext()
         {
             _connection = App.Database.Open();
-            _transaction = _connection.BeginTransaction();
+            _transaction = _connection.BeginTransaction(deferred: true);
         }
 
         public void Commit()
