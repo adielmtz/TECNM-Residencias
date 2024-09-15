@@ -28,6 +28,8 @@ namespace TECNM.Residencias
             }
         }
 
+        public static string SourceCodeUrl => "https://github.com/adielmtz/TECNM-Residencias";
+
         public static int DefaultRowsPerPage => 100;
 
         public static int DefaultInitialPage => 1;

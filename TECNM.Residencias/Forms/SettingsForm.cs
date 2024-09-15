@@ -98,7 +98,7 @@ namespace TECNM.Residencias.Forms
         {
             var info = new ProcessStartInfo
             {
-                FileName = "https://github.com/adielmtz/TECNM-Residencias",
+                FileName = App.SourceCodeUrl,
                 UseShellExecute = true,
             };
 
