@@ -34,10 +34,10 @@ namespace TECNM.Residencias.Forms.CompanyForms
                 tb_CompanyRfc.Text = entity.Rfc;
                 tb_CompanyName.Text = entity.Name;
                 tb_CompanyEmail.Text = entity.Email;
-                tb_CompanyPhone.Text = entity.Phone;
+                mtb_CompanyPhone.Text = entity.Phone;
                 tb_CompanyAddress.Text = entity.Address;
                 tb_CompanyLocality.Text = entity.Locality;
-                tb_CompanyPostalCode.Text = entity.PostalCode;
+                mtb_CompanyPostalCode.Text = entity.PostalCode;
                 chk_CompanyEnabled.Checked = entity.Enabled;
             }
         }
@@ -158,10 +158,10 @@ namespace TECNM.Residencias.Forms.CompanyForms
             _company.Rfc = tb_CompanyRfc.Text.Trim();
             _company.Name = tb_CompanyName.Text.Trim();
             _company.Email = tb_CompanyEmail.Text.Trim();
-            _company.Phone = tb_CompanyPhone.Text.Trim();
+            _company.Phone = mtb_CompanyPhone.Text.Trim();
             _company.Address = tb_CompanyAddress.Text.Trim();
             _company.Locality = tb_CompanyLocality.Text.Trim();
-            _company.PostalCode = tb_CompanyPostalCode.Text.Trim();
+            _company.PostalCode = mtb_CompanyPostalCode.Text.Trim();
             _company.Enabled = chk_CompanyEnabled.Checked;
 
             City? city = (City?) cb_CompanyCity.SelectedItem;

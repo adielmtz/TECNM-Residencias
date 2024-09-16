@@ -47,13 +47,13 @@ namespace TECNM.Residencias.Forms.CompanyForms
             label8 = new System.Windows.Forms.Label();
             tb_CompanyLocality = new System.Windows.Forms.TextBox();
             label9 = new System.Windows.Forms.Label();
-            tb_CompanyPostalCode = new System.Windows.Forms.TextBox();
             chk_CompanyEnabled = new System.Windows.Forms.CheckBox();
             button1 = new System.Windows.Forms.Button();
             label10 = new System.Windows.Forms.Label();
             tb_CompanyEmail = new System.Windows.Forms.TextBox();
             label11 = new System.Windows.Forms.Label();
-            tb_CompanyPhone = new System.Windows.Forms.TextBox();
+            mtb_CompanyPhone = new System.Windows.Forms.MaskedTextBox();
+            mtb_CompanyPostalCode = new System.Windows.Forms.MaskedTextBox();
             SuspendLayout();
             // 
             // label1
@@ -217,13 +217,6 @@ namespace TECNM.Residencias.Forms.CompanyForms
             label9.TabIndex = 0;
             label9.Text = "Código postal";
             // 
-            // tb_CompanyPostalCode
-            // 
-            tb_CompanyPostalCode.Location = new System.Drawing.Point(266, 247);
-            tb_CompanyPostalCode.Name = "tb_CompanyPostalCode";
-            tb_CompanyPostalCode.Size = new System.Drawing.Size(121, 23);
-            tb_CompanyPostalCode.TabIndex = 8;
-            // 
             // chk_CompanyEnabled
             // 
             chk_CompanyEnabled.AutoSize = true;
@@ -259,7 +252,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
             // 
             tb_CompanyEmail.Location = new System.Drawing.Point(12, 115);
             tb_CompanyEmail.Name = "tb_CompanyEmail";
-            tb_CompanyEmail.Size = new System.Drawing.Size(373, 23);
+            tb_CompanyEmail.Size = new System.Drawing.Size(375, 23);
             tb_CompanyEmail.TabIndex = 4;
             // 
             // label11
@@ -271,12 +264,23 @@ namespace TECNM.Residencias.Forms.CompanyForms
             label11.TabIndex = 0;
             label11.Text = "Teléfono";
             // 
-            // tb_CompanyPhone
+            // mtb_CompanyPhone
             // 
-            tb_CompanyPhone.Location = new System.Drawing.Point(12, 159);
-            tb_CompanyPhone.Name = "tb_CompanyPhone";
-            tb_CompanyPhone.Size = new System.Drawing.Size(373, 23);
-            tb_CompanyPhone.TabIndex = 5;
+            mtb_CompanyPhone.Location = new System.Drawing.Point(12, 159);
+            mtb_CompanyPhone.Mask = "000-000-0000";
+            mtb_CompanyPhone.Name = "mtb_CompanyPhone";
+            mtb_CompanyPhone.Size = new System.Drawing.Size(375, 23);
+            mtb_CompanyPhone.TabIndex = 15;
+            mtb_CompanyPhone.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
+            // 
+            // mtb_CompanyPostalCode
+            // 
+            mtb_CompanyPostalCode.Location = new System.Drawing.Point(266, 247);
+            mtb_CompanyPostalCode.Mask = "00000";
+            mtb_CompanyPostalCode.Name = "mtb_CompanyPostalCode";
+            mtb_CompanyPostalCode.Size = new System.Drawing.Size(121, 23);
+            mtb_CompanyPostalCode.TabIndex = 16;
+            mtb_CompanyPostalCode.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
             // 
             // CompanyEditForm
             // 
@@ -285,13 +289,13 @@ namespace TECNM.Residencias.Forms.CompanyForms
             CancelButton = btn_CancelEdit;
             ClientSize = new System.Drawing.Size(397, 378);
             ControlBox = false;
-            Controls.Add(tb_CompanyPhone);
+            Controls.Add(mtb_CompanyPostalCode);
+            Controls.Add(mtb_CompanyPhone);
             Controls.Add(label11);
             Controls.Add(tb_CompanyEmail);
             Controls.Add(label10);
             Controls.Add(button1);
             Controls.Add(chk_CompanyEnabled);
-            Controls.Add(tb_CompanyPostalCode);
             Controls.Add(label9);
             Controls.Add(tb_CompanyLocality);
             Controls.Add(label8);
@@ -339,12 +343,12 @@ namespace TECNM.Residencias.Forms.CompanyForms
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox tb_CompanyLocality;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox tb_CompanyPostalCode;
         private System.Windows.Forms.CheckBox chk_CompanyEnabled;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox tb_CompanyEmail;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TextBox tb_CompanyPhone;
+        private System.Windows.Forms.MaskedTextBox mtb_CompanyPhone;
+        private System.Windows.Forms.MaskedTextBox mtb_CompanyPostalCode;
     }
 }

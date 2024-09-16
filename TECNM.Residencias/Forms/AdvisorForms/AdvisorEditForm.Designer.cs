@@ -41,13 +41,13 @@
             label5 = new System.Windows.Forms.Label();
             tb_AdvisorEmail = new System.Windows.Forms.TextBox();
             label6 = new System.Windows.Forms.Label();
-            tb_AdvisorPhone = new System.Windows.Forms.TextBox();
             chk_AdvisorEnabled = new System.Windows.Forms.CheckBox();
             button1 = new System.Windows.Forms.Button();
             label7 = new System.Windows.Forms.Label();
             cb_AdvisorCompany = new System.Windows.Forms.ComboBox();
             label8 = new System.Windows.Forms.Label();
             tb_AdvisorLastName = new System.Windows.Forms.TextBox();
+            mtb_AdvisorPhone = new System.Windows.Forms.MaskedTextBox();
             SuspendLayout();
             // 
             // btn_CancelEdit
@@ -152,13 +152,6 @@
             label6.TabIndex = 0;
             label6.Text = "Teléfono";
             // 
-            // tb_AdvisorPhone
-            // 
-            tb_AdvisorPhone.Location = new System.Drawing.Point(12, 247);
-            tb_AdvisorPhone.Name = "tb_AdvisorPhone";
-            tb_AdvisorPhone.Size = new System.Drawing.Size(386, 23);
-            tb_AdvisorPhone.TabIndex = 8;
-            // 
             // chk_AdvisorEnabled
             // 
             chk_AdvisorEnabled.AutoSize = true;
@@ -215,6 +208,15 @@
             tb_AdvisorLastName.Size = new System.Drawing.Size(146, 23);
             tb_AdvisorLastName.TabIndex = 3;
             // 
+            // mtb_AdvisorPhone
+            // 
+            mtb_AdvisorPhone.Location = new System.Drawing.Point(12, 247);
+            mtb_AdvisorPhone.Mask = "000-000-0000";
+            mtb_AdvisorPhone.Name = "mtb_AdvisorPhone";
+            mtb_AdvisorPhone.Size = new System.Drawing.Size(386, 23);
+            mtb_AdvisorPhone.TabIndex = 12;
+            mtb_AdvisorPhone.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
+            // 
             // AdvisorEditForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -222,13 +224,13 @@
             CancelButton = btn_CancelEdit;
             ClientSize = new System.Drawing.Size(410, 337);
             ControlBox = false;
+            Controls.Add(mtb_AdvisorPhone);
             Controls.Add(tb_AdvisorLastName);
             Controls.Add(label8);
             Controls.Add(cb_AdvisorCompany);
             Controls.Add(label7);
             Controls.Add(button1);
             Controls.Add(chk_AdvisorEnabled);
-            Controls.Add(tb_AdvisorPhone);
             Controls.Add(label6);
             Controls.Add(tb_AdvisorEmail);
             Controls.Add(label5);
@@ -264,12 +266,12 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox tb_AdvisorEmail;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox tb_AdvisorPhone;
         private System.Windows.Forms.CheckBox chk_AdvisorEnabled;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox cb_AdvisorCompany;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox tb_AdvisorLastName;
+        private System.Windows.Forms.MaskedTextBox mtb_AdvisorPhone;
     }
 }

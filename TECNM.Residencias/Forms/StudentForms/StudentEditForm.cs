@@ -38,14 +38,14 @@ namespace TECNM.Residencias.Forms.StudentForms
                 _student = entity;
 
                 /// INFORMACIÓN GENERAL
-                tb_StudentId.Text = entity.Id.ToString();
-                tb_StudentId.Enabled = false;
+                mtb_StudentId.Text = entity.Id.ToString();
+                mtb_StudentId.Enabled = false;
 
                 tb_StudentFirstName.Text = entity.FirstName;
                 tb_StudentLastName.Text = entity.LastName;
                 cb_StudentGender.SelectedIndex = (int) entity.Gender;
                 tb_StudentEmail.Text = entity.Email;
-                tb_StudentPhone.Text = entity.Phone;
+                mtb_StudentPhone.Text = entity.Phone;
 
                 /// PROYECTO
                 tb_StudentProjectName.Text = entity.Project;
@@ -305,12 +305,12 @@ namespace TECNM.Residencias.Forms.StudentForms
             Specialty? specialty = (Specialty?) cb_StudentSpecialty.SelectedItem;
             string? semester = (string?) cb_StudentSemester.SelectedItem;
 
-            _student.Id = TryConvertLong(tb_StudentId.Text.Trim());
+            _student.Id = TryConvertLong(mtb_StudentId.Text.Trim());
             _student.SpecialtyId = specialty == null ? 0 : specialty.Id;
             _student.FirstName = tb_StudentFirstName.Text.Trim();
             _student.LastName = tb_StudentLastName.Text.Trim();
             _student.Email = tb_StudentEmail.Text.Trim();
-            _student.Phone = tb_StudentPhone.Text.Trim();
+            _student.Phone = mtb_StudentPhone.Text.Trim();
             _student.Gender = (Gender) cb_StudentGender.SelectedIndex;
             _student.Semester = semester ?? "";
             _student.StartDate = dtp_StudentStartDate.Value;

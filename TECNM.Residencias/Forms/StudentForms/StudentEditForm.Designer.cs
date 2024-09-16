@@ -31,13 +31,14 @@ namespace TECNM.Residencias.Forms.StudentForms
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StudentEditForm));
             btn_CancelEdit = new System.Windows.Forms.Button();
             groupBox1 = new System.Windows.Forms.GroupBox();
+            mtb_StudentPhone = new System.Windows.Forms.MaskedTextBox();
+            mtb_StudentId = new System.Windows.Forms.MaskedTextBox();
             label8 = new System.Windows.Forms.Label();
             cb_StudentGender = new System.Windows.Forms.ComboBox();
             cb_StudentSpecialty = new System.Windows.Forms.ComboBox();
             label7 = new System.Windows.Forms.Label();
             cb_StudentCareer = new System.Windows.Forms.ComboBox();
             label6 = new System.Windows.Forms.Label();
-            tb_StudentPhone = new System.Windows.Forms.TextBox();
             label5 = new System.Windows.Forms.Label();
             tb_StudentEmail = new System.Windows.Forms.TextBox();
             label4 = new System.Windows.Forms.Label();
@@ -45,7 +46,6 @@ namespace TECNM.Residencias.Forms.StudentForms
             label3 = new System.Windows.Forms.Label();
             label2 = new System.Windows.Forms.Label();
             tb_StudentFirstName = new System.Windows.Forms.TextBox();
-            tb_StudentId = new System.Windows.Forms.TextBox();
             label1 = new System.Windows.Forms.Label();
             button1 = new System.Windows.Forms.Button();
             groupBox3 = new System.Windows.Forms.GroupBox();
@@ -100,13 +100,14 @@ namespace TECNM.Residencias.Forms.StudentForms
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(mtb_StudentPhone);
+            groupBox1.Controls.Add(mtb_StudentId);
             groupBox1.Controls.Add(label8);
             groupBox1.Controls.Add(cb_StudentGender);
             groupBox1.Controls.Add(cb_StudentSpecialty);
             groupBox1.Controls.Add(label7);
             groupBox1.Controls.Add(cb_StudentCareer);
             groupBox1.Controls.Add(label6);
-            groupBox1.Controls.Add(tb_StudentPhone);
             groupBox1.Controls.Add(label5);
             groupBox1.Controls.Add(tb_StudentEmail);
             groupBox1.Controls.Add(label4);
@@ -114,7 +115,6 @@ namespace TECNM.Residencias.Forms.StudentForms
             groupBox1.Controls.Add(label3);
             groupBox1.Controls.Add(label2);
             groupBox1.Controls.Add(tb_StudentFirstName);
-            groupBox1.Controls.Add(tb_StudentId);
             groupBox1.Controls.Add(label1);
             groupBox1.Location = new System.Drawing.Point(12, 12);
             groupBox1.Name = "groupBox1";
@@ -122,6 +122,23 @@ namespace TECNM.Residencias.Forms.StudentForms
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             groupBox1.Text = "Información general";
+            // 
+            // mtb_StudentPhone
+            // 
+            mtb_StudentPhone.Location = new System.Drawing.Point(365, 86);
+            mtb_StudentPhone.Mask = "000-000-0000";
+            mtb_StudentPhone.Name = "mtb_StudentPhone";
+            mtb_StudentPhone.Size = new System.Drawing.Size(217, 23);
+            mtb_StudentPhone.TabIndex = 10;
+            mtb_StudentPhone.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
+            // 
+            // mtb_StudentId
+            // 
+            mtb_StudentId.Location = new System.Drawing.Point(6, 42);
+            mtb_StudentId.Mask = "00\\070000";
+            mtb_StudentId.Name = "mtb_StudentId";
+            mtb_StudentId.Size = new System.Drawing.Size(64, 23);
+            mtb_StudentId.TabIndex = 9;
             // 
             // label8
             // 
@@ -177,13 +194,6 @@ namespace TECNM.Residencias.Forms.StudentForms
             label6.Size = new System.Drawing.Size(45, 15);
             label6.TabIndex = 0;
             label6.Text = "Carrera";
-            // 
-            // tb_StudentPhone
-            // 
-            tb_StudentPhone.Location = new System.Drawing.Point(365, 86);
-            tb_StudentPhone.Name = "tb_StudentPhone";
-            tb_StudentPhone.Size = new System.Drawing.Size(217, 23);
-            tb_StudentPhone.TabIndex = 6;
             // 
             // label5
             // 
@@ -241,13 +251,6 @@ namespace TECNM.Residencias.Forms.StudentForms
             tb_StudentFirstName.Name = "tb_StudentFirstName";
             tb_StudentFirstName.Size = new System.Drawing.Size(250, 23);
             tb_StudentFirstName.TabIndex = 2;
-            // 
-            // tb_StudentId
-            // 
-            tb_StudentId.Location = new System.Drawing.Point(6, 42);
-            tb_StudentId.Name = "tb_StudentId";
-            tb_StudentId.Size = new System.Drawing.Size(64, 23);
-            tb_StudentId.TabIndex = 1;
             // 
             // label1
             // 
@@ -653,13 +656,11 @@ namespace TECNM.Residencias.Forms.StudentForms
 
         private System.Windows.Forms.Button btn_CancelEdit;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox tb_StudentId;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox tb_StudentLastName;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox tb_StudentFirstName;
-        private System.Windows.Forms.TextBox tb_StudentPhone;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox tb_StudentEmail;
         private System.Windows.Forms.Label label4;
@@ -704,5 +705,7 @@ namespace TECNM.Residencias.Forms.StudentForms
         private System.Windows.Forms.Button btn_RemoveInternalAdvisor;
         private System.Windows.Forms.Button btn_RemoveReviewerAdvisor;
         private System.Windows.Forms.Button btn_RemoveExternalAdvisor;
+        private System.Windows.Forms.MaskedTextBox mtb_StudentId;
+        private System.Windows.Forms.MaskedTextBox mtb_StudentPhone;
     }
 }
