@@ -61,6 +61,11 @@ namespace TECNM.Residencias.Forms.CompanyForms
 
             cb_CompanyCountry.SelectedIndexChanged += CompanyCountry_SelectedIndexChanged;
             cb_CompanyState.SelectedIndexChanged += CompanyState_SelectedIndexChanged;
+
+            if (cb_CompanyCountry.Items.Count == 1)
+            {
+                cb_CompanyCountry.SelectedIndex = 0;
+            }
         }
 
         private void CompanyCountry_SelectedIndexChanged(object? sender, EventArgs e)
