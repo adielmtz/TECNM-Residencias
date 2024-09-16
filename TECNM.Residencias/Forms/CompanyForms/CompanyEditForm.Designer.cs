@@ -270,7 +270,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
             mtb_CompanyPhone.Mask = "000-000-0000";
             mtb_CompanyPhone.Name = "mtb_CompanyPhone";
             mtb_CompanyPhone.Size = new System.Drawing.Size(375, 23);
-            mtb_CompanyPhone.TabIndex = 15;
+            mtb_CompanyPhone.TabIndex = 5;
             mtb_CompanyPhone.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
             // 
             // mtb_CompanyPostalCode
@@ -279,7 +279,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
             mtb_CompanyPostalCode.Mask = "00000";
             mtb_CompanyPostalCode.Name = "mtb_CompanyPostalCode";
             mtb_CompanyPostalCode.Size = new System.Drawing.Size(121, 23);
-            mtb_CompanyPostalCode.TabIndex = 16;
+            mtb_CompanyPostalCode.TabIndex = 8;
             mtb_CompanyPostalCode.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
             // 
             // CompanyEditForm

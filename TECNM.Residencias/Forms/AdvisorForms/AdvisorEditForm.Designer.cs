@@ -214,7 +214,7 @@
             mtb_AdvisorPhone.Mask = "000-000-0000";
             mtb_AdvisorPhone.Name = "mtb_AdvisorPhone";
             mtb_AdvisorPhone.Size = new System.Drawing.Size(386, 23);
-            mtb_AdvisorPhone.TabIndex = 12;
+            mtb_AdvisorPhone.TabIndex = 8;
             mtb_AdvisorPhone.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
             // 
             // AdvisorEditForm

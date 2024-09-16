@@ -129,7 +129,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             mtb_StudentPhone.Mask = "000-000-0000";
             mtb_StudentPhone.Name = "mtb_StudentPhone";
             mtb_StudentPhone.Size = new System.Drawing.Size(217, 23);
-            mtb_StudentPhone.TabIndex = 10;
+            mtb_StudentPhone.TabIndex = 6;
             mtb_StudentPhone.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
             // 
             // mtb_StudentId
@@ -138,7 +138,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             mtb_StudentId.Mask = "00\\070000";
             mtb_StudentId.Name = "mtb_StudentId";
             mtb_StudentId.Size = new System.Drawing.Size(64, 23);
-            mtb_StudentId.TabIndex = 9;
+            mtb_StudentId.TabIndex = 1;
             // 
             // label8
             // 
@@ -267,7 +267,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             button1.Location = new System.Drawing.Point(12, 530);
             button1.Name = "button1";
             button1.Size = new System.Drawing.Size(100, 23);
-            button1.TabIndex = 20;
+            button1.TabIndex = 1;
             button1.Text = "Guardar";
             button1.UseVisualStyleBackColor = true;
             button1.Click += SaveEdit_Click;
@@ -314,7 +314,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             btn_RemoveReviewerAdvisor.Location = new System.Drawing.Point(556, 305);
             btn_RemoveReviewerAdvisor.Name = "btn_RemoveReviewerAdvisor";
             btn_RemoveReviewerAdvisor.Size = new System.Drawing.Size(26, 24);
-            btn_RemoveReviewerAdvisor.TabIndex = 19;
+            btn_RemoveReviewerAdvisor.TabIndex = 0;
             btn_RemoveReviewerAdvisor.TabStop = false;
             btn_RemoveReviewerAdvisor.Text = "X";
             btn_RemoveReviewerAdvisor.UseVisualStyleBackColor = true;
@@ -326,7 +326,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             btn_RemoveExternalAdvisor.Location = new System.Drawing.Point(556, 261);
             btn_RemoveExternalAdvisor.Name = "btn_RemoveExternalAdvisor";
             btn_RemoveExternalAdvisor.Size = new System.Drawing.Size(26, 24);
-            btn_RemoveExternalAdvisor.TabIndex = 18;
+            btn_RemoveExternalAdvisor.TabIndex = 0;
             btn_RemoveExternalAdvisor.TabStop = false;
             btn_RemoveExternalAdvisor.Text = "X";
             btn_RemoveExternalAdvisor.UseVisualStyleBackColor = true;
@@ -376,7 +376,8 @@ namespace TECNM.Residencias.Forms.StudentForms
             button6.Location = new System.Drawing.Point(6, 306);
             button6.Name = "button6";
             button6.Size = new System.Drawing.Size(75, 23);
-            button6.TabIndex = 17;
+            button6.TabIndex = 0;
+            button6.TabStop = false;
             button6.Text = "Seleccionar";
             button6.UseVisualStyleBackColor = true;
             button6.Click += ChoseReviewerAdvisor_Click;
@@ -387,7 +388,8 @@ namespace TECNM.Residencias.Forms.StudentForms
             btn_ChoseExternalAdvisor.Location = new System.Drawing.Point(6, 262);
             btn_ChoseExternalAdvisor.Name = "btn_ChoseExternalAdvisor";
             btn_ChoseExternalAdvisor.Size = new System.Drawing.Size(75, 23);
-            btn_ChoseExternalAdvisor.TabIndex = 16;
+            btn_ChoseExternalAdvisor.TabIndex = 0;
+            btn_ChoseExternalAdvisor.TabStop = false;
             btn_ChoseExternalAdvisor.Text = "Seleccionar";
             btn_ChoseExternalAdvisor.UseVisualStyleBackColor = true;
             btn_ChoseExternalAdvisor.Click += ChoseExternalAdvisor_Click;
@@ -397,7 +399,8 @@ namespace TECNM.Residencias.Forms.StudentForms
             button4.Location = new System.Drawing.Point(6, 218);
             button4.Name = "button4";
             button4.Size = new System.Drawing.Size(75, 23);
-            button4.TabIndex = 15;
+            button4.TabIndex = 0;
+            button4.TabStop = false;
             button4.Text = "Seleccionar";
             button4.UseVisualStyleBackColor = true;
             button4.Click += ChoseInternalAdvisor_Click;
@@ -436,7 +439,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             dtp_StudentEndDate.Location = new System.Drawing.Point(382, 174);
             dtp_StudentEndDate.Name = "dtp_StudentEndDate";
             dtp_StudentEndDate.Size = new System.Drawing.Size(200, 23);
-            dtp_StudentEndDate.TabIndex = 14;
+            dtp_StudentEndDate.TabIndex = 6;
             // 
             // label15
             // 
@@ -454,7 +457,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             dtp_StudentStartDate.Location = new System.Drawing.Point(176, 174);
             dtp_StudentStartDate.Name = "dtp_StudentStartDate";
             dtp_StudentStartDate.Size = new System.Drawing.Size(200, 23);
-            dtp_StudentStartDate.TabIndex = 13;
+            dtp_StudentStartDate.TabIndex = 5;
             // 
             // label14
             // 
@@ -473,7 +476,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             cb_StudentSemester.Location = new System.Drawing.Point(6, 174);
             cb_StudentSemester.Name = "cb_StudentSemester";
             cb_StudentSemester.Size = new System.Drawing.Size(146, 23);
-            cb_StudentSemester.TabIndex = 12;
+            cb_StudentSemester.TabIndex = 4;
             // 
             // label13
             // 
@@ -489,7 +492,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             tb_StudentSchedule.Location = new System.Drawing.Point(432, 130);
             tb_StudentSchedule.Name = "tb_StudentSchedule";
             tb_StudentSchedule.Size = new System.Drawing.Size(150, 23);
-            tb_StudentSchedule.TabIndex = 11;
+            tb_StudentSchedule.TabIndex = 3;
             // 
             // label12
             // 
@@ -505,7 +508,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             tb_StudentDepartment.Location = new System.Drawing.Point(6, 130);
             tb_StudentDepartment.Name = "tb_StudentDepartment";
             tb_StudentDepartment.Size = new System.Drawing.Size(420, 23);
-            tb_StudentDepartment.TabIndex = 10;
+            tb_StudentDepartment.TabIndex = 2;
             // 
             // label11
             // 
@@ -539,7 +542,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             tb_StudentProjectName.Location = new System.Drawing.Point(6, 42);
             tb_StudentProjectName.Name = "tb_StudentProjectName";
             tb_StudentProjectName.Size = new System.Drawing.Size(576, 23);
-            tb_StudentProjectName.TabIndex = 9;
+            tb_StudentProjectName.TabIndex = 1;
             // 
             // label9
             // 
@@ -588,7 +591,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             tb_StudentNotes.Multiline = true;
             tb_StudentNotes.Name = "tb_StudentNotes";
             tb_StudentNotes.Size = new System.Drawing.Size(441, 113);
-            tb_StudentNotes.TabIndex = 19;
+            tb_StudentNotes.TabIndex = 1;
             // 
             // groupBox2
             // 
