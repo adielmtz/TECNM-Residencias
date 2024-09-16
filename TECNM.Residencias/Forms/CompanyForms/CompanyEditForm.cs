@@ -17,7 +17,6 @@ namespace TECNM.Residencias.Forms.CompanyForms
         private readonly AbstractValidator<Company> _validator = new CompanyValidator();
         private readonly FormConfirmClosingService closeConfirmService;
         private Company _company = new Company();
-        private bool _promptExitConfirm = false;
 
         public CompanyEditForm()
         {

@@ -16,7 +16,6 @@ namespace TECNM.Residencias.Forms.SpecialtyForms
         private readonly FormConfirmClosingService closeConfirmService;
         private Career _career = new Career();
         private Specialty _specialty = new Specialty();
-        private bool _promptExitConfirm = false;
 
         public SpecialtyEditForm()
         {

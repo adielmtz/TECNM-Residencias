@@ -15,7 +15,6 @@ namespace TECNM.Residencias.Forms.CareerForms
         private readonly AbstractValidator<Career> _validator = new CareerValidator();
         private readonly FormConfirmClosingService closeConfirmService;
         private Career _career = new Career();
-        private bool _promptExitConfirm = false;
 
         public CareerEditForm()
         {
