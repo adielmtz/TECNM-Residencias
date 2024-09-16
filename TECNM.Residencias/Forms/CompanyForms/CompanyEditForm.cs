@@ -164,6 +164,11 @@ namespace TECNM.Residencias.Forms.CompanyForms
             _company.PostalCode = mtb_CompanyPostalCode.Text.Trim();
             _company.Enabled = chk_CompanyEnabled.Checked;
 
+            if (string.IsNullOrEmpty(_company.Rfc))
+            {
+                _company.Rfc = null;
+            }
+
             City? city = (City?) cb_CompanyCity.SelectedItem;
             _company.CityId = city == null ? 0 : city.Id;
 
