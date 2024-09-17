@@ -27,5 +27,13 @@ namespace TECNM.Residencias.Services
             File.Copy(filename, targetFile, true);
             document.FullPath = targetFile;
         }
+
+        public static void DeleteFile(Document document)
+        {
+            if (File.Exists(document.FullPath) && document.FullPath.StartsWith(App.DocumentArchiveDirectory))
+            {
+                File.Delete(document.FullPath);
+            }
+        }
     }
 }

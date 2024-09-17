@@ -3,7 +3,6 @@ using FluentValidation.Results;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Windows.Forms;
 using TECNM.Residencias.Controls;
 using TECNM.Residencias.Data.Entities;
@@ -290,13 +289,9 @@ namespace TECNM.Residencias.Forms.StudentForms
             int result = context.Documents.Delete(document);
             context.Commit();
 
-            if (result > 0 && File.Exists(document.FullPath))
+            if (result > 0)
             {
-                // Only delete files within Archive Directory root
-                if (document.FullPath.StartsWith(App.DocumentArchiveDirectory, StringComparison.OrdinalIgnoreCase))
-                {
-                    File.Delete(document.FullPath);
-                }
+                DocumentStorageService.DeleteFile(document);
             }
         }
 
