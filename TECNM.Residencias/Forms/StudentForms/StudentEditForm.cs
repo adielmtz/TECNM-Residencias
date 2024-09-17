@@ -29,6 +29,9 @@ namespace TECNM.Residencias.Forms.StudentForms
         {
             InitializeComponent();
             closeConfirmService = new FormConfirmClosingService(this);
+
+            DateTime now = DateTime.Now;
+            cb_StudentSemester.SelectedIndex = now.Month >= 1 && now.Month < 7 ? 0 : 1;
         }
 
         public StudentEditForm(Student? entity) : this()
