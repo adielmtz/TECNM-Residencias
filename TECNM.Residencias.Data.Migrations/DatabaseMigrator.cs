@@ -13,6 +13,11 @@ namespace TECNM.Residencias.Data.Migrations
         private readonly IDbConnection _connection;
         private IDbTransaction? _transaction;
 
+        public DatabaseMigrator(IDbConnection connection)
+        {
+            _connection = connection;
+        }
+
         private long UserVersion
         {
             get => Convert.ToInt64(GetPragma("user_version"));
@@ -29,11 +34,6 @@ namespace TECNM.Residencias.Data.Migrations
         {
             get => (string) GetPragma("journal_mode")!;
             set => SetPragma("journal_mode", value);
-        }
-
-        public DatabaseMigrator(IDbConnection connection)
-        {
-            _connection = connection;
         }
 
         public void Migrate()

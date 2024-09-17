@@ -6,12 +6,12 @@ namespace TECNM.Residencias.Data.Sets.Common
     {
         private readonly IDbContext _context;
 
-        public IDbContext Context => _context;
-
         public DbSet(IDbContext context)
         {
             _context = context;
         }
+
+        public IDbContext Context => _context;
 
         public abstract bool Insert(T entity);
 

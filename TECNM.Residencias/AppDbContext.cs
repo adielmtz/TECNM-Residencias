@@ -10,6 +10,12 @@ namespace TECNM.Residencias
         private readonly SqliteConnection _connection;
         private readonly SqliteTransaction _transaction;
 
+        public AppDbContext()
+        {
+            _connection = App.Database.Open();
+            _transaction = _connection.BeginTransaction(deferred: true);
+        }
+
         public SqliteConnection Database => _connection;
 
         #region DbSets
@@ -40,12 +46,6 @@ namespace TECNM.Residencias
         private DocumentDbSet? _documents;
         public DocumentDbSet Documents => _documents ??= new DocumentDbSet(this);
         #endregion
-
-        public AppDbContext()
-        {
-            _connection = App.Database.Open();
-            _transaction = _connection.BeginTransaction(deferred: true);
-        }
 
         public void Commit()
         {

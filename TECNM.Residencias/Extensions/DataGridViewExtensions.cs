@@ -10,11 +10,7 @@ namespace TECNM.Residencias.Extensions
         {
             Type type = typeof(DataGridView);
             PropertyInfo? property = type.GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic);
-
-            if (property != null)
-            {
-                property.SetValue(dgv, value, null);
-            }
+            property?.SetValue(dgv, value, null);
         }
     }
 }

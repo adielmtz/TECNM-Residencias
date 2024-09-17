@@ -7,6 +7,11 @@ namespace TECNM.Residencias.Data
         private readonly string _dataSource;
         private string? _connectionString;
 
+        public DbFactory(string dataSource)
+        {
+            _dataSource = dataSource;
+        }
+
         public string DataSource => _dataSource;
 
         public string ConnectionString
@@ -26,11 +31,6 @@ namespace TECNM.Residencias.Data
 
                 return _connectionString;
             }
-        }
-
-        public DbFactory(string dataSource)
-        {
-            _dataSource = dataSource;
         }
 
         public SqliteConnection Open()

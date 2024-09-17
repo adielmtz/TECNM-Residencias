@@ -21,7 +21,7 @@ namespace TECNM.Residencias.Forms.SpecialtyForms
         {
             InitializeComponent();
             closeConfirmService = new FormConfirmClosingService(this);
-    }
+        }
 
         public SpecialtyEditForm(Career career, Specialty? entity) : this()
         {

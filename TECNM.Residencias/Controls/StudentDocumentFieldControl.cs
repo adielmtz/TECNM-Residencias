@@ -17,6 +17,42 @@ namespace TECNM.Residencias.Controls
         private string _filename = "";
         private bool _isNewFile = true;
 
+        public StudentDocumentFieldControl()
+        {
+            InitializeComponent();
+
+            items = [
+                ("Solicitud de residencia",              "SOLICITUD_RESIDENCIA"),
+                ("Carta de presentación",                "CARTA_PRESENTACION"),
+                ("Carta de aceptación",                  "CARTA_ACEPTACION"),
+                ("Constancia de servicio social",        "CONSTANCIA_SERVICIO_SOCIAL"),
+                ("Anteproyecto",                         "ANTEPROYECTO"),
+                ("Autorización de anteproyecto",         "AUTORIZACION_ANTEPROYECTO"),
+                ("Asignación de asesor",                 "ASIGNACION_ASESOR"),
+                ("1er. reporte de asesoría",             "PRIMER_REPORTE"),
+                ("2do. reporte de asesoría",             "SEGUNDO_REPORTE"),
+                ("Evaluación final",                     "EVALUACION_FINAL"),
+                ("Reporte final (PDF)",                  "REPORTE_FINAL"),
+                ("Portada del reporte final con firmas", "PORTADA_REPORTE_FINAL"),
+                ("Carta de liberación o terminación",    "CARTA_TERMINACION"),
+                ("Otro",                                 "OTRO"),
+            ];
+
+            foreach (var tuple in items)
+            {
+                cb_DocumentType.Items.Add(tuple.Item1);
+            }
+        }
+
+        public StudentDocumentFieldControl(Document entity) : this()
+        {
+            _document = entity;
+            cb_DocumentType.SelectedIndex = entity.Type;
+            lbl_DocumentName.Text = entity.OriginalName;
+            _filename = entity.FullPath;
+            _isNewFile = false;
+        }
+
         public Document Document => _document;
 
         public string SelectedFile => _filename;
@@ -39,42 +75,6 @@ namespace TECNM.Residencias.Controls
         public bool IsNewFile => _isNewFile;
 
         public EventHandler? Removed;
-
-        public StudentDocumentFieldControl()
-        {
-            InitializeComponent();
-
-            items = [
-                ("Solicitud de residencia", "SOLICITUD_RESIDENCIA"),
-                ("Carta de presentación", "CARTA_PRESENTACION"),
-                ("Carta de aceptación", "CARTA_ACEPTACION"),
-                ("Constancia de servicio social", "CONSTANCIA_SERVICIO_SOCIAL"),
-                ("Anteproyecto", "ANTEPROYECTO"),
-                ("Autorización de anteproyecto", "AUTORIZACION_ANTEPROYECTO"),
-                ("Asignación de asesor", "ASIGNACION_ASESOR"),
-                ("1er. reporte de asesoría", "PRIMER_REPORTE"),
-                ("2do. reporte de asesoría", "SEGUNDO_REPORTE"),
-                ("Evaluación final", "EVALUACION_FINAL"),
-                ("Reporte final (PDF)", "REPORTE_FINAL"),
-                ("Portada del reporte final con firmas", "PORTADA_REPORTE_FINAL"),
-                ("Carta de liberación o terminación", "CARTA_TERMINACION"),
-                ("Otro", "OTRO"),
-            ];
-
-            foreach (var tuple in items)
-            {
-                cb_DocumentType.Items.Add(tuple.Item1);
-            }
-        }
-
-        public StudentDocumentFieldControl(Document entity) : this()
-        {
-            _document = entity;
-            cb_DocumentType.SelectedIndex = entity.Type;
-            lbl_DocumentName.Text = entity.OriginalName;
-            _filename = entity.FullPath;
-            _isNewFile = false;
-        }
 
         private void DocumentType_SelectedIndexChanged(object sender, EventArgs e)
         {
