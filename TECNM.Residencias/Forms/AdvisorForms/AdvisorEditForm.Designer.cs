@@ -75,18 +75,18 @@
             label1.AutoSize = true;
             label1.Location = new System.Drawing.Point(12, 9);
             label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(30, 15);
+            label1.Size = new System.Drawing.Size(35, 15);
             label1.TabIndex = 0;
-            label1.Text = "Tipo";
+            label1.Text = "Tipo*";
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Location = new System.Drawing.Point(100, 9);
             label2.Name = "label2";
-            label2.Size = new System.Drawing.Size(51, 15);
+            label2.Size = new System.Drawing.Size(56, 15);
             label2.TabIndex = 0;
-            label2.Text = "Nombre";
+            label2.Text = "Nombre*";
             // 
             // tb_AdvisorFirstName
             // 
@@ -180,9 +180,9 @@
             label7.AutoSize = true;
             label7.Location = new System.Drawing.Point(12, 53);
             label7.Name = "label7";
-            label7.Size = new System.Drawing.Size(52, 15);
+            label7.Size = new System.Drawing.Size(57, 15);
             label7.TabIndex = 0;
-            label7.Text = "Empresa";
+            label7.Text = "Empresa*";
             // 
             // cb_AdvisorCompany
             // 
@@ -197,9 +197,9 @@
             label8.AutoSize = true;
             label8.Location = new System.Drawing.Point(252, 9);
             label8.Name = "label8";
-            label8.Size = new System.Drawing.Size(56, 15);
+            label8.Size = new System.Drawing.Size(61, 15);
             label8.TabIndex = 0;
-            label8.Text = "Apellidos";
+            label8.Text = "Apellidos*";
             // 
             // tb_AdvisorLastName
             // 

@@ -30,7 +30,7 @@ namespace TECNM.Residencias.Forms.StudentForms
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StudentEditForm));
             btn_CancelEdit = new System.Windows.Forms.Button();
-            groupBox1 = new System.Windows.Forms.GroupBox();
+            gb_GeneralInfo = new System.Windows.Forms.GroupBox();
             mtb_StudentPhone = new System.Windows.Forms.MaskedTextBox();
             mtb_StudentId = new System.Windows.Forms.MaskedTextBox();
             label8 = new System.Windows.Forms.Label();
@@ -48,7 +48,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             tb_StudentFirstName = new System.Windows.Forms.TextBox();
             label1 = new System.Windows.Forms.Label();
             button1 = new System.Windows.Forms.Button();
-            groupBox3 = new System.Windows.Forms.GroupBox();
+            gb_ProjectInfo = new System.Windows.Forms.GroupBox();
             btn_RemoveReviewerAdvisor = new System.Windows.Forms.Button();
             btn_RemoveExternalAdvisor = new System.Windows.Forms.Button();
             btn_RemoveInternalAdvisor = new System.Windows.Forms.Button();
@@ -77,15 +77,15 @@ namespace TECNM.Residencias.Forms.StudentForms
             label9 = new System.Windows.Forms.Label();
             button2 = new System.Windows.Forms.Button();
             chk_StudentEnabled = new System.Windows.Forms.CheckBox();
-            groupBox9 = new System.Windows.Forms.GroupBox();
+            gb_Notes = new System.Windows.Forms.GroupBox();
             tb_StudentNotes = new System.Windows.Forms.TextBox();
-            groupBox2 = new System.Windows.Forms.GroupBox();
+            gb_Documents = new System.Windows.Forms.GroupBox();
             button3 = new System.Windows.Forms.Button();
             flp_Documents = new System.Windows.Forms.FlowLayoutPanel();
-            groupBox1.SuspendLayout();
-            groupBox3.SuspendLayout();
-            groupBox9.SuspendLayout();
-            groupBox2.SuspendLayout();
+            gb_GeneralInfo.SuspendLayout();
+            gb_ProjectInfo.SuspendLayout();
+            gb_Notes.SuspendLayout();
+            gb_Documents.SuspendLayout();
             SuspendLayout();
             // 
             // btn_CancelEdit
@@ -98,30 +98,30 @@ namespace TECNM.Residencias.Forms.StudentForms
             btn_CancelEdit.Text = "Cancelar";
             btn_CancelEdit.UseVisualStyleBackColor = true;
             // 
-            // groupBox1
+            // gb_GeneralInfo
             // 
-            groupBox1.Controls.Add(mtb_StudentPhone);
-            groupBox1.Controls.Add(mtb_StudentId);
-            groupBox1.Controls.Add(label8);
-            groupBox1.Controls.Add(cb_StudentGender);
-            groupBox1.Controls.Add(cb_StudentSpecialty);
-            groupBox1.Controls.Add(label7);
-            groupBox1.Controls.Add(cb_StudentCareer);
-            groupBox1.Controls.Add(label6);
-            groupBox1.Controls.Add(label5);
-            groupBox1.Controls.Add(tb_StudentEmail);
-            groupBox1.Controls.Add(label4);
-            groupBox1.Controls.Add(tb_StudentLastName);
-            groupBox1.Controls.Add(label3);
-            groupBox1.Controls.Add(label2);
-            groupBox1.Controls.Add(tb_StudentFirstName);
-            groupBox1.Controls.Add(label1);
-            groupBox1.Location = new System.Drawing.Point(12, 12);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new System.Drawing.Size(588, 162);
-            groupBox1.TabIndex = 0;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "Información general";
+            gb_GeneralInfo.Controls.Add(mtb_StudentPhone);
+            gb_GeneralInfo.Controls.Add(mtb_StudentId);
+            gb_GeneralInfo.Controls.Add(label8);
+            gb_GeneralInfo.Controls.Add(cb_StudentGender);
+            gb_GeneralInfo.Controls.Add(cb_StudentSpecialty);
+            gb_GeneralInfo.Controls.Add(label7);
+            gb_GeneralInfo.Controls.Add(cb_StudentCareer);
+            gb_GeneralInfo.Controls.Add(label6);
+            gb_GeneralInfo.Controls.Add(label5);
+            gb_GeneralInfo.Controls.Add(tb_StudentEmail);
+            gb_GeneralInfo.Controls.Add(label4);
+            gb_GeneralInfo.Controls.Add(tb_StudentLastName);
+            gb_GeneralInfo.Controls.Add(label3);
+            gb_GeneralInfo.Controls.Add(label2);
+            gb_GeneralInfo.Controls.Add(tb_StudentFirstName);
+            gb_GeneralInfo.Controls.Add(label1);
+            gb_GeneralInfo.Location = new System.Drawing.Point(12, 12);
+            gb_GeneralInfo.Name = "gb_GeneralInfo";
+            gb_GeneralInfo.Size = new System.Drawing.Size(588, 162);
+            gb_GeneralInfo.TabIndex = 0;
+            gb_GeneralInfo.TabStop = false;
+            gb_GeneralInfo.Text = "Información general";
             // 
             // mtb_StudentPhone
             // 
@@ -145,9 +145,9 @@ namespace TECNM.Residencias.Forms.StudentForms
             label8.AutoSize = true;
             label8.Location = new System.Drawing.Point(6, 68);
             label8.Name = "label8";
-            label8.Size = new System.Drawing.Size(32, 15);
+            label8.Size = new System.Drawing.Size(37, 15);
             label8.TabIndex = 0;
-            label8.Text = "Sexo";
+            label8.Text = "Sexo*";
             // 
             // cb_StudentGender
             // 
@@ -232,18 +232,18 @@ namespace TECNM.Residencias.Forms.StudentForms
             label3.AutoSize = true;
             label3.Location = new System.Drawing.Point(332, 24);
             label3.Name = "label3";
-            label3.Size = new System.Drawing.Size(56, 15);
+            label3.Size = new System.Drawing.Size(61, 15);
             label3.TabIndex = 0;
-            label3.Text = "Apellidos";
+            label3.Text = "Apellidos*";
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Location = new System.Drawing.Point(76, 24);
             label2.Name = "label2";
-            label2.Size = new System.Drawing.Size(51, 15);
+            label2.Size = new System.Drawing.Size(56, 15);
             label2.TabIndex = 0;
-            label2.Text = "Nombre";
+            label2.Text = "Nombre*";
             // 
             // tb_StudentFirstName
             // 
@@ -257,9 +257,9 @@ namespace TECNM.Residencias.Forms.StudentForms
             label1.AutoSize = true;
             label1.Location = new System.Drawing.Point(6, 24);
             label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(64, 15);
+            label1.Size = new System.Drawing.Size(69, 15);
             label1.TabIndex = 0;
-            label1.Text = "N° Control";
+            label1.Text = "N° Control*";
             // 
             // button1
             // 
@@ -272,41 +272,41 @@ namespace TECNM.Residencias.Forms.StudentForms
             button1.UseVisualStyleBackColor = true;
             button1.Click += SaveEdit_Click;
             // 
-            // groupBox3
+            // gb_ProjectInfo
             // 
-            groupBox3.Controls.Add(btn_RemoveReviewerAdvisor);
-            groupBox3.Controls.Add(btn_RemoveExternalAdvisor);
-            groupBox3.Controls.Add(btn_RemoveInternalAdvisor);
-            groupBox3.Controls.Add(tb_StudentReviewerAdvisor);
-            groupBox3.Controls.Add(tb_StudentExternalAdvisor);
-            groupBox3.Controls.Add(tb_StudentInternalAdvisor);
-            groupBox3.Controls.Add(button6);
-            groupBox3.Controls.Add(btn_ChoseExternalAdvisor);
-            groupBox3.Controls.Add(button4);
-            groupBox3.Controls.Add(label18);
-            groupBox3.Controls.Add(label17);
-            groupBox3.Controls.Add(label16);
-            groupBox3.Controls.Add(dtp_StudentEndDate);
-            groupBox3.Controls.Add(label15);
-            groupBox3.Controls.Add(dtp_StudentStartDate);
-            groupBox3.Controls.Add(label14);
-            groupBox3.Controls.Add(cb_StudentSemester);
-            groupBox3.Controls.Add(label13);
-            groupBox3.Controls.Add(tb_StudentSchedule);
-            groupBox3.Controls.Add(label12);
-            groupBox3.Controls.Add(tb_StudentDepartment);
-            groupBox3.Controls.Add(label11);
-            groupBox3.Controls.Add(tb_StudentCompany);
-            groupBox3.Controls.Add(label10);
-            groupBox3.Controls.Add(tb_StudentProjectName);
-            groupBox3.Controls.Add(label9);
-            groupBox3.Controls.Add(button2);
-            groupBox3.Location = new System.Drawing.Point(12, 180);
-            groupBox3.Name = "groupBox3";
-            groupBox3.Size = new System.Drawing.Size(588, 344);
-            groupBox3.TabIndex = 1;
-            groupBox3.TabStop = false;
-            groupBox3.Text = "Proyecto";
+            gb_ProjectInfo.Controls.Add(btn_RemoveReviewerAdvisor);
+            gb_ProjectInfo.Controls.Add(btn_RemoveExternalAdvisor);
+            gb_ProjectInfo.Controls.Add(btn_RemoveInternalAdvisor);
+            gb_ProjectInfo.Controls.Add(tb_StudentReviewerAdvisor);
+            gb_ProjectInfo.Controls.Add(tb_StudentExternalAdvisor);
+            gb_ProjectInfo.Controls.Add(tb_StudentInternalAdvisor);
+            gb_ProjectInfo.Controls.Add(button6);
+            gb_ProjectInfo.Controls.Add(btn_ChoseExternalAdvisor);
+            gb_ProjectInfo.Controls.Add(button4);
+            gb_ProjectInfo.Controls.Add(label18);
+            gb_ProjectInfo.Controls.Add(label17);
+            gb_ProjectInfo.Controls.Add(label16);
+            gb_ProjectInfo.Controls.Add(dtp_StudentEndDate);
+            gb_ProjectInfo.Controls.Add(label15);
+            gb_ProjectInfo.Controls.Add(dtp_StudentStartDate);
+            gb_ProjectInfo.Controls.Add(label14);
+            gb_ProjectInfo.Controls.Add(cb_StudentSemester);
+            gb_ProjectInfo.Controls.Add(label13);
+            gb_ProjectInfo.Controls.Add(tb_StudentSchedule);
+            gb_ProjectInfo.Controls.Add(label12);
+            gb_ProjectInfo.Controls.Add(tb_StudentDepartment);
+            gb_ProjectInfo.Controls.Add(label11);
+            gb_ProjectInfo.Controls.Add(tb_StudentCompany);
+            gb_ProjectInfo.Controls.Add(label10);
+            gb_ProjectInfo.Controls.Add(tb_StudentProjectName);
+            gb_ProjectInfo.Controls.Add(label9);
+            gb_ProjectInfo.Controls.Add(button2);
+            gb_ProjectInfo.Location = new System.Drawing.Point(12, 180);
+            gb_ProjectInfo.Name = "gb_ProjectInfo";
+            gb_ProjectInfo.Size = new System.Drawing.Size(588, 344);
+            gb_ProjectInfo.TabIndex = 1;
+            gb_ProjectInfo.TabStop = false;
+            gb_ProjectInfo.Text = "Proyecto";
             // 
             // btn_RemoveReviewerAdvisor
             // 
@@ -446,9 +446,9 @@ namespace TECNM.Residencias.Forms.StudentForms
             label15.AutoSize = true;
             label15.Location = new System.Drawing.Point(382, 156);
             label15.Name = "label15";
-            label15.Size = new System.Drawing.Size(86, 15);
+            label15.Size = new System.Drawing.Size(91, 15);
             label15.TabIndex = 0;
-            label15.Text = "Fecha de cierre";
+            label15.Text = "Fecha de cierre*";
             // 
             // dtp_StudentStartDate
             // 
@@ -464,9 +464,9 @@ namespace TECNM.Residencias.Forms.StudentForms
             label14.AutoSize = true;
             label14.Location = new System.Drawing.Point(176, 156);
             label14.Name = "label14";
-            label14.Size = new System.Drawing.Size(86, 15);
+            label14.Size = new System.Drawing.Size(91, 15);
             label14.TabIndex = 0;
-            label14.Text = "Fecha de inicio";
+            label14.Text = "Fecha de inicio*";
             // 
             // cb_StudentSemester
             // 
@@ -483,9 +483,9 @@ namespace TECNM.Residencias.Forms.StudentForms
             label13.AutoSize = true;
             label13.Location = new System.Drawing.Point(6, 156);
             label13.Name = "label13";
-            label13.Size = new System.Drawing.Size(55, 15);
+            label13.Size = new System.Drawing.Size(60, 15);
             label13.TabIndex = 0;
-            label13.Text = "Semestre";
+            label13.Text = "Semestre*";
             // 
             // tb_StudentSchedule
             // 
@@ -549,9 +549,9 @@ namespace TECNM.Residencias.Forms.StudentForms
             label9.AutoSize = true;
             label9.Location = new System.Drawing.Point(6, 24);
             label9.Name = "label9";
-            label9.Size = new System.Drawing.Size(120, 15);
+            label9.Size = new System.Drawing.Size(125, 15);
             label9.TabIndex = 0;
-            label9.Text = "Nombre del proyecto";
+            label9.Text = "Nombre del proyecto*";
             // 
             // button2
             // 
@@ -573,16 +573,17 @@ namespace TECNM.Residencias.Forms.StudentForms
             chk_StudentEnabled.TabIndex = 18;
             chk_StudentEnabled.Text = "Expediente cerrado";
             chk_StudentEnabled.UseVisualStyleBackColor = true;
+            chk_StudentEnabled.CheckedChanged += StudentEnabled_CheckedChanged;
             // 
-            // groupBox9
+            // gb_Notes
             // 
-            groupBox9.Controls.Add(tb_StudentNotes);
-            groupBox9.Location = new System.Drawing.Point(606, 383);
-            groupBox9.Name = "groupBox9";
-            groupBox9.Size = new System.Drawing.Size(453, 141);
-            groupBox9.TabIndex = 3;
-            groupBox9.TabStop = false;
-            groupBox9.Text = "Observaciones";
+            gb_Notes.Controls.Add(tb_StudentNotes);
+            gb_Notes.Location = new System.Drawing.Point(606, 383);
+            gb_Notes.Name = "gb_Notes";
+            gb_Notes.Size = new System.Drawing.Size(453, 141);
+            gb_Notes.TabIndex = 3;
+            gb_Notes.TabStop = false;
+            gb_Notes.Text = "Observaciones";
             // 
             // tb_StudentNotes
             // 
@@ -593,16 +594,16 @@ namespace TECNM.Residencias.Forms.StudentForms
             tb_StudentNotes.Size = new System.Drawing.Size(441, 113);
             tb_StudentNotes.TabIndex = 1;
             // 
-            // groupBox2
+            // gb_Documents
             // 
-            groupBox2.Controls.Add(button3);
-            groupBox2.Controls.Add(flp_Documents);
-            groupBox2.Location = new System.Drawing.Point(606, 12);
-            groupBox2.Name = "groupBox2";
-            groupBox2.Size = new System.Drawing.Size(454, 365);
-            groupBox2.TabIndex = 2;
-            groupBox2.TabStop = false;
-            groupBox2.Text = "Documentos";
+            gb_Documents.Controls.Add(button3);
+            gb_Documents.Controls.Add(flp_Documents);
+            gb_Documents.Location = new System.Drawing.Point(606, 12);
+            gb_Documents.Name = "gb_Documents";
+            gb_Documents.Size = new System.Drawing.Size(454, 365);
+            gb_Documents.TabIndex = 2;
+            gb_Documents.TabStop = false;
+            gb_Documents.Text = "Documentos";
             // 
             // button3
             // 
@@ -631,11 +632,11 @@ namespace TECNM.Residencias.Forms.StudentForms
             CancelButton = btn_CancelEdit;
             ClientSize = new System.Drawing.Size(1072, 565);
             ControlBox = false;
-            Controls.Add(groupBox2);
-            Controls.Add(groupBox9);
-            Controls.Add(groupBox3);
+            Controls.Add(gb_Documents);
+            Controls.Add(gb_Notes);
+            Controls.Add(gb_ProjectInfo);
             Controls.Add(button1);
-            Controls.Add(groupBox1);
+            Controls.Add(gb_GeneralInfo);
             Controls.Add(chk_StudentEnabled);
             Controls.Add(btn_CancelEdit);
             DoubleBuffered = true;
@@ -644,13 +645,13 @@ namespace TECNM.Residencias.Forms.StudentForms
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "Editar información";
             Load += StudentEditForm_Load;
-            groupBox1.ResumeLayout(false);
-            groupBox1.PerformLayout();
-            groupBox3.ResumeLayout(false);
-            groupBox3.PerformLayout();
-            groupBox9.ResumeLayout(false);
-            groupBox9.PerformLayout();
-            groupBox2.ResumeLayout(false);
+            gb_GeneralInfo.ResumeLayout(false);
+            gb_GeneralInfo.PerformLayout();
+            gb_ProjectInfo.ResumeLayout(false);
+            gb_ProjectInfo.PerformLayout();
+            gb_Notes.ResumeLayout(false);
+            gb_Notes.PerformLayout();
+            gb_Documents.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -658,7 +659,7 @@ namespace TECNM.Residencias.Forms.StudentForms
         #endregion
 
         private System.Windows.Forms.Button btn_CancelEdit;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox gb_GeneralInfo;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox tb_StudentLastName;
         private System.Windows.Forms.Label label3;
@@ -674,7 +675,7 @@ namespace TECNM.Residencias.Forms.StudentForms
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ComboBox cb_StudentGender;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.GroupBox gb_ProjectInfo;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox tb_StudentCompany;
@@ -693,10 +694,10 @@ namespace TECNM.Residencias.Forms.StudentForms
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.GroupBox groupBox9;
+        private System.Windows.Forms.GroupBox gb_Notes;
         private System.Windows.Forms.TextBox tb_StudentNotes;
         private System.Windows.Forms.CheckBox chk_StudentEnabled;
-        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox gb_Documents;
         private System.Windows.Forms.FlowLayoutPanel flp_Documents;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button6;

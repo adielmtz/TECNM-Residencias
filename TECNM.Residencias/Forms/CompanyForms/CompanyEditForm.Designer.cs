@@ -61,9 +61,9 @@ namespace TECNM.Residencias.Forms.CompanyForms
             label1.AutoSize = true;
             label1.Location = new System.Drawing.Point(12, 273);
             label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(28, 15);
+            label1.Size = new System.Drawing.Size(33, 15);
             label1.TabIndex = 0;
-            label1.Text = "País";
+            label1.Text = "País*";
             // 
             // cb_CompanyCountry
             // 
@@ -81,9 +81,9 @@ namespace TECNM.Residencias.Forms.CompanyForms
             label2.AutoSize = true;
             label2.Location = new System.Drawing.Point(139, 273);
             label2.Name = "label2";
-            label2.Size = new System.Drawing.Size(42, 15);
+            label2.Size = new System.Drawing.Size(47, 15);
             label2.TabIndex = 0;
-            label2.Text = "Estado";
+            label2.Text = "Estado*";
             // 
             // cb_CompanyState
             // 
@@ -101,9 +101,9 @@ namespace TECNM.Residencias.Forms.CompanyForms
             label3.AutoSize = true;
             label3.Location = new System.Drawing.Point(266, 273);
             label3.Name = "label3";
-            label3.Size = new System.Drawing.Size(45, 15);
+            label3.Size = new System.Drawing.Size(50, 15);
             label3.TabIndex = 0;
-            label3.Text = "Ciudad";
+            label3.Text = "Ciudad*";
             // 
             // cb_CompanyCity
             // 
@@ -130,9 +130,9 @@ namespace TECNM.Residencias.Forms.CompanyForms
             label4.AutoSize = true;
             label4.Location = new System.Drawing.Point(12, 9);
             label4.Name = "label4";
-            label4.Size = new System.Drawing.Size(29, 15);
+            label4.Size = new System.Drawing.Size(34, 15);
             label4.TabIndex = 0;
-            label4.Text = "Giro";
+            label4.Text = "Giro*";
             // 
             // cb_CompanyType
             // 
@@ -165,9 +165,9 @@ namespace TECNM.Residencias.Forms.CompanyForms
             label6.AutoSize = true;
             label6.Location = new System.Drawing.Point(12, 53);
             label6.Name = "label6";
-            label6.Size = new System.Drawing.Size(51, 15);
+            label6.Size = new System.Drawing.Size(56, 15);
             label6.TabIndex = 0;
-            label6.Text = "Nombre";
+            label6.Text = "Nombre*";
             // 
             // tb_CompanyName
             // 
@@ -181,9 +181,9 @@ namespace TECNM.Residencias.Forms.CompanyForms
             label7.AutoSize = true;
             label7.Location = new System.Drawing.Point(12, 185);
             label7.Name = "label7";
-            label7.Size = new System.Drawing.Size(57, 15);
+            label7.Size = new System.Drawing.Size(62, 15);
             label7.TabIndex = 0;
-            label7.Text = "Dirección";
+            label7.Text = "Dirección*";
             // 
             // tb_CompanyAddress
             // 
@@ -197,9 +197,9 @@ namespace TECNM.Residencias.Forms.CompanyForms
             label8.AutoSize = true;
             label8.Location = new System.Drawing.Point(12, 229);
             label8.Name = "label8";
-            label8.Size = new System.Drawing.Size(48, 15);
+            label8.Size = new System.Drawing.Size(53, 15);
             label8.TabIndex = 0;
-            label8.Text = "Colonia";
+            label8.Text = "Colonia*";
             // 
             // tb_CompanyLocality
             // 
@@ -213,9 +213,9 @@ namespace TECNM.Residencias.Forms.CompanyForms
             label9.AutoSize = true;
             label9.Location = new System.Drawing.Point(266, 229);
             label9.Name = "label9";
-            label9.Size = new System.Drawing.Size(81, 15);
+            label9.Size = new System.Drawing.Size(86, 15);
             label9.TabIndex = 0;
-            label9.Text = "Código postal";
+            label9.Text = "Código postal*";
             // 
             // chk_CompanyEnabled
             // 
