@@ -157,6 +157,37 @@ CREATE TABLE Document (
 STRICT;
 
 
+CREATE TABLE Extra (
+    Id        INTEGER PRIMARY KEY
+                      NOT NULL,
+    Type      TEXT    NOT NULL,
+    Value     TEXT    NOT NULL,
+    UpdatedOn TEXT    NOT NULL,
+    CreatedOn TEXT    NOT NULL
+                      DEFAULT (CURRENT_TIMESTAMP),
+    CONSTRAINT AK_Extra_Identity UNIQUE (
+        Type,
+        Value
+    )
+)
+STRICT;
+
+
+
+CREATE TABLE StudentExtras (
+    StudentId INTEGER REFERENCES Student (Id) ON DELETE CASCADE
+                      NOT NULL,
+    ExtraId   INTEGER REFERENCES Extra (Id) ON DELETE CASCADE
+                      NOT NULL,
+    CONSTRAINT PK_StudentExtras PRIMARY KEY (
+        StudentId,
+        ExtraId
+    )
+)
+WITHOUT ROWID,
+STRICT;
+
+
 CREATE VIRTUAL TABLE CompanySearch USING fts5 (
     Rfc,
     Name,

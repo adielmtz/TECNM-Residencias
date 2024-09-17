@@ -45,6 +45,9 @@ namespace TECNM.Residencias
 
         private DocumentDbSet? _documents;
         public DocumentDbSet Documents => _documents ??= new DocumentDbSet(this);
+
+        private ExtraDbSet? _extras;
+        public ExtraDbSet Extras => _extras ??= new ExtraDbSet(this);
         #endregion
 
         public void Commit()

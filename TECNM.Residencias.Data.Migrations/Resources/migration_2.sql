@@ -26,3 +26,8 @@ CREATE INDEX IX_Document_Lookup ON Document (
 CREATE INDEX IX_Document_Hash ON Document (
     Hash
 );
+
+
+CREATE INDEX IX_StudentExtras_ExtraId ON StudentExtras (
+    ExtraId
+);

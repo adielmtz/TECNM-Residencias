@@ -82,6 +82,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             gb_Documents = new System.Windows.Forms.GroupBox();
             button3 = new System.Windows.Forms.Button();
             flp_Documents = new System.Windows.Forms.FlowLayoutPanel();
+            button5 = new System.Windows.Forms.Button();
             gb_GeneralInfo.SuspendLayout();
             gb_ProjectInfo.SuspendLayout();
             gb_Notes.SuspendLayout();
@@ -567,7 +568,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             // chk_StudentEnabled
             // 
             chk_StudentEnabled.AutoSize = true;
-            chk_StudentEnabled.Location = new System.Drawing.Point(121, 533);
+            chk_StudentEnabled.Location = new System.Drawing.Point(308, 533);
             chk_StudentEnabled.Name = "chk_StudentEnabled";
             chk_StudentEnabled.Size = new System.Drawing.Size(127, 19);
             chk_StudentEnabled.TabIndex = 18;
@@ -625,6 +626,16 @@ namespace TECNM.Residencias.Forms.StudentForms
             flp_Documents.TabIndex = 0;
             flp_Documents.WrapContents = false;
             // 
+            // button5
+            // 
+            button5.Location = new System.Drawing.Point(188, 530);
+            button5.Name = "button5";
+            button5.Size = new System.Drawing.Size(114, 23);
+            button5.TabIndex = 22;
+            button5.Text = "Asignar extras";
+            button5.UseVisualStyleBackColor = true;
+            button5.Click += OpenExtrasDialog_Click;
+            // 
             // StudentEditForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -632,6 +643,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             CancelButton = btn_CancelEdit;
             ClientSize = new System.Drawing.Size(1072, 565);
             ControlBox = false;
+            Controls.Add(button5);
             Controls.Add(gb_Documents);
             Controls.Add(gb_Notes);
             Controls.Add(gb_ProjectInfo);
@@ -711,5 +723,6 @@ namespace TECNM.Residencias.Forms.StudentForms
         private System.Windows.Forms.Button btn_RemoveExternalAdvisor;
         private System.Windows.Forms.MaskedTextBox mtb_StudentId;
         private System.Windows.Forms.MaskedTextBox mtb_StudentPhone;
+        private System.Windows.Forms.Button button5;
     }
 }

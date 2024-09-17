@@ -24,6 +24,7 @@ namespace TECNM.Residencias.Forms.StudentForms
         private Advisor? _internalAdvisor;
         private Advisor? _externalAdvisor;
         private Advisor? _reviewerAdvisor;
+        private IList<Extra>? extras;
 
         public StudentEditForm()
         {
@@ -299,6 +300,23 @@ namespace TECNM.Residencias.Forms.StudentForms
             }
         }
 
+        private void StudentEnabled_CheckedChanged(object sender, EventArgs e)
+        {
+            /*
+            gb_GeneralInfo.Enabled = !chk_StudentEnabled.Checked;
+            gb_ProjectInfo.Enabled = !chk_StudentEnabled.Checked;
+            gb_Documents.Enabled = !chk_StudentEnabled.Checked;
+            gb_Notes.Enabled = !chk_StudentEnabled.Checked;
+            */
+        }
+
+        private void OpenExtrasDialog_Click(object sender, EventArgs e)
+        {
+            using var dialog = new StudentExtrasPickerDialogForm(_student);
+            dialog.ShowDialog();
+            extras = dialog.SelectedExtras;
+        }
+
         private void SaveEdit_Click(object sender, EventArgs e)
         {
             Student _student = this._student;
@@ -336,6 +354,12 @@ namespace TECNM.Residencias.Forms.StudentForms
 
             using var context = new AppDbContext();
             context.Students.InsertOrUpdate(_student);
+
+            if (extras != null)
+            {
+                context.Extras.DeleteExtrasForStudent(_student);
+                context.Extras.InsertExtrasForStudent(_student, extras);
+            }
 
             foreach (StudentDocumentFieldControl control in flp_Documents.Controls)
             {
