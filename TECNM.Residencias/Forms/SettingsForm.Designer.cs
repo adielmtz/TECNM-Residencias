@@ -35,11 +35,11 @@ namespace TECNM.Residencias.Forms
             button2 = new System.Windows.Forms.Button();
             button1 = new System.Windows.Forms.Button();
             groupBox2 = new System.Windows.Forms.GroupBox();
-            lbl_AppVersion = new System.Windows.Forms.Label();
-            linkLabel1 = new System.Windows.Forms.LinkLabel();
             label3 = new System.Windows.Forms.Label();
             label2 = new System.Windows.Forms.Label();
             label1 = new System.Windows.Forms.Label();
+            lbl_AppVersion = new System.Windows.Forms.Label();
+            linkLabel1 = new System.Windows.Forms.LinkLabel();
             groupBox3 = new System.Windows.Forms.GroupBox();
             groupBox6 = new System.Windows.Forms.GroupBox();
             cb_StudentCareer = new System.Windows.Forms.ComboBox();
@@ -113,37 +113,15 @@ namespace TECNM.Residencias.Forms
             // 
             // groupBox2
             // 
-            groupBox2.Controls.Add(lbl_AppVersion);
-            groupBox2.Controls.Add(linkLabel1);
             groupBox2.Controls.Add(label3);
             groupBox2.Controls.Add(label2);
             groupBox2.Controls.Add(label1);
-            groupBox2.Location = new System.Drawing.Point(541, 334);
+            groupBox2.Location = new System.Drawing.Point(541, 353);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new System.Drawing.Size(247, 104);
+            groupBox2.Size = new System.Drawing.Size(247, 70);
             groupBox2.TabIndex = 2;
             groupBox2.TabStop = false;
             groupBox2.Text = "Créditos";
-            // 
-            // lbl_AppVersion
-            // 
-            lbl_AppVersion.AutoSize = true;
-            lbl_AppVersion.Location = new System.Drawing.Point(6, 64);
-            lbl_AppVersion.Name = "lbl_AppVersion";
-            lbl_AppVersion.Size = new System.Drawing.Size(87, 15);
-            lbl_AppVersion.TabIndex = 6;
-            lbl_AppVersion.Text = "[APP VERSION]";
-            // 
-            // linkLabel1
-            // 
-            linkLabel1.AutoSize = true;
-            linkLabel1.Location = new System.Drawing.Point(6, 79);
-            linkLabel1.Name = "linkLabel1";
-            linkLabel1.Size = new System.Drawing.Size(83, 15);
-            linkLabel1.TabIndex = 3;
-            linkLabel1.TabStop = true;
-            linkLabel1.Text = "Código fuente";
-            linkLabel1.LinkClicked += SourceCodeGitHub_LinkClicked;
             // 
             // label3
             // 
@@ -171,6 +149,26 @@ namespace TECNM.Residencias.Forms
             label1.Size = new System.Drawing.Size(232, 15);
             label1.TabIndex = 3;
             label1.Text = "18070602 : Luis Adiel Jesús Martínez Garcés";
+            // 
+            // lbl_AppVersion
+            // 
+            lbl_AppVersion.AutoSize = true;
+            lbl_AppVersion.Location = new System.Drawing.Point(541, 426);
+            lbl_AppVersion.Name = "lbl_AppVersion";
+            lbl_AppVersion.Size = new System.Drawing.Size(87, 15);
+            lbl_AppVersion.TabIndex = 6;
+            lbl_AppVersion.Text = "[APP VERSION]";
+            // 
+            // linkLabel1
+            // 
+            linkLabel1.AutoSize = true;
+            linkLabel1.Location = new System.Drawing.Point(705, 426);
+            linkLabel1.Name = "linkLabel1";
+            linkLabel1.Size = new System.Drawing.Size(83, 15);
+            linkLabel1.TabIndex = 3;
+            linkLabel1.TabStop = true;
+            linkLabel1.Text = "Código fuente";
+            linkLabel1.LinkClicked += SourceCodeGitHub_LinkClicked;
             // 
             // groupBox3
             // 
@@ -289,7 +287,9 @@ namespace TECNM.Residencias.Forms
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(800, 450);
+            Controls.Add(lbl_AppVersion);
             Controls.Add(groupBox3);
+            Controls.Add(linkLabel1);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
             Icon = (System.Drawing.Icon) resources.GetObject("$this.Icon");
@@ -309,6 +309,7 @@ namespace TECNM.Residencias.Forms
             groupBox4.ResumeLayout(false);
             groupBox4.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion

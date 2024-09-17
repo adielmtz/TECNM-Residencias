@@ -25,6 +25,11 @@ namespace TECNM.Residencias.Forms
             FormManagerService.OpenForm<StudentListViewForm>();
         }
 
+        private void AddNewStudent_Click(object sender, EventArgs e)
+        {
+            FormManagerService.OpenDialog<StudentEditForm>();
+        }
+
         private void ShowCareers_Click(object sender, EventArgs e)
         {
             FormManagerService.OpenForm<CareerListViewForm>();
@@ -33,6 +38,11 @@ namespace TECNM.Residencias.Forms
         private void ShowCompanies_Click(object sender, EventArgs e)
         {
             FormManagerService.OpenForm<CompanyListViewForm>();
+        }
+
+        private void AddNewCompany_Click(object sender, EventArgs e)
+        {
+            FormManagerService.OpenDialog<CompanyEditForm>();
         }
 
         private void ShowSettings_Click(object sender, EventArgs e)
