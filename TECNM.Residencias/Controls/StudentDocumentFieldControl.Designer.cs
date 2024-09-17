@@ -78,7 +78,6 @@ namespace TECNM.Residencias.Controls
             // 
             cb_DocumentType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             cb_DocumentType.FormattingEnabled = true;
-            cb_DocumentType.Items.AddRange(new object[] { "Solicitud de residencia", "Carta de presentación", "Carta de aceptación", "Constancia de servicio social", "Anteproyecto", "Otro" });
             cb_DocumentType.Location = new System.Drawing.Point(39, 8);
             cb_DocumentType.Name = "cb_DocumentType";
             cb_DocumentType.Size = new System.Drawing.Size(190, 23);

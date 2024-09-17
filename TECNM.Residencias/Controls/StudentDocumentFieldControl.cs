@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Security.Cryptography;
@@ -11,6 +12,7 @@ namespace TECNM.Residencias.Controls
 {
     public sealed partial class StudentDocumentFieldControl : UserControl
     {
+        private readonly List<(string, string)> items;
         private Document _document = new Document();
         private string _filename = "";
         private bool _isNewFile = true;
@@ -30,7 +32,7 @@ namespace TECNM.Residencias.Controls
                     return "";
                 }
 
-                return (string) cb_DocumentType.Items[index]!;
+                return items[index].Item2;
             }
         }
 
@@ -41,6 +43,28 @@ namespace TECNM.Residencias.Controls
         public StudentDocumentFieldControl()
         {
             InitializeComponent();
+
+            items = [
+                ("Solicitud de residencia", "SOLICITUD_RESIDENCIA"),
+                ("Carta de presentación", "CARTA_PRESENTACION"),
+                ("Carta de aceptación", "CARTA_ACEPTACION"),
+                ("Constancia de servicio social", "CONSTANCIA_SERVICIO_SOCIAL"),
+                ("Anteproyecto", "ANTEPROYECTO"),
+                ("Autorización de anteproyecto", "AUTORIZACION_ANTEPROYECTO"),
+                ("Asignación de asesor", "ASIGNACION_ASESOR"),
+                ("1er. reporte de asesoría", "PRIMER_REPORTE"),
+                ("2do. reporte de asesoría", "SEGUNDO_REPORTE"),
+                ("Evaluación final", "EVALUACION_FINAL"),
+                ("Reporte final (PDF)", "REPORTE_FINAL"),
+                ("Portada del reporte final con firmas", "PORTADA_REPORTE_FINAL"),
+                ("Carta de liberación o terminación", "CARTA_TERMINACION"),
+                ("Otro", "OTRO"),
+            ];
+
+            foreach (var tuple in items)
+            {
+                cb_DocumentType.Items.Add(tuple.Item1);
+            }
         }
 
         public StudentDocumentFieldControl(Document entity) : this()
@@ -130,7 +154,7 @@ namespace TECNM.Residencias.Controls
             var builder = new StringBuilder(result.Length * 2);
             foreach (byte b in result)
             {
-                builder.AppendFormat("{0:x}", b);
+                builder.AppendFormat("{0:X}", b);
             }
 
             _document.Size = stream.Length;
