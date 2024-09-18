@@ -593,6 +593,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             tb_StudentNotes.Location = new System.Drawing.Point(6, 22);
             tb_StudentNotes.Multiline = true;
             tb_StudentNotes.Name = "tb_StudentNotes";
+            tb_StudentNotes.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             tb_StudentNotes.Size = new System.Drawing.Size(441, 113);
             tb_StudentNotes.TabIndex = 1;
             // 
