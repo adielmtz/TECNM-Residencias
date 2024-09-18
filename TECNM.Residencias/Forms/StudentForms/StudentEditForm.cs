@@ -298,14 +298,31 @@ namespace TECNM.Residencias.Forms.StudentForms
             }
         }
 
-        private void StudentEnabled_CheckedChanged(object sender, EventArgs e)
+        private void StudentEnabled_Click(object sender, EventArgs e)
         {
-            /*
-            gb_GeneralInfo.Enabled = !chk_StudentEnabled.Checked;
-            gb_ProjectInfo.Enabled = !chk_StudentEnabled.Checked;
-            gb_Documents.Enabled = !chk_StudentEnabled.Checked;
-            gb_Notes.Enabled = !chk_StudentEnabled.Checked;
-            */
+            bool enabled = chk_StudentEnabled.Checked;
+            if (enabled)
+            {
+                DialogResult result = MessageBox.Show(
+                    "Se va a cerrar el expediente. Al cerrarlo ya no podrá editarse.",
+                    "Confirmar acción",
+                    MessageBoxButtons.OKCancel,
+                    MessageBoxIcon.Question
+                );
+
+                if (result == DialogResult.Cancel)
+                {
+                    chk_StudentEnabled.Checked = false;
+                    return;
+                }
+            }
+
+            gb_GeneralInfo.Enabled = !enabled;
+            gb_ProjectInfo.Enabled = !enabled;
+            gb_Documents.Enabled = !enabled;
+            gb_Notes.Enabled = !enabled;
+            btn_AddExtras.Enabled = !enabled;
+            btn_DeleteStudent.Enabled = !enabled;
         }
 
         private void OpenExtrasDialog_Click(object sender, EventArgs e)
@@ -371,7 +388,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             _student.Department = tb_StudentDepartment.Text.Trim();
             _student.Schedule = tb_StudentSchedule.Text.Trim();
             _student.Notes = tb_StudentNotes.Text.Trim();
-            _student.Enabled = chk_StudentEnabled.Checked;
+            _student.Enabled = !chk_StudentEnabled.Checked;
 
             ValidationResult result = _validator.Validate(_student);
 
@@ -461,6 +478,17 @@ namespace TECNM.Residencias.Forms.StudentForms
                 var control = new StudentDocumentFieldControl(document);
                 control.Removed += RemoveDocument_Handler;
                 flp_Documents.Controls.Add(control);
+            }
+
+            chk_StudentEnabled.Checked = !_student.Enabled;
+            if (chk_StudentEnabled.Checked)
+            {
+                gb_GeneralInfo.Enabled = false;
+                gb_ProjectInfo.Enabled = false;
+                gb_Documents.Enabled = false;
+                gb_Notes.Enabled = false;
+                btn_AddExtras.Enabled = false;
+                btn_DeleteStudent.Enabled = false;
             }
         }
 

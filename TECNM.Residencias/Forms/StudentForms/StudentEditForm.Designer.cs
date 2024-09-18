@@ -82,7 +82,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             gb_Documents = new System.Windows.Forms.GroupBox();
             button3 = new System.Windows.Forms.Button();
             flp_Documents = new System.Windows.Forms.FlowLayoutPanel();
-            button5 = new System.Windows.Forms.Button();
+            btn_AddExtras = new System.Windows.Forms.Button();
             btn_DeleteStudent = new System.Windows.Forms.Button();
             gb_GeneralInfo.SuspendLayout();
             gb_ProjectInfo.SuspendLayout();
@@ -575,7 +575,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             chk_StudentEnabled.TabIndex = 18;
             chk_StudentEnabled.Text = "Expediente cerrado";
             chk_StudentEnabled.UseVisualStyleBackColor = true;
-            chk_StudentEnabled.CheckedChanged += StudentEnabled_CheckedChanged;
+            chk_StudentEnabled.Click += StudentEnabled_Click;
             // 
             // gb_Notes
             // 
@@ -628,15 +628,15 @@ namespace TECNM.Residencias.Forms.StudentForms
             flp_Documents.TabIndex = 0;
             flp_Documents.WrapContents = false;
             // 
-            // button5
+            // btn_AddExtras
             // 
-            button5.Location = new System.Drawing.Point(188, 530);
-            button5.Name = "button5";
-            button5.Size = new System.Drawing.Size(114, 23);
-            button5.TabIndex = 22;
-            button5.Text = "Asignar extras";
-            button5.UseVisualStyleBackColor = true;
-            button5.Click += OpenExtrasDialog_Click;
+            btn_AddExtras.Location = new System.Drawing.Point(188, 530);
+            btn_AddExtras.Name = "btn_AddExtras";
+            btn_AddExtras.Size = new System.Drawing.Size(114, 23);
+            btn_AddExtras.TabIndex = 22;
+            btn_AddExtras.Text = "Asignar extras";
+            btn_AddExtras.UseVisualStyleBackColor = true;
+            btn_AddExtras.Click += OpenExtrasDialog_Click;
             // 
             // btn_DeleteStudent
             // 
@@ -657,7 +657,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             ClientSize = new System.Drawing.Size(1072, 565);
             ControlBox = false;
             Controls.Add(btn_DeleteStudent);
-            Controls.Add(button5);
+            Controls.Add(btn_AddExtras);
             Controls.Add(gb_Documents);
             Controls.Add(gb_Notes);
             Controls.Add(gb_ProjectInfo);
@@ -737,7 +737,7 @@ namespace TECNM.Residencias.Forms.StudentForms
         private System.Windows.Forms.Button btn_RemoveExternalAdvisor;
         private System.Windows.Forms.MaskedTextBox mtb_StudentId;
         private System.Windows.Forms.MaskedTextBox mtb_StudentPhone;
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button btn_AddExtras;
         private System.Windows.Forms.Button btn_DeleteStudent;
     }
 }
