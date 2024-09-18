@@ -166,5 +166,15 @@ namespace TECNM.Residencias.Forms.StudentForms
         {
             lbl_StatusLabel.Text = $"Página {_currentPage}    Número de registros: {dgv_ListView.RowCount}";
         }
+
+        private void ListView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var grid = (DataGridView) sender;
+            if (e.RowIndex >= 0)
+            {
+                var student = (Student) grid.Rows[e.RowIndex].Tag!;
+                ShowStudentEditDialog(student);
+            }
+        }
     }
 }
