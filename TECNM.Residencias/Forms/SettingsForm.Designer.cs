@@ -42,6 +42,7 @@ namespace TECNM.Residencias.Forms
             linkLabel1 = new System.Windows.Forms.LinkLabel();
             groupBox3 = new System.Windows.Forms.GroupBox();
             groupBox6 = new System.Windows.Forms.GroupBox();
+            checkBox1 = new System.Windows.Forms.CheckBox();
             cb_StudentCareer = new System.Windows.Forms.ComboBox();
             label6 = new System.Windows.Forms.Label();
             groupBox5 = new System.Windows.Forms.GroupBox();
@@ -51,7 +52,6 @@ namespace TECNM.Residencias.Forms
             groupBox4 = new System.Windows.Forms.GroupBox();
             label4 = new System.Windows.Forms.Label();
             cb_AdvisorType = new System.Windows.Forms.ComboBox();
-            checkBox1 = new System.Windows.Forms.CheckBox();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
@@ -117,9 +117,9 @@ namespace TECNM.Residencias.Forms
             groupBox2.Controls.Add(label3);
             groupBox2.Controls.Add(label2);
             groupBox2.Controls.Add(label1);
-            groupBox2.Location = new System.Drawing.Point(541, 353);
+            groupBox2.Location = new System.Drawing.Point(541, 350);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new System.Drawing.Size(247, 70);
+            groupBox2.Size = new System.Drawing.Size(247, 73);
             groupBox2.TabIndex = 2;
             groupBox2.TabStop = false;
             groupBox2.Text = "Créditos";
@@ -195,6 +195,16 @@ namespace TECNM.Residencias.Forms
             groupBox6.TabIndex = 7;
             groupBox6.TabStop = false;
             groupBox6.Text = "Residentes";
+            // 
+            // checkBox1
+            // 
+            checkBox1.AutoSize = true;
+            checkBox1.Location = new System.Drawing.Point(6, 45);
+            checkBox1.Name = "checkBox1";
+            checkBox1.Size = new System.Drawing.Size(168, 19);
+            checkBox1.TabIndex = 2;
+            checkBox1.Text = "Mostrar carreras liquidadas";
+            checkBox1.UseVisualStyleBackColor = true;
             // 
             // cb_StudentCareer
             // 
@@ -283,16 +293,6 @@ namespace TECNM.Residencias.Forms
             cb_AdvisorType.Name = "cb_AdvisorType";
             cb_AdvisorType.Size = new System.Drawing.Size(118, 23);
             cb_AdvisorType.TabIndex = 2;
-            // 
-            // checkBox1
-            // 
-            checkBox1.AutoSize = true;
-            checkBox1.Location = new System.Drawing.Point(6, 45);
-            checkBox1.Name = "checkBox1";
-            checkBox1.Size = new System.Drawing.Size(168, 19);
-            checkBox1.TabIndex = 2;
-            checkBox1.Text = "Mostrar carreras liquidadas";
-            checkBox1.UseVisualStyleBackColor = true;
             // 
             // SettingsForm
             // 
