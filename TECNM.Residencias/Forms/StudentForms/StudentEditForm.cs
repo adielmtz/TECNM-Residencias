@@ -38,6 +38,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             if (entity != null)
             {
                 _student = entity;
+                btn_DeleteStudent.Enabled = _student.Id > 0;
 
                 /// INFORMACIÓN GENERAL
                 mtb_StudentId.Text = entity.Id.ToString();
@@ -58,10 +59,6 @@ namespace TECNM.Residencias.Forms.StudentForms
                 dtp_StudentEndDate.Value = entity.EndDate;
                 chk_StudentEnabled.Checked = entity.Enabled;
                 tb_StudentNotes.Text = entity.Notes;
-            }
-            else
-            {
-                btn_DeleteStudent.Enabled = false;
             }
         }
 
@@ -318,6 +315,38 @@ namespace TECNM.Residencias.Forms.StudentForms
             extras = dialog.SelectedExtras;
         }
 
+        private void DeleteStudent_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show(
+                "¿Está seguro de que quiere eliminar el expediente? Esta acción no es reversible.",
+                "Confirmar acción",
+                MessageBoxButtons.OKCancel,
+                MessageBoxIcon.Warning
+            );
+
+            if (result == DialogResult.Cancel)
+            {
+                return;
+            }
+
+            using var context = new AppDbContext();
+            int rowCount = context.Students.Delete(_student);
+
+            if (rowCount == 0)
+            {
+                MessageBox.Show(
+                    "No se pudo eliminar el expediente.",
+                    "Error al eliminar",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+                return;
+            }
+
+            context.Commit();
+            Close();
+        }
+
         private void SaveEdit_Click(object sender, EventArgs e)
         {
             Student _student = this._student;
@@ -471,40 +500,6 @@ namespace TECNM.Residencias.Forms.StudentForms
             }
 
             return 0;
-        }
-
-        private void btn_DeleteStudent_Click(object sender, EventArgs e)
-        {
-            DialogResult resullt = MessageBox.Show(
-                "¿Desea eliminar el expediente?",
-                "Confirmación",
-                MessageBoxButtons.OKCancel,
-                MessageBoxIcon.Question
-
-            );
-
-            if (resullt == DialogResult.Cancel)
-            {
-                return;
-            }
-
-            using var context = new AppDbContext();
-            var queryResult = context.Students.Delete(_student);
-
-            if (queryResult > 0)
-            {
-                context.Commit();
-                Close();
-            }
-            else
-            {
-                MessageBox.Show(
-                    "Error al eliminar expediente",
-                    "Información",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error
-                );
-            }
         }
     }
 }

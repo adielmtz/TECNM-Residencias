@@ -639,13 +639,14 @@ namespace TECNM.Residencias.Forms.StudentForms
             // 
             // btn_DeleteStudent
             // 
+            btn_DeleteStudent.Enabled = false;
             btn_DeleteStudent.Location = new System.Drawing.Point(828, 530);
             btn_DeleteStudent.Name = "btn_DeleteStudent";
             btn_DeleteStudent.Size = new System.Drawing.Size(126, 23);
             btn_DeleteStudent.TabIndex = 23;
             btn_DeleteStudent.Text = "Eliminar expediente";
             btn_DeleteStudent.UseVisualStyleBackColor = true;
-            btn_DeleteStudent.Click += btn_DeleteStudent_Click;
+            btn_DeleteStudent.Click += DeleteStudent_Click;
             // 
             // StudentEditForm
             // 
