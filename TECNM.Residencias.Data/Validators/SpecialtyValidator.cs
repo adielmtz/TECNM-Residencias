@@ -8,8 +8,8 @@ namespace TECNM.Residencias.Data.Validators
         public SpecialtyValidator()
         {
             ClassLevelCascadeMode = CascadeMode.Stop;
-            RuleFor(s => s.CareerId).GreaterThan(0).WithMessage("Debe asignar una carrera para esta especialidad.");
-            RuleFor(s => s.Name).NotEmpty().WithMessage("El nombre de la especialidad no puede estar vacío.");
+            RuleFor(s => s.CareerId).GreaterThan(0).WithMessage("La especialidad debe asignarse a una carrera.");
+            RuleFor(s => s.Name).NotEmpty().WithName("Nombre de la especialidad");
         }
     }
 }
