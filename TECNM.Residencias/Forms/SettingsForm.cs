@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
-using TECNM.Residencias.Properties;
 
 namespace TECNM.Residencias.Forms
 {
@@ -107,17 +106,17 @@ namespace TECNM.Residencias.Forms
 
         private void SaveAppSettings_Click(object sender, EventArgs e)
         {
-            AppSettings.Default.AdvisorDefaultType = cb_AdvisorType.SelectedIndex - 1;
-            AppSettings.Default.CompanyDefaultType = cb_CompanyType.SelectedIndex - 1;
-            AppSettings.Default.StudentDefaultCareer = ((Career) cb_StudentCareer.SelectedItem!).Id;
+            AppSettings.Default.DefaultAdvisorType = cb_AdvisorType.SelectedIndex - 1;
+            AppSettings.Default.DefaultCompanyType = cb_CompanyType.SelectedIndex - 1;
+            AppSettings.Default.DefaultStudentCareer = ((Career) cb_StudentCareer.SelectedItem!).Id;
             AppSettings.Default.Save();
             Close();
         }
 
         private void LoadSavedSettings()
         {
-            cb_AdvisorType.SelectedIndex = AppSettings.Default.AdvisorDefaultType + 1;
-            cb_CompanyType.SelectedIndex = AppSettings.Default.CompanyDefaultType + 1;
+            cb_AdvisorType.SelectedIndex = AppSettings.Default.DefaultAdvisorType + 1;
+            cb_CompanyType.SelectedIndex = AppSettings.Default.DefaultCompanyType + 1;
 
             using var context = new AppDbContext();
             IEnumerable<Career> careers = context.Careers.EnumerateCareers();
@@ -128,7 +127,7 @@ namespace TECNM.Residencias.Forms
             foreach (Career career in careers)
             {
                 int index = cb_StudentCareer.Items.Add(career);
-                if (AppSettings.Default.StudentDefaultCareer == career.Id)
+                if (AppSettings.Default.DefaultStudentCareer == career.Id)
                 {
                     cb_StudentCareer.SelectedIndex = index;
                 }

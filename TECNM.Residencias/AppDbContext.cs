@@ -28,6 +28,9 @@ namespace TECNM.Residencias
         private CityDbSet? _cities;
         public CityDbSet Cities => _cities ??= new CityDbSet(this);
 
+        private SettingDbSet? _settings;
+        public SettingDbSet Settings => _settings ??= new SettingDbSet(this);
+
         private CareerDbSet? _careers;
         public CareerDbSet Careers => _careers ??= new CareerDbSet(this);
 

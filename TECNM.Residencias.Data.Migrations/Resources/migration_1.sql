@@ -35,6 +35,19 @@ CREATE TABLE City (
 STRICT;
 
 
+CREATE TABLE Setting (
+    Id        INTEGER PRIMARY KEY
+                      NOT NULL,
+    Name      TEXT    UNIQUE
+                      NOT NULL,
+    Value     TEXT    NOT NULL,
+    UpdatedOn TEXT    NOT NULL,
+    CreatedOn TEXT    NOT NULL
+                      DEFAULT (CURRENT_TIMESTAMP) 
+)
+STRICT;
+
+
 CREATE TABLE Career (
     Id        INTEGER PRIMARY KEY
                       NOT NULL,

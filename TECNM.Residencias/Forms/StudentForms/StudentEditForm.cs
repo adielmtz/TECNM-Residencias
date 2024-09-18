@@ -9,7 +9,6 @@ using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Data.Validators;
 using TECNM.Residencias.Forms.AdvisorForms;
 using TECNM.Residencias.Forms.CompanyForms;
-using TECNM.Residencias.Properties;
 using TECNM.Residencias.Services;
 
 namespace TECNM.Residencias.Forms.StudentForms
@@ -72,7 +71,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             foreach (Career career in careers)
             {
                 int index = cb_StudentCareer.Items.Add(career);
-                if (AppSettings.Default.StudentDefaultCareer == career.Id)
+                if (AppSettings.Default.DefaultStudentCareer == career.Id)
                 {
                     cb_StudentCareer.SelectedIndex = index;
                     prefetchCareer = career;

@@ -148,7 +148,7 @@
             button1.Name = "button1";
             button1.Size = new System.Drawing.Size(121, 32);
             button1.TabIndex = 1;
-            button1.Text = "Añadir nueva";
+            button1.Text = "Añadir nuevo";
             button1.UseVisualStyleBackColor = true;
             button1.Click += AddNewAdvisor_Click;
             // 
