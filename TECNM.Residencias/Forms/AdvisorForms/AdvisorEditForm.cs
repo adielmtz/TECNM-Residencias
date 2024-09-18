@@ -64,7 +64,7 @@ namespace TECNM.Residencias.Forms.AdvisorForms
 
             if (!result.IsValid)
             {
-                Debug.Assert(result.Errors.Count == 1);
+                Debug.Assert(result.Errors.Count > 0);
                 MessageBox.Show(result.Errors[0].ErrorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
