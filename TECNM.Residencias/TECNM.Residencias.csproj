@@ -1,22 +1,20 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net8.0-windows</TargetFramework>
+        <Nullable>enable</Nullable>
+        <UseWindowsForms>true</UseWindowsForms>
+        <ImplicitUsings>disable</ImplicitUsings>
+        <ApplicationIcon>Resources\logo-itcm-v2.ico</ApplicationIcon>
+        <Version>1.0.0.0</Version>
+    </PropertyGroup>
 
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
-    <UseWindowsForms>true</UseWindowsForms>
-    <ImplicitUsings>disable</ImplicitUsings>
-    <ApplicationIcon>Resources\logo-itcm-v2.ico</ApplicationIcon>
-    <Version>1.0.0.0</Version>
-  </PropertyGroup>
+    <ItemGroup>
+        <Content Include="Resources\logo-itcm-v2.ico" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <Content Include="Resources\logo-itcm-v2.ico" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\TECNM.Residencias.Data.Migrations\TECNM.Residencias.Data.Migrations.csproj" />
-    <ProjectReference Include="..\TECNM.Residencias.Data\TECNM.Residencias.Data.csproj" />
-  </ItemGroup>
-
+    <ItemGroup>
+        <ProjectReference Include="..\TECNM.Residencias.Data.Migrations\TECNM.Residencias.Data.Migrations.csproj" />
+        <ProjectReference Include="..\TECNM.Residencias.Data\TECNM.Residencias.Data.csproj" />
+    </ItemGroup>
 </Project>

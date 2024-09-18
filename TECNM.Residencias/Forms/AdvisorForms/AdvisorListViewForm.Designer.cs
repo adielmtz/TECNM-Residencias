@@ -1,4 +1,4 @@
-﻿namespace TECNM.Residencias.Forms.AdvisorForms
+namespace TECNM.Residencias.Forms.AdvisorForms
 {
     partial class AdvisorListViewForm
     {
@@ -44,9 +44,9 @@
             lbl_StatusLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize) dgv_ListView).BeginInit();
             SuspendLayout();
-            // 
+            //
             // dgv_ListView
-            // 
+            //
             dgv_ListView.AllowUserToAddRows = false;
             dgv_ListView.AllowUserToDeleteRows = false;
             dgv_ListView.AllowUserToResizeRows = false;
@@ -61,88 +61,88 @@
             dgv_ListView.Size = new System.Drawing.Size(1240, 619);
             dgv_ListView.TabIndex = 0;
             dgv_ListView.CellContentClick += ListView_CellContentClick;
-            // 
+            //
             // ListAdvisorName
-            // 
+            //
             ListAdvisorName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             ListAdvisorName.HeaderText = "Nombre";
             ListAdvisorName.Name = "ListAdvisorName";
             ListAdvisorName.ReadOnly = true;
-            // 
+            //
             // ListAdvisorType
-            // 
+            //
             ListAdvisorType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
             ListAdvisorType.HeaderText = "Tipo";
             ListAdvisorType.Name = "ListAdvisorType";
             ListAdvisorType.ReadOnly = true;
             ListAdvisorType.Width = 55;
-            // 
+            //
             // ListAdvisorSection
-            // 
+            //
             ListAdvisorSection.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
             ListAdvisorSection.HeaderText = "Departamento";
             ListAdvisorSection.Name = "ListAdvisorSection";
             ListAdvisorSection.ReadOnly = true;
             ListAdvisorSection.Width = 108;
-            // 
+            //
             // ListAdvisorRole
-            // 
+            //
             ListAdvisorRole.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
             ListAdvisorRole.HeaderText = "Puesto";
             ListAdvisorRole.Name = "ListAdvisorRole";
             ListAdvisorRole.ReadOnly = true;
             ListAdvisorRole.Width = 68;
-            // 
+            //
             // ListAdvisorEmail
-            // 
+            //
             ListAdvisorEmail.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
             ListAdvisorEmail.HeaderText = "Correo";
             ListAdvisorEmail.Name = "ListAdvisorEmail";
             ListAdvisorEmail.ReadOnly = true;
             ListAdvisorEmail.Width = 68;
-            // 
+            //
             // ListAdvisorPhone
-            // 
+            //
             ListAdvisorPhone.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
             ListAdvisorPhone.HeaderText = "Teléfono";
             ListAdvisorPhone.Name = "ListAdvisorPhone";
             ListAdvisorPhone.ReadOnly = true;
             ListAdvisorPhone.Width = 77;
-            // 
+            //
             // ListAdvisorEnabled
-            // 
+            //
             ListAdvisorEnabled.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
             ListAdvisorEnabled.HeaderText = "Habilitado";
             ListAdvisorEnabled.Name = "ListAdvisorEnabled";
             ListAdvisorEnabled.ReadOnly = true;
             ListAdvisorEnabled.Width = 68;
-            // 
+            //
             // ListAdvisorUpdatedOn
-            // 
+            //
             ListAdvisorUpdatedOn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
             ListAdvisorUpdatedOn.HeaderText = "Última modificación";
             ListAdvisorUpdatedOn.Name = "ListAdvisorUpdatedOn";
             ListAdvisorUpdatedOn.ReadOnly = true;
             ListAdvisorUpdatedOn.Width = 128;
-            // 
+            //
             // ListAdvisorCreatedOn
-            // 
+            //
             ListAdvisorCreatedOn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
             ListAdvisorCreatedOn.HeaderText = "Fecha de registro";
             ListAdvisorCreatedOn.Name = "ListAdvisorCreatedOn";
             ListAdvisorCreatedOn.ReadOnly = true;
             ListAdvisorCreatedOn.Width = 112;
-            // 
+            //
             // ListAdvisorActions
-            // 
+            //
             ListAdvisorActions.HeaderText = "Acciones";
             ListAdvisorActions.Name = "ListAdvisorActions";
             ListAdvisorActions.ReadOnly = true;
             ListAdvisorActions.Text = "Editar";
             ListAdvisorActions.UseColumnTextForButtonValue = true;
-            // 
+            //
             // button1
-            // 
+            //
             button1.Anchor =  System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
             button1.Location = new System.Drawing.Point(1131, 637);
             button1.Name = "button1";
@@ -151,9 +151,9 @@
             button1.Text = "Añadir nuevo";
             button1.UseVisualStyleBackColor = true;
             button1.Click += AddNewAdvisor_Click;
-            // 
+            //
             // lbl_StatusLabel
-            // 
+            //
             lbl_StatusLabel.Anchor =  System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
             lbl_StatusLabel.AutoSize = true;
             lbl_StatusLabel.Location = new System.Drawing.Point(12, 646);
@@ -161,9 +161,9 @@
             lbl_StatusLabel.Size = new System.Drawing.Size(53, 15);
             lbl_StatusLabel.TabIndex = 2;
             lbl_StatusLabel.Text = "[STATUS]";
-            // 
+            //
             // AdvisorListViewForm
-            // 
+            //
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(1264, 681);

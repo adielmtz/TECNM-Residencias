@@ -1,4 +1,4 @@
-﻿namespace TECNM.Residencias.Forms.SpecialtyForms
+namespace TECNM.Residencias.Forms.SpecialtyForms
 {
     partial class SpecialtyListViewForm
     {
@@ -39,9 +39,9 @@
             lbl_StatusLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize) dgv_ListView).BeginInit();
             SuspendLayout();
-            // 
+            //
             // dgv_ListView
-            // 
+            //
             dgv_ListView.AllowUserToAddRows = false;
             dgv_ListView.AllowUserToDeleteRows = false;
             dgv_ListView.AllowUserToResizeRows = false;
@@ -57,16 +57,16 @@
             dgv_ListView.Size = new System.Drawing.Size(814, 379);
             dgv_ListView.TabIndex = 0;
             dgv_ListView.CellContentClick += ListView_CellContentClick;
-            // 
+            //
             // SpecialtyName
-            // 
+            //
             SpecialtyName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             SpecialtyName.HeaderText = "Nombre";
             SpecialtyName.Name = "SpecialtyName";
             SpecialtyName.ReadOnly = true;
-            // 
+            //
             // SpecialtyEnabled
-            // 
+            //
             SpecialtyEnabled.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
             SpecialtyEnabled.HeaderText = "Habilitada";
             SpecialtyEnabled.Name = "SpecialtyEnabled";
@@ -74,25 +74,25 @@
             SpecialtyEnabled.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             SpecialtyEnabled.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             SpecialtyEnabled.Width = 86;
-            // 
+            //
             // SpecialtyUpdatedOn
-            // 
+            //
             SpecialtyUpdatedOn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
             SpecialtyUpdatedOn.HeaderText = "Última modificación";
             SpecialtyUpdatedOn.Name = "SpecialtyUpdatedOn";
             SpecialtyUpdatedOn.ReadOnly = true;
             SpecialtyUpdatedOn.Width = 128;
-            // 
+            //
             // SpecialtyCreatedOn
-            // 
+            //
             SpecialtyCreatedOn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
             SpecialtyCreatedOn.HeaderText = "Fecha de registro";
             SpecialtyCreatedOn.Name = "SpecialtyCreatedOn";
             SpecialtyCreatedOn.ReadOnly = true;
             SpecialtyCreatedOn.Width = 112;
-            // 
+            //
             // SpecialtyEdit
-            // 
+            //
             SpecialtyEdit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
             SpecialtyEdit.HeaderText = "Acciones";
             SpecialtyEdit.Name = "SpecialtyEdit";
@@ -100,9 +100,9 @@
             SpecialtyEdit.Text = "Editar";
             SpecialtyEdit.UseColumnTextForButtonValue = true;
             SpecialtyEdit.Width = 61;
-            // 
+            //
             // button1
-            // 
+            //
             button1.Anchor =  System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
             button1.Location = new System.Drawing.Point(705, 397);
             button1.Name = "button1";
@@ -111,9 +111,9 @@
             button1.Text = "Añadir nueva";
             button1.UseVisualStyleBackColor = true;
             button1.Click += AddNewSpecialty_Click;
-            // 
+            //
             // lbl_StatusLabel
-            // 
+            //
             lbl_StatusLabel.Anchor =  System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
             lbl_StatusLabel.AutoSize = true;
             lbl_StatusLabel.Location = new System.Drawing.Point(12, 406);
@@ -121,9 +121,9 @@
             lbl_StatusLabel.Size = new System.Drawing.Size(53, 15);
             lbl_StatusLabel.TabIndex = 2;
             lbl_StatusLabel.Text = "[STATUS]";
-            // 
+            //
             // SpecialtyListViewForm
-            // 
+            //
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(838, 441);

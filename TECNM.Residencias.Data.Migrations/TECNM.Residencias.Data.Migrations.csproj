@@ -1,23 +1,21 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>disable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>disable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+    <ItemGroup>
+        <None Remove="Resources\migration_1.sql" />
+        <None Remove="Resources\migration_2.sql" />
+        <None Remove="Resources\migration_3.sql" />
+        <None Remove="Resources\migration_4.sql" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <None Remove="Resources\migration_1.sql" />
-    <None Remove="Resources\migration_2.sql" />
-    <None Remove="Resources\migration_3.sql" />
-    <None Remove="Resources\migration_4.sql" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\migration_1.sql" />
-    <EmbeddedResource Include="Resources\migration_2.sql" />
-    <EmbeddedResource Include="Resources\migration_3.sql" />
-    <EmbeddedResource Include="Resources\migration_4.sql" />
-  </ItemGroup>
-
+    <ItemGroup>
+        <EmbeddedResource Include="Resources\migration_1.sql" />
+        <EmbeddedResource Include="Resources\migration_2.sql" />
+        <EmbeddedResource Include="Resources\migration_3.sql" />
+        <EmbeddedResource Include="Resources\migration_4.sql" />
+    </ItemGroup>
 </Project>

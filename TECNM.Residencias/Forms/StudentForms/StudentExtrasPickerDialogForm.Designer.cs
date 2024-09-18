@@ -1,4 +1,4 @@
-﻿namespace TECNM.Residencias.Forms.StudentForms
+namespace TECNM.Residencias.Forms.StudentForms
 {
     partial class StudentExtrasPickerDialogForm
     {
@@ -44,9 +44,9 @@
             groupBox3.SuspendLayout();
             groupBox4.SuspendLayout();
             SuspendLayout();
-            // 
+            //
             // groupBox1
-            // 
+            //
             groupBox1.Controls.Add(flp_Languages);
             groupBox1.Location = new System.Drawing.Point(12, 12);
             groupBox1.Name = "groupBox1";
@@ -54,9 +54,9 @@
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             groupBox1.Text = "Lenguajes de programación";
-            // 
+            //
             // flp_Languages
-            // 
+            //
             flp_Languages.AutoScroll = true;
             flp_Languages.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             flp_Languages.Location = new System.Drawing.Point(6, 22);
@@ -64,9 +64,9 @@
             flp_Languages.Size = new System.Drawing.Size(188, 389);
             flp_Languages.TabIndex = 1;
             flp_Languages.WrapContents = false;
-            // 
+            //
             // groupBox2
-            // 
+            //
             groupBox2.Controls.Add(flp_Databases);
             groupBox2.Location = new System.Drawing.Point(218, 12);
             groupBox2.Name = "groupBox2";
@@ -74,9 +74,9 @@
             groupBox2.TabIndex = 2;
             groupBox2.TabStop = false;
             groupBox2.Text = "Bases de datos";
-            // 
+            //
             // flp_Databases
-            // 
+            //
             flp_Databases.AutoScroll = true;
             flp_Databases.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             flp_Databases.Location = new System.Drawing.Point(6, 22);
@@ -84,9 +84,9 @@
             flp_Databases.Size = new System.Drawing.Size(188, 389);
             flp_Databases.TabIndex = 1;
             flp_Databases.WrapContents = false;
-            // 
+            //
             // groupBox3
-            // 
+            //
             groupBox3.Controls.Add(flp_editors);
             groupBox3.Location = new System.Drawing.Point(424, 12);
             groupBox3.Name = "groupBox3";
@@ -94,9 +94,9 @@
             groupBox3.TabIndex = 3;
             groupBox3.TabStop = false;
             groupBox3.Text = "Editores e IDEs";
-            // 
+            //
             // flp_editors
-            // 
+            //
             flp_editors.AutoScroll = true;
             flp_editors.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             flp_editors.Location = new System.Drawing.Point(6, 22);
@@ -104,9 +104,9 @@
             flp_editors.Size = new System.Drawing.Size(188, 389);
             flp_editors.TabIndex = 1;
             flp_editors.WrapContents = false;
-            // 
+            //
             // groupBox4
-            // 
+            //
             groupBox4.Controls.Add(flp_methodologies);
             groupBox4.Location = new System.Drawing.Point(630, 12);
             groupBox4.Name = "groupBox4";
@@ -114,9 +114,9 @@
             groupBox4.TabIndex = 4;
             groupBox4.TabStop = false;
             groupBox4.Text = "Metodologías";
-            // 
+            //
             // flp_methodologies
-            // 
+            //
             flp_methodologies.AutoScroll = true;
             flp_methodologies.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             flp_methodologies.Location = new System.Drawing.Point(6, 22);
@@ -124,9 +124,9 @@
             flp_methodologies.Size = new System.Drawing.Size(280, 389);
             flp_methodologies.TabIndex = 1;
             flp_methodologies.WrapContents = false;
-            // 
+            //
             // button1
-            // 
+            //
             button1.Location = new System.Drawing.Point(12, 437);
             button1.Name = "button1";
             button1.Size = new System.Drawing.Size(75, 23);
@@ -134,18 +134,18 @@
             button1.Text = "Guardar";
             button1.UseVisualStyleBackColor = true;
             button1.Click += SaveEdit_Click;
-            // 
+            //
             // btn_Cancel
-            // 
+            //
             btn_Cancel.Location = new System.Drawing.Point(847, 437);
             btn_Cancel.Name = "btn_Cancel";
             btn_Cancel.Size = new System.Drawing.Size(75, 23);
             btn_Cancel.TabIndex = 6;
             btn_Cancel.Text = "Cancelar";
             btn_Cancel.UseVisualStyleBackColor = true;
-            // 
+            //
             // StudentExtrasPickerDialogForm
-            // 
+            //
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             CancelButton = btn_Cancel;
