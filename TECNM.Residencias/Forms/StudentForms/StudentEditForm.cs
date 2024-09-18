@@ -59,6 +59,10 @@ namespace TECNM.Residencias.Forms.StudentForms
                 chk_StudentEnabled.Checked = entity.Enabled;
                 tb_StudentNotes.Text = entity.Notes;
             }
+            else
+            {
+                btn_DeleteStudent.Enabled = false;
+            }
         }
 
         private void StudentEditForm_Load(object sender, EventArgs e)
@@ -467,6 +471,40 @@ namespace TECNM.Residencias.Forms.StudentForms
             }
 
             return 0;
+        }
+
+        private void btn_DeleteStudent_Click(object sender, EventArgs e)
+        {
+            DialogResult resullt = MessageBox.Show(
+                "¿Desea eliminar el expediente?",
+                "Confirmación",
+                MessageBoxButtons.OKCancel,
+                MessageBoxIcon.Question
+
+            );
+
+            if (resullt == DialogResult.Cancel)
+            {
+                return;
+            }
+
+            using var context = new AppDbContext();
+            var queryResult = context.Students.Delete(_student);
+
+            if (queryResult > 0)
+            {
+                context.Commit();
+                Close();
+            }
+            else
+            {
+                MessageBox.Show(
+                    "Error al eliminar expediente",
+                    "Información",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+            }
         }
     }
 }

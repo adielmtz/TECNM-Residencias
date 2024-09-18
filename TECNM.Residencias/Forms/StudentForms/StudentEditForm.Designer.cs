@@ -83,6 +83,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             button3 = new System.Windows.Forms.Button();
             flp_Documents = new System.Windows.Forms.FlowLayoutPanel();
             button5 = new System.Windows.Forms.Button();
+            btn_DeleteStudent = new System.Windows.Forms.Button();
             gb_GeneralInfo.SuspendLayout();
             gb_ProjectInfo.SuspendLayout();
             gb_Notes.SuspendLayout();
@@ -636,6 +637,16 @@ namespace TECNM.Residencias.Forms.StudentForms
             button5.UseVisualStyleBackColor = true;
             button5.Click += OpenExtrasDialog_Click;
             // 
+            // btn_DeleteStudent
+            // 
+            btn_DeleteStudent.Location = new System.Drawing.Point(828, 530);
+            btn_DeleteStudent.Name = "btn_DeleteStudent";
+            btn_DeleteStudent.Size = new System.Drawing.Size(126, 23);
+            btn_DeleteStudent.TabIndex = 23;
+            btn_DeleteStudent.Text = "Eliminar expediente";
+            btn_DeleteStudent.UseVisualStyleBackColor = true;
+            btn_DeleteStudent.Click += btn_DeleteStudent_Click;
+            // 
             // StudentEditForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -643,6 +654,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             CancelButton = btn_CancelEdit;
             ClientSize = new System.Drawing.Size(1072, 565);
             ControlBox = false;
+            Controls.Add(btn_DeleteStudent);
             Controls.Add(button5);
             Controls.Add(gb_Documents);
             Controls.Add(gb_Notes);
@@ -724,5 +736,6 @@ namespace TECNM.Residencias.Forms.StudentForms
         private System.Windows.Forms.MaskedTextBox mtb_StudentId;
         private System.Windows.Forms.MaskedTextBox mtb_StudentPhone;
         private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button btn_DeleteStudent;
     }
 }
