@@ -1,4 +1,4 @@
-﻿namespace TECNM.Residencias.Forms.StudentForms
+namespace TECNM.Residencias.Forms.StudentForms
 {
     partial class StudentListViewForm
     {
@@ -77,6 +77,7 @@
             dgv_ListView.Size = new System.Drawing.Size(1240, 596);
             dgv_ListView.TabIndex = 0;
             dgv_ListView.CellContentClick += ListView_CellContentClick;
+            dgv_ListView.CellDoubleClick += ListView_CellDoubleClick;
             // 
             // StudentId
             // 

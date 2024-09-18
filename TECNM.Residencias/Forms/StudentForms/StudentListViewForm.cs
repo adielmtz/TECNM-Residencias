@@ -35,6 +35,13 @@ namespace TECNM.Residencias.Forms.StudentForms
             }
         }
 
+        private void ListView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var grid = (DataGridView) sender;
+            var student = (Student) grid.Rows[e.RowIndex].Tag!;
+            ShowStudentEditDialog(student);
+        }
+
         private void AddNewCompany_Click(object sender, EventArgs e)
         {
             ShowStudentEditDialog();
