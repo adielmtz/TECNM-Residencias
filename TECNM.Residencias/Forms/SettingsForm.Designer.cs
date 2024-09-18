@@ -51,6 +51,7 @@ namespace TECNM.Residencias.Forms
             groupBox4 = new System.Windows.Forms.GroupBox();
             label4 = new System.Windows.Forms.Label();
             cb_AdvisorType = new System.Windows.Forms.ComboBox();
+            checkBox1 = new System.Windows.Forms.CheckBox();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
@@ -185,11 +186,12 @@ namespace TECNM.Residencias.Forms
             // 
             // groupBox6
             // 
+            groupBox6.Controls.Add(checkBox1);
             groupBox6.Controls.Add(cb_StudentCareer);
             groupBox6.Controls.Add(label6);
             groupBox6.Location = new System.Drawing.Point(6, 138);
             groupBox6.Name = "groupBox6";
-            groupBox6.Size = new System.Drawing.Size(511, 52);
+            groupBox6.Size = new System.Drawing.Size(511, 142);
             groupBox6.TabIndex = 7;
             groupBox6.TabStop = false;
             groupBox6.Text = "Residentes";
@@ -282,6 +284,16 @@ namespace TECNM.Residencias.Forms
             cb_AdvisorType.Size = new System.Drawing.Size(118, 23);
             cb_AdvisorType.TabIndex = 2;
             // 
+            // checkBox1
+            // 
+            checkBox1.AutoSize = true;
+            checkBox1.Location = new System.Drawing.Point(6, 45);
+            checkBox1.Name = "checkBox1";
+            checkBox1.Size = new System.Drawing.Size(168, 19);
+            checkBox1.TabIndex = 2;
+            checkBox1.Text = "Mostrar carreras liquidadas";
+            checkBox1.UseVisualStyleBackColor = true;
+            // 
             // SettingsForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -336,5 +348,6 @@ namespace TECNM.Residencias.Forms
         private System.Windows.Forms.ComboBox cb_StudentCareer;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label lbl_AppVersion;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }

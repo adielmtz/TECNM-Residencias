@@ -8,7 +8,7 @@ namespace TECNM.Residencias.Data.Validators
         public CareerValidator()
         {
             ClassLevelCascadeMode = CascadeMode.Stop;
-            RuleFor(c => c.Name).NotEmpty().WithMessage("El nombre de la carrera no puede estar vacío.");
+            RuleFor(c => c.Name).NotEmpty().WithName("Nombre de la carrera");
         }
     }
 }
