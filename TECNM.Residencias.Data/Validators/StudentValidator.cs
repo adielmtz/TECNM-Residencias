@@ -14,7 +14,7 @@ namespace TECNM.Residencias.Data.Validators
             RuleFor(s => s.SpecialtyId).GreaterThan(0).WithMessage("Seleccione la carrera y la especialidad del residente.");
             RuleFor(s => s.FirstName).NotEmpty().WithName("Nombre");
             RuleFor(s => s.LastName).NotEmpty().WithName("Apellidos");
-            RuleFor(s => s.Email).EmailAddress().When(s => s.Email.Length > 0).WithName("Correo");
+            RuleFor(s => s.Email).EmailAddress().WithName("Correo");
             RuleFor(s => s.Phone).Must(DataValidator.BeAPhoneNumber).When(s => s.Phone.Length > 0).WithMessage("Introduzca un número de teléfono válido.");
             RuleFor(s => s.Gender).IsInEnum().WithMessage("Seleccione el género del residente.");
             RuleFor(s => s.Project).NotEmpty().WithName("Nombre del proyecto");

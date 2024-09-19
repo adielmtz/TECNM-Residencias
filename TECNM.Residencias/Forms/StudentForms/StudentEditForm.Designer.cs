@@ -218,9 +218,9 @@ namespace TECNM.Residencias.Forms.StudentForms
             label4.AutoSize = true;
             label4.Location = new System.Drawing.Point(109, 68);
             label4.Name = "label4";
-            label4.Size = new System.Drawing.Size(43, 15);
+            label4.Size = new System.Drawing.Size(48, 15);
             label4.TabIndex = 0;
-            label4.Text = "Correo";
+            label4.Text = "Correo*";
             // 
             // tb_StudentLastName
             // 
