@@ -21,6 +21,10 @@ namespace TECNM.Residencias.Forms
         private void MainWindow_Load(object sender, EventArgs e)
         {
             App.Initialize();
+        }
+
+        private void MainWindow_Activated(object sender, EventArgs e)
+        {
             LoadLastModifiedStudents();
         }
 
@@ -71,7 +75,8 @@ namespace TECNM.Residencias.Forms
         private void LoadLastModifiedStudents()
         {
             using var context = new AppDbContext();
-            IEnumerable<Student> students = context.Students.EnumerateStudents(10);
+            IEnumerable<Student> students = context.Students.EnumerateStudents(count: 30);
+            flp_LastModifiedStudents.Controls.Clear();
 
             foreach (Student student in students)
             {
@@ -89,7 +94,7 @@ namespace TECNM.Residencias.Forms
             }
 
             using var context = new AppDbContext();
-            IEnumerable<Student> students = context.Students.Search(query, 50, 1);
+            IEnumerable<Student> students = context.Students.Search(query, 30, 1);
             flp_QuickSearchResults.Controls.Clear();
 
             foreach (Student student in students)

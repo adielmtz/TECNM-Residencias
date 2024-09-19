@@ -251,6 +251,7 @@ namespace TECNM.Residencias.Forms
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "MainWindow";
             WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            Activated += MainWindow_Activated;
             Load += MainWindow_Load;
             groupBox1.ResumeLayout(false);
             groupBox5.ResumeLayout(false);
