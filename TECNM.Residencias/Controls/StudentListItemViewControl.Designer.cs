@@ -35,6 +35,7 @@ namespace TECNM.Residencias.Controls
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             BackColor = System.Drawing.SystemColors.Control;
+            Cursor = System.Windows.Forms.Cursors.Hand;
             Font = new System.Drawing.Font("Segoe UI", 10F);
             Name = "StudentListItemViewControl";
             Padding = new System.Windows.Forms.Padding(10);
