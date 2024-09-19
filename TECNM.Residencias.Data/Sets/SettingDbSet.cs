@@ -64,7 +64,8 @@ namespace TECNM.Residencias.Data.Sets
             INSERT INTO Setting (Name, Value, UpdatedOn)
             VALUES ($p0, $p1, CURRENT_TIMESTAMP)
             ON CONFLICT(Name) DO UPDATE
-            SET UpdatedOn = excluded.UpdatedOn
+            SET Value     = excluded.Value,
+                UpdatedOn = excluded.UpdatedOn
             RETURNING Id
             """;
 
