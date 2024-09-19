@@ -11,6 +11,17 @@ CREATE INDEX IX_Advisor_By_Company_Lookup ON Advisor (
 );
 
 
+CREATE INDEX IX_Student_Last_Modified ON Student (
+    UpdatedOn
+);
+
+
+CREATE INDEX IX_Student_Internship_Period ON Student (
+    StartDate,
+    EndDate
+);
+
+
 CREATE INDEX IX_Student_Lookup_By_Semester_Expr ON Student (
     Semester,
     strftime('%Y', StartDate)

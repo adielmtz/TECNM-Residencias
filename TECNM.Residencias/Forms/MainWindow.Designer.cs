@@ -35,11 +35,19 @@ namespace TECNM.Residencias.Forms
             label1 = new System.Windows.Forms.Label();
             button4 = new System.Windows.Forms.Button();
             groupBox1 = new System.Windows.Forms.GroupBox();
+            groupBox5 = new System.Windows.Forms.GroupBox();
+            flp_QuickSearchResults = new System.Windows.Forms.FlowLayoutPanel();
+            button7 = new System.Windows.Forms.Button();
+            tb_QuickSearchQuery = new System.Windows.Forms.TextBox();
+            groupBox4 = new System.Windows.Forms.GroupBox();
+            flp_LastModifiedStudents = new System.Windows.Forms.FlowLayoutPanel();
             button5 = new System.Windows.Forms.Button();
             groupBox2 = new System.Windows.Forms.GroupBox();
             button6 = new System.Windows.Forms.Button();
             groupBox3 = new System.Windows.Forms.GroupBox();
             groupBox1.SuspendLayout();
+            groupBox5.SuspendLayout();
+            groupBox4.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
             SuspendLayout();
@@ -104,15 +112,80 @@ namespace TECNM.Residencias.Forms
             // 
             // groupBox1
             // 
+            groupBox1.Anchor =  System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            groupBox1.Controls.Add(groupBox5);
+            groupBox1.Controls.Add(groupBox4);
             groupBox1.Controls.Add(button5);
             groupBox1.Controls.Add(button3);
             groupBox1.Font = new System.Drawing.Font("Segoe UI", 14F);
             groupBox1.Location = new System.Drawing.Point(12, 71);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new System.Drawing.Size(403, 501);
+            groupBox1.Size = new System.Drawing.Size(1240, 501);
             groupBox1.TabIndex = 5;
             groupBox1.TabStop = false;
             groupBox1.Text = "Expedientes de residencias";
+            // 
+            // groupBox5
+            // 
+            groupBox5.Anchor =  System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            groupBox5.Controls.Add(flp_QuickSearchResults);
+            groupBox5.Controls.Add(button7);
+            groupBox5.Controls.Add(tb_QuickSearchQuery);
+            groupBox5.Location = new System.Drawing.Point(402, 31);
+            groupBox5.Name = "groupBox5";
+            groupBox5.Size = new System.Drawing.Size(832, 464);
+            groupBox5.TabIndex = 6;
+            groupBox5.TabStop = false;
+            groupBox5.Text = "Búsqueda rápida";
+            // 
+            // flp_QuickSearchResults
+            // 
+            flp_QuickSearchResults.Anchor =  System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            flp_QuickSearchResults.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            flp_QuickSearchResults.Location = new System.Drawing.Point(7, 67);
+            flp_QuickSearchResults.Name = "flp_QuickSearchResults";
+            flp_QuickSearchResults.Size = new System.Drawing.Size(819, 391);
+            flp_QuickSearchResults.TabIndex = 6;
+            // 
+            // button7
+            // 
+            button7.Font = new System.Drawing.Font("Segoe UI", 10F);
+            button7.Location = new System.Drawing.Point(736, 29);
+            button7.Name = "button7";
+            button7.Size = new System.Drawing.Size(90, 32);
+            button7.TabIndex = 5;
+            button7.Text = "Buscar";
+            button7.UseVisualStyleBackColor = true;
+            button7.Click += DoSearch_Click;
+            // 
+            // tb_QuickSearchQuery
+            // 
+            tb_QuickSearchQuery.Location = new System.Drawing.Point(6, 29);
+            tb_QuickSearchQuery.Name = "tb_QuickSearchQuery";
+            tb_QuickSearchQuery.Size = new System.Drawing.Size(724, 32);
+            tb_QuickSearchQuery.TabIndex = 4;
+            tb_QuickSearchQuery.KeyPress += QuickSearchQuery_KeyPress;
+            // 
+            // groupBox4
+            // 
+            groupBox4.Anchor =  System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            groupBox4.Controls.Add(flp_LastModifiedStudents);
+            groupBox4.Location = new System.Drawing.Point(6, 89);
+            groupBox4.Name = "groupBox4";
+            groupBox4.Size = new System.Drawing.Size(390, 406);
+            groupBox4.TabIndex = 2;
+            groupBox4.TabStop = false;
+            groupBox4.Text = "Modificados recientemente";
+            // 
+            // flp_LastModifiedStudents
+            // 
+            flp_LastModifiedStudents.Anchor =  System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            flp_LastModifiedStudents.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            flp_LastModifiedStudents.Font = new System.Drawing.Font("Segoe UI", 10F);
+            flp_LastModifiedStudents.Location = new System.Drawing.Point(7, 31);
+            flp_LastModifiedStudents.Name = "flp_LastModifiedStudents";
+            flp_LastModifiedStudents.Size = new System.Drawing.Size(377, 369);
+            flp_LastModifiedStudents.TabIndex = 1;
             // 
             // button5
             // 
@@ -128,6 +201,7 @@ namespace TECNM.Residencias.Forms
             // 
             // groupBox2
             // 
+            groupBox2.Anchor =  System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
             groupBox2.Controls.Add(button6);
             groupBox2.Controls.Add(button2);
             groupBox2.Font = new System.Drawing.Font("Segoe UI", 14F);
@@ -152,6 +226,7 @@ namespace TECNM.Residencias.Forms
             // 
             // groupBox3
             // 
+            groupBox3.Anchor =  System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
             groupBox3.Controls.Add(button1);
             groupBox3.Font = new System.Drawing.Font("Segoe UI", 14F);
             groupBox3.Location = new System.Drawing.Point(421, 578);
@@ -178,6 +253,9 @@ namespace TECNM.Residencias.Forms
             WindowState = System.Windows.Forms.FormWindowState.Maximized;
             Load += MainWindow_Load;
             groupBox1.ResumeLayout(false);
+            groupBox5.ResumeLayout(false);
+            groupBox5.PerformLayout();
+            groupBox4.ResumeLayout(false);
             groupBox2.ResumeLayout(false);
             groupBox3.ResumeLayout(false);
             ResumeLayout(false);
@@ -196,5 +274,11 @@ namespace TECNM.Residencias.Forms
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.FlowLayoutPanel flp_LastModifiedStudents;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.TextBox tb_QuickSearchQuery;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.FlowLayoutPanel flp_QuickSearchResults;
     }
 }

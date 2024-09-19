@@ -1,4 +1,5 @@
 using Microsoft.Data.Sqlite;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
@@ -67,6 +68,48 @@ namespace TECNM.Residencias.Data.Sets
             """;
             command.Parameters.Add("$p0", SqliteType.Integer).Value = count;
             command.Parameters.Add("$p1", SqliteType.Integer).Value = (page - 1) * count;
+            using var reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Student student = HydrateObject(reader);
+                yield return student;
+            }
+        }
+
+        public IEnumerable<Student> EnumerateStudents(DateTime from, DateTime to)
+        {
+            using var command = Context.Database.CreateCommand();
+            command.CommandText = """
+            SELECT Id, SpecialtyId, FirstName, LastName, Email, Phone, Gender, Semester, StartDate, EndDate,
+                   Project, InternalAdvisorId, ExternalAdvisorId, ReviewerAdvisorId, CompanyId, Department,
+                   Schedule, Notes, Enabled, UpdatedOn, CreatedOn
+            FROM Student
+            WHERE StartDate >= $p0 AND EndDate <= $p1
+            """;
+            command.Parameters.Add("$p0", SqliteType.Text).Value = from.ToLongIsoString();
+            command.Parameters.Add("$p1", SqliteType.Text).Value = to.ToLongIsoString();
+            using var reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Student student = HydrateObject(reader);
+                yield return student;
+            }
+        }
+
+        public IEnumerable<Student> EnumerateStudents(int count = 10)
+        {
+            using var command = Context.Database.CreateCommand();
+            command.CommandText = """
+            SELECT Id, SpecialtyId, FirstName, LastName, Email, Phone, Gender, Semester, StartDate, EndDate,
+                   Project, InternalAdvisorId, ExternalAdvisorId, ReviewerAdvisorId, CompanyId, Department,
+                   Schedule, Notes, Enabled, UpdatedOn, CreatedOn
+            FROM Student
+            ORDER BY UpdatedOn DESC
+            LIMIT $p0
+            """;
+            command.Parameters.Add("$p0", SqliteType.Integer).Value = count;
             using var reader = command.ExecuteReader();
 
             while (reader.Read())

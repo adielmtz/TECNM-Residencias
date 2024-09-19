@@ -49,7 +49,7 @@ namespace TECNM.Residencias.Data.Entities
 
         public override string ToString()
         {
-            return $"({Id}) {FirstName} {LastName}";
+            return $"[{Id}] {FirstName} {LastName}";
         }
     }
 
