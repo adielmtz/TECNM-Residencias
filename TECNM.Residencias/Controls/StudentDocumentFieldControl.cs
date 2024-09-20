@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
@@ -13,6 +14,7 @@ namespace TECNM.Residencias.Controls
     public sealed partial class StudentDocumentFieldControl : UserControl
     {
         private readonly List<(string, string)> items;
+        private CancellationTokenSource _tokenSource = new CancellationTokenSource();
         private Document _document = new Document();
         private string _filename = "";
         private bool _isNewFile = true;
@@ -112,7 +114,7 @@ namespace TECNM.Residencias.Controls
                 _document.OriginalName = Path.GetFileName(_filename);
                 lbl_DocumentName.Text = _document.OriginalName;
                 _isNewFile = true;
-                await ComputeHash();
+                await ComputeHash(_tokenSource.Token);
             }
         }
 
@@ -141,24 +143,33 @@ namespace TECNM.Residencias.Controls
 
             if (result == DialogResult.Yes)
             {
+                _tokenSource.Cancel();
                 Removed?.Invoke(this, EventArgs.Empty);
             }
         }
 
-        private async Task ComputeHash()
+        private async Task ComputeHash(CancellationToken cancellationToken)
         {
-            await using var stream = new FileStream(_filename, FileMode.Open, FileAccess.Read, FileShare.Read);
-            using var digest = SHA256.Create();
-            byte[] result = await digest.ComputeHashAsync(stream);
-
-            var builder = new StringBuilder(result.Length * 2);
-            foreach (byte b in result)
+            try
             {
-                builder.AppendFormat("{0:X}", b);
-            }
+                await using var stream = new FileStream(_filename, FileMode.Open, FileAccess.Read, FileShare.Read);
+                using var digest = SHA256.Create();
+                byte[] result = await digest.ComputeHashAsync(stream, cancellationToken);
 
-            _document.Size = stream.Length;
-            _document.Hash = builder.ToString();
+                var builder = new StringBuilder(result.Length * 2);
+                foreach (byte b in result)
+                {
+                    builder.AppendFormat("{0:X}", b);
+                }
+
+                _document.Size = stream.Length;
+                _document.Hash = builder.ToString();
+            }
+            catch (OperationCanceledException e)
+            {
+                // Do nothing with the exception
+                Debug.WriteLine(e);
+            }
         }
     }
 }

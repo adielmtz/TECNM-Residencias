@@ -98,6 +98,7 @@ namespace TECNM.Residencias.Controls
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            AutoSize = true;
             BackColor = System.Drawing.SystemColors.Control;
             Controls.Add(button3);
             Controls.Add(cb_DocumentType);
