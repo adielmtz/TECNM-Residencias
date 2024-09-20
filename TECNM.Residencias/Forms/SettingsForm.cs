@@ -39,9 +39,8 @@ namespace TECNM.Residencias.Forms
 
         private void DatabaseBackup_Click(object sender, EventArgs e)
         {
-            //using var dialog = new FolderBrowserDialog();
-            //DialogResult result = dialog.ShowDialog();
-            MessageBox.Show("¡Módulo en construcción!");
+            using var dialog = new DialogBackupForm();
+            dialog.ShowDialog();
         }
 
         private void SourceCodeGitHub_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

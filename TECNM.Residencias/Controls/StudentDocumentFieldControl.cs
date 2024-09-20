@@ -165,10 +165,9 @@ namespace TECNM.Residencias.Controls
                 _document.Size = stream.Length;
                 _document.Hash = builder.ToString();
             }
-            catch (OperationCanceledException e)
+            catch (OperationCanceledException)
             {
                 // Do nothing with the exception
-                Debug.WriteLine(e);
             }
         }
     }

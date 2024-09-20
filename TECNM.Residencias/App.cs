@@ -50,7 +50,9 @@ namespace TECNM.Residencias
 
         public static string DocumentArchiveDirectory => Path.Combine(RootDataDirectory, "Archivo");
 
-        public static string DatabaseFile => Path.Combine(RootDataDirectory, "database.db");
+        public static string DatabaseName => "database.db";
+
+        public static string DatabaseFullName => Path.Combine(RootDataDirectory, DatabaseName);
 
         public static DbFactory Database
         {
@@ -58,7 +60,7 @@ namespace TECNM.Residencias
             {
                 if (s_factory == null)
                 {
-                    s_factory = new DbFactory(DatabaseFile);
+                    s_factory = new DbFactory(DatabaseFullName);
                 }
 
                 return s_factory;
