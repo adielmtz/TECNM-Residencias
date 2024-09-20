@@ -31,8 +31,7 @@ namespace TECNM.Residencias.Forms
                     MessageBoxIcon.Information
                 );
 
-                using var dialog = new DialogBackupForm();
-                dialog.ShowDialog();
+                FormManagerService.OpenDialog<DialogBackupForm>();
             }
         }
 
