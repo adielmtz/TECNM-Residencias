@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
 
@@ -34,54 +33,6 @@ namespace TECNM.Residencias.Forms
 
             command.CommandText = "PRAGMA wal_checkpoint(FULL)";
             command.ExecuteNonQuery();
-
-            Enabled = true;
-        }
-
-        private void DatabaseCheckIntegrity_Click(object sender, EventArgs e)
-        {
-            Enabled = false;
-
-            bool mustRepairDb = false;
-
-            using (var sqlite = App.Database.Open())
-            {
-                using (var command = sqlite.CreateCommand())
-                {
-                    command.CommandText = "PRAGMA integrity_check";
-                    object? result = command.ExecuteScalar();
-
-                    if (result is string state && state.Equals("ok", StringComparison.OrdinalIgnoreCase))
-                    {
-                        MessageBox.Show(
-                            "No se encontraron problemas de integridad en la base de datos.",
-                            "Información",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Information
-                        );
-                    }
-                    else
-                    {
-                        DialogResult dr = MessageBox.Show(
-                            "Se encontraron errores en la base de datos. ¿Desea reparar la base de datos?"
-                            + "Se creará una nueva base de datos vacía.",
-                            "Confirmar reparacón",
-                            MessageBoxButtons.YesNo,
-                            MessageBoxIcon.Error
-                        );
-
-                        if (dr == DialogResult.Yes)
-                        {
-                            mustRepairDb = true;
-                        }
-                    }
-                }
-            }
-
-            if (mustRepairDb)
-            {
-                RepairDatabase();
-            }
 
             Enabled = true;
         }
@@ -147,15 +98,6 @@ namespace TECNM.Residencias.Forms
             }
 
             return "unknown version";
-        }
-
-        private void RepairDatabase()
-        {
-            // Keep the original db but rename it
-            File.Move(App.DatabaseFile, App.DatabaseFile + ".corrupt");
-
-            // Create a brand new db
-            App.Initialize();
         }
     }
 }

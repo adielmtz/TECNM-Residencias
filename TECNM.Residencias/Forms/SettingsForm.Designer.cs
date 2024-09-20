@@ -32,7 +32,6 @@ namespace TECNM.Residencias.Forms
             lbl_SqliteVersion = new System.Windows.Forms.Label();
             groupBox1 = new System.Windows.Forms.GroupBox();
             button3 = new System.Windows.Forms.Button();
-            button2 = new System.Windows.Forms.Button();
             button1 = new System.Windows.Forms.Button();
             groupBox2 = new System.Windows.Forms.GroupBox();
             label3 = new System.Windows.Forms.Label();
@@ -62,7 +61,7 @@ namespace TECNM.Residencias.Forms
             // lbl_SqliteVersion
             // 
             lbl_SqliteVersion.AutoSize = true;
-            lbl_SqliteVersion.Location = new System.Drawing.Point(6, 106);
+            lbl_SqliteVersion.Location = new System.Drawing.Point(6, 77);
             lbl_SqliteVersion.Name = "lbl_SqliteVersion";
             lbl_SqliteVersion.Size = new System.Drawing.Size(101, 15);
             lbl_SqliteVersion.TabIndex = 0;
@@ -71,35 +70,24 @@ namespace TECNM.Residencias.Forms
             // groupBox1
             // 
             groupBox1.Controls.Add(button3);
-            groupBox1.Controls.Add(button2);
             groupBox1.Controls.Add(button1);
             groupBox1.Controls.Add(lbl_SqliteVersion);
             groupBox1.Location = new System.Drawing.Point(541, 12);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new System.Drawing.Size(247, 128);
+            groupBox1.Size = new System.Drawing.Size(247, 99);
             groupBox1.TabIndex = 1;
             groupBox1.TabStop = false;
             groupBox1.Text = "Base de datos";
             // 
             // button3
             // 
-            button3.Location = new System.Drawing.Point(6, 80);
+            button3.Location = new System.Drawing.Point(6, 51);
             button3.Name = "button3";
             button3.Size = new System.Drawing.Size(235, 23);
             button3.TabIndex = 3;
             button3.Text = "Copia de seguridad";
             button3.UseVisualStyleBackColor = true;
             button3.Click += DatabaseBackup_Click;
-            // 
-            // button2
-            // 
-            button2.Location = new System.Drawing.Point(6, 51);
-            button2.Name = "button2";
-            button2.Size = new System.Drawing.Size(235, 23);
-            button2.TabIndex = 2;
-            button2.Text = "Verificar integridad";
-            button2.UseVisualStyleBackColor = true;
-            button2.Click += DatabaseCheckIntegrity_Click;
             // 
             // button1
             // 
@@ -178,7 +166,7 @@ namespace TECNM.Residencias.Forms
             groupBox3.Controls.Add(groupBox4);
             groupBox3.Location = new System.Drawing.Point(12, 12);
             groupBox3.Name = "groupBox3";
-            groupBox3.Size = new System.Drawing.Size(523, 426);
+            groupBox3.Size = new System.Drawing.Size(523, 429);
             groupBox3.TabIndex = 4;
             groupBox3.TabStop = false;
             groupBox3.Text = "Configuración";
@@ -317,7 +305,6 @@ namespace TECNM.Residencias.Forms
         private System.Windows.Forms.Label lbl_SqliteVersion;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
