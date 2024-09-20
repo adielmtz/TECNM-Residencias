@@ -37,6 +37,7 @@ namespace TECNM.Residencias.Controls
             BackColor = System.Drawing.SystemColors.Control;
             Cursor = System.Windows.Forms.Cursors.Hand;
             Font = new System.Drawing.Font("Segoe UI", 10F);
+            Margin = new System.Windows.Forms.Padding(0);
             Name = "StudentListItemViewControl";
             Padding = new System.Windows.Forms.Padding(10);
             Size = new System.Drawing.Size(668, 39);
