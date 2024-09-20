@@ -73,6 +73,9 @@ namespace TECNM.Residencias.Forms
             {
                 await backup.BackupAsync(progress);
 
+                AppSettings.Default.LastBackupDate = DateTime.Now;
+                AppSettings.Default.Save();
+
                 if (chk_OpenBackupFolder.Checked)
                 {
                     var info = new ProcessStartInfo();

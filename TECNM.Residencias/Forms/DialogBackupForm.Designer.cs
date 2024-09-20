@@ -1,4 +1,4 @@
-﻿namespace TECNM.Residencias.Forms
+namespace TECNM.Residencias.Forms
 {
     partial class DialogBackupForm
     {
@@ -44,9 +44,9 @@
             gb_Config.SuspendLayout();
             gb_Status.SuspendLayout();
             SuspendLayout();
-            // 
+            //
             // gb_Config
-            // 
+            //
             gb_Config.Controls.Add(chk_OpenBackupFolder);
             gb_Config.Controls.Add(btn_StartBackup);
             gb_Config.Controls.Add(chk_EnableCompression);
@@ -59,9 +59,9 @@
             gb_Config.TabIndex = 0;
             gb_Config.TabStop = false;
             gb_Config.Text = "Configuración";
-            // 
+            //
             // btn_StartBackup
-            // 
+            //
             btn_StartBackup.Enabled = false;
             btn_StartBackup.Location = new System.Drawing.Point(6, 116);
             btn_StartBackup.Name = "btn_StartBackup";
@@ -70,9 +70,9 @@
             btn_StartBackup.Text = "Iniciar copia de seguridad";
             btn_StartBackup.UseVisualStyleBackColor = true;
             btn_StartBackup.Click += StartBackup_Click;
-            // 
+            //
             // chk_EnableCompression
-            // 
+            //
             chk_EnableCompression.AutoSize = true;
             chk_EnableCompression.Checked = true;
             chk_EnableCompression.CheckState = System.Windows.Forms.CheckState.Checked;
@@ -82,26 +82,26 @@
             chk_EnableCompression.TabIndex = 3;
             chk_EnableCompression.Text = "Comprimir archivos para ahorrar espacio";
             chk_EnableCompression.UseVisualStyleBackColor = true;
-            // 
+            //
             // tb_BackupLocation
-            // 
+            //
             tb_BackupLocation.Enabled = false;
             tb_BackupLocation.Location = new System.Drawing.Point(87, 37);
             tb_BackupLocation.Name = "tb_BackupLocation";
             tb_BackupLocation.Size = new System.Drawing.Size(368, 23);
             tb_BackupLocation.TabIndex = 2;
-            // 
+            //
             // label1
-            // 
+            //
             label1.AutoSize = true;
             label1.Location = new System.Drawing.Point(6, 19);
             label1.Name = "label1";
             label1.Size = new System.Drawing.Size(191, 15);
             label1.TabIndex = 1;
             label1.Text = "Ubicación de la copia de seguridad";
-            // 
+            //
             // button1
-            // 
+            //
             button1.Location = new System.Drawing.Point(6, 37);
             button1.Name = "button1";
             button1.Size = new System.Drawing.Size(75, 23);
@@ -109,9 +109,9 @@
             button1.Text = "Seleccionar";
             button1.UseVisualStyleBackColor = true;
             button1.Click += ChoseBackupDestination_Click;
-            // 
+            //
             // btn_Cancel
-            // 
+            //
             btn_Cancel.Anchor =  System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
             btn_Cancel.Location = new System.Drawing.Point(398, 262);
             btn_Cancel.Name = "btn_Cancel";
@@ -119,9 +119,9 @@
             btn_Cancel.TabIndex = 1;
             btn_Cancel.Text = "Cancelar";
             btn_Cancel.UseVisualStyleBackColor = true;
-            // 
+            //
             // gb_Status
-            // 
+            //
             gb_Status.Controls.Add(lbl_FileCount);
             gb_Status.Controls.Add(pb_Progress);
             gb_Status.Controls.Add(lbl_ProgressStatus);
@@ -132,18 +132,18 @@
             gb_Status.TabIndex = 2;
             gb_Status.TabStop = false;
             gb_Status.Text = "Progreso";
-            // 
+            //
             // lbl_FileCount
-            // 
+            //
             lbl_FileCount.AutoSize = true;
             lbl_FileCount.Location = new System.Drawing.Point(6, 63);
             lbl_FileCount.Name = "lbl_FileCount";
             lbl_FileCount.Size = new System.Drawing.Size(79, 15);
             lbl_FileCount.TabIndex = 2;
             lbl_FileCount.Text = "[FILE COUNT]";
-            // 
+            //
             // pb_Progress
-            // 
+            //
             pb_Progress.Location = new System.Drawing.Point(6, 37);
             pb_Progress.MarqueeAnimationSpeed = 50;
             pb_Progress.Maximum = 0;
@@ -151,18 +151,18 @@
             pb_Progress.Size = new System.Drawing.Size(449, 23);
             pb_Progress.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             pb_Progress.TabIndex = 1;
-            // 
+            //
             // lbl_ProgressStatus
-            // 
+            //
             lbl_ProgressStatus.AutoSize = true;
             lbl_ProgressStatus.Location = new System.Drawing.Point(6, 19);
             lbl_ProgressStatus.Name = "lbl_ProgressStatus";
             lbl_ProgressStatus.Size = new System.Drawing.Size(58, 15);
             lbl_ProgressStatus.TabIndex = 0;
             lbl_ProgressStatus.Text = "Sin iniciar";
-            // 
+            //
             // chk_OpenBackupFolder
-            // 
+            //
             chk_OpenBackupFolder.AutoSize = true;
             chk_OpenBackupFolder.Location = new System.Drawing.Point(6, 91);
             chk_OpenBackupFolder.Name = "chk_OpenBackupFolder";
@@ -170,9 +170,9 @@
             chk_OpenBackupFolder.TabIndex = 5;
             chk_OpenBackupFolder.Text = "Abrir carpeta al terminar la copia de seguridad";
             chk_OpenBackupFolder.UseVisualStyleBackColor = true;
-            // 
+            //
             // DialogBackupForm
-            // 
+            //
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             CancelButton = btn_Cancel;

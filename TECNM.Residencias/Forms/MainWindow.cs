@@ -21,6 +21,19 @@ namespace TECNM.Residencias.Forms
         private void MainWindow_Load(object sender, EventArgs e)
         {
             App.Initialize();
+
+            if (AppSettings.Default.IsBackupRequired)
+            {
+                MessageBox.Show(
+                    "Es necesario realizar una copia de seguridad.",
+                    "Información",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
+                );
+
+                using var dialog = new DialogBackupForm();
+                dialog.ShowDialog();
+            }
         }
 
         private void MainWindow_Activated(object sender, EventArgs e)
