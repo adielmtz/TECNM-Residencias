@@ -14,6 +14,10 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="ScottPlot.WinForms" Version="5.0.39" />
+    </ItemGroup>
+
+    <ItemGroup>
         <ProjectReference Include="..\TECNM.Residencias.Data.Migrations\TECNM.Residencias.Data.Migrations.csproj" />
         <ProjectReference Include="..\TECNM.Residencias.Data\TECNM.Residencias.Data.csproj" />
     </ItemGroup>
