@@ -5,6 +5,7 @@ using TECNM.Residencias.Controls;
 using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Forms.CareerForms;
 using TECNM.Residencias.Forms.CompanyForms;
+using TECNM.Residencias.Forms.ReportForms;
 using TECNM.Residencias.Forms.StudentForms;
 using TECNM.Residencias.Services;
 
@@ -33,14 +34,16 @@ namespace TECNM.Residencias.Forms
 
                 FormManagerService.OpenDialog<DialogBackupForm>();
             }
+
+            LoadLastModifiedStudents();
         }
 
         private void MainWindow_Activated(object sender, EventArgs e)
         {
             if (App.Initialized)
             {
-            LoadLastModifiedStudents();
-        }
+                LoadLastModifiedStudents();
+            }
         }
 
         private void ShowStudents_Click(object sender, EventArgs e)
@@ -73,6 +76,11 @@ namespace TECNM.Residencias.Forms
             FormManagerService.OpenForm<SettingsForm>();
         }
 
+        private void ShowReportsPanel_Click(object sender, EventArgs e)
+        {
+            FormManagerService.OpenForm<ReportMainPanelForm>();
+        }
+
         private void DoSearch_Click(object sender, EventArgs e)
         {
             RunQuickSearch();
@@ -90,7 +98,7 @@ namespace TECNM.Residencias.Forms
         private void LoadLastModifiedStudents()
         {
             using var context = new AppDbContext();
-            IEnumerable<Student> students = context.Students.EnumerateStudents(count: 30);
+            IEnumerable<Student> students = context.Students.EnumerateStudents(count: 20);
             flp_LastModifiedStudents.Controls.Clear();
 
             foreach (Student student in students)
@@ -109,7 +117,7 @@ namespace TECNM.Residencias.Forms
             }
 
             using var context = new AppDbContext();
-            IEnumerable<Student> students = context.Students.Search(query, 30, 1);
+            IEnumerable<Student> students = context.Students.Search(query, 20, 1);
             flp_QuickSearchResults.Controls.Clear();
 
             foreach (Student student in students)

@@ -35,6 +35,8 @@ namespace TECNM.Residencias.Forms
             command.ExecuteNonQuery();
 
             Enabled = true;
+
+            MessageBox.Show("Base de datos optimizada.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void DatabaseBackup_Click(object sender, EventArgs e)

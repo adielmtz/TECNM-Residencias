@@ -37,6 +37,8 @@ namespace TECNM.Residencias
 
         public static int DefaultInitialPage => 1;
 
+        public static int MinimumReportYear => 1954;
+
         public static string RootDataDirectory
         {
             get

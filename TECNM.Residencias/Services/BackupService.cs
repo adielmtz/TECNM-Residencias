@@ -27,7 +27,7 @@ namespace TECNM.Residencias.Services
 
         public int FileCount => fileInfos.Count;
 
-        public string BackupFile => Path.Combine(destination.FullName, $"Residencias_backup_{DateTime.Now:yyyy-MM-dd_HH.mm}.tar.gz");
+        public string BackupFile => Path.Combine(destination.FullName, $"rp_backup_{DateTime.Now:yyyy-MM-dd_HH.mm}.tar.gz");
 
         private CompressionLevel CompressionLevel => Compress ? CompressionLevel.Optimal : CompressionLevel.NoCompression;
 

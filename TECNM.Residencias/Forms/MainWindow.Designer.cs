@@ -45,11 +45,14 @@ namespace TECNM.Residencias.Forms
             groupBox2 = new System.Windows.Forms.GroupBox();
             button6 = new System.Windows.Forms.Button();
             groupBox3 = new System.Windows.Forms.GroupBox();
+            groupBox6 = new System.Windows.Forms.GroupBox();
+            button8 = new System.Windows.Forms.Button();
             groupBox1.SuspendLayout();
             groupBox5.SuspendLayout();
             groupBox4.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
+            groupBox6.SuspendLayout();
             SuspendLayout();
             // 
             // button1
@@ -236,11 +239,35 @@ namespace TECNM.Residencias.Forms
             groupBox3.TabStop = false;
             groupBox3.Text = "Carreras";
             // 
+            // groupBox6
+            // 
+            groupBox6.Anchor =  System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            groupBox6.Controls.Add(button8);
+            groupBox6.Font = new System.Drawing.Font("Segoe UI", 14F);
+            groupBox6.Location = new System.Drawing.Point(631, 578);
+            groupBox6.Name = "groupBox6";
+            groupBox6.Size = new System.Drawing.Size(204, 91);
+            groupBox6.TabIndex = 8;
+            groupBox6.TabStop = false;
+            groupBox6.Text = "Reportes y gráficas";
+            // 
+            // button8
+            // 
+            button8.Font = new System.Drawing.Font("Segoe UI", 10F);
+            button8.Location = new System.Drawing.Point(6, 31);
+            button8.Name = "button8";
+            button8.Size = new System.Drawing.Size(192, 52);
+            button8.TabIndex = 0;
+            button8.Text = "Panel de reportes";
+            button8.UseVisualStyleBackColor = true;
+            button8.Click += ShowReportsPanel_Click;
+            // 
             // MainWindow
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(1264, 681);
+            Controls.Add(groupBox6);
             Controls.Add(groupBox3);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
@@ -259,6 +286,7 @@ namespace TECNM.Residencias.Forms
             groupBox4.ResumeLayout(false);
             groupBox2.ResumeLayout(false);
             groupBox3.ResumeLayout(false);
+            groupBox6.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -281,5 +309,7 @@ namespace TECNM.Residencias.Forms
         private System.Windows.Forms.TextBox tb_QuickSearchQuery;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.FlowLayoutPanel flp_QuickSearchResults;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.Button button8;
     }
 }
