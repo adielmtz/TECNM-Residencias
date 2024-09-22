@@ -11,6 +11,9 @@ namespace TECNM.Residencias
         private static string? s_rootDataDirectory = null;
         private static DbFactory? s_factory = null;
         private static Version? s_version = null;
+        private static bool s_initialized = false;
+
+        public static bool Initialized => s_initialized;
 
         public static string Name => "Archivo de residencias | TECNM";
 
@@ -72,6 +75,7 @@ namespace TECNM.Residencias
             Directory.CreateDirectory(RootDataDirectory);
             Directory.CreateDirectory(DocumentArchiveDirectory);
             InitializeDatabase();
+            s_initialized = true;
         }
 
         private static void InitializeDatabase()

@@ -37,7 +37,10 @@ namespace TECNM.Residencias.Forms
 
         private void MainWindow_Activated(object sender, EventArgs e)
         {
+            if (App.Initialized)
+            {
             LoadLastModifiedStudents();
+        }
         }
 
         private void ShowStudents_Click(object sender, EventArgs e)
