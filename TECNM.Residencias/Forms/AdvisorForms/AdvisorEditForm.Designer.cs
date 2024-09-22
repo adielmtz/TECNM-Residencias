@@ -48,10 +48,12 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             label8 = new System.Windows.Forms.Label();
             tb_AdvisorLastName = new System.Windows.Forms.TextBox();
             mtb_AdvisorPhone = new System.Windows.Forms.MaskedTextBox();
+            label9 = new System.Windows.Forms.Label();
+            tb_AdvisorExtension = new System.Windows.Forms.TextBox();
             SuspendLayout();
-            //
+            // 
             // btn_CancelEdit
-            //
+            // 
             btn_CancelEdit.Anchor =  System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
             btn_CancelEdit.Location = new System.Drawing.Point(298, 302);
             btn_CancelEdit.Name = "btn_CancelEdit";
@@ -59,9 +61,9 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             btn_CancelEdit.TabIndex = 11;
             btn_CancelEdit.Text = "Cancelar";
             btn_CancelEdit.UseVisualStyleBackColor = true;
-            //
+            // 
             // cb_AdvisorType
-            //
+            // 
             cb_AdvisorType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             cb_AdvisorType.FormattingEnabled = true;
             cb_AdvisorType.Items.AddRange(new object[] { "Interno", "Externo" });
@@ -69,91 +71,91 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             cb_AdvisorType.Name = "cb_AdvisorType";
             cb_AdvisorType.Size = new System.Drawing.Size(83, 23);
             cb_AdvisorType.TabIndex = 1;
-            //
+            // 
             // label1
-            //
+            // 
             label1.AutoSize = true;
             label1.Location = new System.Drawing.Point(12, 9);
             label1.Name = "label1";
             label1.Size = new System.Drawing.Size(35, 15);
             label1.TabIndex = 0;
             label1.Text = "Tipo*";
-            //
+            // 
             // label2
-            //
+            // 
             label2.AutoSize = true;
             label2.Location = new System.Drawing.Point(100, 9);
             label2.Name = "label2";
             label2.Size = new System.Drawing.Size(56, 15);
             label2.TabIndex = 0;
             label2.Text = "Nombre*";
-            //
+            // 
             // tb_AdvisorFirstName
-            //
+            // 
             tb_AdvisorFirstName.Location = new System.Drawing.Point(100, 27);
             tb_AdvisorFirstName.Name = "tb_AdvisorFirstName";
             tb_AdvisorFirstName.Size = new System.Drawing.Size(146, 23);
             tb_AdvisorFirstName.TabIndex = 2;
-            //
+            // 
             // label3
-            //
+            // 
             label3.AutoSize = true;
             label3.Location = new System.Drawing.Point(12, 97);
             label3.Name = "label3";
             label3.Size = new System.Drawing.Size(83, 15);
             label3.TabIndex = 0;
             label3.Text = "Departamento";
-            //
+            // 
             // tb_AdvisorSection
-            //
+            // 
             tb_AdvisorSection.Location = new System.Drawing.Point(12, 115);
             tb_AdvisorSection.Name = "tb_AdvisorSection";
             tb_AdvisorSection.Size = new System.Drawing.Size(386, 23);
             tb_AdvisorSection.TabIndex = 5;
-            //
+            // 
             // label4
-            //
+            // 
             label4.AutoSize = true;
             label4.Location = new System.Drawing.Point(12, 141);
             label4.Name = "label4";
             label4.Size = new System.Drawing.Size(43, 15);
             label4.TabIndex = 0;
             label4.Text = "Puesto";
-            //
+            // 
             // tb_AdvisorRole
-            //
+            // 
             tb_AdvisorRole.Location = new System.Drawing.Point(12, 159);
             tb_AdvisorRole.Name = "tb_AdvisorRole";
             tb_AdvisorRole.Size = new System.Drawing.Size(386, 23);
             tb_AdvisorRole.TabIndex = 6;
-            //
+            // 
             // label5
-            //
+            // 
             label5.AutoSize = true;
             label5.Location = new System.Drawing.Point(12, 185);
             label5.Name = "label5";
             label5.Size = new System.Drawing.Size(43, 15);
             label5.TabIndex = 0;
             label5.Text = "Correo";
-            //
+            // 
             // tb_AdvisorEmail
-            //
+            // 
             tb_AdvisorEmail.Location = new System.Drawing.Point(12, 203);
             tb_AdvisorEmail.Name = "tb_AdvisorEmail";
             tb_AdvisorEmail.Size = new System.Drawing.Size(386, 23);
             tb_AdvisorEmail.TabIndex = 7;
-            //
+            // 
             // label6
-            //
+            // 
             label6.AutoSize = true;
             label6.Location = new System.Drawing.Point(12, 229);
             label6.Name = "label6";
             label6.Size = new System.Drawing.Size(52, 15);
             label6.TabIndex = 0;
             label6.Text = "Teléfono";
-            //
+            // 
             // chk_AdvisorEnabled
-            //
+            // 
             chk_AdvisorEnabled.AutoSize = true;
             chk_AdvisorEnabled.Checked = true;
             chk_AdvisorEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
@@ -163,9 +165,9 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             chk_AdvisorEnabled.TabIndex = 9;
             chk_AdvisorEnabled.Text = "Habilitar";
             chk_AdvisorEnabled.UseVisualStyleBackColor = true;
-            //
+            // 
             // button1
-            //
+            // 
             button1.Anchor =  System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
             button1.Location = new System.Drawing.Point(12, 302);
             button1.Name = "button1";
@@ -174,56 +176,76 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             button1.Text = "Guardar";
             button1.UseVisualStyleBackColor = true;
             button1.Click += SaveEdit_Click;
-            //
+            // 
             // label7
-            //
+            // 
             label7.AutoSize = true;
             label7.Location = new System.Drawing.Point(12, 53);
             label7.Name = "label7";
             label7.Size = new System.Drawing.Size(57, 15);
             label7.TabIndex = 0;
             label7.Text = "Empresa*";
-            //
+            // 
             // cb_AdvisorCompany
-            //
+            // 
             cb_AdvisorCompany.FormattingEnabled = true;
             cb_AdvisorCompany.Location = new System.Drawing.Point(12, 71);
             cb_AdvisorCompany.Name = "cb_AdvisorCompany";
             cb_AdvisorCompany.Size = new System.Drawing.Size(386, 23);
             cb_AdvisorCompany.TabIndex = 4;
-            //
+            // 
             // label8
-            //
+            // 
             label8.AutoSize = true;
             label8.Location = new System.Drawing.Point(252, 9);
             label8.Name = "label8";
             label8.Size = new System.Drawing.Size(61, 15);
             label8.TabIndex = 0;
             label8.Text = "Apellidos*";
-            //
+            // 
             // tb_AdvisorLastName
-            //
+            // 
             tb_AdvisorLastName.Location = new System.Drawing.Point(252, 27);
             tb_AdvisorLastName.Name = "tb_AdvisorLastName";
             tb_AdvisorLastName.Size = new System.Drawing.Size(146, 23);
             tb_AdvisorLastName.TabIndex = 3;
-            //
+            // 
             // mtb_AdvisorPhone
-            //
+            // 
             mtb_AdvisorPhone.Location = new System.Drawing.Point(12, 247);
             mtb_AdvisorPhone.Mask = "000-000-0000";
             mtb_AdvisorPhone.Name = "mtb_AdvisorPhone";
-            mtb_AdvisorPhone.Size = new System.Drawing.Size(386, 23);
+            mtb_AdvisorPhone.Size = new System.Drawing.Size(83, 23);
             mtb_AdvisorPhone.TabIndex = 8;
+            mtb_AdvisorPhone.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             mtb_AdvisorPhone.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
-            //
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new System.Drawing.Point(101, 229);
+            label9.Name = "label9";
+            label9.Size = new System.Drawing.Size(58, 15);
+            label9.TabIndex = 0;
+            label9.Text = "Extensión";
+            // 
+            // tb_AdvisorExtension
+            // 
+            tb_AdvisorExtension.Location = new System.Drawing.Point(101, 247);
+            tb_AdvisorExtension.Name = "tb_AdvisorExtension";
+            tb_AdvisorExtension.Size = new System.Drawing.Size(80, 23);
+            tb_AdvisorExtension.TabIndex = 0;
+            tb_AdvisorExtension.TabStop = false;
+            // 
             // AdvisorEditForm
-            //
+            // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             CancelButton = btn_CancelEdit;
             ClientSize = new System.Drawing.Size(410, 337);
             ControlBox = false;
+            Controls.Add(tb_AdvisorExtension);
+            Controls.Add(label9);
             Controls.Add(mtb_AdvisorPhone);
             Controls.Add(tb_AdvisorLastName);
             Controls.Add(label8);
@@ -273,5 +295,7 @@ namespace TECNM.Residencias.Forms.AdvisorForms
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox tb_AdvisorLastName;
         private System.Windows.Forms.MaskedTextBox mtb_AdvisorPhone;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox tb_AdvisorExtension;
     }
 }

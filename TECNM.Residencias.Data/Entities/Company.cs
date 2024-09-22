@@ -17,6 +17,8 @@ namespace TECNM.Residencias.Data.Entities
 
         public string Phone { get; set; } = "";
 
+        public string Extension { get; set; } = "";
+
         public string Address { get; set; } = "";
 
         public string Locality { get; set; } = "";

@@ -23,6 +23,8 @@ namespace TECNM.Residencias.Data.Entities
 
         public string Phone { get; set; } = "";
 
+        public string Extension { get; set; } = "";
+
         public bool Enabled { get; set; }
 
         public DateTime UpdatedOn { get; set; }

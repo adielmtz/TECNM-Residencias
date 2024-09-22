@@ -37,6 +37,7 @@ namespace TECNM.Residencias.Forms.AdvisorForms
                 tb_AdvisorRole.Text = entity.Role;
                 tb_AdvisorEmail.Text = entity.Email;
                 mtb_AdvisorPhone.Text = entity.Phone;
+                tb_AdvisorExtension.Text = entity.Extension;
                 chk_AdvisorEnabled.Checked = entity.Enabled;
             }
         }
@@ -58,6 +59,7 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             _advisor.Role = tb_AdvisorRole.Text.Trim();
             _advisor.Email = tb_AdvisorEmail.Text.Trim();
             _advisor.Phone = mtb_AdvisorPhone.Text.Trim();
+            _advisor.Extension = tb_AdvisorExtension.Text.Trim();
             _advisor.Enabled = chk_AdvisorEnabled.Checked;
 
             ValidationResult result = _validator.Validate(_advisor);
@@ -70,15 +72,7 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             }
 
             using var context = new AppDbContext();
-            if (_advisor.Id > 0)
-            {
-                context.Advisors.Update(_advisor);
-            }
-            else
-            {
-                context.Advisors.Insert(_advisor);
-            }
-
+            context.Advisors.InsertOrUpdate(_advisor);
             context.Commit();
             Close();
         }

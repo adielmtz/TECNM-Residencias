@@ -18,7 +18,7 @@ namespace TECNM.Residencias.Data.Sets
         public Company? GetCompanyById(long id)
         {
             using var command = Context.Database.CreateCommand();
-            command.CommandText = "SELECT Id, Rfc, Type, Name, Email, Phone, Address, Locality, PostalCode, CityId, Enabled, UpdatedOn, CreatedOn FROM Company WHERE Id = $id";
+            command.CommandText = "SELECT Id, Rfc, Type, Name, Email, Phone, Extension, Address, Locality, PostalCode, CityId, Enabled, UpdatedOn, CreatedOn FROM Company WHERE Id = $id";
             command.Parameters.Add("$id", SqliteType.Integer).Value = id;
             using var reader = command.ExecuteReader();
 
@@ -50,7 +50,7 @@ namespace TECNM.Residencias.Data.Sets
         public IEnumerable<Company> EnumerateCompanies(int count, int page)
         {
             using var command = Context.Database.CreateCommand();
-            command.CommandText = "SELECT Id, Rfc, Type, Name, Email, Phone, Address, Locality, PostalCode, CityId, Enabled, UpdatedOn, CreatedOn FROM Company ORDER BY Name LIMIT $p0 OFFSET $p1";
+            command.CommandText = "SELECT Id, Rfc, Type, Name, Email, Phone, Extension, Address, Locality, PostalCode, CityId, Enabled, UpdatedOn, CreatedOn FROM Company ORDER BY Name LIMIT $p0 OFFSET $p1";
             command.Parameters.Add("$p0", SqliteType.Integer).Value = count;
             command.Parameters.Add("$p1", SqliteType.Integer).Value = (page - 1) * count;
             using var reader = command.ExecuteReader();
@@ -66,21 +66,22 @@ namespace TECNM.Residencias.Data.Sets
         {
             using var command = Context.Database.CreateCommand();
             command.CommandText = """
-            INSERT INTO Company (Rfc, Type, Name, Email, Phone, Address, Locality, PostalCode, CityId, Enabled, UpdatedOn)
-            VALUES ($p0, $p1, $p2, $p3, $p4, $p5, $p6, $p7, $p8, $p9, CURRENT_TIMESTAMP)
+            INSERT INTO Company (Rfc, Type, Name, Email, Phone, Extension, Address, Locality, PostalCode, CityId, Enabled, UpdatedOn)
+            VALUES ($p00, $p01, $p02, $p03, $p04, $p05, $p06, $p07, $p08, $p09, $p10, CURRENT_TIMESTAMP)
             RETURNING Id
             """;
 
-            command.Parameters.Add("$p0", SqliteType.Text).SetNullableValue(entity.Rfc);
-            command.Parameters.Add("$p1", SqliteType.Text).Value = entity.Type.ToString();
-            command.Parameters.Add("$p2", SqliteType.Text).Value = entity.Name;
-            command.Parameters.Add("$p3", SqliteType.Text).Value = entity.Email;
-            command.Parameters.Add("$p4", SqliteType.Text).Value = entity.Phone;
-            command.Parameters.Add("$p5", SqliteType.Text).Value = entity.Address;
-            command.Parameters.Add("$p6", SqliteType.Text).Value = entity.Locality;
-            command.Parameters.Add("$p7", SqliteType.Text).Value = entity.PostalCode;
-            command.Parameters.Add("$p8", SqliteType.Integer).Value = entity.CityId;
-            command.Parameters.Add("$p9", SqliteType.Integer).Value = entity.Enabled;
+            command.Parameters.Add("$p00", SqliteType.Text).SetNullableValue(entity.Rfc);
+            command.Parameters.Add("$p01", SqliteType.Text).Value = entity.Type.ToString();
+            command.Parameters.Add("$p02", SqliteType.Text).Value = entity.Name;
+            command.Parameters.Add("$p03", SqliteType.Text).Value = entity.Email;
+            command.Parameters.Add("$p04", SqliteType.Text).Value = entity.Phone;
+            command.Parameters.Add("$p05", SqliteType.Text).Value = entity.Extension;
+            command.Parameters.Add("$p06", SqliteType.Text).Value = entity.Address;
+            command.Parameters.Add("$p07", SqliteType.Text).Value = entity.Locality;
+            command.Parameters.Add("$p08", SqliteType.Text).Value = entity.PostalCode;
+            command.Parameters.Add("$p09", SqliteType.Integer).Value = entity.CityId;
+            command.Parameters.Add("$p10", SqliteType.Integer).Value = entity.Enabled;
             object? result = command.ExecuteScalar();
 
             entity.Id = Convert.ToInt64(result);
@@ -92,30 +93,32 @@ namespace TECNM.Residencias.Data.Sets
             using var command = Context.Database.CreateCommand();
             command.CommandText = """
             UPDATE Company
-            SET Rfc        = $p0,
-                Type       = $p1,
-                Name       = $p2,
-                Email      = $p3,
-                Phone      = $p4,
-                Address    = $p5,
-                Locality   = $p6,
-                PostalCode = $p7,
-                CityId     = $p8,
-                Enabled    = $p9,
+            SET Rfc        = $p00,
+                Type       = $p01,
+                Name       = $p02,
+                Email      = $p03,
+                Phone      = $p04,
+                Extension  = $p05,
+                Address    = $p06,
+                Locality   = $p07,
+                PostalCode = $p08,
+                CityId     = $p09,
+                Enabled    = $p10,
                 UpdatedOn  = CURRENT_TIMESTAMP
-            WHERE Id = $id
+            WHERE Id = $id;
             """;
 
-            command.Parameters.Add("$p0", SqliteType.Text).SetNullableValue(entity.Rfc);
-            command.Parameters.Add("$p1", SqliteType.Text).Value = entity.Type.ToString();
-            command.Parameters.Add("$p2", SqliteType.Text).Value = entity.Name;
-            command.Parameters.Add("$p3", SqliteType.Text).Value = entity.Email;
-            command.Parameters.Add("$p4", SqliteType.Text).Value = entity.Phone;
-            command.Parameters.Add("$p5", SqliteType.Text).Value = entity.Address;
-            command.Parameters.Add("$p6", SqliteType.Text).Value = entity.Locality;
-            command.Parameters.Add("$p7", SqliteType.Text).Value = entity.PostalCode;
-            command.Parameters.Add("$p8", SqliteType.Integer).Value = entity.CityId;
-            command.Parameters.Add("$p9", SqliteType.Integer).Value = entity.Enabled;
+            command.Parameters.Add("$p00", SqliteType.Text).SetNullableValue(entity.Rfc);
+            command.Parameters.Add("$p01", SqliteType.Text).Value = entity.Type.ToString();
+            command.Parameters.Add("$p02", SqliteType.Text).Value = entity.Name;
+            command.Parameters.Add("$p03", SqliteType.Text).Value = entity.Email;
+            command.Parameters.Add("$p04", SqliteType.Text).Value = entity.Phone;
+            command.Parameters.Add("$p05", SqliteType.Text).Value = entity.Extension;
+            command.Parameters.Add("$p06", SqliteType.Text).Value = entity.Address;
+            command.Parameters.Add("$p07", SqliteType.Text).Value = entity.Locality;
+            command.Parameters.Add("$p08", SqliteType.Text).Value = entity.PostalCode;
+            command.Parameters.Add("$p09", SqliteType.Integer).Value = entity.CityId;
+            command.Parameters.Add("$p10", SqliteType.Integer).Value = entity.Enabled;
             command.Parameters.Add("$id", SqliteType.Integer).Value = entity.Id;
             return command.ExecuteNonQuery();
         }
@@ -132,13 +135,14 @@ namespace TECNM.Residencias.Data.Sets
         {
             using var command = Context.Database.CreateCommand();
             command.CommandText = """
-            INSERT INTO Company (Rfc, Type, Name, Email, Phone, Address, Locality, PostalCode, CityId, Enabled, UpdatedOn)
-            VALUES ($p0, $p1, $p2, $p3, $p4, $p5, $p6, $p7, $p8, $p9, CURRENT_TIMESTAMP)
+            INSERT INTO Company (Rfc, Type, Name, Email, Phone, Extension, Address, Locality, PostalCode, CityId, Enabled, UpdatedOn)
+            VALUES ($p00, $p01, $p02, $p03, $p04, $p05, $p06, $p07, $p08, $p09, $p10, CURRENT_TIMESTAMP)
             ON CONFLICT(Rfc) DO UPDATE
             SET Type       = excluded.Type,
                 Name       = excluded.Name,
                 Email      = excluded.Email,
                 Phone      = excluded.Phone,
+                Extension  = excluded.Extension,
                 Address    = excluded.Address,
                 Locality   = excluded.Locality,
                 PostalCode = excluded.PostalCode,
@@ -166,7 +170,7 @@ namespace TECNM.Residencias.Data.Sets
 
         protected override Company HydrateObject(IDataReader reader)
         {
-            Debug.Assert(reader.FieldCount == 13);
+            Debug.Assert(reader.FieldCount == 14);
             return new Company
             {
                 Id         = reader.GetInt64(0),
@@ -175,13 +179,14 @@ namespace TECNM.Residencias.Data.Sets
                 Name       = reader.GetString(3),
                 Email      = reader.GetString(4),
                 Phone      = reader.GetString(5),
-                Address    = reader.GetString(6),
-                Locality   = reader.GetString(7),
-                PostalCode = reader.GetString(8),
-                CityId     = reader.GetInt64(9),
-                Enabled    = reader.GetBoolean(10),
-                UpdatedOn  = reader.GetLocalDateTime(11),
-                CreatedOn  = reader.GetLocalDateTime(12),
+                Extension  = reader.GetString(6),
+                Address    = reader.GetString(7),
+                Locality   = reader.GetString(8),
+                PostalCode = reader.GetString(9),
+                CityId     = reader.GetInt64(10),
+                Enabled    = reader.GetBoolean(11),
+                UpdatedOn  = reader.GetLocalDateTime(12),
+                CreatedOn  = reader.GetLocalDateTime(13),
             };
         }
     }

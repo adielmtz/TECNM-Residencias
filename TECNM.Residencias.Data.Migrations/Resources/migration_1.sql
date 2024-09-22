@@ -56,7 +56,7 @@ CREATE TABLE Career (
     Enabled   INTEGER NOT NULL,
     UpdatedOn TEXT    NOT NULL,
     CreatedOn TEXT    NOT NULL
-                      DEFAULT (CURRENT_TIMESTAMP)
+                      DEFAULT (CURRENT_TIMESTAMP) 
 )
 STRICT;
 
@@ -87,6 +87,7 @@ CREATE TABLE Company (
     Name       TEXT    NOT NULL,
     Email      TEXT    NOT NULL,
     Phone      TEXT    NOT NULL,
+    Extension  TEXT    NOT NULL,
     Address    TEXT    NOT NULL,
     Locality   TEXT    NOT NULL,
     PostalCode TEXT    NOT NULL,
@@ -95,7 +96,7 @@ CREATE TABLE Company (
     Enabled    INTEGER NOT NULL,
     UpdatedOn  TEXT    NOT NULL,
     CreatedOn  TEXT    NOT NULL
-                       DEFAULT (CURRENT_TIMESTAMP)
+                       DEFAULT (CURRENT_TIMESTAMP) 
 )
 STRICT;
 
@@ -112,41 +113,42 @@ CREATE TABLE Advisor (
     Role      TEXT    NOT NULL,
     Email     TEXT    NOT NULL,
     Phone     TEXT    NOT NULL,
+    Extension TEXT    NOT NULL,
     Enabled   INTEGER NOT NULL,
     UpdatedOn TEXT    NOT NULL,
     CreatedOn TEXT    NOT NULL
-                      DEFAULT (CURRENT_TIMESTAMP)
+                      DEFAULT (CURRENT_TIMESTAMP) 
 )
 STRICT;
 
 
 CREATE TABLE Student (
-    Id                          INTEGER PRIMARY KEY
-                                        NOT NULL,
-    SpecialtyId                 INTEGER REFERENCES Specialty (Id) ON DELETE RESTRICT
-                                        NOT NULL,
-    FirstName                   TEXT    NOT NULL,
-    LastName                    TEXT    NOT NULL,
-    Email                       TEXT    UNIQUE
-                                        NOT NULL,
-    Phone                       TEXT    NOT NULL,
-    Gender                      TEXT    NOT NULL,
-    Semester                    TEXT    NOT NULL,
-    StartDate                   TEXT    NOT NULL,
-    EndDate                     TEXT    NOT NULL,
-    Project                     TEXT    NOT NULL,
-    InternalAdvisorId           INTEGER REFERENCES Advisor (Id) ON DELETE RESTRICT,
-    ExternalAdvisorId           INTEGER REFERENCES Advisor (Id) ON DELETE RESTRICT,
-    ReviewerAdvisorId           INTEGER REFERENCES Advisor (Id) ON DELETE RESTRICT,
-    CompanyId                   INTEGER REFERENCES Company (Id) ON DELETE RESTRICT
-                                        NOT NULL,
-    Department                  TEXT    NOT NULL,
-    Schedule                    TEXT    NOT NULL,
-    Notes                       TEXT    NOT NULL,
-    Enabled                     INTEGER NOT NULL,
-    UpdatedOn                   TEXT    NOT NULL,
-    CreatedOn                   TEXT    NOT NULL
-                                DEFAULT (CURRENT_TIMESTAMP)
+    Id                INTEGER PRIMARY KEY
+                              NOT NULL,
+    SpecialtyId       INTEGER REFERENCES Specialty (Id) ON DELETE RESTRICT
+                              NOT NULL,
+    FirstName         TEXT    NOT NULL,
+    LastName          TEXT    NOT NULL,
+    Email             TEXT    UNIQUE
+                              NOT NULL,
+    Phone             TEXT    NOT NULL,
+    Gender            TEXT    NOT NULL,
+    Semester          TEXT    NOT NULL,
+    StartDate         TEXT    NOT NULL,
+    EndDate           TEXT    NOT NULL,
+    Project           TEXT    NOT NULL,
+    InternalAdvisorId INTEGER REFERENCES Advisor (Id) ON DELETE RESTRICT,
+    ExternalAdvisorId INTEGER REFERENCES Advisor (Id) ON DELETE RESTRICT,
+    ReviewerAdvisorId INTEGER REFERENCES Advisor (Id) ON DELETE RESTRICT,
+    CompanyId         INTEGER REFERENCES Company (Id) ON DELETE RESTRICT
+                              NOT NULL,
+    Department        TEXT    NOT NULL,
+    Schedule          TEXT    NOT NULL,
+    Notes             TEXT    NOT NULL,
+    Enabled           INTEGER NOT NULL,
+    UpdatedOn         TEXT    NOT NULL,
+    CreatedOn         TEXT    NOT NULL
+                              DEFAULT (CURRENT_TIMESTAMP) 
 )
 STRICT;
 
@@ -165,7 +167,7 @@ CREATE TABLE Document (
     Enabled      INTEGER NOT NULL,
     UpdatedOn    TEXT    NOT NULL,
     CreatedOn    TEXT    NOT NULL
-                         DEFAULT (CURRENT_TIMESTAMP)
+                         DEFAULT (CURRENT_TIMESTAMP) 
 )
 STRICT;
 
@@ -184,7 +186,6 @@ CREATE TABLE Extra (
     )
 )
 STRICT;
-
 
 
 CREATE TABLE StudentExtras (

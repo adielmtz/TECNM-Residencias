@@ -34,6 +34,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
                 tb_CompanyName.Text = entity.Name;
                 tb_CompanyEmail.Text = entity.Email;
                 mtb_CompanyPhone.Text = entity.Phone;
+                tb_CompanyExtension.Text = entity.Extension;
                 tb_CompanyAddress.Text = entity.Address;
                 tb_CompanyLocality.Text = entity.Locality;
                 mtb_CompanyPostalCode.Text = entity.PostalCode;
@@ -163,6 +164,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
             _company.Name = tb_CompanyName.Text.Trim();
             _company.Email = tb_CompanyEmail.Text.Trim();
             _company.Phone = mtb_CompanyPhone.Text.Trim();
+            _company.Extension = tb_CompanyExtension.Text.Trim();
             _company.Address = tb_CompanyAddress.Text.Trim();
             _company.Locality = tb_CompanyLocality.Text.Trim();
             _company.PostalCode = mtb_CompanyPostalCode.Text.Trim();
