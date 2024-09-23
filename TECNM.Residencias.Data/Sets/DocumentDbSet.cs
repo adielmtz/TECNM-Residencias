@@ -29,20 +29,6 @@ namespace TECNM.Residencias.Data.Sets
             }
         }
 
-        public IEnumerable<Document> EnumerateDocumentsByHash(string hash)
-        {
-            using var command = Context.Database.CreateCommand();
-            command.CommandText = "SELECT Id, StudentId, Type, FullPath, OriginalName, Size, Hash, Enabled, UpdatedOn, CreatedOn FROM Document WHERE Hash = $p0";
-            command.Parameters.Add("$p0", SqliteType.Text).Value = hash;
-            using var reader = command.ExecuteReader();
-
-            while (reader.Read())
-            {
-                Document document = HydrateObject(reader);
-                yield return document;
-            }
-        }
-
         public override bool Insert(Document entity)
         {
             using var command = Context.Database.CreateCommand();

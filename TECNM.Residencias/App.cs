@@ -55,6 +55,8 @@ namespace TECNM.Residencias
 
         public static string DocumentArchiveDirectory => Path.Combine(RootDataDirectory, "Archivo");
 
+        public static string TemporaryArchiveDirectory => Path.Combine(RootDataDirectory, "Temporary");
+
         public static string DatabaseName => "database.db";
 
         public static string DatabaseFullName => Path.Combine(RootDataDirectory, DatabaseName);
@@ -76,6 +78,7 @@ namespace TECNM.Residencias
         {
             Directory.CreateDirectory(RootDataDirectory);
             Directory.CreateDirectory(DocumentArchiveDirectory);
+            Directory.CreateDirectory(TemporaryArchiveDirectory);
             InitializeDatabase();
             s_initialized = true;
         }

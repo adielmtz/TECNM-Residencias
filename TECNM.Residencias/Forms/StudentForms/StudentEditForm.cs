@@ -294,7 +294,7 @@ namespace TECNM.Residencias.Forms.StudentForms
 
             if (result > 0)
             {
-                DocumentStorageService.DeleteFile(document);
+                DocumentStorageService.DeleteDocument(document);
             }
         }
 
@@ -364,8 +364,10 @@ namespace TECNM.Residencias.Forms.StudentForms
             Close();
         }
 
-        private void SaveEdit_Click(object sender, EventArgs e)
+        private async void SaveEdit_Click(object sender, EventArgs e)
         {
+            Enabled = false;
+
             Student _student = this._student;
             Specialty? specialty = (Specialty?) cb_StudentSpecialty.SelectedItem;
             string? semester = (string?) cb_StudentSemester.SelectedItem;
@@ -396,6 +398,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             {
                 Debug.Assert(result.Errors.Count > 0);
                 MessageBox.Show(result.Errors[0].ErrorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Enabled = true;
                 return;
             }
 
@@ -410,14 +413,11 @@ namespace TECNM.Residencias.Forms.StudentForms
 
             foreach (StudentDocumentFieldControl control in flp_Documents.Controls)
             {
-                Document document = control.Document;
-
                 if (control.IsNewFile)
                 {
-                    DocumentStorageService.SaveFile(_student, document, control.SelectedFile, control.TypeName);
+                    await control.SaveDocumentAsync(_student);
+                    context.Documents.InsertOrUpdate(control.Document);
                 }
-
-                context.Documents.InsertOrUpdate(document);
             }
 
             context.Commit();

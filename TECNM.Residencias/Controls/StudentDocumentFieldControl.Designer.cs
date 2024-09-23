@@ -30,7 +30,7 @@ namespace TECNM.Residencias.Controls
         {
             lbl_DocumentName = new System.Windows.Forms.Label();
             button1 = new System.Windows.Forms.Button();
-            button2 = new System.Windows.Forms.Button();
+            btn_UploadFile = new System.Windows.Forms.Button();
             label1 = new System.Windows.Forms.Label();
             cb_DocumentType = new System.Windows.Forms.ComboBox();
             button3 = new System.Windows.Forms.Button();
@@ -55,15 +55,15 @@ namespace TECNM.Residencias.Controls
             button1.UseVisualStyleBackColor = true;
             button1.Click += OpenFile_Click;
             // 
-            // button2
+            // btn_UploadFile
             // 
-            button2.Location = new System.Drawing.Point(235, 8);
-            button2.Name = "button2";
-            button2.Size = new System.Drawing.Size(110, 23);
-            button2.TabIndex = 2;
-            button2.Text = "Cargar archivo";
-            button2.UseVisualStyleBackColor = true;
-            button2.Click += UploadFile_Click;
+            btn_UploadFile.Location = new System.Drawing.Point(235, 8);
+            btn_UploadFile.Name = "btn_UploadFile";
+            btn_UploadFile.Size = new System.Drawing.Size(110, 23);
+            btn_UploadFile.TabIndex = 2;
+            btn_UploadFile.Text = "Cargar archivo";
+            btn_UploadFile.UseVisualStyleBackColor = true;
+            btn_UploadFile.Click += UploadFile_Click;
             // 
             // label1
             // 
@@ -82,7 +82,6 @@ namespace TECNM.Residencias.Controls
             cb_DocumentType.Name = "cb_DocumentType";
             cb_DocumentType.Size = new System.Drawing.Size(190, 23);
             cb_DocumentType.TabIndex = 4;
-            cb_DocumentType.SelectedIndexChanged += DocumentType_SelectedIndexChanged;
             // 
             // button3
             // 
@@ -103,7 +102,7 @@ namespace TECNM.Residencias.Controls
             Controls.Add(button3);
             Controls.Add(cb_DocumentType);
             Controls.Add(label1);
-            Controls.Add(button2);
+            Controls.Add(btn_UploadFile);
             Controls.Add(button1);
             Controls.Add(lbl_DocumentName);
             Name = "StudentDocumentFieldControl";
@@ -116,7 +115,7 @@ namespace TECNM.Residencias.Controls
 
         private System.Windows.Forms.Label lbl_DocumentName;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btn_UploadFile;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cb_DocumentType;
         private System.Windows.Forms.Button button3;
