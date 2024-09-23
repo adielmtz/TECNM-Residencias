@@ -3,6 +3,7 @@ using FluentValidation.Results;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Windows.Forms;
 using TECNM.Residencias.Controls;
 using TECNM.Residencias.Data.Entities;
@@ -415,8 +416,23 @@ namespace TECNM.Residencias.Forms.StudentForms
             {
                 if (control.IsNewFile)
                 {
+                    Document document = control.Document;
+
+                    if (string.IsNullOrEmpty(document.FullPath) || !File.Exists(document.FullPath))
+                    {
+                        MessageBox.Show(
+                            "Uno o varios documentos no se han seleccionado o no se pudieron encontrar. Verifíquelos.",
+                            "Error",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Information
+                        );
+
+                        Enabled = true;
+                        return;
+                    }
+
                     await control.SaveDocumentAsync(_student);
-                    context.Documents.InsertOrUpdate(control.Document);
+                    context.Documents.InsertOrUpdate(document);
                 }
             }
 

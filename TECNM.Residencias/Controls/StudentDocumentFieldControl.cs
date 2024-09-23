@@ -39,6 +39,8 @@ namespace TECNM.Residencias.Controls
             {
                 cb_DocumentType.Items.Add(type);
             }
+
+            cb_DocumentType.SelectedIndex = 0;
         }
 
         public StudentDocumentFieldControl(Document document) : this()
