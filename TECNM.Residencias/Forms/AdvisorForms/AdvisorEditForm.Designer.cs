@@ -208,14 +208,14 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             mtb_AdvisorPhone.Location = new System.Drawing.Point(12, 247);
             mtb_AdvisorPhone.Mask = "000-000-0000";
             mtb_AdvisorPhone.Name = "mtb_AdvisorPhone";
-            mtb_AdvisorPhone.Size = new System.Drawing.Size(70, 23);
+            mtb_AdvisorPhone.Size = new System.Drawing.Size(80, 23);
             mtb_AdvisorPhone.TabIndex = 8;
             mtb_AdvisorPhone.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
             // 
             // label9
             // 
             label9.AutoSize = true;
-            label9.Location = new System.Drawing.Point(88, 229);
+            label9.Location = new System.Drawing.Point(98, 229);
             label9.Name = "label9";
             label9.Size = new System.Drawing.Size(58, 15);
             label9.TabIndex = 0;
@@ -223,7 +223,7 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             // 
             // tb_AdvisorExtension
             // 
-            tb_AdvisorExtension.Location = new System.Drawing.Point(88, 247);
+            tb_AdvisorExtension.Location = new System.Drawing.Point(98, 247);
             tb_AdvisorExtension.Name = "tb_AdvisorExtension";
             tb_AdvisorExtension.Size = new System.Drawing.Size(80, 23);
             tb_AdvisorExtension.TabIndex = 0;
