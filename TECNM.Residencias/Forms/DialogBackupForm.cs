@@ -49,9 +49,12 @@ namespace TECNM.Residencias.Forms
             gb_Status.Enabled = true;
 
             var target = new DirectoryInfo(tb_BackupLocation.Text);
-            var backup = new BackupService(target);
+            var backup = new BackupService();
+            backup.Destination = target;
             backup.Compress = chk_EnableCompression.Checked;
             _backup = backup;
+
+            backup.BackupDatabase();
 
             lbl_ProgressStatus.Text = "Recolectando archivos...";
             pb_Progress.Maximum = 1;
@@ -71,7 +74,7 @@ namespace TECNM.Residencias.Forms
 
             try
             {
-                await backup.BackupAsync(progress);
+                await backup.BackupFilesAsync(progress);
 
                 AppSettings.Default.LastBackupDate = DateTime.Now;
                 AppSettings.Default.Save();

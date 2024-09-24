@@ -13,18 +13,21 @@ namespace TECNM.Residencias.Services
 {
     internal sealed class BackupService
     {
+        private readonly int MaxDatabaseBackupsInFolder = 50;
         private readonly CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-        private readonly DirectoryInfo destination;
         private readonly DateTime backupDateTime;
         private IList<FileInfo> fileInfos = [];
 
-        public BackupService(DirectoryInfo destination, DateTime datetime)
+        public BackupService(DateTime datetime)
         {
-            this.destination = destination;
             backupDateTime = datetime;
+
+            // Default to Documents
+            string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            Destination = new DirectoryInfo(documentsPath);
         }
 
-        public BackupService(DirectoryInfo destination) : this(destination, DateTime.Now)
+        public BackupService() : this(DateTime.Now)
         {
         }
 
@@ -32,7 +35,9 @@ namespace TECNM.Residencias.Services
 
         public int FileCount => fileInfos.Count;
 
-        public string BackupFile => Path.Combine(destination.FullName, $"rp_backup_{backupDateTime:yyyy-MM-dd_HH.mm}.tar.gz");
+        public DirectoryInfo Destination { get; set; }
+
+        public string BackupFile => Path.Combine(Destination.FullName, $"rp_backup_{backupDateTime:yyyy-MM-dd_HH.mm}.tar.gz");
 
         public CompressionLevel CompressionLevel => Compress ? CompressionLevel.Optimal : CompressionLevel.NoCompression;
 
@@ -42,15 +47,20 @@ namespace TECNM.Residencias.Services
             fileInfos = await Task.Run(() => source.EnumerateFiles("*.*", SearchOption.AllDirectories).ToList(), cancellationTokenSource.Token);
         }
 
-        public async Task BackupAsync(IProgress<(string, int)> progress)
+        public void BackupDatabase()
         {
-            BackupDatabase();
+            string backupFileName = $"database.backup_{backupDateTime:yyyy-MM-dd_HH.mm.ss}.db";
+            string backupDatabase = Path.Combine(App.DatabaseBackupDirectory, backupFileName);
 
-            if (fileInfos.Count == 0)
-            {
-                return;
-            }
+            using var sqlite = App.Database.Open();
+            using var backup = new DbFactory(backupDatabase).Open();
+            sqlite.BackupDatabase(backup);
+            SqliteConnection.ClearAllPools();
+            RemoveOldDatabaseBackups();
+        }
 
+        public async Task BackupFilesAsync(IProgress<(string, int)> progress)
+        {
             try
             {
                 await using var writer = OpenBackupWriter();
@@ -74,19 +84,25 @@ namespace TECNM.Residencias.Services
             cancellationTokenSource.Cancel();
         }
 
-        private void BackupDatabase()
-        {
-            using var sqlite = App.Database.Open();
-            using var backup = new DbFactory(Path.Combine(App.DatabaseBackupDirectory, App.DatabaseName)).Open();
-            sqlite.BackupDatabase(backup);
-            SqliteConnection.ClearAllPools();
-        }
-
         private TarWriter OpenBackupWriter()
         {
             var fileStream = new FileStream(BackupFile, FileMode.Create, FileAccess.Write, FileShare.None);
             var gzipStream = new GZipStream(fileStream, CompressionLevel, leaveOpen: false);
             return new TarWriter(gzipStream, leaveOpen: false);
+        }
+
+        private void RemoveOldDatabaseBackups()
+        {
+            IList<FileInfo> fileList = new DirectoryInfo(App.DatabaseBackupDirectory)
+                .EnumerateFiles()
+                .Where(file => file.Extension == ".db") // Ensure we aren't grabbing ".db-shm" or ".db-wal" files
+                .OrderBy(file => file.Name)
+                .ToList();
+
+            if (fileList.Count > MaxDatabaseBackupsInFolder)
+            {
+                fileList[0].Delete();
+            }
         }
     }
 }
