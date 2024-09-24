@@ -74,5 +74,18 @@ namespace TECNM.Residencias.Forms.AdvisorForms
                 Close();
             }
         }
+
+        private void QuickAddAdvisor_Click(object sender, EventArgs e)
+        {
+            using var dialog = new AdvisorEditForm();
+            dialog.ShowDialog();
+
+            string name = dialog.Advisor.ToString();
+            if (!string.IsNullOrEmpty(name))
+            {
+                tb_SearchQuery.Text = name;
+                SearchAdvisors();
+            }
+        }
     }
 }

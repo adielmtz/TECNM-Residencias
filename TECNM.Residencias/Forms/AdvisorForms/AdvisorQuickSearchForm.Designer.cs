@@ -35,6 +35,7 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             dgv_ListView = new System.Windows.Forms.DataGridView();
             ListAdvisorName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ListAdvisorAction = new System.Windows.Forms.DataGridViewButtonColumn();
+            button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize) dgv_ListView).BeginInit();
             SuspendLayout();
             // 
@@ -77,7 +78,7 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             dgv_ListView.ReadOnly = true;
             dgv_ListView.RowHeadersVisible = false;
             dgv_ListView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            dgv_ListView.Size = new System.Drawing.Size(524, 404);
+            dgv_ListView.Size = new System.Drawing.Size(524, 374);
             dgv_ListView.TabIndex = 3;
             dgv_ListView.CellContentClick += ListView_CellContentClick;
             // 
@@ -98,11 +99,22 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             ListAdvisorAction.UseColumnTextForButtonValue = true;
             ListAdvisorAction.Width = 50;
             // 
+            // button2
+            // 
+            button2.Location = new System.Drawing.Point(421, 415);
+            button2.Name = "button2";
+            button2.Size = new System.Drawing.Size(115, 24);
+            button2.TabIndex = 4;
+            button2.Text = "Añadir nuevo";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += QuickAddAdvisor_Click;
+            // 
             // AdvisorQuickSearchForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(548, 451);
+            Controls.Add(button2);
             Controls.Add(dgv_ListView);
             Controls.Add(button1);
             Controls.Add(tb_SearchQuery);
@@ -124,5 +136,6 @@ namespace TECNM.Residencias.Forms.AdvisorForms
         private System.Windows.Forms.DataGridView dgv_ListView;
         private System.Windows.Forms.DataGridViewTextBoxColumn ListAdvisorName;
         private System.Windows.Forms.DataGridViewButtonColumn ListAdvisorAction;
+        private System.Windows.Forms.Button button2;
     }
 }

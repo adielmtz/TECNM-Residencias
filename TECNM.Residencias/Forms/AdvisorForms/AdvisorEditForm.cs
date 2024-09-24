@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Data.Validators;
+using TECNM.Residencias.Forms.CompanyForms;
 using TECNM.Residencias.Services;
 
 namespace TECNM.Residencias.Forms.AdvisorForms
@@ -26,6 +27,8 @@ namespace TECNM.Residencias.Forms.AdvisorForms
         public AdvisorEditForm(Company company, Advisor? entity) : this()
         {
             _company = company;
+            tb_AdvisorCompany.Text = company.Name;
+            btn_ChooseCompany.Enabled = false;
 
             if (entity != null)
             {
@@ -42,11 +45,35 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             }
         }
 
-        private void AdvisorEditForm_Load(object sender, EventArgs e)
+        public Advisor Advisor => _advisor;
+
+        private void ChooseCompany_Click(object sender, EventArgs e)
         {
-            cb_AdvisorCompany.Items.Add(_company);
-            cb_AdvisorCompany.SelectedIndex = 0;
-            cb_AdvisorCompany.Enabled = false;
+            while (true)
+            {
+                using var dialog = new CompanyQuickSearchForm();
+                dialog.ShowDialog();
+
+                Company? selected = dialog.SelectedCompany;
+                if (selected != null)
+                {
+                    _company = selected;
+                    tb_AdvisorCompany.Text = selected.Name;
+                    break;
+                }
+
+                DialogResult result = MessageBox.Show(
+                    "No se seleccionó empresa.",
+                    "Información",
+                    MessageBoxButtons.RetryCancel,
+                    MessageBoxIcon.Information
+                );
+
+                if (result == DialogResult.Cancel)
+                {
+                    break;
+                }
+            }
         }
 
         private void SaveEdit_Click(object sender, EventArgs e)
