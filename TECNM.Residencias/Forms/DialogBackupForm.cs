@@ -49,7 +49,7 @@ namespace TECNM.Residencias.Forms
             gb_Status.Enabled = true;
 
             var target = new DirectoryInfo(tb_BackupLocation.Text);
-            await using var backup = new BackupService(target);
+            var backup = new BackupService(target);
             backup.Compress = chk_EnableCompression.Checked;
             _backup = backup;
 

@@ -11,38 +11,31 @@ using TECNM.Residencias.Data;
 
 namespace TECNM.Residencias.Services
 {
-    internal sealed class BackupService : IDisposable, IAsyncDisposable
+    internal sealed class BackupService
     {
         private readonly CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
         private readonly DirectoryInfo destination;
+        private readonly DateTime backupDateTime;
         private IList<FileInfo> fileInfos = [];
         private Stream? stream;
 
-        public BackupService(DirectoryInfo destination)
+        public BackupService(DirectoryInfo destination, DateTime datetime)
         {
             this.destination = destination;
+            backupDateTime = datetime;
+        }
+
+        public BackupService(DirectoryInfo destination) : this(destination, DateTime.Now)
+        {
         }
 
         public bool Compress { get; set; } = true;
 
         public int FileCount => fileInfos.Count;
 
-        public string BackupFile => Path.Combine(destination.FullName, $"rp_backup_{DateTime.Now:yyyy-MM-dd_HH.mm}.tar.gz");
+        public string BackupFile => Path.Combine(destination.FullName, $"rp_backup_{backupDateTime:yyyy-MM-dd_HH.mm}.tar.gz");
 
-        private CompressionLevel CompressionLevel => Compress ? CompressionLevel.Optimal : CompressionLevel.NoCompression;
-
-        public void Dispose()
-        {
-            stream?.Dispose();
-        }
-
-        public async ValueTask DisposeAsync()
-        {
-            if (stream != null)
-            {
-                await stream.DisposeAsync();
-            }
-        }
+        public CompressionLevel CompressionLevel => Compress ? CompressionLevel.Optimal : CompressionLevel.NoCompression;
 
         public async Task CollectFiles()
         {
