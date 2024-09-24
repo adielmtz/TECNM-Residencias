@@ -21,7 +21,7 @@ namespace TECNM.Residencias
         {
             string appDataDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             s_rootDirectory = Path.Combine(appDataDirectory, "TECNM-Residencias");
-            s_fileStorageDirectory = Path.Combine(s_rootDirectory, "Files");
+            s_fileStorageDirectory = Path.Combine(s_rootDirectory, "Archivo");
             s_tempStorageDirectory = Path.Combine(s_rootDirectory, "Temp");
 
             s_databaseName = "database.db";
