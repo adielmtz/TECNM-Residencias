@@ -1,9 +1,8 @@
 using System;
-using TECNM.Residencias.Data.Entities.Common;
 
 namespace TECNM.Residencias.Data.Entities
 {
-    public sealed class Company : IEntity<long>
+    public sealed class Company
     {
         public long Id { get; set; }
 
