@@ -42,6 +42,8 @@ namespace TECNM.Residencias.Forms.CompanyForms
             }
         }
 
+        public Company Company => _company;
+
         private void CompanyEditForm_Load(object sender, EventArgs e)
         {
             using var context = new AppDbContext();

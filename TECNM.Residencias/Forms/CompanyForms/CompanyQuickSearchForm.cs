@@ -63,5 +63,13 @@ namespace TECNM.Residencias.Forms.CompanyForms
                 Close();
             }
         }
+
+        private void QuickAddCompany_Click(object sender, EventArgs e)
+        {
+            using var dialog = new CompanyEditForm();
+            dialog.ShowDialog();
+            tb_SearchQuery.Text = dialog.Company.Name;
+            SearchCompanies();
+        }
     }
 }
