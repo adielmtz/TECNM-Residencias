@@ -17,7 +17,6 @@ namespace TECNM.Residencias.Services
         private readonly DirectoryInfo destination;
         private readonly DateTime backupDateTime;
         private IList<FileInfo> fileInfos = [];
-        private Stream? stream;
 
         public BackupService(DirectoryInfo destination, DateTime datetime)
         {
@@ -78,7 +77,7 @@ namespace TECNM.Residencias.Services
         private void BackupDatabase()
         {
             using var sqlite = App.Database.Open();
-            using var backup = new DbFactory(Path.Combine(App.FileStorageDirectory, App.DatabaseName)).Open();
+            using var backup = new DbFactory(Path.Combine(App.DatabaseBackupDirectory, App.DatabaseName)).Open();
             sqlite.BackupDatabase(backup);
             SqliteConnection.ClearAllPools();
         }

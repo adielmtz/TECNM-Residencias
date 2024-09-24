@@ -11,6 +11,7 @@ namespace TECNM.Residencias
         private static readonly string s_rootDirectory;
         private static readonly string s_fileStorageDirectory;
         private static readonly string s_tempStorageDirectory;
+        private static readonly string s_dbBackupDirectory;
         private static readonly string s_databaseName;
         private static readonly string s_databasePath;
         private static readonly DbFactory s_dbFactory;
@@ -23,6 +24,7 @@ namespace TECNM.Residencias
             s_rootDirectory = Path.Combine(appDataDirectory, "TECNM-Residencias");
             s_fileStorageDirectory = Path.Combine(s_rootDirectory, "Archivo");
             s_tempStorageDirectory = Path.Combine(s_rootDirectory, "Temp");
+            s_dbBackupDirectory = Path.Combine(s_fileStorageDirectory, ".db-backups");
 
             s_databaseName = "database.db";
             s_databasePath = Path.Combine(s_rootDirectory, s_databaseName);
@@ -52,6 +54,8 @@ namespace TECNM.Residencias
 
         public static string TempStorageDirectory => s_tempStorageDirectory;
 
+        public static string DatabaseBackupDirectory => s_dbBackupDirectory;
+
         public static string DatabaseName => s_databaseName;
 
         public static string DatabaseFullName => s_databasePath;
@@ -63,6 +67,7 @@ namespace TECNM.Residencias
             Directory.CreateDirectory(RootDirectory);
             Directory.CreateDirectory(FileStorageDirectory);
             Directory.CreateDirectory(TempStorageDirectory);
+            Directory.CreateDirectory(DatabaseBackupDirectory);
             InitializeDatabase();
             s_initialized = true;
         }
