@@ -7,24 +7,19 @@ namespace TECNM.Residencias.Data.Extensions
         /// <summary>
         /// Produce un query con carácteres especiales removidos y encapsulado entre comillas dobles.
         /// </summary>
-        /// <param name="s">El string para escapar.</param>
+        /// <param name="str">El string para escapar.</param>
         /// <returns>El string escapado y listo para usar en consultas FTS5 de SQLite.</returns>
-        public static string ToFtsQuery(this string s)
+        public static string ToFtsQuery(this string str)
         {
-            var builder = new StringBuilder(s.Length + 2);
-            builder.Append('"');
-
-            foreach (char c in s)
+            var builder = new StringBuilder(str.Length);
+            foreach (char c in str)
             {
-                if (c == '"')
+                if (char.IsLetterOrDigit(c) || char.IsWhiteSpace(c))
                 {
-                    builder.Append('"');
+                    builder.Append(c);
                 }
-
-                builder.Append(c);
             }
 
-            builder.Append('"');
             return builder.ToString();
         }
     }
