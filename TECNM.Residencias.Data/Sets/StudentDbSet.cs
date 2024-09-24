@@ -21,7 +21,7 @@ namespace TECNM.Residencias.Data.Sets
             command.CommandText = """
             SELECT Id, SpecialtyId, FirstName, LastName, Email, Phone, Gender, Semester, StartDate, EndDate,
                    Project, InternalAdvisorId, ExternalAdvisorId, ReviewerAdvisorId, CompanyId, Department,
-                   Schedule, Notes, Enabled, UpdatedOn, CreatedOn
+                   Schedule, Notes, IsClosed, UpdatedOn, CreatedOn
             FROM Student
             WHERE Id = $id
             """;
@@ -61,7 +61,7 @@ namespace TECNM.Residencias.Data.Sets
             command.CommandText = """
             SELECT Id, SpecialtyId, FirstName, LastName, Email, Phone, Gender, Semester, StartDate, EndDate,
                    Project, InternalAdvisorId, ExternalAdvisorId, ReviewerAdvisorId, CompanyId, Department,
-                   Schedule, Notes, Enabled, UpdatedOn, CreatedOn
+                   Schedule, Notes, IsClosed, UpdatedOn, CreatedOn
             FROM Student
             ORDER BY Id
             LIMIT $p0 OFFSET $p1
@@ -83,7 +83,7 @@ namespace TECNM.Residencias.Data.Sets
             command.CommandText = """
             SELECT Id, SpecialtyId, FirstName, LastName, Email, Phone, Gender, Semester, StartDate, EndDate,
                    Project, InternalAdvisorId, ExternalAdvisorId, ReviewerAdvisorId, CompanyId, Department,
-                   Schedule, Notes, Enabled, UpdatedOn, CreatedOn
+                   Schedule, Notes, IsClosed, UpdatedOn, CreatedOn
             FROM Student
             WHERE StartDate >= $p0 AND EndDate <= $p1
             """;
@@ -104,7 +104,7 @@ namespace TECNM.Residencias.Data.Sets
             command.CommandText = """
             SELECT Id, SpecialtyId, FirstName, LastName, Email, Phone, Gender, Semester, StartDate, EndDate,
                    Project, InternalAdvisorId, ExternalAdvisorId, ReviewerAdvisorId, CompanyId, Department,
-                   Schedule, Notes, Enabled, UpdatedOn, CreatedOn
+                   Schedule, Notes, IsClosed, UpdatedOn, CreatedOn
             FROM Student
             ORDER BY UpdatedOn DESC
             LIMIT $p0
@@ -126,7 +126,7 @@ namespace TECNM.Residencias.Data.Sets
             INSERT INTO Student (
                 Id, SpecialtyId, FirstName, LastName, Email, Phone, Gender, Semester, StartDate, EndDate,
                 Project, InternalAdvisorId, ExternalAdvisorId, ReviewerAdvisorId, CompanyId, Department,
-                Schedule, Notes, Enabled, UpdatedOn
+                Schedule, Notes, IsClosed, UpdatedOn
             )
             VALUES (
                 $pid, $p00, $p01, $p02, $p03, $p04, $p05, $p06, $p07, $p08, $p09, $p10, $p11, $p12,
@@ -152,7 +152,7 @@ namespace TECNM.Residencias.Data.Sets
             command.Parameters.Add("$p14", SqliteType.Text).Value = entity.Department;
             command.Parameters.Add("$p15", SqliteType.Text).Value = entity.Schedule;
             command.Parameters.Add("$p16", SqliteType.Text).Value = entity.Notes;
-            command.Parameters.Add("$p17", SqliteType.Integer).Value = entity.Enabled;
+            command.Parameters.Add("$p17", SqliteType.Integer).Value = entity.IsClosed;
             return command.ExecuteNonQuery() > 0;
         }
 
@@ -178,7 +178,7 @@ namespace TECNM.Residencias.Data.Sets
                 Department        = $p14,
                 Schedule          = $p15,
                 Notes             = $p16,
-                Enabled           = $p17,
+                IsClosed          = $p17,
                 UpdatedOn         = CURRENT_TIMESTAMP
             WHERE Id = $pid
             """;
@@ -200,7 +200,7 @@ namespace TECNM.Residencias.Data.Sets
             command.Parameters.Add("$p14", SqliteType.Text).Value = entity.Department;
             command.Parameters.Add("$p15", SqliteType.Text).Value = entity.Schedule;
             command.Parameters.Add("$p16", SqliteType.Text).Value = entity.Notes;
-            command.Parameters.Add("$p17", SqliteType.Integer).Value = entity.Enabled;
+            command.Parameters.Add("$p17", SqliteType.Integer).Value = entity.IsClosed;
             command.Parameters.Add("$pid", SqliteType.Integer).Value = entity.Id;
             return command.ExecuteNonQuery();
         }
@@ -220,7 +220,7 @@ namespace TECNM.Residencias.Data.Sets
             INSERT INTO Student (
                 Id, SpecialtyId, FirstName, LastName, Email, Phone, Gender, Semester, StartDate, EndDate,
                 Project, InternalAdvisorId, ExternalAdvisorId, ReviewerAdvisorId, CompanyId, Department,
-                Schedule, Notes, Enabled, UpdatedOn
+                Schedule, Notes, IsClosed, UpdatedOn
             )
             VALUES (
                 $pid, $p00, $p01, $p02, $p03, $p04, $p05, $p06, $p07, $p08, $p09, $p10, $p11, $p12,
@@ -244,7 +244,7 @@ namespace TECNM.Residencias.Data.Sets
                 Department        = excluded.Department,
                 Schedule          = excluded.Schedule,
                 Notes             = excluded.Notes,
-                Enabled           = excluded.Enabled,
+                IsClosed          = excluded.IsClosed,
                 UpdatedOn         = excluded.UpdatedOn
             """;
 
@@ -266,7 +266,7 @@ namespace TECNM.Residencias.Data.Sets
             command.Parameters.Add("$p14", SqliteType.Text).Value = entity.Department;
             command.Parameters.Add("$p15", SqliteType.Text).Value = entity.Schedule;
             command.Parameters.Add("$p16", SqliteType.Text).Value = entity.Notes;
-            command.Parameters.Add("$p17", SqliteType.Integer).Value = entity.Enabled;
+            command.Parameters.Add("$p17", SqliteType.Integer).Value = entity.IsClosed;
             return command.ExecuteNonQuery() > 0;
         }
 
@@ -293,7 +293,7 @@ namespace TECNM.Residencias.Data.Sets
                 Department        = reader.GetString(15),
                 Schedule          = reader.GetString(16),
                 Notes             = reader.GetString(17),
-                Enabled           = reader.GetBoolean(18),
+                IsClosed          = reader.GetBoolean(18),
                 UpdatedOn         = reader.GetLocalDateTime(19),
                 CreatedOn         = reader.GetLocalDateTime(20),
             };

@@ -145,7 +145,7 @@ CREATE TABLE Student (
     Department        TEXT    NOT NULL,
     Schedule          TEXT    NOT NULL,
     Notes             TEXT    NOT NULL,
-    Enabled           INTEGER NOT NULL,
+    IsClosed          INTEGER NOT NULL,
     UpdatedOn         TEXT    NOT NULL,
     CreatedOn         TEXT    NOT NULL
                               DEFAULT (CURRENT_TIMESTAMP) 
@@ -159,27 +159,26 @@ CREATE TABLE Document (
     StudentId    INTEGER REFERENCES Student (Id) ON DELETE CASCADE
                          NOT NULL,
     Type         INTEGER NOT NULL,
-    FullPath     TEXT    UNIQUE
-                         NOT NULL,
+    FullPath     TEXT    NOT NULL,
     OriginalName TEXT    NOT NULL,
     Size         INTEGER NOT NULL,
     Hash         TEXT    NOT NULL,
-    Enabled      INTEGER NOT NULL,
-    UpdatedOn    TEXT    NOT NULL,
     CreatedOn    TEXT    NOT NULL
-                         DEFAULT (CURRENT_TIMESTAMP) 
+                         DEFAULT (CURRENT_TIMESTAMP),
+    CONSTRAINT AK_Document_Identity UNIQUE (
+        StudentId,
+        Type,
+        FullPath
+    )
 )
 STRICT;
 
 
 CREATE TABLE Extra (
-    Id        INTEGER PRIMARY KEY
-                      NOT NULL,
-    Type      TEXT    NOT NULL,
-    Value     TEXT    NOT NULL,
-    UpdatedOn TEXT    NOT NULL,
-    CreatedOn TEXT    NOT NULL
-                      DEFAULT (CURRENT_TIMESTAMP),
+    Id    INTEGER PRIMARY KEY
+                  NOT NULL,
+    Type  TEXT    NOT NULL,
+    Value TEXT    NOT NULL,
     CONSTRAINT AK_Extra_Identity UNIQUE (
         Type,
         Value

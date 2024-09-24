@@ -40,7 +40,7 @@ namespace TECNM.Residencias.Data.Entities
 
         public string Notes { get; set; } = "";
 
-        public bool Enabled { get; set; }
+        public bool IsClosed { get; set; }
 
         public DateTime UpdatedOn { get; set; }
 

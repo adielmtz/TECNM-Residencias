@@ -58,7 +58,7 @@ namespace TECNM.Residencias.Forms.StudentForms
                 cb_StudentSemester.SelectedIndex = entity.Semester == "ENE-JUN" ? 0 : 1;
                 dtp_StudentStartDate.Value = entity.StartDate;
                 dtp_StudentEndDate.Value = entity.EndDate;
-                chk_StudentEnabled.Checked = entity.Enabled;
+                chk_StudentClosed.Checked = entity.IsClosed;
                 tb_StudentNotes.Text = entity.Notes;
             }
         }
@@ -301,7 +301,7 @@ namespace TECNM.Residencias.Forms.StudentForms
 
         private void StudentEnabled_Click(object sender, EventArgs e)
         {
-            bool enabled = chk_StudentEnabled.Checked;
+            bool enabled = chk_StudentClosed.Checked;
             if (enabled)
             {
                 DialogResult result = MessageBox.Show(
@@ -313,7 +313,7 @@ namespace TECNM.Residencias.Forms.StudentForms
 
                 if (result == DialogResult.Cancel)
                 {
-                    chk_StudentEnabled.Checked = false;
+                    chk_StudentClosed.Checked = false;
                     return;
                 }
             }
@@ -391,7 +391,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             _student.Department = tb_StudentDepartment.Text.Trim();
             _student.Schedule = tb_StudentSchedule.Text.Trim();
             _student.Notes = tb_StudentNotes.Text.Trim();
-            _student.Enabled = !chk_StudentEnabled.Checked;
+            _student.IsClosed = !chk_StudentClosed.Checked;
 
             ValidationResult result = _validator.Validate(_student);
 
@@ -496,8 +496,8 @@ namespace TECNM.Residencias.Forms.StudentForms
                 flp_Documents.Controls.Add(control);
             }
 
-            chk_StudentEnabled.Checked = !_student.Enabled;
-            if (chk_StudentEnabled.Checked)
+            chk_StudentClosed.Checked = _student.IsClosed;
+            if (chk_StudentClosed.Checked)
             {
                 gb_GeneralInfo.Enabled = false;
                 gb_ProjectInfo.Enabled = false;

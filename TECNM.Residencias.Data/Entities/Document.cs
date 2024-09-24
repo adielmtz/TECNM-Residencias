@@ -18,10 +18,6 @@ namespace TECNM.Residencias.Data.Entities
 
         public string Hash { get; set; } = "";
 
-        public bool Enabled { get; set; } = true;
-
-        public DateTime UpdatedOn { get; set; }
-
         public DateTime CreatedOn { get; set; }
     }
 }

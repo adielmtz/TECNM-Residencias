@@ -76,7 +76,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             tb_StudentProjectName = new System.Windows.Forms.TextBox();
             label9 = new System.Windows.Forms.Label();
             button2 = new System.Windows.Forms.Button();
-            chk_StudentEnabled = new System.Windows.Forms.CheckBox();
+            chk_StudentClosed = new System.Windows.Forms.CheckBox();
             gb_Notes = new System.Windows.Forms.GroupBox();
             tb_StudentNotes = new System.Windows.Forms.TextBox();
             gb_Documents = new System.Windows.Forms.GroupBox();
@@ -568,14 +568,14 @@ namespace TECNM.Residencias.Forms.StudentForms
             // 
             // chk_StudentEnabled
             // 
-            chk_StudentEnabled.AutoSize = true;
-            chk_StudentEnabled.Location = new System.Drawing.Point(308, 533);
-            chk_StudentEnabled.Name = "chk_StudentEnabled";
-            chk_StudentEnabled.Size = new System.Drawing.Size(127, 19);
-            chk_StudentEnabled.TabIndex = 18;
-            chk_StudentEnabled.Text = "Expediente cerrado";
-            chk_StudentEnabled.UseVisualStyleBackColor = true;
-            chk_StudentEnabled.Click += StudentEnabled_Click;
+            chk_StudentClosed.AutoSize = true;
+            chk_StudentClosed.Location = new System.Drawing.Point(308, 533);
+            chk_StudentClosed.Name = "chk_StudentEnabled";
+            chk_StudentClosed.Size = new System.Drawing.Size(127, 19);
+            chk_StudentClosed.TabIndex = 18;
+            chk_StudentClosed.Text = "Expediente cerrado";
+            chk_StudentClosed.UseVisualStyleBackColor = true;
+            chk_StudentClosed.Click += StudentEnabled_Click;
             // 
             // gb_Notes
             // 
@@ -663,7 +663,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             Controls.Add(gb_ProjectInfo);
             Controls.Add(button1);
             Controls.Add(gb_GeneralInfo);
-            Controls.Add(chk_StudentEnabled);
+            Controls.Add(chk_StudentClosed);
             Controls.Add(btn_CancelEdit);
             DoubleBuffered = true;
             Icon = (System.Drawing.Icon) resources.GetObject("$this.Icon");
@@ -722,7 +722,7 @@ namespace TECNM.Residencias.Forms.StudentForms
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.GroupBox gb_Notes;
         private System.Windows.Forms.TextBox tb_StudentNotes;
-        private System.Windows.Forms.CheckBox chk_StudentEnabled;
+        private System.Windows.Forms.CheckBox chk_StudentClosed;
         private System.Windows.Forms.GroupBox gb_Documents;
         private System.Windows.Forms.FlowLayoutPanel flp_Documents;
         private System.Windows.Forms.Button button3;

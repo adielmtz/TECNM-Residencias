@@ -83,63 +83,32 @@ namespace TECNM.Residencias.Data.Sets
 
         public override bool Insert(Extra entity)
         {
-            using var command = Context.Database.CreateCommand();
-            command.CommandText = "INSERT INTO Extra (Type, Value, UpdatedOn) VALUES ($p0, $p1, CURRENT_TIMESTAMP) RETURNING Id";
-            command.Parameters.Add("$p0", SqliteType.Text).Value = entity.Type.ToString();
-            command.Parameters.Add("$p1", SqliteType.Text).Value = entity.Value;
-            object? result = command.ExecuteScalar();
-
-            entity.Id = Convert.ToInt64(result);
-            return result != null;
+            throw new NotImplementedException();
         }
 
         public override int Update(Extra entity)
         {
-            using var command = Context.Database.CreateCommand();
-            command.CommandText = "UPDATE Extra SET Type = $p0, Value = $p1, UpdatedOn = CURRENT_TIMESTAMP WHERE Id = $id";
-            command.Parameters.Add("$p0", SqliteType.Text).Value = entity.Type.ToString();
-            command.Parameters.Add("$p1", SqliteType.Text).Value = entity.Value;
-            command.Parameters.Add("$id", SqliteType.Integer).Value = entity.Id;
-            return command.ExecuteNonQuery();
+            throw new NotImplementedException();
         }
 
         public override int Delete(Extra entity)
         {
-            using var command = Context.Database.CreateCommand();
-            command.CommandText = "DELETE FROM Extra WHERE Id = $id";
-            command.Parameters.Add("$id", SqliteType.Integer).Value = entity.Id;
-            return command.ExecuteNonQuery();
+            throw new NotImplementedException();
         }
 
         public override bool InsertOrUpdate(Extra entity)
         {
-            using var command = Context.Database.CreateCommand();
-            command.CommandText = """
-            INSERT INTO Extra (Type, Value, UpdatedOn)
-            VALUES ($p0, $p1, CURRENT_TIMESTAMP)
-            ON CONFLICT(Type, Value) DO UPDATE
-            SET UpdatedOn = excluded.UpdatedOn
-            RETURNING Id
-            """;
-
-            command.Parameters.Add("$p0", SqliteType.Text).Value = entity.Type.ToString();
-            command.Parameters.Add("$p1", SqliteType.Text).Value = entity.Value;
-            object? result = command.ExecuteScalar();
-
-            entity.Id = Convert.ToInt64(result);
-            return result != null;
+            throw new NotImplementedException();
         }
 
         protected override Extra HydrateObject(IDataReader reader)
         {
-            Debug.Assert(reader.FieldCount == 5);
+            Debug.Assert(reader.FieldCount == 3);
             return new Extra
             {
-                Id        = reader.GetInt64(0),
-                Type      = reader.GetEnum<ExtraType>(1),
-                Value     = reader.GetString(2),
-                UpdatedOn = reader.GetLocalDateTime(3),
-                CreatedOn = reader.GetLocalDateTime(4),
+                Id    = reader.GetInt64(0),
+                Type  = reader.GetEnum<ExtraType>(1),
+                Value = reader.GetString(2),
             };
         }
     }

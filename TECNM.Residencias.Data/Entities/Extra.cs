@@ -1,20 +1,12 @@
-using System;
-
 namespace TECNM.Residencias.Data.Entities
 {
-    public sealed class Extra
+    public sealed record Extra
     {
-        public required long Id { get; set; }
+        public required long Id { get; init; }
 
-        public required ExtraType Type { get; set; }
+        public required ExtraType Type { get; init; }
 
-        public required string Value { get; set; }
-
-        public bool Enabled { get; set; } = true;
-
-        public DateTime UpdatedOn { get; set; }
-
-        public DateTime CreatedOn { get; set; }
+        public required string Value { get; init; }
     }
 
     public enum ExtraType

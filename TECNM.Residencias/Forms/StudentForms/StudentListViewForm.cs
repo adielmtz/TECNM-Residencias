@@ -138,7 +138,7 @@ namespace TECNM.Residencias.Forms.StudentForms
                 row.Cells[11].Value = company.Name;
                 row.Cells[12].Value = student.Department;
                 row.Cells[13].Value = student.Schedule;
-                row.Cells[14].Value = !student.Enabled;
+                row.Cells[14].Value = student.IsClosed;
                 row.Cells[15].Value = student.Notes;
                 row.Cells[16].Value = student.UpdatedOn;
                 row.Cells[17].Value = student.CreatedOn;
