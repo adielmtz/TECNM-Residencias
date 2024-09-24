@@ -58,17 +58,17 @@ namespace TECNM.Residencias.Forms
 
         private void SaveAppSettings_Click(object sender, EventArgs e)
         {
-            AppSettings.Default.DefaultAdvisorType = cb_AdvisorType.SelectedIndex - 1;
-            AppSettings.Default.DefaultCompanyType = cb_CompanyType.SelectedIndex - 1;
-            AppSettings.Default.DefaultStudentCareer = ((Career) cb_StudentCareer.SelectedItem!).Id;
+            AppSettings.Default.AdvisorType = cb_AdvisorType.SelectedIndex - 1;
+            AppSettings.Default.CompanyType = cb_CompanyType.SelectedIndex - 1;
+            AppSettings.Default.StudentCareer = ((Career) cb_StudentCareer.SelectedItem!).Id;
             AppSettings.Default.Save();
             Close();
         }
 
         private void LoadSavedSettings()
         {
-            cb_AdvisorType.SelectedIndex = AppSettings.Default.DefaultAdvisorType + 1;
-            cb_CompanyType.SelectedIndex = AppSettings.Default.DefaultCompanyType + 1;
+            cb_AdvisorType.SelectedIndex = AppSettings.Default.AdvisorType + 1;
+            cb_CompanyType.SelectedIndex = AppSettings.Default.CompanyType + 1;
 
             using var context = new AppDbContext();
             IEnumerable<Career> careers = context.Careers.EnumerateCareers();
@@ -79,7 +79,7 @@ namespace TECNM.Residencias.Forms
             foreach (Career career in careers)
             {
                 int index = cb_StudentCareer.Items.Add(career);
-                if (AppSettings.Default.DefaultStudentCareer == career.Id)
+                if (AppSettings.Default.StudentCareer == career.Id)
                 {
                     cb_StudentCareer.SelectedIndex = index;
                 }

@@ -21,7 +21,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
         {
             InitializeComponent();
             closeConfirmService = new FormConfirmClosingService(this);
-            cb_CompanyType.SelectedIndex = AppSettings.Default.DefaultCompanyType;
+            cb_CompanyType.SelectedIndex = AppSettings.Default.CompanyType;
         }
 
         public CompanyEditForm(Company? entity) : this()

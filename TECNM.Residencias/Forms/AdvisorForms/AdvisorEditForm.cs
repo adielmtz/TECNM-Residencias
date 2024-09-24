@@ -20,7 +20,7 @@ namespace TECNM.Residencias.Forms.AdvisorForms
         {
             InitializeComponent();
             closeConfirmService = new FormConfirmClosingService(this);
-            cb_AdvisorType.SelectedIndex = AppSettings.Default.DefaultAdvisorType;
+            cb_AdvisorType.SelectedIndex = AppSettings.Default.AdvisorType;
         }
 
         public AdvisorEditForm(Company company, Advisor? entity) : this()

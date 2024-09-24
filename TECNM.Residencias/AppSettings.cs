@@ -6,6 +6,10 @@ namespace TECNM.Residencias
 {
     internal sealed class AppSettings
     {
+        private static readonly int DefaultAdvisorType = -1;
+        private static readonly int DefaultCompanyType = -1;
+        private static readonly long DefaultStudentCareer = -1;
+        private static readonly string DefaultLastBackupDate = "2024-09-01 13:00:00";
         private static readonly TimeSpan DefaultBackupFrequency = TimeSpan.FromDays(30);
 
         private static AppSettings? s_instance;
@@ -37,27 +41,27 @@ namespace TECNM.Residencias
             _settings = settings;
         }
 
-        public int DefaultAdvisorType
+        public int AdvisorType
         {
-            get => int.Parse(GetSetting(nameof(DefaultAdvisorType), -1).Value);
-            set => SetSetting(nameof(DefaultAdvisorType), value);
+            get => int.Parse(GetSetting(nameof(AdvisorType), DefaultAdvisorType).Value);
+            set => SetSetting(nameof(AdvisorType), value);
         }
 
-        public int DefaultCompanyType
+        public int CompanyType
         {
-            get => int.Parse(GetSetting(nameof(DefaultCompanyType), -1).Value);
-            set => SetSetting(nameof(DefaultCompanyType), value);
+            get => int.Parse(GetSetting(nameof(CompanyType), DefaultCompanyType).Value);
+            set => SetSetting(nameof(CompanyType), value);
         }
 
-        public long DefaultStudentCareer
+        public long StudentCareer
         {
-            get => long.Parse(GetSetting(nameof(DefaultStudentCareer), -1).Value);
-            set => SetSetting(nameof(DefaultStudentCareer), value);
+            get => long.Parse(GetSetting(nameof(StudentCareer), DefaultStudentCareer).Value);
+            set => SetSetting(nameof(StudentCareer), value);
         }
 
         public DateTime LastBackupDate
         {
-            get => DateTime.Parse(GetSetting(nameof(LastBackupDate), "2024-09-01 13:00:00").Value);
+            get => DateTime.Parse(GetSetting(nameof(LastBackupDate), DefaultLastBackupDate).Value);
             set => SetSetting(nameof(LastBackupDate), value.ToString("yyyy-MM-dd HH:mm:ss"));
         }
 

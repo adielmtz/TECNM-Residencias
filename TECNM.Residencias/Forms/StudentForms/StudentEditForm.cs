@@ -73,7 +73,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             foreach (Career career in careers)
             {
                 int index = cb_StudentCareer.Items.Add(career);
-                if (AppSettings.Default.DefaultStudentCareer == career.Id)
+                if (AppSettings.Default.StudentCareer == career.Id)
                 {
                     cb_StudentCareer.SelectedIndex = index;
                     prefetchCareer = career;
