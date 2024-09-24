@@ -75,7 +75,7 @@ namespace TECNM.Residencias.Controls
 
             string studentId = student.Id.ToString("00000000");
             string tempFileName = _document.FullPath;
-            string finalDirectory = Path.Combine(App.DocumentArchiveDirectory, studentId.Substring(0, 2), studentId);
+            string finalDirectory = Path.Combine(App.FileStorageDirectory, studentId.Substring(0, 2), studentId);
             _document.FullPath = Path.Combine(finalDirectory, $"{studentId}_{_document.Hash}{_extension}");
 
             Directory.CreateDirectory(finalDirectory);

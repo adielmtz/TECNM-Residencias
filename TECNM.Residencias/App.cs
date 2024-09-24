@@ -8,30 +8,29 @@ namespace TECNM.Residencias
 {
     internal static class App
     {
-        private static string? s_rootDataDirectory = null;
-        private static DbFactory? s_factory = null;
-        private static Version? s_version = null;
+        private static readonly string s_rootDirectory;
+        private static readonly string s_fileStorageDirectory;
+        private static readonly string s_tempStorageDirectory;
+        private static readonly string s_databaseName;
+        private static readonly string s_databasePath;
+        private static readonly DbFactory s_dbFactory;
+        private static readonly Version s_version;
         private static bool s_initialized = false;
 
-        public static bool Initialized => s_initialized;
-
-        public static string Name => "Archivo de residencias | TECNM";
-
-        public static Version Version
+        static App()
         {
-            get
-            {
-                if (s_version == null)
-                {
-                    AssemblyName name = typeof(App).Assembly.GetName();
-                    s_version = name.Version;
-                }
+            string appDataDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            s_rootDirectory = Path.Combine(appDataDirectory, "TECNM-Residencias");
+            s_fileStorageDirectory = Path.Combine(s_rootDirectory, "Files");
+            s_tempStorageDirectory = Path.Combine(s_rootDirectory, "Temp");
 
-                return s_version!;
-            }
+            s_databaseName = "database.db";
+            s_databasePath = Path.Combine(s_rootDirectory, s_databaseName);
+            s_dbFactory = new DbFactory(s_databasePath);
+
+            AssemblyName name = typeof(App).Assembly.GetName();
+            s_version = name.Version!;
         }
-
-        public static string SourceCodeUrl => "https://github.com/adielmtz/TECNM-Residencias";
 
         public static int DefaultRowsPerPage => 100;
 
@@ -39,46 +38,31 @@ namespace TECNM.Residencias
 
         public static int MinimumReportYear => 1954;
 
-        public static string RootDataDirectory
-        {
-            get
-            {
-                if (s_rootDataDirectory == null)
-                {
-                    string directory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-                    s_rootDataDirectory = Path.Combine(directory, "TECNM-Residencias");
-                }
+        public static string Name => "Archivo de residencias | TECNM";
 
-                return s_rootDataDirectory;
-            }
-        }
+        public static string SourceCodeUrl => "https://github.com/adielmtz/TECNM-Residencias";
 
-        public static string DocumentArchiveDirectory => Path.Combine(RootDataDirectory, "Archivo");
+        public static Version Version => s_version;
 
-        public static string TemporaryArchiveDirectory => Path.Combine(RootDataDirectory, "Temporary");
+        public static bool Initialized => s_initialized;
 
-        public static string DatabaseName => "database.db";
+        public static string RootDirectory => s_rootDirectory;
 
-        public static string DatabaseFullName => Path.Combine(RootDataDirectory, DatabaseName);
+        public static string FileStorageDirectory => s_fileStorageDirectory;
 
-        public static DbFactory Database
-        {
-            get
-            {
-                if (s_factory == null)
-                {
-                    s_factory = new DbFactory(DatabaseFullName);
-                }
+        public static string TempStorageDirectory => s_tempStorageDirectory;
 
-                return s_factory;
-            }
-        }
+        public static string DatabaseName => s_databaseName;
+
+        public static string DatabaseFullName => s_databasePath;
+
+        public static DbFactory Database => s_dbFactory;
 
         public static void Initialize()
         {
-            Directory.CreateDirectory(RootDataDirectory);
-            Directory.CreateDirectory(DocumentArchiveDirectory);
-            Directory.CreateDirectory(TemporaryArchiveDirectory);
+            Directory.CreateDirectory(RootDirectory);
+            Directory.CreateDirectory(FileStorageDirectory);
+            Directory.CreateDirectory(TempStorageDirectory);
             InitializeDatabase();
             s_initialized = true;
         }

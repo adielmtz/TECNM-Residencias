@@ -15,7 +15,7 @@ namespace TECNM.Residencias.Services
     {
         public static async Task SaveDocumentAsync(Document document, CancellationToken token = default)
         {
-            string outputFileName = Path.Combine(App.TemporaryArchiveDirectory, Guid.NewGuid().ToString());
+            string outputFileName = Path.Combine(App.TempStorageDirectory, Guid.NewGuid().ToString());
 
             await using var sourceStream = new FileStream(document.FullPath, FileMode.Open, FileAccess.Read, FileShare.Read);
             await using var outputStream = new FileStream(outputFileName, FileMode.Create, FileAccess.Write, FileShare.None);
@@ -32,7 +32,7 @@ namespace TECNM.Residencias.Services
 
         public static void DeleteDocument(Document document)
         {
-            if (document.FullPath.StartsWith(App.DocumentArchiveDirectory))
+            if (document.FullPath.StartsWith(App.FileStorageDirectory))
             {
                 string directory = Path.GetDirectoryName(document.FullPath)!;
                 File.Delete(document.FullPath);

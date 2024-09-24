@@ -46,7 +46,7 @@ namespace TECNM.Residencias.Services
 
         public async Task CollectFiles()
         {
-            var source = new DirectoryInfo(App.DocumentArchiveDirectory);
+            var source = new DirectoryInfo(App.FileStorageDirectory);
             fileInfos = await Task.Run(() => source.EnumerateFiles("*.*", SearchOption.AllDirectories).ToList(), cancellationTokenSource.Token);
         }
 
@@ -65,7 +65,7 @@ namespace TECNM.Residencias.Services
                 for (int i = 0; i < fileInfos.Count; i++)
                 {
                     FileInfo file = fileInfos[i];
-                    string entry = Path.GetRelativePath(App.DocumentArchiveDirectory, file.FullName).Replace('\\', '/');
+                    string entry = Path.GetRelativePath(App.FileStorageDirectory, file.FullName).Replace('\\', '/');
 
                     progress.Report((file.Name, i + 1));
                     await writer.WriteEntryAsync(file.FullName, entry, cancellationTokenSource.Token);
@@ -85,7 +85,7 @@ namespace TECNM.Residencias.Services
         private void BackupDatabase()
         {
             using var sqlite = App.Database.Open();
-            using var backup = new DbFactory(Path.Combine(App.DocumentArchiveDirectory, App.DatabaseName)).Open();
+            using var backup = new DbFactory(Path.Combine(App.FileStorageDirectory, App.DatabaseName)).Open();
             sqlite.BackupDatabase(backup);
             SqliteConnection.ClearAllPools();
         }
