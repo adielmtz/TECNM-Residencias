@@ -1,8 +1,11 @@
 using FluentValidation;
 using FluentValidation.Results;
+using Microsoft.Data.Sqlite;
+using SQLitePCL;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Data.Validators;
@@ -22,6 +25,7 @@ namespace TECNM.Residencias.Forms.StudentForms
         private Advisor? _externalAdvisor;
         private Advisor? _reviewerAdvisor;
         private IList<Extra>? extras;
+        private bool _isNewRecord = true;
 
         public StudentEditForm()
         {
@@ -37,6 +41,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             if (entity != null)
             {
                 _student = entity;
+                _isNewRecord = false;
                 btn_DeleteStudent.Enabled = _student.Id > 0;
 
                 /// INFORMACIÓN GENERAL
@@ -289,23 +294,6 @@ namespace TECNM.Residencias.Forms.StudentForms
             }
         }
 
-        private void RemoveDocument_Handler(object? sender, EventArgs e)
-        {
-            Debug.Assert(sender != null);
-            //var control = (StudentDocumentFieldControl) sender;
-            //Document document = control.Document;
-            //flp_Documents.Controls.Remove(control);
-            //
-            //using var context = new AppDbContext();
-            //int result = context.Documents.Delete(document);
-            //context.Commit();
-            //
-            //if (result > 0)
-            //{
-            //    DocumentStorageService.DeleteDocument(document);
-            //}
-        }
-
         private void StudentEnabled_Click(object sender, EventArgs e)
         {
             bool enabled = chk_StudentClosed.Checked;
@@ -374,54 +362,105 @@ namespace TECNM.Residencias.Forms.StudentForms
 
         private async void SaveEdit_Click(object sender, EventArgs e)
         {
-            Enabled = false;
-
-            Student _student = this._student;
-            Specialty? specialty = (Specialty?) cb_StudentSpecialty.SelectedItem;
-            string? semester = (string?) cb_StudentSemester.SelectedItem;
-
-            _student.Id = TryConvertLong(mtb_StudentId.Text.Trim());
-            _student.SpecialtyId = specialty == null ? 0 : specialty.Id;
-            _student.FirstName = tb_StudentFirstName.Text.Trim();
-            _student.LastName = tb_StudentLastName.Text.Trim();
-            _student.Email = tb_StudentEmail.Text.Trim();
-            _student.Phone = mtb_StudentPhone.Text.Trim();
-            _student.Gender = (Gender) cb_StudentGender.SelectedIndex;
-            _student.Semester = semester ?? "";
-            _student.StartDate = dtp_StudentStartDate.Value;
-            _student.EndDate = dtp_StudentEndDate.Value;
-            _student.Project = tb_StudentProjectName.Text.Trim();
-            _student.InternalAdvisorId = _internalAdvisor?.Id;
-            _student.ExternalAdvisorId = _externalAdvisor?.Id;
-            _student.ReviewerAdvisorId = _reviewerAdvisor?.Id;
-            _student.CompanyId = _company.Id;
-            _student.Department = tb_StudentDepartment.Text.Trim();
-            _student.Schedule = tb_StudentSchedule.Text.Trim();
-            _student.Notes = tb_StudentNotes.Text.Trim();
-            _student.IsClosed = chk_StudentClosed.Checked;
-
-            ValidationResult result = _validator.Validate(_student);
-
-            if (!result.IsValid)
+            try
             {
-                Debug.Assert(result.Errors.Count > 0);
-                MessageBox.Show(result.Errors[0].ErrorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Enabled = false;
+
+                Student _student = this._student;
+                Specialty? specialty = (Specialty?) cb_StudentSpecialty.SelectedItem;
+                string? semester = (string?) cb_StudentSemester.SelectedItem;
+
+                _student.Id = TryConvertLong(mtb_StudentId.Text.Trim());
+                _student.SpecialtyId = specialty == null ? 0 : specialty.Id;
+                _student.FirstName = tb_StudentFirstName.Text.Trim();
+                _student.LastName = tb_StudentLastName.Text.Trim();
+                _student.Email = tb_StudentEmail.Text.Trim();
+                _student.Phone = mtb_StudentPhone.Text.Trim();
+                _student.Gender = (Gender) cb_StudentGender.SelectedIndex;
+                _student.Semester = semester ?? "";
+                _student.StartDate = dtp_StudentStartDate.Value;
+                _student.EndDate = dtp_StudentEndDate.Value;
+                _student.Project = tb_StudentProjectName.Text.Trim();
+                _student.InternalAdvisorId = _internalAdvisor?.Id;
+                _student.ExternalAdvisorId = _externalAdvisor?.Id;
+                _student.ReviewerAdvisorId = _reviewerAdvisor?.Id;
+                _student.CompanyId = _company.Id;
+                _student.Department = tb_StudentDepartment.Text.Trim();
+                _student.Schedule = tb_StudentSchedule.Text.Trim();
+                _student.Notes = tb_StudentNotes.Text.Trim();
+                _student.IsClosed = chk_StudentClosed.Checked;
+
+                ValidationResult result = _validator.Validate(_student);
+
+                if (!result.IsValid)
+                {
+                    Debug.Assert(result.Errors.Count > 0);
+                    MessageBox.Show(result.Errors[0].ErrorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Enabled = true;
+                    return;
+                }
+
+                using var context = new AppDbContext();
+
+                if (_isNewRecord)
+                {
+                    context.Students.Insert(_student);
+                }
+                else
+                {
+                    context.Students.Update(_student);
+                }
+
+                if (extras != null)
+                {
+                    context.Extras.DeleteExtrasForStudent(_student);
+                    context.Extras.InsertExtrasForStudent(_student, extras);
+                }
+
+                await dcc_Documents.SaveAsync(context.Documents, _student);
+                context.Commit();
+                Close();
+            }
+            catch (SqliteException ex) when (ex.SqliteErrorCode == raw.SQLITE_CONSTRAINT)
+            {
+                string message = ex.SqliteExtendedErrorCode switch
+                {
+                    raw.SQLITE_CONSTRAINT_PRIMARYKEY => $"Ya existe un expediente con este número de control: {_student.Id}",
+                    raw.SQLITE_CONSTRAINT_UNIQUE => $"Ya existe un expediente con esta dirección de correo: {_student.Email}",
+                    _ => $"SQLite error: {ex.SqliteExtendedErrorCode}.",
+                };
+
+                MessageBox.Show(
+                    message,
+                    "Conflicto de expedientes",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
+                );
+
                 Enabled = true;
-                return;
             }
-
-            using var context = new AppDbContext();
-            context.Students.InsertOrUpdate(_student);
-
-            if (extras != null)
+            catch (FileNotFoundException ex)
             {
-                context.Extras.DeleteExtrasForStudent(_student);
-                context.Extras.InsertExtrasForStudent(_student, extras);
-            }
+                MessageBox.Show(
+                    $"No se encontró el archivo {ex.FileName}.",
+                    "Error al guardar",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Exclamation
+                );
 
-            await dcc_Documents.SaveAsync(context.Documents, _student);
-            context.Commit();
-            Close();
+                Enabled = true;
+            }
+            catch (IOException)
+            {
+                MessageBox.Show(
+                    $"Ocurrió un error al intentar cargar los archivos. Vuelva a intentarlo.",
+                    "IO Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+
+                Enabled = true;
+            }
         }
 
         private void LoadStudentData(AppDbContext context)

@@ -175,9 +175,9 @@ namespace TECNM.Residencias.Forms.StudentForms
             label7.AutoSize = true;
             label7.Location = new System.Drawing.Point(310, 112);
             label7.Name = "label7";
-            label7.Size = new System.Drawing.Size(72, 15);
+            label7.Size = new System.Drawing.Size(77, 15);
             label7.TabIndex = 0;
-            label7.Text = "Especialidad";
+            label7.Text = "Especialidad*";
             // 
             // cb_StudentCareer
             // 
@@ -193,9 +193,9 @@ namespace TECNM.Residencias.Forms.StudentForms
             label6.AutoSize = true;
             label6.Location = new System.Drawing.Point(6, 112);
             label6.Name = "label6";
-            label6.Size = new System.Drawing.Size(45, 15);
+            label6.Size = new System.Drawing.Size(50, 15);
             label6.TabIndex = 0;
-            label6.Text = "Carrera";
+            label6.Text = "Carrera*";
             // 
             // label5
             // 
@@ -535,9 +535,9 @@ namespace TECNM.Residencias.Forms.StudentForms
             label10.AutoSize = true;
             label10.Location = new System.Drawing.Point(6, 68);
             label10.Name = "label10";
-            label10.Size = new System.Drawing.Size(52, 15);
+            label10.Size = new System.Drawing.Size(57, 15);
             label10.TabIndex = 0;
-            label10.Text = "Empresa";
+            label10.Text = "Empresa*";
             // 
             // tb_StudentProjectName
             // 
