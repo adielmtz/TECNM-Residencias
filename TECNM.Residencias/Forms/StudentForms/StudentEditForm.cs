@@ -3,9 +3,7 @@ using FluentValidation.Results;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Windows.Forms;
-using TECNM.Residencias.Controls;
 using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Data.Validators;
 using TECNM.Residencias.Forms.AdvisorForms;
@@ -60,6 +58,9 @@ namespace TECNM.Residencias.Forms.StudentForms
                 dtp_StudentEndDate.Value = entity.EndDate;
                 chk_StudentClosed.Checked = entity.IsClosed;
                 tb_StudentNotes.Text = entity.Notes;
+
+                cb_StudentSemester.Enabled = false;
+                dtp_StudentStartDate.Enabled = false;
             }
         }
 
@@ -277,26 +278,32 @@ namespace TECNM.Residencias.Forms.StudentForms
 
         private void AddStudentDocument_Click(object sender, EventArgs e)
         {
-            var control = new StudentDocumentFieldControl();
-            control.Removed += RemoveDocument_Handler;
-            flp_Documents.Controls.Add(control);
+            using var dialog = new OpenFileDialog();
+            dialog.Multiselect = false;
+            dialog.RestoreDirectory = true;
+            DialogResult result = dialog.ShowDialog();
+
+            if (result == DialogResult.OK)
+            {
+                dcc_Documents.Add(dialog.FileName);
+            }
         }
 
         private void RemoveDocument_Handler(object? sender, EventArgs e)
         {
             Debug.Assert(sender != null);
-            var control = (StudentDocumentFieldControl) sender;
-            Document document = control.Document;
-            flp_Documents.Controls.Remove(control);
-
-            using var context = new AppDbContext();
-            int result = context.Documents.Delete(document);
-            context.Commit();
-
-            if (result > 0)
-            {
-                DocumentStorageService.DeleteDocument(document);
-            }
+            //var control = (StudentDocumentFieldControl) sender;
+            //Document document = control.Document;
+            //flp_Documents.Controls.Remove(control);
+            //
+            //using var context = new AppDbContext();
+            //int result = context.Documents.Delete(document);
+            //context.Commit();
+            //
+            //if (result > 0)
+            //{
+            //    DocumentStorageService.DeleteDocument(document);
+            //}
         }
 
         private void StudentEnabled_Click(object sender, EventArgs e)
@@ -391,7 +398,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             _student.Department = tb_StudentDepartment.Text.Trim();
             _student.Schedule = tb_StudentSchedule.Text.Trim();
             _student.Notes = tb_StudentNotes.Text.Trim();
-            _student.IsClosed = !chk_StudentClosed.Checked;
+            _student.IsClosed = chk_StudentClosed.Checked;
 
             ValidationResult result = _validator.Validate(_student);
 
@@ -412,30 +419,7 @@ namespace TECNM.Residencias.Forms.StudentForms
                 context.Extras.InsertExtrasForStudent(_student, extras);
             }
 
-            foreach (StudentDocumentFieldControl control in flp_Documents.Controls)
-            {
-                if (control.IsNewFile)
-                {
-                    Document document = control.Document;
-
-                    if (string.IsNullOrEmpty(document.FullPath) || !File.Exists(document.FullPath))
-                    {
-                        MessageBox.Show(
-                            "Uno o varios documentos no se han seleccionado o no se pudieron encontrar. Verifíquelos.",
-                            "Error",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Information
-                        );
-
-                        Enabled = true;
-                        return;
-                    }
-
-                    await control.SaveDocumentAsync(_student);
-                    context.Documents.InsertOrUpdate(document);
-                }
-            }
-
+            await dcc_Documents.SaveAsync(context.Documents, _student);
             context.Commit();
             Close();
         }
@@ -487,13 +471,11 @@ namespace TECNM.Residencias.Forms.StudentForms
                 SetReviewerAdvisor(reviewAdvisor);
             }
 
-            /// Load documents
+            // Load documents
             IEnumerable<Document> documents = context.Documents.EnumerateDocumentsByStudent(_student.Id);
             foreach (Document document in documents)
             {
-                var control = new StudentDocumentFieldControl(document);
-                control.Removed += RemoveDocument_Handler;
-                flp_Documents.Controls.Add(control);
+                dcc_Documents.Add(document);
             }
 
             chk_StudentClosed.Checked = _student.IsClosed;

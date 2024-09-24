@@ -80,8 +80,8 @@ namespace TECNM.Residencias.Forms.StudentForms
             gb_Notes = new System.Windows.Forms.GroupBox();
             tb_StudentNotes = new System.Windows.Forms.TextBox();
             gb_Documents = new System.Windows.Forms.GroupBox();
+            dcc_Documents = new Controls.DocumentCollectionControl();
             button3 = new System.Windows.Forms.Button();
-            flp_Documents = new System.Windows.Forms.FlowLayoutPanel();
             btn_AddExtras = new System.Windows.Forms.Button();
             btn_DeleteStudent = new System.Windows.Forms.Button();
             gb_GeneralInfo.SuspendLayout();
@@ -566,11 +566,11 @@ namespace TECNM.Residencias.Forms.StudentForms
             button2.UseVisualStyleBackColor = true;
             button2.Click += ChoseCompany_Click;
             // 
-            // chk_StudentEnabled
+            // chk_StudentClosed
             // 
             chk_StudentClosed.AutoSize = true;
             chk_StudentClosed.Location = new System.Drawing.Point(308, 533);
-            chk_StudentClosed.Name = "chk_StudentEnabled";
+            chk_StudentClosed.Name = "chk_StudentClosed";
             chk_StudentClosed.Size = new System.Drawing.Size(127, 19);
             chk_StudentClosed.TabIndex = 18;
             chk_StudentClosed.Text = "Expediente cerrado";
@@ -599,14 +599,21 @@ namespace TECNM.Residencias.Forms.StudentForms
             // 
             // gb_Documents
             // 
+            gb_Documents.Controls.Add(dcc_Documents);
             gb_Documents.Controls.Add(button3);
-            gb_Documents.Controls.Add(flp_Documents);
             gb_Documents.Location = new System.Drawing.Point(606, 12);
             gb_Documents.Name = "gb_Documents";
             gb_Documents.Size = new System.Drawing.Size(454, 365);
             gb_Documents.TabIndex = 2;
             gb_Documents.TabStop = false;
             gb_Documents.Text = "Documentos";
+            // 
+            // dcc_Documents
+            // 
+            dcc_Documents.Location = new System.Drawing.Point(6, 22);
+            dcc_Documents.Name = "dcc_Documents";
+            dcc_Documents.Size = new System.Drawing.Size(442, 308);
+            dcc_Documents.TabIndex = 2;
             // 
             // button3
             // 
@@ -617,16 +624,6 @@ namespace TECNM.Residencias.Forms.StudentForms
             button3.Text = "Añadir documento";
             button3.UseVisualStyleBackColor = true;
             button3.Click += AddStudentDocument_Click;
-            // 
-            // flp_Documents
-            // 
-            flp_Documents.AutoScroll = true;
-            flp_Documents.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            flp_Documents.Location = new System.Drawing.Point(6, 22);
-            flp_Documents.Name = "flp_Documents";
-            flp_Documents.Size = new System.Drawing.Size(442, 308);
-            flp_Documents.TabIndex = 0;
-            flp_Documents.WrapContents = false;
             // 
             // btn_AddExtras
             // 
@@ -724,7 +721,6 @@ namespace TECNM.Residencias.Forms.StudentForms
         private System.Windows.Forms.TextBox tb_StudentNotes;
         private System.Windows.Forms.CheckBox chk_StudentClosed;
         private System.Windows.Forms.GroupBox gb_Documents;
-        private System.Windows.Forms.FlowLayoutPanel flp_Documents;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button btn_ChoseExternalAdvisor;
@@ -739,5 +735,6 @@ namespace TECNM.Residencias.Forms.StudentForms
         private System.Windows.Forms.MaskedTextBox mtb_StudentPhone;
         private System.Windows.Forms.Button btn_AddExtras;
         private System.Windows.Forms.Button btn_DeleteStudent;
+        private Controls.DocumentCollectionControl dcc_Documents;
     }
 }

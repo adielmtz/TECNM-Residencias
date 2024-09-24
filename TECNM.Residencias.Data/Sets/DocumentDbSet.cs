@@ -34,7 +34,7 @@ namespace TECNM.Residencias.Data.Sets
             using var command = Context.Database.CreateCommand();
             command.CommandText = """
             INSERT INTO Document (StudentId, Type, FullPath, OriginalName, Size, Hash)
-            VALUES ($p0, $p1, $p2, $p3, $p4, $p5, $p6)
+            VALUES ($p0, $p1, $p2, $p3, $p4, $p5)
             RETURNING Id
             """;
 
