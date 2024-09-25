@@ -75,7 +75,7 @@ namespace TECNM.Residencias
         private static void InitializeDatabase()
         {
             using var sqlite = Database.Open();
-            using var migrator = new DatabaseMigrator(sqlite);
+            using var migrator = new DbMigrator(sqlite);
             migrator.Migrate();
         }
     }

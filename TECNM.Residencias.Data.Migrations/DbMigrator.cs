@@ -6,14 +6,14 @@ using System.Reflection;
 
 namespace TECNM.Residencias.Data.Migrations
 {
-    public sealed class DatabaseMigrator : IDisposable
+    public sealed class DbMigrator : IDisposable
     {
         private const long CURRENT_VERSION = 4;
 
         private readonly IDbConnection _connection;
         private IDbTransaction? _transaction;
 
-        public DatabaseMigrator(IDbConnection connection)
+        public DbMigrator(IDbConnection connection)
         {
             _connection = connection;
         }
@@ -96,7 +96,7 @@ namespace TECNM.Residencias.Data.Migrations
 
         private string GetStringResource(long version)
         {
-            Assembly assembly = typeof(DatabaseMigrator).Assembly;
+            Assembly assembly = typeof(DbMigrator).Assembly;
             using var stream = assembly.GetManifestResourceStream($"TECNM.Residencias.Data.Migrations.Resources.migration_{version}.sql");
             Debug.Assert(stream != null);
 
