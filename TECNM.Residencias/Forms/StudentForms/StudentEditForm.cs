@@ -284,13 +284,16 @@ namespace TECNM.Residencias.Forms.StudentForms
         private void AddStudentDocument_Click(object sender, EventArgs e)
         {
             using var dialog = new OpenFileDialog();
-            dialog.Multiselect = false;
+            dialog.Multiselect = true;
             dialog.RestoreDirectory = true;
             DialogResult result = dialog.ShowDialog();
 
             if (result == DialogResult.OK)
             {
-                dcc_Documents.Add(dialog.FileName);
+                foreach (string filename in dialog.FileNames)
+                {
+                    dcc_Documents.Add(filename);
+                }
             }
         }
 
