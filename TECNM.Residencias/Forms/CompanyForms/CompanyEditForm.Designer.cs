@@ -76,7 +76,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
             cb_CompanyCountry.Location = new System.Drawing.Point(12, 291);
             cb_CompanyCountry.Name = "cb_CompanyCountry";
             cb_CompanyCountry.Size = new System.Drawing.Size(121, 23);
-            cb_CompanyCountry.TabIndex = 9;
+            cb_CompanyCountry.TabIndex = 7;
             // 
             // label2
             // 
@@ -96,7 +96,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
             cb_CompanyState.Location = new System.Drawing.Point(139, 291);
             cb_CompanyState.Name = "cb_CompanyState";
             cb_CompanyState.Size = new System.Drawing.Size(121, 23);
-            cb_CompanyState.TabIndex = 10;
+            cb_CompanyState.TabIndex = 8;
             // 
             // label3
             // 
@@ -116,7 +116,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
             cb_CompanyCity.Location = new System.Drawing.Point(266, 291);
             cb_CompanyCity.Name = "cb_CompanyCity";
             cb_CompanyCity.Size = new System.Drawing.Size(121, 23);
-            cb_CompanyCity.TabIndex = 11;
+            cb_CompanyCity.TabIndex = 9;
             // 
             // btn_CancelEdit
             // 
@@ -144,7 +144,8 @@ namespace TECNM.Residencias.Forms.CompanyForms
             cb_CompanyType.Location = new System.Drawing.Point(12, 27);
             cb_CompanyType.Name = "cb_CompanyType";
             cb_CompanyType.Size = new System.Drawing.Size(121, 23);
-            cb_CompanyType.TabIndex = 1;
+            cb_CompanyType.TabIndex = 0;
+            cb_CompanyType.TabStop = false;
             // 
             // label5
             // 
@@ -160,7 +161,8 @@ namespace TECNM.Residencias.Forms.CompanyForms
             tb_CompanyRfc.Location = new System.Drawing.Point(139, 27);
             tb_CompanyRfc.Name = "tb_CompanyRfc";
             tb_CompanyRfc.Size = new System.Drawing.Size(248, 23);
-            tb_CompanyRfc.TabIndex = 2;
+            tb_CompanyRfc.TabIndex = 0;
+            tb_CompanyRfc.TabStop = false;
             // 
             // label6
             // 
@@ -176,7 +178,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
             tb_CompanyName.Location = new System.Drawing.Point(12, 71);
             tb_CompanyName.Name = "tb_CompanyName";
             tb_CompanyName.Size = new System.Drawing.Size(375, 23);
-            tb_CompanyName.TabIndex = 3;
+            tb_CompanyName.TabIndex = 1;
             // 
             // label7
             // 
@@ -192,7 +194,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
             tb_CompanyAddress.Location = new System.Drawing.Point(12, 203);
             tb_CompanyAddress.Name = "tb_CompanyAddress";
             tb_CompanyAddress.Size = new System.Drawing.Size(375, 23);
-            tb_CompanyAddress.TabIndex = 6;
+            tb_CompanyAddress.TabIndex = 4;
             // 
             // label8
             // 
@@ -208,7 +210,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
             tb_CompanyLocality.Location = new System.Drawing.Point(12, 247);
             tb_CompanyLocality.Name = "tb_CompanyLocality";
             tb_CompanyLocality.Size = new System.Drawing.Size(248, 23);
-            tb_CompanyLocality.TabIndex = 7;
+            tb_CompanyLocality.TabIndex = 5;
             // 
             // label9
             // 
@@ -227,7 +229,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
             chk_CompanyEnabled.Location = new System.Drawing.Point(12, 320);
             chk_CompanyEnabled.Name = "chk_CompanyEnabled";
             chk_CompanyEnabled.Size = new System.Drawing.Size(71, 19);
-            chk_CompanyEnabled.TabIndex = 12;
+            chk_CompanyEnabled.TabIndex = 10;
             chk_CompanyEnabled.Text = "Habilitar";
             chk_CompanyEnabled.UseVisualStyleBackColor = true;
             // 
@@ -255,7 +257,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
             tb_CompanyEmail.Location = new System.Drawing.Point(12, 115);
             tb_CompanyEmail.Name = "tb_CompanyEmail";
             tb_CompanyEmail.Size = new System.Drawing.Size(375, 23);
-            tb_CompanyEmail.TabIndex = 4;
+            tb_CompanyEmail.TabIndex = 2;
             // 
             // label11
             // 
@@ -272,7 +274,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
             mtb_CompanyPhone.Mask = "000-000-0000";
             mtb_CompanyPhone.Name = "mtb_CompanyPhone";
             mtb_CompanyPhone.Size = new System.Drawing.Size(248, 23);
-            mtb_CompanyPhone.TabIndex = 5;
+            mtb_CompanyPhone.TabIndex = 3;
             mtb_CompanyPhone.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
             // 
             // mtb_CompanyPostalCode
@@ -281,7 +283,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
             mtb_CompanyPostalCode.Mask = "00000";
             mtb_CompanyPostalCode.Name = "mtb_CompanyPostalCode";
             mtb_CompanyPostalCode.Size = new System.Drawing.Size(121, 23);
-            mtb_CompanyPostalCode.TabIndex = 8;
+            mtb_CompanyPostalCode.TabIndex = 6;
             mtb_CompanyPostalCode.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
             // 
             // label12

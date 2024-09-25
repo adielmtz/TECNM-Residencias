@@ -1,6 +1,7 @@
 using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.Data.Sqlite;
+using SQLitePCL;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -202,7 +203,7 @@ namespace TECNM.Residencias.Forms.CompanyForms
                     context.Companies.Insert(_company);
                 }
             }
-            catch (SqliteException)
+            catch (SqliteException e) when (e.SqliteErrorCode == raw.SQLITE_CONSTRAINT)
             {
                 MessageBox.Show(
                     "Ya existe un registro con el mismo RFC.",
