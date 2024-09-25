@@ -140,7 +140,7 @@ namespace TECNM.Residencias.Data.Sets
             command.Parameters.Add("$p02", SqliteType.Text).Value = entity.LastName;
             command.Parameters.Add("$p03", SqliteType.Text).Value = entity.Email;
             command.Parameters.Add("$p04", SqliteType.Text).Value = entity.Phone;
-            command.Parameters.Add("$p05", SqliteType.Text).Value = entity.Gender;
+            command.Parameters.Add("$p05", SqliteType.Text).Value = entity.Gender.ToString();
             command.Parameters.Add("$p06", SqliteType.Text).Value = entity.Semester;
             command.Parameters.Add("$p07", SqliteType.Text).Value = entity.StartDate.ToLongIsoStringUtc();
             command.Parameters.Add("$p08", SqliteType.Text).Value = entity.EndDate.ToLongIsoStringUtc();
@@ -188,7 +188,7 @@ namespace TECNM.Residencias.Data.Sets
             command.Parameters.Add("$p02", SqliteType.Text).Value = entity.LastName;
             command.Parameters.Add("$p03", SqliteType.Text).Value = entity.Email;
             command.Parameters.Add("$p04", SqliteType.Text).Value = entity.Phone;
-            command.Parameters.Add("$p05", SqliteType.Text).Value = entity.Gender;
+            command.Parameters.Add("$p05", SqliteType.Text).Value = entity.Gender.ToString();
             command.Parameters.Add("$p06", SqliteType.Text).Value = entity.Semester;
             command.Parameters.Add("$p07", SqliteType.Text).Value = entity.StartDate.ToLongIsoStringUtc();
             command.Parameters.Add("$p08", SqliteType.Text).Value = entity.EndDate.ToLongIsoStringUtc();
@@ -254,7 +254,7 @@ namespace TECNM.Residencias.Data.Sets
             command.Parameters.Add("$p02", SqliteType.Text).Value = entity.LastName;
             command.Parameters.Add("$p03", SqliteType.Text).Value = entity.Email;
             command.Parameters.Add("$p04", SqliteType.Text).Value = entity.Phone;
-            command.Parameters.Add("$p05", SqliteType.Text).Value = entity.Gender;
+            command.Parameters.Add("$p05", SqliteType.Text).Value = entity.Gender.ToString();
             command.Parameters.Add("$p06", SqliteType.Text).Value = entity.Semester;
             command.Parameters.Add("$p07", SqliteType.Text).Value = entity.StartDate.ToLongIsoStringUtc();
             command.Parameters.Add("$p08", SqliteType.Text).Value = entity.EndDate.ToLongIsoStringUtc();
