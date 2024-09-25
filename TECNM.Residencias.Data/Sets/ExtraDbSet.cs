@@ -18,7 +18,7 @@ namespace TECNM.Residencias.Data.Sets
         public IEnumerable<Extra> EnumerateExtras()
         {
             using var command = Context.Database.CreateCommand();
-            command.CommandText = "SELECT Id, Type, Value, UpdatedOn, CreatedOn FROM Extra ORDER BY Id";
+            command.CommandText = "SELECT Id, Type, Value FROM Extra ORDER BY Id";
             using var reader = command.ExecuteReader();
 
             while (reader.Read())
@@ -31,7 +31,7 @@ namespace TECNM.Residencias.Data.Sets
         public IEnumerable<Extra> EnumerateExtras(ExtraType type)
         {
             using var command = Context.Database.CreateCommand();
-            command.CommandText = "SELECT Id, Type, Value, UpdatedOn, CreatedOn FROM Extra WHERE Type = $p0 ORDER BY Id";
+            command.CommandText = "SELECT Id, Type, Value FROM Extra WHERE Type = $p0 ORDER BY Id";
             command.Parameters.Add("$p0", SqliteType.Text).Value = type.ToString();
             using var reader = command.ExecuteReader();
 
