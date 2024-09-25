@@ -76,7 +76,21 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             }
         }
 
+        private void QuickSave_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char) Keys.Enter)
+            {
+                Save();
+                e.Handled = true;
+            }
+        }
+
         private void SaveEdit_Click(object sender, EventArgs e)
+        {
+            Save();
+        }
+
+        private void Save()
         {
             _advisor.CompanyId = _company.Id;
             _advisor.Type = (AdvisorType) cb_AdvisorType.SelectedIndex;

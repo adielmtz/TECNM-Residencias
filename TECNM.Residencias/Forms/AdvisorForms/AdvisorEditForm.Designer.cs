@@ -59,7 +59,7 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             btn_CancelEdit.Location = new System.Drawing.Point(298, 302);
             btn_CancelEdit.Name = "btn_CancelEdit";
             btn_CancelEdit.Size = new System.Drawing.Size(100, 23);
-            btn_CancelEdit.TabIndex = 11;
+            btn_CancelEdit.TabIndex = 9;
             btn_CancelEdit.Text = "Cancelar";
             btn_CancelEdit.UseVisualStyleBackColor = true;
             // 
@@ -71,7 +71,8 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             cb_AdvisorType.Location = new System.Drawing.Point(12, 27);
             cb_AdvisorType.Name = "cb_AdvisorType";
             cb_AdvisorType.Size = new System.Drawing.Size(83, 23);
-            cb_AdvisorType.TabIndex = 1;
+            cb_AdvisorType.TabIndex = 0;
+            cb_AdvisorType.TabStop = false;
             // 
             // label1
             // 
@@ -96,7 +97,8 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             tb_AdvisorFirstName.Location = new System.Drawing.Point(100, 27);
             tb_AdvisorFirstName.Name = "tb_AdvisorFirstName";
             tb_AdvisorFirstName.Size = new System.Drawing.Size(146, 23);
-            tb_AdvisorFirstName.TabIndex = 2;
+            tb_AdvisorFirstName.TabIndex = 1;
+            tb_AdvisorFirstName.KeyPress += QuickSave_KeyPress;
             // 
             // label3
             // 
@@ -112,7 +114,8 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             tb_AdvisorSection.Location = new System.Drawing.Point(12, 115);
             tb_AdvisorSection.Name = "tb_AdvisorSection";
             tb_AdvisorSection.Size = new System.Drawing.Size(386, 23);
-            tb_AdvisorSection.TabIndex = 5;
+            tb_AdvisorSection.TabIndex = 3;
+            tb_AdvisorSection.KeyPress += QuickSave_KeyPress;
             // 
             // label4
             // 
@@ -128,7 +131,8 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             tb_AdvisorRole.Location = new System.Drawing.Point(12, 159);
             tb_AdvisorRole.Name = "tb_AdvisorRole";
             tb_AdvisorRole.Size = new System.Drawing.Size(386, 23);
-            tb_AdvisorRole.TabIndex = 6;
+            tb_AdvisorRole.TabIndex = 4;
+            tb_AdvisorRole.KeyPress += QuickSave_KeyPress;
             // 
             // label5
             // 
@@ -144,7 +148,8 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             tb_AdvisorEmail.Location = new System.Drawing.Point(12, 203);
             tb_AdvisorEmail.Name = "tb_AdvisorEmail";
             tb_AdvisorEmail.Size = new System.Drawing.Size(386, 23);
-            tb_AdvisorEmail.TabIndex = 7;
+            tb_AdvisorEmail.TabIndex = 5;
+            tb_AdvisorEmail.KeyPress += QuickSave_KeyPress;
             // 
             // label6
             // 
@@ -163,7 +168,7 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             chk_AdvisorEnabled.Location = new System.Drawing.Point(12, 276);
             chk_AdvisorEnabled.Name = "chk_AdvisorEnabled";
             chk_AdvisorEnabled.Size = new System.Drawing.Size(71, 19);
-            chk_AdvisorEnabled.TabIndex = 9;
+            chk_AdvisorEnabled.TabIndex = 7;
             chk_AdvisorEnabled.Text = "Habilitar";
             chk_AdvisorEnabled.UseVisualStyleBackColor = true;
             // 
@@ -173,7 +178,7 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             button1.Location = new System.Drawing.Point(12, 302);
             button1.Name = "button1";
             button1.Size = new System.Drawing.Size(100, 23);
-            button1.TabIndex = 10;
+            button1.TabIndex = 8;
             button1.Text = "Guardar";
             button1.UseVisualStyleBackColor = true;
             button1.Click += SaveEdit_Click;
@@ -201,7 +206,8 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             tb_AdvisorLastName.Location = new System.Drawing.Point(252, 27);
             tb_AdvisorLastName.Name = "tb_AdvisorLastName";
             tb_AdvisorLastName.Size = new System.Drawing.Size(146, 23);
-            tb_AdvisorLastName.TabIndex = 3;
+            tb_AdvisorLastName.TabIndex = 2;
+            tb_AdvisorLastName.KeyPress += QuickSave_KeyPress;
             // 
             // mtb_AdvisorPhone
             // 
@@ -209,8 +215,9 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             mtb_AdvisorPhone.Mask = "000-000-0000";
             mtb_AdvisorPhone.Name = "mtb_AdvisorPhone";
             mtb_AdvisorPhone.Size = new System.Drawing.Size(80, 23);
-            mtb_AdvisorPhone.TabIndex = 8;
+            mtb_AdvisorPhone.TabIndex = 6;
             mtb_AdvisorPhone.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
+            mtb_AdvisorPhone.KeyPress += QuickSave_KeyPress;
             // 
             // label9
             // 
@@ -228,6 +235,7 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             tb_AdvisorExtension.Size = new System.Drawing.Size(80, 23);
             tb_AdvisorExtension.TabIndex = 0;
             tb_AdvisorExtension.TabStop = false;
+            tb_AdvisorExtension.KeyPress += QuickSave_KeyPress;
             // 
             // btn_ChooseCompany
             // 
