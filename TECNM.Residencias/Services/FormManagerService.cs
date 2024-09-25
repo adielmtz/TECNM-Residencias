@@ -1,50 +1,49 @@
+namespace TECNM.Residencias.Services;
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
 
-namespace TECNM.Residencias.Services
+internal static class FormManagerService
 {
-    internal static class FormManagerService
+    private readonly static Dictionary<Type, Form> s_openForms = new();
+
+    public static void OpenForm<T>() where T : Form, new()
     {
-        private readonly static Dictionary<Type, Form> s_openForms = new();
+        Type type = typeof(T);
+        Form? form;
 
-        public static void OpenForm<T>() where T : Form, new()
+        if (s_openForms.TryGetValue(type, out form))
         {
-            Type type = typeof(T);
-            Form? form;
-
-            if (s_openForms.TryGetValue(type, out form))
-            {
-                form.WindowState = FormWindowState.Normal;
-                form.Focus();
-                return;
-            }
-
-            form = new T();
-            form.FormClosed += FormClosedHandler;
-            s_openForms[type] = form;
-            form.Show();
+            form.WindowState = FormWindowState.Normal;
+            form.Focus();
+            return;
         }
 
-        public static DialogResult OpenDialog<T>() where T : Form, new()
-        {
-            using var dialog = new T();
-            return dialog.ShowDialog();
-        }
+        form = new T();
+        form.FormClosed += FormClosedHandler;
+        s_openForms[type] = form;
+        form.Show();
+    }
 
-        public static void CloseAll()
-        {
-            foreach (Form form in s_openForms.Values)
-            {
-                form.Close();
-            }
-        }
+    public static DialogResult OpenDialog<T>() where T : Form, new()
+    {
+        using var dialog = new T();
+        return dialog.ShowDialog();
+    }
 
-        private static void FormClosedHandler(object? sender, FormClosedEventArgs e)
+    public static void CloseAll()
+    {
+        foreach (Form form in s_openForms.Values)
         {
-            Debug.Assert(sender != null);
-            s_openForms.Remove(sender.GetType());
+            form.Close();
         }
+    }
+
+    private static void FormClosedHandler(object? sender, FormClosedEventArgs e)
+    {
+        Debug.Assert(sender != null);
+        s_openForms.Remove(sender.GetType());
     }
 }

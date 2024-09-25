@@ -1,3 +1,5 @@
+namespace TECNM.Residencias.Services;
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,192 +10,189 @@ using System.Text;
 using System.Threading.Tasks;
 using TECNM.Residencias.Data.Entities;
 
-namespace TECNM.Residencias.Services
+internal static class StorageService
 {
-    internal static class StorageService
+    public static readonly IReadOnlyList<(string, string)> DocumentTypes = [
+        ("Solicitud de residencia",              "SOLICITUD_RESIDENCIAS"),
+        ("Carta de presentación",                "CARTA_PRESENTACION"),
+        ("Carta de aceptación",                  "CARTA_ACEPTACION"),
+        ("Constancia de servicio social",        "CONSTANCIA_SERVICIO_SOCIAL"),
+        ("Anteproyecto",                         "ANTEPROYECTO"),
+        ("Autorización de anteproyecto",         "AUTORIZACION_ANTEPROYECTO"),
+        ("Asignación de asesor",                 "ASIGNACION_ASESOR"),
+        ("1er. reporte de asesoría",             "PRIMER_REPORTE"),
+        ("2do. reporte de asesoría",             "SEGUNDO_REPORTE"),
+        ("Evaluación final",                     "EVALUACION_FINAL"),
+        ("Reporte final (PDF)",                  "REPORTE_FINAL"),
+        ("Portada del reporte final con firmas", "PORTADA"),
+        ("Carta de liberación o terminación",    "CARTA_TERMINACION"),
+        ("Otro",                                 "OTRO"),
+    ];
+
+    public static async Task<Document> SaveFileAsync(Student owner, Document document)
     {
-        public static readonly IReadOnlyList<(string, string)> DocumentTypes = [
-            ("Solicitud de residencia",              "SOLICITUD_RESIDENCIAS"),
-            ("Carta de presentación",                "CARTA_PRESENTACION"),
-            ("Carta de aceptación",                  "CARTA_ACEPTACION"),
-            ("Constancia de servicio social",        "CONSTANCIA_SERVICIO_SOCIAL"),
-            ("Anteproyecto",                         "ANTEPROYECTO"),
-            ("Autorización de anteproyecto",         "AUTORIZACION_ANTEPROYECTO"),
-            ("Asignación de asesor",                 "ASIGNACION_ASESOR"),
-            ("1er. reporte de asesoría",             "PRIMER_REPORTE"),
-            ("2do. reporte de asesoría",             "SEGUNDO_REPORTE"),
-            ("Evaluación final",                     "EVALUACION_FINAL"),
-            ("Reporte final (PDF)",                  "REPORTE_FINAL"),
-            ("Portada del reporte final con firmas", "PORTADA"),
-            ("Carta de liberación o terminación",    "CARTA_TERMINACION"),
-            ("Otro",                                 "OTRO"),
-        ];
+        Debug.Assert(owner.Id > 0);
+        Debug.Assert(document.Id == 0);
 
-        public static async Task<Document> SaveFileAsync(Student owner, Document document)
+        // Generate temporary file
+        string sourceFileName = document.FullPath;
+        string tempFileName = Path.Combine(App.TempStorageDirectory, Guid.NewGuid().ToString());
+        long size = 0;
+        string hash = "";
+
+        await using (var sourceStream = new FileStream(sourceFileName, FileMode.Open, FileAccess.Read, FileShare.Read))
+        await using (var outputStream = new FileStream(tempFileName, FileMode.Create, FileAccess.Write, FileShare.None))
         {
-            Debug.Assert(owner.Id > 0);
-            Debug.Assert(document.Id == 0);
-
-            // Generate temporary file
-            string sourceFileName = document.FullPath;
-            string tempFileName = Path.Combine(App.TempStorageDirectory, Guid.NewGuid().ToString());
-            long size = 0;
-            string hash = "";
-
-            await using (var sourceStream = new FileStream(sourceFileName, FileMode.Open, FileAccess.Read, FileShare.Read))
-            await using (var outputStream = new FileStream(tempFileName, FileMode.Create, FileAccess.Write, FileShare.None))
-            {
-                size = sourceStream.Length;
-                hash = await CopyAndComputeHashAsync(sourceStream, outputStream);
-            }
-
-            var builder = new FileNameBuilder
-            {
-                StudentId = owner.Id,
-                Year      = owner.StartDate.Year,
-                Semester  = owner.Semester,
-                Type      = document.Type,
-                Hash      = hash,
-                Extension = Path.GetExtension(document.FullPath),
-            };
-
-            Directory.CreateDirectory(builder.Directory);
-            File.Move(tempFileName, builder.FullPath, true);
-
-            return new Document
-            {
-                StudentId    = builder.StudentId,
-                Type         = builder.Type,
-                FullPath     = builder.FullPath,
-                OriginalName = document.OriginalName,
-                Size         = size,
-                Hash         = hash,
-            };
+            size = sourceStream.Length;
+            hash = await CopyAndComputeHashAsync(sourceStream, outputStream);
         }
 
-        public static void DeleteFile(string filename)
+        var builder = new FileNameBuilder
         {
-            if (filename.StartsWith(App.FileStorageDirectory))
+            StudentId = owner.Id,
+            Year      = owner.StartDate.Year,
+            Semester  = owner.Semester,
+            Type      = document.Type,
+            Hash      = hash,
+            Extension = Path.GetExtension(document.FullPath),
+        };
+
+        Directory.CreateDirectory(builder.Directory);
+        File.Move(tempFileName, builder.FullPath, true);
+
+        return new Document
+        {
+            StudentId    = builder.StudentId,
+            Type         = builder.Type,
+            FullPath     = builder.FullPath,
+            OriginalName = document.OriginalName,
+            Size         = size,
+            Hash         = hash,
+        };
+    }
+
+    public static void DeleteFile(string filename)
+    {
+        if (filename.StartsWith(App.FileStorageDirectory))
+        {
+            File.Delete(filename);
+            string directory = Path.GetDirectoryName(filename)!;
+            DeleteEmptyDirectory(directory);
+        }
+    }
+
+    private static void DeleteEmptyDirectory(string directory)
+    {
+        IEnumerable<string> entries = Directory.EnumerateFileSystemEntries(directory);
+        if (!entries.Any())
+        {
+            Directory.Delete(directory);
+        }
+    }
+
+    private static async Task<string> CopyAndComputeHashAsync(Stream source, Stream destination)
+    {
+        using var sha = SHA256.Create();
+        byte[] buffer = new byte[81920];
+        int read = 0;
+
+        while (true)
+        {
+            read = await source.ReadAsync(buffer, 0, buffer.Length);
+            if (read == 0)
             {
-                File.Delete(filename);
-                string directory = Path.GetDirectoryName(filename)!;
-                DeleteEmptyDirectory(directory);
+                break;
             }
+
+            await destination.WriteAsync(buffer, 0, read);
+            sha.TransformBlock(buffer, 0, read, null, 0);
         }
 
-        private static void DeleteEmptyDirectory(string directory)
+        await destination.FlushAsync();
+        Debug.Assert(source.Length == destination.Length);
+
+        sha.TransformFinalBlock(buffer, 0, read);
+        byte[] hash = sha.Hash!;
+        var builder = new StringBuilder(hash.Length * 2);
+
+        foreach (byte b in hash)
         {
-            IEnumerable<string> entries = Directory.EnumerateFileSystemEntries(directory);
-            if (!entries.Any())
-            {
-                Directory.Delete(directory);
-            }
+            builder.AppendFormat("{0:X2}", b);
         }
 
-        private static async Task<string> CopyAndComputeHashAsync(Stream source, Stream destination)
-        {
-            using var sha = SHA256.Create();
-            byte[] buffer = new byte[81920];
-            int read = 0;
+        return builder.ToString();
+    }
 
-            while (true)
+    private class FileNameBuilder
+    {
+        private string _directory = "";
+        private string _fullpath = "";
+
+        #region Properties from Owner
+        public required long StudentId { get; init; }
+
+        public required int Year { get; init; }
+
+        public required string Semester { get; init; }
+        #endregion
+
+        #region Properties from Document
+        public required int Type { get; init; }
+
+        public required string Hash { get; init; }
+
+        public required string Extension { get; init; }
+        #endregion
+
+        public string Directory
+        {
+            get
             {
-                read = await source.ReadAsync(buffer, 0, buffer.Length);
-                if (read == 0)
+                if (string.IsNullOrEmpty(_directory))
                 {
-                    break;
+                    _directory = BuildDirectoryPath();
                 }
 
-                await destination.WriteAsync(buffer, 0, read);
-                sha.TransformBlock(buffer, 0, read, null, 0);
+                return _directory;
             }
-
-            await destination.FlushAsync();
-            Debug.Assert(source.Length == destination.Length);
-
-            sha.TransformFinalBlock(buffer, 0, read);
-            byte[] hash = sha.Hash!;
-            var builder = new StringBuilder(hash.Length * 2);
-
-            foreach (byte b in hash)
-            {
-                builder.AppendFormat("{0:X2}", b);
-            }
-
-            return builder.ToString();
         }
 
-        private class FileNameBuilder
+        public string FullPath
         {
-            private string _directory = "";
-            private string _fullpath = "";
-
-            #region Properties from Owner
-            public required long StudentId { get; init; }
-
-            public required int Year { get; init; }
-
-            public required string Semester { get; init; }
-            #endregion
-
-            #region Properties from Document
-            public required int Type { get; init; }
-
-            public required string Hash { get; init; }
-
-            public required string Extension { get; init; }
-            #endregion
-
-            public string Directory
+            get
             {
-                get
+                if (string.IsNullOrEmpty(_fullpath))
                 {
-                    if (string.IsNullOrEmpty(_directory))
-                    {
-                        _directory = BuildDirectoryPath();
-                    }
-
-                    return _directory;
+                    string name = BuildFileName();
+                    _fullpath = Path.Combine(Directory, name);
                 }
+
+                return _fullpath;
             }
+        }
 
-            public string FullPath
-            {
-                get
-                {
-                    if (string.IsNullOrEmpty(_fullpath))
-                    {
-                        string name = BuildFileName();
-                        _fullpath = Path.Combine(Directory, name);
-                    }
+        private string Owner => StudentId.ToString("00000000");
 
-                    return _fullpath;
-                }
-            }
+        public override string ToString()
+        {
+            return FullPath;
+        }
 
-            private string Owner => StudentId.ToString("00000000");
+        private string BuildDirectoryPath()
+        {
+            return Path.Combine(
+                App.FileStorageDirectory,
+                Year.ToString(),
+                Semester,
+                Owner
+            );
+        }
 
-            public override string ToString()
-            {
-                return FullPath;
-            }
-
-            private string BuildDirectoryPath()
-            {
-                return Path.Combine(
-                    App.FileStorageDirectory,
-                    Year.ToString(),
-                    Semester,
-                    Owner
-                );
-            }
-
-            private string BuildFileName()
-            {
-                string label = DocumentTypes[Type].Item2;
-                string hash = Hash.Substring(0, 8);
-                return $"{Owner}_{Type}_{label}_{hash}{Extension}";
-            }
+        private string BuildFileName()
+        {
+            string label = DocumentTypes[Type].Item2;
+            string hash = Hash.Substring(0, 8);
+            return $"{Owner}_{Type}_{label}_{hash}{Extension}";
         }
     }
 }

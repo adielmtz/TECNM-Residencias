@@ -1,3 +1,5 @@
+namespace TECNM.Residencias.Data.Sets.Location;
+
 using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
@@ -6,98 +8,95 @@ using System.Diagnostics;
 using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Data.Sets.Common;
 
-namespace TECNM.Residencias.Data.Sets.Location
+public sealed class CityDbSet : DbSet<City>
 {
-    public sealed class CityDbSet : DbSet<City>
+    private static readonly Dictionary<long, IReadOnlyList<City>> _citiesByState = new();
+    private static readonly Dictionary<long, City> _cities = new();
+
+    public CityDbSet(IDbContext context) : base(context)
     {
-        private static readonly Dictionary<long, IReadOnlyList<City>> _citiesByState = new();
-        private static readonly Dictionary<long, City> _cities = new();
+    }
 
-        public CityDbSet(IDbContext context) : base(context)
+    public City GetCityById(long id)
+    {
+        City? city;
+        if (_cities.TryGetValue(id, out city))
         {
+            return city;
         }
 
-        public City GetCityById(long id)
+        using var command = Context.Database.CreateCommand();
+        command.CommandText = "SELECT Id, StateId, Name FROM City WHERE Id = $id";
+        command.Parameters.Add("$id", SqliteType.Integer).Value = id;
+        using var reader = command.ExecuteReader();
+
+        if (reader.Read())
         {
-            City? city;
-            if (_cities.TryGetValue(id, out city))
-            {
-                return city;
-            }
-
-            using var command = Context.Database.CreateCommand();
-            command.CommandText = "SELECT Id, StateId, Name FROM City WHERE Id = $id";
-            command.Parameters.Add("$id", SqliteType.Integer).Value = id;
-            using var reader = command.ExecuteReader();
-
-            if (reader.Read())
-            {
-                city = HydrateObject(reader);
-                _cities[city.Id] = city;
-                return city;
-            }
-
-            throw new UnreachableException($"Illegal City Id: {id}");
+            city = HydrateObject(reader);
+            _cities[city.Id] = city;
+            return city;
         }
 
-        public IReadOnlyList<City> GetCitiesByState(State state)
+        throw new UnreachableException($"Illegal City Id: {id}");
+    }
+
+    public IReadOnlyList<City> GetCitiesByState(State state)
+    {
+        return GetCitiesByState(state.Id);
+    }
+
+    public IReadOnlyList<City> GetCitiesByState(long stateId)
+    {
+        if (_citiesByState.TryGetValue(stateId, out var cities))
         {
-            return GetCitiesByState(state.Id);
+            return cities;
         }
 
-        public IReadOnlyList<City> GetCitiesByState(long stateId)
+        using var command = Context.Database.CreateCommand();
+        command.CommandText = "SELECT Id, StateId, Name FROM City WHERE StateId = $p0 ORDER BY Name";
+        command.Parameters.Add("$p0", SqliteType.Integer).Value = stateId;
+        using var reader = command.ExecuteReader();
+
+        var result = new List<City>();
+        while (reader.Read())
         {
-            if (_citiesByState.TryGetValue(stateId, out var cities))
-            {
-                return cities;
-            }
-
-            using var command = Context.Database.CreateCommand();
-            command.CommandText = "SELECT Id, StateId, Name FROM City WHERE StateId = $p0 ORDER BY Name";
-            command.Parameters.Add("$p0", SqliteType.Integer).Value = stateId;
-            using var reader = command.ExecuteReader();
-
-            var result = new List<City>();
-            while (reader.Read())
-            {
-                var city = HydrateObject(reader);
-                result.Add(city);
-                _cities[city.Id] = city;
-            }
-
-            _citiesByState[stateId] = result;
-            return result;
+            var city = HydrateObject(reader);
+            result.Add(city);
+            _cities[city.Id] = city;
         }
 
-        public override bool Insert(City entity)
-        {
-            throw new NotImplementedException();
-        }
+        _citiesByState[stateId] = result;
+        return result;
+    }
 
-        public override int Update(City entity)
-        {
-            throw new NotImplementedException();
-        }
+    public override bool Insert(City entity)
+    {
+        throw new NotImplementedException();
+    }
 
-        public override int Delete(City entity)
-        {
-            throw new NotImplementedException();
-        }
+    public override int Update(City entity)
+    {
+        throw new NotImplementedException();
+    }
 
-        public override bool InsertOrUpdate(City entity)
-        {
-            throw new NotImplementedException();
-        }
+    public override int Delete(City entity)
+    {
+        throw new NotImplementedException();
+    }
 
-        protected override City HydrateObject(IDataReader reader)
+    public override bool InsertOrUpdate(City entity)
+    {
+        throw new NotImplementedException();
+    }
+
+    protected override City HydrateObject(IDataReader reader)
+    {
+        Debug.Assert(reader.FieldCount == 3);
+        return new City
         {
-            Debug.Assert(reader.FieldCount == 3);
-            return new City
-            {
-                Id      = reader.GetInt64(0),
-                StateId = reader.GetInt64(1),
-                Name    = reader.GetString(2),
-            };
-        }
+            Id      = reader.GetInt64(0),
+            StateId = reader.GetInt64(1),
+            Name    = reader.GetString(2),
+        };
     }
 }

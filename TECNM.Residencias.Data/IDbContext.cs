@@ -1,14 +1,13 @@
+namespace TECNM.Residencias.Data;
+
 using Microsoft.Data.Sqlite;
 using System;
 
-namespace TECNM.Residencias.Data
+public interface IDbContext : IDisposable
 {
-    public interface IDbContext : IDisposable
-    {
-        public SqliteConnection Database { get; }
+    public SqliteConnection Database { get; }
 
-        public void Commit();
+    public void Commit();
 
-        public void Rollback();
-    }
+    public void Rollback();
 }
