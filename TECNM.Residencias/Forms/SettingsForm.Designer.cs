@@ -85,6 +85,7 @@ namespace TECNM.Residencias.Forms
             button3.Name = "button3";
             button3.Size = new System.Drawing.Size(235, 23);
             button3.TabIndex = 3;
+            button3.TabStop = false;
             button3.Text = "Copia de seguridad";
             button3.UseVisualStyleBackColor = true;
             button3.Click += DatabaseBackup_Click;
@@ -95,6 +96,7 @@ namespace TECNM.Residencias.Forms
             button1.Name = "button1";
             button1.Size = new System.Drawing.Size(235, 23);
             button1.TabIndex = 0;
+            button1.TabStop = false;
             button1.Text = "Optimizar";
             button1.UseVisualStyleBackColor = true;
             button1.Click += DatabaseOptimize_Click;
@@ -189,7 +191,7 @@ namespace TECNM.Residencias.Forms
             cb_StudentCareer.Location = new System.Drawing.Point(121, 16);
             cb_StudentCareer.Name = "cb_StudentCareer";
             cb_StudentCareer.Size = new System.Drawing.Size(272, 23);
-            cb_StudentCareer.TabIndex = 1;
+            cb_StudentCareer.TabIndex = 3;
             // 
             // label6
             // 
@@ -235,7 +237,8 @@ namespace TECNM.Residencias.Forms
             button4.Location = new System.Drawing.Point(6, 395);
             button4.Name = "button4";
             button4.Size = new System.Drawing.Size(75, 23);
-            button4.TabIndex = 5;
+            button4.TabIndex = 0;
+            button4.TabStop = false;
             button4.Text = "Guardar";
             button4.UseVisualStyleBackColor = true;
             button4.Click += SaveAppSettings_Click;
@@ -268,7 +271,7 @@ namespace TECNM.Residencias.Forms
             cb_AdvisorType.Location = new System.Drawing.Point(121, 16);
             cb_AdvisorType.Name = "cb_AdvisorType";
             cb_AdvisorType.Size = new System.Drawing.Size(118, 23);
-            cb_AdvisorType.TabIndex = 2;
+            cb_AdvisorType.TabIndex = 1;
             // 
             // SettingsForm
             // 

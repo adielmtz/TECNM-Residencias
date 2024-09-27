@@ -2,14 +2,17 @@ namespace TECNM.Residencias.Forms;
 
 using System;
 using System.Diagnostics;
-using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using TECNM.Residencias.Data;
 using TECNM.Residencias.Services;
 
 public sealed partial class DialogBackupForm : Form
 {
+    private static readonly TimeSpan refreshFrequency = TimeSpan.FromMilliseconds(100);
     private readonly FormConfirmClosingService closeConfirmService;
-    private BackupService? _backup;
+    private CancellationTokenSource? tokenSource;
 
     public DialogBackupForm()
     {
@@ -34,7 +37,10 @@ public sealed partial class DialogBackupForm : Form
     private async void StartBackup_Click(object sender, EventArgs e)
     {
         DialogResult result = MessageBox.Show(
-            "¿Iniciar copia de seguridad? Este proceso puede llegar a tardar horas.",
+            """
+            ¿Está listo para iniciar el proceso de copia de seguridad?
+            Este proceso puede tardar horas en completarse.
+            """,
             "Confirmar",
             MessageBoxButtons.OKCancel,
             MessageBoxIcon.Question
@@ -45,38 +51,22 @@ public sealed partial class DialogBackupForm : Form
             return;
         }
 
+        string destination = tb_BackupLocation.Text;
+        DateTime backupTime = DateTime.Now;
+
         gb_Config.Enabled = false;
         gb_Status.Enabled = true;
 
-        var target = new DirectoryInfo(tb_BackupLocation.Text);
-        var backup = new BackupService();
-        backup.Destination = target;
-        backup.Compress = chk_EnableCompression.Checked;
-        _backup = backup;
-
-        backup.BackupDatabase();
-
-        lbl_ProgressStatus.Text = "Recolectando archivos...";
-        pb_Progress.Maximum = 1;
-        pb_Progress.Value = 1;
-        await backup.CollectFiles();
-
-        pb_Progress.Maximum = backup.FileCount;
-        pb_Progress.Value = 0;
-        pb_Progress.Style = ProgressBarStyle.Blocks;
-
-        var progress = new Progress<(string, int)>(((string, int) value) =>
+        if (chk_DatabaseBackup.Checked)
         {
-            lbl_ProgressStatus.Text = value.Item1;
-            lbl_FileCount.Text = $"{value.Item2} / {backup.FileCount} archivos respaldados";
-            pb_Progress.Value = value.Item2;
-        });
+            RunDatabaseBackup(backupTime);
+        }
 
         try
         {
-            await backup.BackupFilesAsync(progress);
+            string backupFile = await RunStorageBackupAsync(destination, chk_EnableCompression.Checked, backupTime);
 
-            AppSettings.Default.LastBackupDate = DateTime.Now;
+            AppSettings.Default.LastBackupDate = backupTime;
             AppSettings.Default.Save();
 
             if (chk_OpenBackupFolder.Checked)
@@ -88,21 +78,77 @@ public sealed partial class DialogBackupForm : Form
             }
 
             MessageBox.Show(
-                "Copia de seguridad guardada en: " + backup.BackupFile,
+                "Copia de seguridad guardada en: " + backupFile,
                 "Acción completada",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information
             );
-
-            Close();
         }
-        catch (OperationCanceledException)
+        catch
         {
         }
+        finally
+        {
+            Close();
+        }
+    }
+
+    private void RunDatabaseBackup(DateTime backupTime)
+    {
+        SetProgressBarMaximum(1);
+        UpdateProgressStatus("Respaldando base de datos...", 1);
+
+        using var sqlite = App.Database.Open();
+        string target = App.DatabaseBackupDirectory;
+
+        using var backup = new DbBackup(sqlite, target, backupTime);
+        backup.Execute();
+    }
+
+    private async Task<string> RunStorageBackupAsync(string destination, bool compress, DateTime backupTime)
+    {
+        var backup = new StorageBackupService(App.FileStorageDirectory, destination, backupTime);
+        backup.Compress = compress;
+        tokenSource = new CancellationTokenSource();
+
+        SetProgressBarMaximum(1);
+        UpdateProgressStatus("Preparando archivos para copia de seguridad...", 1);
+        int count = await backup.PrepareFilesAsync(tokenSource.Token);
+
+        SetProgressBarMaximum(count);
+        UpdateProgressStatus("Iniciando copia de seguridad...", 0);
+
+        var stopwatch = Stopwatch.StartNew();
+        var progress = new Progress<(string, int)>(((string, int) x) =>
+        {
+            if (stopwatch.Elapsed < refreshFrequency && x.Item2 < count)
+            {
+                return;
+            }
+
+            stopwatch.Restart();
+            UpdateProgressStatus(x.Item1, x.Item2);
+        });
+
+        return await backup.ExecuteAsync(progress, tokenSource.Token);
+    }
+
+    private void UpdateProgressStatus(string label, int value)
+    {
+        pb_Progress.Value = value;
+        lbl_ProgressStatus.Text = label;
+        lbl_FileCount.Text = $"{value} / {pb_Progress.Maximum}";
+    }
+
+    private void SetProgressBarMaximum(int maximum)
+    {
+        pb_Progress.Maximum = maximum;
+        pb_Progress.Style = maximum > 1 ? ProgressBarStyle.Blocks : ProgressBarStyle.Marquee;
+        lbl_FileCount.Visible = maximum > 1;
     }
 
     private void CancelAndCleanup()
     {
-        _backup?.Cancel();
+        tokenSource?.Cancel();
     }
 }
