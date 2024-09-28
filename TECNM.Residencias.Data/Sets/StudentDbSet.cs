@@ -77,18 +77,25 @@ public sealed class StudentDbSet : DbSet<Student>
         }
     }
 
-    public IEnumerable<Student> EnumerateStudents(DateTime from, DateTime to)
+    public IEnumerable<Student> EnumerateStudents(int year, string? semester)
     {
         using var command = Context.Database.CreateCommand();
-        command.CommandText = """
+        string extraParam = "";
+        if (semester != null)
+        {
+            extraParam = "AND Semester = $p1";
+            command.Parameters.Add("$p1", SqliteType.Text).Value = semester;
+        }
+
+        command.CommandText = $"""
         SELECT Id, SpecialtyId, FirstName, LastName, Email, Phone, Gender, Semester, StartDate, EndDate,
                Project, InternalAdvisorId, ExternalAdvisorId, ReviewerAdvisorId, CompanyId, Department,
                Schedule, Notes, IsClosed, UpdatedOn, CreatedOn
         FROM Student
-        WHERE StartDate >= $p0 AND EndDate <= $p1
+        WHERE strftime('%Y', StartDate) = $p0 {extraParam}
         """;
-        command.Parameters.Add("$p0", SqliteType.Text).Value = from.ToLongIsoString();
-        command.Parameters.Add("$p1", SqliteType.Text).Value = to.ToLongIsoString();
+
+        command.Parameters.Add("$p0", SqliteType.Text).Value = year.ToString();
         using var reader = command.ExecuteReader();
 
         while (reader.Read())

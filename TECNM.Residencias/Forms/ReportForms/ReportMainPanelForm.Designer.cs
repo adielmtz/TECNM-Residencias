@@ -33,13 +33,14 @@ namespace TECNM.Residencias.Forms.ReportForms
             label1 = new System.Windows.Forms.Label();
             cb_Year = new System.Windows.Forms.ComboBox();
             label2 = new System.Windows.Forms.Label();
+            button1 = new System.Windows.Forms.Button();
             SuspendLayout();
             // 
             // cb_Semester
             // 
             cb_Semester.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             cb_Semester.FormattingEnabled = true;
-            cb_Semester.Items.AddRange(new object[] { "ENE-JUN", "AGO-DIC" });
+            cb_Semester.Items.AddRange(new object[] { "Todo", "ENE-JUN", "AGO-DIC" });
             cb_Semester.Location = new System.Drawing.Point(12, 27);
             cb_Semester.Name = "cb_Semester";
             cb_Semester.Size = new System.Drawing.Size(146, 23);
@@ -72,11 +73,22 @@ namespace TECNM.Residencias.Forms.ReportForms
             label2.TabIndex = 8;
             label2.Text = "Año:";
             // 
+            // button1
+            // 
+            button1.Location = new System.Drawing.Point(12, 56);
+            button1.Name = "button1";
+            button1.Size = new System.Drawing.Size(75, 23);
+            button1.TabIndex = 9;
+            button1.Text = "Generar";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += GenerateStats_Click;
+            // 
             // ReportMainPanelForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(800, 450);
+            Controls.Add(button1);
             Controls.Add(label2);
             Controls.Add(cb_Year);
             Controls.Add(label1);
@@ -96,5 +108,6 @@ namespace TECNM.Residencias.Forms.ReportForms
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cb_Year;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button button1;
     }
 }

@@ -15,6 +15,21 @@ public sealed class ExtraDbSet : DbSet<Extra>
     {
     }
 
+    public Extra? GetExtra(long id)
+    {
+        using var command = Context.Database.CreateCommand();
+        command.CommandText = "SELECT Id, Type, Value FROM Extra WHERE Id = $id";
+        command.Parameters.Add("$id", SqliteType.Integer).Value = id;
+        using var reader = command.ExecuteReader();
+
+        if (!reader.Read())
+        {
+            return null;
+        }
+
+        return HydrateObject(reader);
+    }
+
     public IEnumerable<Extra> EnumerateExtras()
     {
         using var command = Context.Database.CreateCommand();
@@ -28,16 +43,17 @@ public sealed class ExtraDbSet : DbSet<Extra>
         }
     }
 
-    public IEnumerable<Extra> EnumerateExtras(ExtraType type)
+    public IEnumerable<Extra> EnumerateExtras(long studentId)
     {
         using var command = Context.Database.CreateCommand();
-        command.CommandText = "SELECT Id, Type, Value FROM Extra WHERE Type = $p0 ORDER BY Id";
-        command.Parameters.Add("$p0", SqliteType.Text).Value = type.ToString();
+        command.CommandText = "SELECT ExtraId FROM StudentExtras WHERE StudentId = $id ORDER BY ExtraId";
+        command.Parameters.Add("$id", SqliteType.Integer).Value = studentId;
         using var reader = command.ExecuteReader();
 
         while (reader.Read())
         {
-            Extra extra = HydrateObject(reader);
+            long rowid = reader.GetInt64(0);
+            Extra extra = GetExtra(rowid)!;
             yield return extra;
         }
     }
