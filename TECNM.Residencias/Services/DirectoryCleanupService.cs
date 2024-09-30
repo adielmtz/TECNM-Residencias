@@ -9,7 +9,7 @@ namespace TECNM.Residencias.Services
         public static void DeleteOldFiles(string directory, int maxFilesToKeep)
         {
             IList<string> entries = Directory.EnumerateFiles(directory)
-                .OrderDescending()
+                .Order()
                 .ToList();
 
             if (entries.Count < maxFilesToKeep)

@@ -77,16 +77,7 @@ internal static class StorageService
         {
             File.Delete(filename);
             string directory = Path.GetDirectoryName(filename)!;
-            DeleteEmptyDirectory(directory);
-        }
-    }
-
-    private static void DeleteEmptyDirectory(string directory)
-    {
-        IEnumerable<string> entries = Directory.EnumerateFileSystemEntries(directory);
-        if (!entries.Any())
-        {
-            Directory.Delete(directory);
+            DirectoryCleanupService.DeleteDirectoryIfEmpty(directory);
         }
     }
 
