@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using TECNM.Residencias.Controls;
+using TECNM.Residencias.Data;
 using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Forms.CareerForms;
 using TECNM.Residencias.Forms.CompanyForms;
@@ -23,7 +24,7 @@ public sealed partial class MainWindow : Form
     {
         App.Initialize();
 
-        if (AppSettings.Default.IsBackupRequired)
+        if (AppSettings.Default.IsManualBackupRequired)
         {
             MessageBox.Show(
                 "Es necesario realizar una copia de seguridad.",
@@ -33,6 +34,11 @@ public sealed partial class MainWindow : Form
             );
 
             FormManagerService.OpenDialog<DialogBackupForm>();
+        }
+
+        if (AppSettings.Default.IsAutomaticBackupRequired)
+        {
+            MakeDatabaseBackup();
         }
 
         LoadLastModifiedStudents();
@@ -93,6 +99,18 @@ public sealed partial class MainWindow : Form
             RunQuickSearch();
             e.Handled = true;
         }
+    }
+
+    private void MakeDatabaseBackup()
+    {
+        using var sqlite = App.Database.Open();
+        using var backup = new DbBackup(sqlite, App.DatabaseBackupDirectory);
+        backup.Execute();
+
+        AppSettings.Default.LastAutomaticBackupDate = DateTime.Now;
+        AppSettings.Default.Save();
+
+        DirectoryCleanupService.DeleteOldFiles(App.DatabaseBackupDirectory, 20);
     }
 
     private void LoadLastModifiedStudents()

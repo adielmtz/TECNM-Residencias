@@ -9,8 +9,10 @@ internal sealed class AppSettings
     private static readonly int DefaultAdvisorType = -1;
     private static readonly int DefaultCompanyType = -1;
     private static readonly long DefaultStudentCareer = -1;
-    private static readonly string DefaultLastBackupDate = "2024-09-01 13:00:00";
-    private static readonly TimeSpan DefaultBackupFrequency = TimeSpan.FromDays(30);
+    private static readonly string DefaultLastManualBackupDate = "2024-09-01 13:00:00";
+    private static readonly string DefaultLastAutomaticBackupDate = "2024-09-01 13:00:00";
+    private static readonly TimeSpan DefaultManualBackupFrequency = TimeSpan.FromDays(30);
+    private static readonly TimeSpan DefaultAutomaticBackupFrequency = TimeSpan.FromDays(7);
 
     private static AppSettings? s_instance;
     private IDictionary<string, Setting> _settings;
@@ -59,30 +61,33 @@ internal sealed class AppSettings
         set => SetSetting(nameof(StudentCareer), value);
     }
 
-    public DateTime LastBackupDate
+    public DateTime LastManualBackupDate
     {
-        get => DateTime.Parse(GetSetting(nameof(LastBackupDate), DefaultLastBackupDate).Value);
-        set => SetSetting(nameof(LastBackupDate), value.ToString("yyyy-MM-dd HH:mm:ss"));
+        get => DateTime.Parse(GetSetting(nameof(LastManualBackupDate), DefaultLastManualBackupDate).Value);
+        set => SetSetting(nameof(LastManualBackupDate), $"{value:yyyy-MM-dd HH:mm:ss}");
     }
 
-    public TimeSpan BackupFrequency
+    public TimeSpan ManualBackupFrequency
     {
-        get => TimeSpan.Parse(GetSetting(nameof(BackupFrequency), DefaultBackupFrequency).Value);
-        set => SetSetting(nameof(BackupFrequency), value);
+        get => TimeSpan.Parse(GetSetting(nameof(ManualBackupFrequency), DefaultManualBackupFrequency).Value);
+        set => SetSetting(nameof(ManualBackupFrequency), value);
     }
 
-    /// <summary>
-    /// Gets a value indicating whether a backup is required.
-    /// </summary>
-    /// <remarks>
-    /// The property evaluates to <c>true</c> if the current date and time
-    /// is greater than the sum of the last backup date and the backup frequency.
-    /// This property is not stored in the database.
-    /// </remarks>
-    /// <value>
-    /// <c>true</c> if a backup is required; otherwise, <c>false</c>.
-    /// </value>
-    public bool IsBackupRequired => DateTime.Now > (LastBackupDate + BackupFrequency);
+    public DateTime LastAutomaticBackupDate
+    {
+        get => DateTime.Parse(GetSetting(nameof(LastAutomaticBackupDate), DefaultLastAutomaticBackupDate).Value);
+        set => SetSetting(nameof(LastAutomaticBackupDate), $"{value:yyyy-MM-dd HH:mm:ss}");
+    }
+
+    public TimeSpan AutomaticBackupFrequency
+    {
+        get => TimeSpan.Parse(GetSetting(nameof(AutomaticBackupFrequency), DefaultAutomaticBackupFrequency).Value);
+        set => SetSetting(nameof(AutomaticBackupFrequency), value);
+    }
+
+    public bool IsManualBackupRequired => DateTime.Now > (LastManualBackupDate + ManualBackupFrequency);
+
+    public bool IsAutomaticBackupRequired => DateTime.Now > (LastAutomaticBackupDate + AutomaticBackupFrequency);
 
     public void Save()
     {
