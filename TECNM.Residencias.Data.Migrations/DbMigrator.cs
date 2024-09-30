@@ -18,6 +18,8 @@ public sealed class DbMigrator : IDisposable
         _connection = connection;
     }
 
+    public bool NeedsMigration => UserVersion < CURRENT_VERSION;
+
     private long UserVersion
     {
         get => Convert.ToInt64(GetPragma("user_version"));
@@ -39,13 +41,6 @@ public sealed class DbMigrator : IDisposable
     public void Migrate()
     {
         long version = UserVersion;
-        if (version == CURRENT_VERSION)
-        {
-            return;
-        }
-
-        Debug.Assert(version < CURRENT_VERSION);
-
         ConfigureDatabase();
         _transaction = _connection.BeginTransaction();
 

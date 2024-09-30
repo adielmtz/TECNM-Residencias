@@ -1,5 +1,6 @@
 namespace TECNM.Residencias;
 
+using Microsoft.Data.Sqlite;
 using System;
 using System.IO;
 using System.Reflection;
@@ -64,18 +65,32 @@ internal static class App
 
     public static void Initialize()
     {
-        Directory.CreateDirectory(RootDirectory);
-        Directory.CreateDirectory(FileStorageDirectory);
-        Directory.CreateDirectory(TempStorageDirectory);
-        Directory.CreateDirectory(DatabaseBackupDirectory);
-        InitializeDatabase();
-        s_initialized = true;
+        if (!s_initialized)
+        {
+            Directory.CreateDirectory(RootDirectory);
+            Directory.CreateDirectory(FileStorageDirectory);
+            Directory.CreateDirectory(TempStorageDirectory);
+            Directory.CreateDirectory(DatabaseBackupDirectory);
+            InitializeDatabase();
+            s_initialized = true;
+        }
     }
 
     private static void InitializeDatabase()
     {
         using var sqlite = Database.Open();
         using var migrator = new DbMigrator(sqlite);
-        migrator.Migrate();
+
+        if (migrator.NeedsMigration)
+        {
+            MakeDbBackup(sqlite);
+            migrator.Migrate();
+        }
+    }
+
+    private static void MakeDbBackup(SqliteConnection sqlite)
+    {
+        var backup = new DbBackup(sqlite, DatabaseBackupDirectory);
+        backup.Execute();
     }
 }
