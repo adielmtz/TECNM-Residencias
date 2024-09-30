@@ -61,33 +61,6 @@ public sealed class AdvisorDbSet : DbSet<Advisor>
         }
     }
 
-    public IEnumerable<Advisor> EnumerateAdvisorsByType(AdvisorType type)
-    {
-        using var command = Context.Database.CreateCommand();
-        command.CommandText = "SELECT Id, CompanyId, Type, FirstName, LastName, Section, Role, Email, Phone, Extension, Enabled, UpdatedOn, CreatedOn FROM Advisor WHERE Type = $p0 ORDER BY FirstName, LastName";
-        command.Parameters.Add("$p0", SqliteType.Text).Value = type.ToString();
-        using var reader = command.ExecuteReader();
-
-        while (reader.Read())
-        {
-            Advisor advisor = HydrateObject(reader);
-            yield return advisor;
-        }
-    }
-
-    public IEnumerable<Advisor> EnumerateAdvisors()
-    {
-        using var command = Context.Database.CreateCommand();
-        command.CommandText = "SELECT Id, CompanyId, Type, FirstName, LastName, Section, Role, Email, Phone, Extension, Enabled, UpdatedOn, CreatedOn FROM Advisor";
-        using var reader = command.ExecuteReader();
-
-        while (reader.Read())
-        {
-            Advisor advisor = HydrateObject(reader);
-            yield return advisor;
-        }
-    }
-
     public override bool Insert(Advisor entity)
     {
         using var command = Context.Database.CreateCommand();

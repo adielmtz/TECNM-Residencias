@@ -15,21 +15,6 @@ public sealed class CareerDbSet : DbSet<Career>
     {
     }
 
-    public Career? GetCareerById(long id)
-    {
-        using var command = Context.Database.CreateCommand();
-        command.CommandText = "SELECT Id, Name, Enabled, UpdatedOn, CreatedOn FROM Career WHERE Id = $id";
-        command.Parameters.Add("$id", SqliteType.Integer).Value = id;
-        using var reader = command.ExecuteReader();
-
-        if (!reader.Read())
-        {
-            return null;
-        }
-
-        return HydrateObject(reader);
-    }
-
     public IEnumerable<Career> EnumerateCareers()
     {
         using var command = Context.Database.CreateCommand();

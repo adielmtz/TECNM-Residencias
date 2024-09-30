@@ -15,21 +15,6 @@ public sealed class CompanyDbSet : DbSet<Company>
     {
     }
 
-    public string? GetCompanyNameById(long id)
-    {
-        using var command = Context.Database.CreateCommand();
-        command.CommandText = "SELECT Name FROM Company WHERE Id = $id";
-        command.Parameters.Add("$id", SqliteType.Integer).Value = id;
-        object? result = command.ExecuteScalar();
-
-        if (result is string str)
-        {
-            return str;
-        }
-
-        return null;
-    }
-
     public Company? GetCompanyById(long id)
     {
         using var command = Context.Database.CreateCommand();
