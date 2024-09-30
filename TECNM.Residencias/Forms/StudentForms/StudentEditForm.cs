@@ -333,7 +333,10 @@ public sealed partial class StudentEditForm : Form
     private void DeleteStudent_Click(object sender, EventArgs e)
     {
         DialogResult result = MessageBox.Show(
-            "¿Está seguro de que quiere eliminar el expediente? Esta acción no es reversible.",
+            """
+            ¿Está seguro de que desea eliminar expediente? Esta acción no es revesible.
+            Los documentos del residente también serán eliminados permanentemente.
+            """,
             "Confirmar acción",
             MessageBoxButtons.OKCancel,
             MessageBoxIcon.Warning
