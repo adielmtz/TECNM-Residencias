@@ -348,19 +348,8 @@ public sealed partial class StudentEditForm : Form
         }
 
         using var context = new AppDbContext();
-        int rowCount = context.Students.Delete(_student);
-
-        if (rowCount == 0)
-        {
-            MessageBox.Show(
-                "No se pudo eliminar el expediente.",
-                "Error al eliminar",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Error
-            );
-            return;
-        }
-
+        dcc_Documents.RemoveAll(context.Documents);
+        context.Students.Delete(_student);
         context.Commit();
         Close();
     }

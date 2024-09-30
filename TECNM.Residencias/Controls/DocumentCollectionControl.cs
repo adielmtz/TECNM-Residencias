@@ -3,6 +3,7 @@ namespace TECNM.Residencias.Controls;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
@@ -34,6 +35,23 @@ public sealed partial class DocumentCollectionControl : UserControl
         };
 
         Add(document);
+    }
+
+    public void RemoveAll(DbSet<Document> set)
+    {
+        IList<DocumentListItemControl> controls = flp_ControlContainer.Controls.Cast<DocumentListItemControl>().ToList();
+        for (int i = 0; i < controls.Count; i++)
+        {
+            DocumentListItemControl item = controls[i];
+            flp_ControlContainer.Controls.Remove(item);
+
+            if (!item.IsNew)
+            {
+                _deleted.Add(item.Document);
+            }
+        }
+
+        PurgeDeletedDocuments(set);
     }
 
     public async Task SaveAsync(DbSet<Document> set, Student owner)
