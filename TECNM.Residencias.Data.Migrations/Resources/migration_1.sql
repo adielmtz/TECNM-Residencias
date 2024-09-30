@@ -156,7 +156,7 @@ STRICT;
 CREATE TABLE Document (
     Id           INTEGER PRIMARY KEY
                          NOT NULL,
-    StudentId    INTEGER REFERENCES Student (Id) ON DELETE CASCADE
+    StudentId    INTEGER REFERENCES Student (Id) ON DELETE RESTRICT
                          NOT NULL,
     Type         INTEGER NOT NULL,
     FullPath     TEXT    NOT NULL,
