@@ -34,6 +34,7 @@ namespace TECNM.Residencias.Forms.ReportForms
             cb_Year = new System.Windows.Forms.ComboBox();
             label2 = new System.Windows.Forms.Label();
             button1 = new System.Windows.Forms.Button();
+            chk_OpenDirectory = new System.Windows.Forms.CheckBox();
             SuspendLayout();
             // 
             // cb_Semester
@@ -75,7 +76,7 @@ namespace TECNM.Residencias.Forms.ReportForms
             // 
             // button1
             // 
-            button1.Location = new System.Drawing.Point(12, 56);
+            button1.Location = new System.Drawing.Point(291, 27);
             button1.Name = "button1";
             button1.Size = new System.Drawing.Size(75, 23);
             button1.TabIndex = 9;
@@ -83,11 +84,24 @@ namespace TECNM.Residencias.Forms.ReportForms
             button1.UseVisualStyleBackColor = true;
             button1.Click += GenerateStats_Click;
             // 
+            // chk_OpenDirectory
+            // 
+            chk_OpenDirectory.AutoSize = true;
+            chk_OpenDirectory.Checked = true;
+            chk_OpenDirectory.CheckState = System.Windows.Forms.CheckState.Checked;
+            chk_OpenDirectory.Location = new System.Drawing.Point(12, 59);
+            chk_OpenDirectory.Name = "chk_OpenDirectory";
+            chk_OpenDirectory.Size = new System.Drawing.Size(150, 19);
+            chk_OpenDirectory.TabIndex = 10;
+            chk_OpenDirectory.Text = "Abrir carpeta al finalizar";
+            chk_OpenDirectory.UseVisualStyleBackColor = true;
+            // 
             // ReportMainPanelForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(800, 450);
+            ClientSize = new System.Drawing.Size(379, 90);
+            Controls.Add(chk_OpenDirectory);
             Controls.Add(button1);
             Controls.Add(label2);
             Controls.Add(cb_Year);
@@ -109,5 +123,6 @@ namespace TECNM.Residencias.Forms.ReportForms
         private System.Windows.Forms.ComboBox cb_Year;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.CheckBox chk_OpenDirectory;
     }
 }

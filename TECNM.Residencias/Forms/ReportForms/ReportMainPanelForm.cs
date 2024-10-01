@@ -2,6 +2,7 @@ namespace TECNM.Residencias.Forms.ReportForms;
 
 using ScottPlot;
 using ScottPlot.Plottables;
+using ScottPlot.TickGenerators;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -35,6 +36,7 @@ public sealed partial class ReportMainPanelForm : Form
 
     private void GenerateStats_Click(object sender, EventArgs e)
     {
+        Enabled = false;
         int year = (int) cb_Year.SelectedItem!;
         string? semester = (string?) cb_Semester.SelectedItem;
 
@@ -43,23 +45,42 @@ public sealed partial class ReportMainPanelForm : Form
             semester = null;
         }
 
-        string outputDirectory = GetOuputDirectory(year, semester ?? "Todos");
-        Directory.CreateDirectory(outputDirectory);
+        string rootDirectory = GetOuputDirectory(year, semester ?? "Todos");
+        string chartDirectory = Path.Combine(rootDirectory, "Gráficas");
+        string advisorDirectory = Path.Combine(rootDirectory, "Reportes de asesor interno");
+        Directory.CreateDirectory(rootDirectory);
+        Directory.CreateDirectory(chartDirectory);
+        Directory.CreateDirectory(advisorDirectory);
 
         using var context = new AppDbContext();
         IReadOnlyList<StudentFullDetailsDto> students = FetchStudentData(context, year, semester);
-        GenerateGeneralCsvReport(outputDirectory, students);
+        GenerateGeneralCsvReport(rootDirectory, students);
+        var grouped = GenerateInternalAdvisorCsvReport(advisorDirectory, students);
 
         Statistics stats = CollectStatistics(students);
-        PlotGenderCountImage(stats, outputDirectory);
-        PlotCompanyTypeCountImage(stats, outputDirectory);
-        PlotSpecialtyCountImage(stats, outputDirectory);
-        PlotBarChartCountImage(stats, outputDirectory, ExtraType.Database, "Gestores de bases de datos");
-        PlotBarChartCountImage(stats, outputDirectory, ExtraType.Editor, "Editores de texto");
-        PlotBarChartCountImage(stats, outputDirectory, ExtraType.Language, "Lenguajes de programación");
-        PlotBarChartCountImage(stats, outputDirectory, ExtraType.Methodology, "Metodologías de desarrollo");
+        PlotGenderCountImage(stats, chartDirectory);
+        PlotCompanyTypeCountImage(stats, chartDirectory);
+        PlotSpecialtyCountImage(stats, chartDirectory);
+        PlotAdvisorStudentCountImage(grouped, chartDirectory, "Conteo residentes por asesor");
+        PlotBarChartCountImage(stats, chartDirectory, ExtraType.Database, "Gestores de bases de datos");
+        PlotBarChartCountImage(stats, chartDirectory, ExtraType.Editor, "Editores de texto");
+        PlotBarChartCountImage(stats, chartDirectory, ExtraType.Language, "Lenguajes de programación");
+        PlotBarChartCountImage(stats, chartDirectory, ExtraType.Methodology, "Metodologías de desarrollo");
 
         MessageBox.Show("Reportes generados.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+        if (chk_OpenDirectory.Checked)
+        {
+            var info = new ProcessStartInfo
+            {
+                FileName = "explorer.exe",
+                Arguments = rootDirectory,
+            };
+
+            Process.Start(info);
+        }
+
+        Close();
     }
 
     private string GetOuputDirectory(int year, string semester)
@@ -105,6 +126,7 @@ public sealed partial class ReportMainPanelForm : Form
                 long rowid = (long) advisorId;
                 if (!advisorCache.TryGetValue(rowid, out Advisor? advisor))
                 {
+                    advisor = context.Advisors.GetAdvisorById(rowid);
                     advisorCache[rowid] = advisor!;
                 }
             }
@@ -122,9 +144,9 @@ public sealed partial class ReportMainPanelForm : Form
                 StartDate       = student.StartDate,
                 EndDate         = student.EndDate,
                 Project         = student.Project,
-                InternalAdvisor = advisorCache[student.InternalAdvisorId ?? 0],
-                ExternalAdvisor = advisorCache[student.ExternalAdvisorId ?? 0],
-                ReviewerAdvisor = advisorCache[student.ReviewerAdvisorId ?? 0],
+                InternalAdvisor = student.InternalAdvisorId == null ? null : advisorCache[(long) student.InternalAdvisorId],
+                ExternalAdvisor = student.ExternalAdvisorId == null ? null : advisorCache[(long) student.ExternalAdvisorId],
+                ReviewerAdvisor = student.ReviewerAdvisorId == null ? null : advisorCache[(long) student.ReviewerAdvisorId],
                 Company         = company!,
                 Department      = student.Department,
                 Schedule        = student.Schedule,
@@ -164,6 +186,52 @@ public sealed partial class ReportMainPanelForm : Form
             writer.Write("\"{0}\",", string.Join(", ", student.Extras.Where(it => it.Type == ExtraType.Methodology).Select(it => it.Value)));
             writer.WriteLine();
         }
+    }
+
+    private Dictionary<Advisor, IList<StudentFullDetailsDto>> GenerateInternalAdvisorCsvReport(string outputDirectory, IReadOnlyList<StudentFullDetailsDto> studentList)
+    {
+        Dictionary<Advisor, IList<StudentFullDetailsDto>> groupedByAdvisor = new(studentList.Count);
+        foreach (StudentFullDetailsDto student in studentList)
+        {
+            if (student.InternalAdvisor is null)
+            {
+                continue;
+            }
+
+            IList<StudentFullDetailsDto>? list;
+            if (!groupedByAdvisor.TryGetValue(student.InternalAdvisor, out list))
+            {
+                list = new List<StudentFullDetailsDto>();
+                groupedByAdvisor[student.InternalAdvisor] = list;
+            }
+
+            list.Add(student);
+        }
+
+        foreach (KeyValuePair<Advisor, IList<StudentFullDetailsDto>> kvp in groupedByAdvisor)
+        {
+            Advisor advisor = kvp.Key;
+            IList<StudentFullDetailsDto> students = kvp.Value;
+
+            string filename = Path.Combine(outputDirectory, $"[Reporte] RESIDENTES {advisor.FirstName} {advisor.LastName}.csv");
+            using var stream = new FileStream(filename, FileMode.Create, FileAccess.Write, FileShare.None);
+            using var writer = new StreamWriter(stream, Encoding.UTF8);
+
+            // Write CSV headers
+            writer.WriteLine("\"N. Control\",\"Nombre\",\"Especialidad\",\"Empresa\",\"Proyecto\"");
+
+            foreach (var student in students)
+            {
+                writer.Write("{0},", student.Id);
+                writer.Write("\"{0}\",", $"{student.FirstName} {student.LastName}");
+                writer.Write("\"{0}\",", student.Specialty.Name);
+                writer.Write("\"{0}\",", student.Company.Name);
+                writer.Write("\"{0}\",", student.Project);
+                writer.WriteLine();
+            }
+        }
+
+        return groupedByAdvisor;
     }
 
     private Statistics CollectStatistics(IReadOnlyList<StudentFullDetailsDto> students)
@@ -335,11 +403,43 @@ public sealed partial class ReportMainPanelForm : Form
             pos++;
         }
 
-        plot.Axes.Bottom.TickGenerator = new ScottPlot.TickGenerators.NumericManual(ticks.ToArray());
+        plot.Axes.Bottom.TickGenerator = new NumericManual(ticks.ToArray());
         plot.Axes.Bottom.MajorTickStyle.Length = 0;
         plot.Axes.Margins(bottom: 0);
 
         plot.Title(title);
+        plot.SavePng(
+            Path.Combine(directory, $"[Gráfico] {title}.png"),
+            1280,
+            720
+        );
+    }
+
+    private void PlotAdvisorStudentCountImage(Dictionary<Advisor, IList<StudentFullDetailsDto>> grouped, string directory, string title)
+    {
+        List<Tick> ticks = [];
+        var plot = new Plot();
+        double pos = 1.0;
+
+        foreach (var kvp in grouped)
+        {
+            string label = $"{kvp.Key.FirstName} {kvp.Key.LastName}";
+            double value = kvp.Value.Count;
+
+            var bar = plot.Add.Bar(position: pos, value: value);
+            bar.LegendText = $"({value:0}) {label}";
+            bar.Horizontal = true;
+
+            ticks.Add(new Tick(pos, label));
+            pos++;
+        }
+
+        plot.Axes.Left.TickGenerator = new NumericManual(ticks.ToArray());
+        plot.Axes.Left.MajorTickStyle.Length = 0;
+        plot.Axes.Margins(left: 0);
+
+        plot.Title(title);
+        plot.ShowLegend(alignment: Alignment.UpperRight);
         plot.SavePng(
             Path.Combine(directory, $"[Gráfico] {title}.png"),
             1280,
