@@ -9,8 +9,8 @@ internal sealed class AppSettings
     private static readonly int DefaultAdvisorType = -1;
     private static readonly int DefaultCompanyType = -1;
     private static readonly long DefaultStudentCareer = -1;
-    private static readonly string DefaultLastManualBackupDate = "2024-09-01 13:00:00";
-    private static readonly string DefaultLastAutomaticBackupDate = "2024-09-01 13:00:00";
+    private static readonly string DefaultLastManualBackupDate = "2024-10-01 13:00:00";
+    private static readonly string DefaultLastAutomaticBackupDate = "2024-10-01 13:00:00";
     private static readonly TimeSpan DefaultManualBackupFrequency = TimeSpan.FromDays(30);
     private static readonly TimeSpan DefaultAutomaticBackupFrequency = TimeSpan.FromDays(7);
 
