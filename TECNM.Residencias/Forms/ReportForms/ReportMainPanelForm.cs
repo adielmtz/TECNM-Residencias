@@ -1,7 +1,6 @@
 namespace TECNM.Residencias.Forms.ReportForms;
 
 using ScottPlot;
-using ScottPlot.Plottables;
 using ScottPlot.TickGenerators;
 using System;
 using System.Collections.Generic;
@@ -263,6 +262,12 @@ public sealed partial class ReportMainPanelForm : Form
                 case CompanyType.Industrial:
                     stats.CompanyTypeIndustrialCount++;
                     break;
+                case CompanyType.Services:
+                    stats.CompanyTypeServicesCount++;
+                    break;
+                case CompanyType.Other:
+                    stats.CompanyTypeOtherCount++;
+                    break;
             }
 
             foreach (Extra extra in s.Extras)
@@ -365,11 +370,15 @@ public sealed partial class ReportMainPanelForm : Form
             stats.CompanyTypePublicPercentage,
             stats.CompanyTypePrivatePercentage,
             stats.CompanyTypeIndustrialPercentage,
+            stats.CompanyTypeServicesPercentage,
+            stats.CompanyTypeOtherPercentage,
         });
 
         pie.Slices[0].Label = $"Pública {stats.CompanyTypePublicPercentage:0}%";
         pie.Slices[1].Label = $"Privada {stats.CompanyTypePrivatePercentage:0}%";
         pie.Slices[2].Label = $"Industrial {stats.CompanyTypeIndustrialPercentage:0}%";
+        pie.Slices[3].Label = $"Servicios {stats.CompanyTypeServicesPercentage:0}%";
+        pie.Slices[4].Label = $"Otro {stats.CompanyTypeOtherPercentage:0}%";
 
         pie.ExplodeFraction = 0;
         pie.ShowSliceLabels = true;
@@ -461,11 +470,15 @@ public sealed partial class ReportMainPanelForm : Form
         public int CompanyTypePublicCount;
         public int CompanyTypePrivateCount;
         public int CompanyTypeIndustrialCount;
+        public int CompanyTypeServicesCount;
+        public int CompanyTypeOtherCount;
 
-        public int TotalCompanyTypeCount => CompanyTypePublicCount + CompanyTypePrivateCount + CompanyTypeIndustrialCount;
+        public int TotalCompanyTypeCount => CompanyTypePublicCount + CompanyTypePrivateCount + CompanyTypeIndustrialCount + CompanyTypeServicesCount + CompanyTypeOtherCount;
         public double CompanyTypePublicPercentage => (CompanyTypePublicCount / (double) TotalCompanyTypeCount) * 100.0;
         public double CompanyTypePrivatePercentage => (CompanyTypePrivateCount / (double) TotalCompanyTypeCount) * 100.0;
         public double CompanyTypeIndustrialPercentage => (CompanyTypeIndustrialCount / (double) TotalCompanyTypeCount) * 100.0;
+        public double CompanyTypeServicesPercentage => (CompanyTypeServicesCount / (double) TotalCompanyTypeCount) * 100.0;
+        public double CompanyTypeOtherPercentage => (CompanyTypeOtherCount / (double) TotalCompanyTypeCount) * 100.0;
 
         public Dictionary<long, SpecialtyStatistics> SpecialtyStats = [];
         public Dictionary<Extra, int> ExtraStats = [];

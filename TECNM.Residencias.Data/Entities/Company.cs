@@ -43,4 +43,6 @@ public enum CompanyType
     Public,
     Private,
     Industrial,
+    Services,
+    Other,
 }

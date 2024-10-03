@@ -226,7 +226,7 @@ namespace TECNM.Residencias.Forms
             // 
             cb_CompanyType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             cb_CompanyType.FormattingEnabled = true;
-            cb_CompanyType.Items.AddRange(new object[] { "Ninguno", "Pública", "Privada", "Industrial" });
+            cb_CompanyType.Items.AddRange(new object[] { "Ninguno", "Pública", "Privada", "Industrial", "Servicios", "Otro" });
             cb_CompanyType.Location = new System.Drawing.Point(121, 16);
             cb_CompanyType.Name = "cb_CompanyType";
             cb_CompanyType.Size = new System.Drawing.Size(118, 23);

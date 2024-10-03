@@ -163,6 +163,10 @@ public sealed partial class CompanyListViewForm : Form
                 return "Privada";
             case CompanyType.Industrial:
                 return "Industrial";
+            case CompanyType.Services:
+                return "Servicios";
+            case CompanyType.Other:
+                return "Otro";
             default:
                 throw new UnreachableException();
         }
