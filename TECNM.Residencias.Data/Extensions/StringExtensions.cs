@@ -12,14 +12,17 @@ internal static class StringExtensions
     public static string ToFtsQuery(this string str)
     {
         var builder = new StringBuilder(str.Length);
-        foreach (char c in str)
+        for (int i = 0; i < str.Length; i++)
         {
-            if (char.IsLetterOrDigit(c) || char.IsWhiteSpace(c))
+            char c = str[i];
+            if (!char.IsLetterOrDigit(c) && !char.IsWhiteSpace(c))
             {
-                builder.Append(c);
+                c = ' ';
             }
+
+            builder.Append(c);
         }
 
-        return builder.ToString();
+        return builder.ToString().Trim() + "*";
     }
 }
