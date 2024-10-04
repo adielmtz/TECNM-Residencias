@@ -129,6 +129,8 @@ public sealed partial class MainWindow : Form
     private void RunQuickSearch()
     {
         string query = tb_QuickSearchQuery.Text.Trim();
+        flp_QuickSearchResults.Controls.Clear();
+
         if (query.Length == 0)
         {
             return;
@@ -136,7 +138,6 @@ public sealed partial class MainWindow : Form
 
         using var context = new AppDbContext();
         IEnumerable<Student> students = context.Students.Search(query, 20, 1);
-        flp_QuickSearchResults.Controls.Clear();
 
         foreach (Student student in students)
         {
