@@ -1,5 +1,5 @@
 CREATE TABLE Country (
-    Id   INTEGER PRIMARY KEY
+    Id   INTEGER PRIMARY KEY AUTOINCREMENT
                  NOT NULL,
     Name TEXT    UNIQUE
                  NOT NULL
@@ -8,7 +8,7 @@ STRICT;
 
 
 CREATE TABLE State (
-    Id        INTEGER PRIMARY KEY
+    Id        INTEGER PRIMARY KEY AUTOINCREMENT
                       NOT NULL,
     CountryId INTEGER REFERENCES Country (Id) ON DELETE RESTRICT
                       NOT NULL,
@@ -22,7 +22,7 @@ STRICT;
 
 
 CREATE TABLE City (
-    Id      INTEGER PRIMARY KEY
+    Id      INTEGER PRIMARY KEY AUTOINCREMENT
                     NOT NULL,
     StateId INTEGER REFERENCES State (Id) ON DELETE RESTRICT
                     NOT NULL,
@@ -36,7 +36,7 @@ STRICT;
 
 
 CREATE TABLE Setting (
-    Id        INTEGER PRIMARY KEY
+    Id        INTEGER PRIMARY KEY AUTOINCREMENT
                       NOT NULL,
     Name      TEXT    UNIQUE
                       NOT NULL,
@@ -49,7 +49,7 @@ STRICT;
 
 
 CREATE TABLE Career (
-    Id        INTEGER PRIMARY KEY
+    Id        INTEGER PRIMARY KEY AUTOINCREMENT
                       NOT NULL,
     Name      TEXT    UNIQUE
                       NOT NULL,
@@ -62,7 +62,7 @@ STRICT;
 
 
 CREATE TABLE Specialty (
-    Id        INTEGER PRIMARY KEY
+    Id        INTEGER PRIMARY KEY AUTOINCREMENT
                       NOT NULL,
     CareerId  INTEGER REFERENCES Career (Id) ON DELETE RESTRICT
                       NOT NULL,
@@ -80,7 +80,7 @@ STRICT;
 
 
 CREATE TABLE Company (
-    Id         INTEGER PRIMARY KEY
+    Id         INTEGER PRIMARY KEY AUTOINCREMENT
                        NOT NULL,
     Rfc        TEXT    UNIQUE,
     Type       TEXT    NOT NULL,
@@ -102,7 +102,7 @@ STRICT;
 
 
 CREATE TABLE Advisor (
-    Id        INTEGER PRIMARY KEY
+    Id        INTEGER PRIMARY KEY AUTOINCREMENT
                       NOT NULL,
     CompanyId INTEGER REFERENCES Company (Id) ON DELETE RESTRICT
                       NOT NULL,
@@ -123,7 +123,7 @@ STRICT;
 
 
 CREATE TABLE Student (
-    Id                INTEGER PRIMARY KEY
+    Id                INTEGER PRIMARY KEY AUTOINCREMENT
                               NOT NULL,
     SpecialtyId       INTEGER REFERENCES Specialty (Id) ON DELETE RESTRICT
                               NOT NULL,
@@ -154,7 +154,7 @@ STRICT;
 
 
 CREATE TABLE Document (
-    Id           INTEGER PRIMARY KEY
+    Id           INTEGER PRIMARY KEY AUTOINCREMENT
                          NOT NULL,
     StudentId    INTEGER REFERENCES Student (Id) ON DELETE RESTRICT
                          NOT NULL,
@@ -175,7 +175,7 @@ STRICT;
 
 
 CREATE TABLE Extra (
-    Id    INTEGER PRIMARY KEY
+    Id    INTEGER PRIMARY KEY AUTOINCREMENT
                   NOT NULL,
     Type  TEXT    NOT NULL,
     Value TEXT    NOT NULL,
