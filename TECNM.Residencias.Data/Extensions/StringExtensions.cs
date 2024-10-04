@@ -23,6 +23,6 @@ internal static class StringExtensions
             builder.Append(c);
         }
 
-        return builder.ToString().Trim() + "*";
+        return builder.Trim().Append('*').ToString();
     }
 }
