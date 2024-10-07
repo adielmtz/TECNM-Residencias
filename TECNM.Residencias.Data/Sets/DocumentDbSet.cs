@@ -18,7 +18,13 @@ public sealed class DocumentDbSet : DbSet<Document>
     public IEnumerable<Document> EnumerateDocumentsByStudent(long studentId)
     {
         using var command = Context.Database.CreateCommand();
-        command.CommandText = "SELECT Id, StudentId, Type, FullPath, OriginalName, Size, Hash, CreatedOn FROM Document WHERE StudentId = $p0 ORDER BY Type";
+        command.CommandText = """
+        SELECT Id, StudentId, TypeId, FullPath, OriginalName, Size, Hash, CreatedOn
+        FROM Document
+        WHERE StudentId = $p0
+        ORDER BY TypeId
+        """;
+
         command.Parameters.Add("$p0", SqliteType.Integer).Value = studentId;
         using var reader = command.ExecuteReader();
 
@@ -33,13 +39,13 @@ public sealed class DocumentDbSet : DbSet<Document>
     {
         using var command = Context.Database.CreateCommand();
         command.CommandText = """
-        INSERT INTO Document (StudentId, Type, FullPath, OriginalName, Size, Hash)
+        INSERT INTO Document (StudentId, TypeId, FullPath, OriginalName, Size, Hash)
         VALUES ($p0, $p1, $p2, $p3, $p4, $p5)
         RETURNING Id
         """;
 
         command.Parameters.Add("$p0", SqliteType.Integer).Value = entity.StudentId;
-        command.Parameters.Add("$p1", SqliteType.Integer).Value = entity.Type;
+        command.Parameters.Add("$p1", SqliteType.Integer).Value = entity.TypeId;
         command.Parameters.Add("$p2", SqliteType.Text).Value = entity.FullPath;
         command.Parameters.Add("$p3", SqliteType.Text).Value = entity.OriginalName;
         command.Parameters.Add("$p4", SqliteType.Integer).Value = entity.Size;
@@ -52,26 +58,7 @@ public sealed class DocumentDbSet : DbSet<Document>
 
     public override int Update(Document entity)
     {
-        using var command = Context.Database.CreateCommand();
-        command.CommandText = """
-        UPDATE Document
-        SET StudentId    = $p0,
-            Type         = $p1,
-            FullPath     = $p2,
-            OriginalName = $p3,
-            Size         = $p4,
-            Hash         = $p5
-        WHERE Id = $id
-        """;
-
-        command.Parameters.Add("$p0", SqliteType.Integer).Value = entity.StudentId;
-        command.Parameters.Add("$p1", SqliteType.Integer).Value = entity.Type;
-        command.Parameters.Add("$p2", SqliteType.Text).Value = entity.FullPath;
-        command.Parameters.Add("$p3", SqliteType.Text).Value = entity.OriginalName;
-        command.Parameters.Add("$p4", SqliteType.Integer).Value = entity.Size;
-        command.Parameters.Add("$p5", SqliteType.Text).Value = entity.Hash;
-        command.Parameters.Add("$id", SqliteType.Integer).Value = entity.Id;
-        return command.ExecuteNonQuery();
+        throw new NotImplementedException();
     }
 
     public override int Delete(Document entity)
@@ -84,14 +71,7 @@ public sealed class DocumentDbSet : DbSet<Document>
 
     public override bool InsertOrUpdate(Document entity)
     {
-        if (entity.Id > 0)
-        {
-            return Update(entity) > 0;
-        }
-        else
-        {
-            return Insert(entity);
-        }
+        throw new NotImplementedException();
     }
 
     protected override Document HydrateObject(IDataReader reader)
@@ -101,7 +81,7 @@ public sealed class DocumentDbSet : DbSet<Document>
         {
             Id           = reader.GetInt64(0),
             StudentId    = reader.GetInt64(1),
-            Type         = reader.GetInt32(2),
+            TypeId       = reader.GetInt64(2),
             FullPath     = reader.GetString(3),
             OriginalName = reader.GetString(4),
             Size         = reader.GetInt64(5),

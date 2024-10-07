@@ -16,7 +16,7 @@ public sealed class StudentValidator : AbstractValidator<Student>
         RuleFor(s => s.LastName).NotEmpty().WithName("Apellidos");
         RuleFor(s => s.Email).EmailAddress().WithName("Correo");
         RuleFor(s => s.Phone).Must(DataValidator.BeAPhoneNumber).When(s => s.Phone.Length > 0).WithMessage("Introduzca un número de teléfono válido.");
-        RuleFor(s => s.Gender).IsInEnum().WithMessage("Seleccione el género del residente.");
+        RuleFor(s => s.GenderId).GreaterThan(0).WithMessage("Seleccione el género del residente.");
         RuleFor(s => s.Project).NotEmpty().WithName("Nombre del proyecto");
         RuleFor(s => s.CompanyId).GreaterThan(0).WithMessage("Asigne una empresa para el proyecto.");
         RuleFor(s => s.Semester).NotEmpty().WithMessage("Seleccione el semestre.");

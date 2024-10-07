@@ -18,7 +18,7 @@ public sealed class ExtraDbSet : DbSet<Extra>
     public Extra? GetExtra(long id)
     {
         using var command = Context.Database.CreateCommand();
-        command.CommandText = "SELECT Id, Type, Value FROM Extra WHERE Id = $id";
+        command.CommandText = "SELECT Id, TypeId, Value FROM Extra WHERE Id = $id";
         command.Parameters.Add("$id", SqliteType.Integer).Value = id;
         using var reader = command.ExecuteReader();
 
@@ -33,7 +33,7 @@ public sealed class ExtraDbSet : DbSet<Extra>
     public IEnumerable<Extra> EnumerateExtras()
     {
         using var command = Context.Database.CreateCommand();
-        command.CommandText = "SELECT Id, Type, Value FROM Extra ORDER BY Id";
+        command.CommandText = "SELECT Id, TypeId, Value FROM Extra ORDER BY Id";
         using var reader = command.ExecuteReader();
 
         while (reader.Read())
@@ -122,9 +122,9 @@ public sealed class ExtraDbSet : DbSet<Extra>
         Debug.Assert(reader.FieldCount == 3);
         return new Extra
         {
-            Id    = reader.GetInt64(0),
-            Type  = reader.GetEnum<ExtraType>(1),
-            Value = reader.GetString(2),
+            Id     = reader.GetInt64(0),
+            TypeId = reader.GetInt64(1),
+            Value  = reader.GetString(2),
         };
     }
 }

@@ -10,7 +10,6 @@ public sealed class AdvisorValidator : AbstractValidator<Advisor>
     {
         ClassLevelCascadeMode = CascadeMode.Stop;
         RuleFor(a => a.CompanyId).GreaterThan(0).WithMessage("El asesor debe asignarse a una empresa.");
-        RuleFor(a => a.Type).IsInEnum().WithMessage("Seleccione el tipo de asesor.");
         RuleFor(a => a.FirstName).NotEmpty().WithName("Nombre");
         RuleFor(a => a.LastName).NotEmpty().WithName("Apellidos");
         RuleFor(a => a.Email).EmailAddress().When(c => c.Email.Length > 0).WithName("Correo");

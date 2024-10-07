@@ -16,7 +16,7 @@ public sealed class CompanyValidator : AbstractValidator<Company>
             .When(c => c.Rfc != null)
             .WithMessage("Introduzca un RFC válido.");
 
-        RuleFor(c => c.Type).IsInEnum().WithMessage("Seleccione el tipo de empresa.");
+        RuleFor(c => c.TypeId).GreaterThan(0).WithMessage("Seleccione el tipo de empresa.");
         RuleFor(c => c.Name).NotEmpty().WithName("Nombre de la empresa");
         RuleFor(c => c.Email).EmailAddress().When(c => c.Email.Length > 0).WithName("Correo");
         RuleFor(c => c.Phone).Must(DataValidator.BeAPhoneNumber).When(c => c.Phone.Length > 0).WithMessage("Introduzca un número de teléfono válido.");
