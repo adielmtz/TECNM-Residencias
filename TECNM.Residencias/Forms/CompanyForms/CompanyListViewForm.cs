@@ -2,7 +2,6 @@ namespace TECNM.Residencias.Forms.CompanyForms;
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Extensions;
@@ -33,11 +32,11 @@ public sealed partial class CompanyListViewForm : Form
         {
             var company = (Company) grid.Rows[e.RowIndex].Tag!;
 
-            if (e.ColumnIndex == 12)
+            if (e.ColumnIndex == 13)
             {
                 ShowCompanyEditDialog(company);
             }
-            else if (e.ColumnIndex == 13)
+            else if (e.ColumnIndex == 14)
             {
                 using var dialog = new AdvisorListViewForm(company);
                 dialog.ShowDialog();
@@ -130,20 +129,22 @@ public sealed partial class CompanyListViewForm : Form
             City city = context.Cities.GetCityById(company.CityId);
             State state = context.States.GetStateById(city.StateId);
             Country country = context.Countries.GetCountryById(state.CountryId);
+            CompanyType type = context.CompanyTypes.GetCompanyTypeById(company.TypeId)!;
 
             row.Tag = company;
             row.Cells[0].Value = company.Name;
             row.Cells[1].Value = company.Rfc;
-            row.Cells[2].Value = TranslateCompanyType(company.Type);
+            row.Cells[2].Value = type.ToString();
             row.Cells[3].Value = company.Email;
             row.Cells[4].Value = company.Phone;
-            row.Cells[5].Value = company.Address;
-            row.Cells[6].Value = company.Locality;
-            row.Cells[7].Value = company.PostalCode;
-            row.Cells[8].Value = $"{city}, {state}, {country}";
-            row.Cells[9].Value = company.Enabled;
-            row.Cells[10].Value = company.UpdatedOn;
-            row.Cells[11].Value = company.CreatedOn;
+            row.Cells[5].Value = company.Extension;
+            row.Cells[6].Value = company.Address;
+            row.Cells[7].Value = company.Locality;
+            row.Cells[8].Value = company.PostalCode;
+            row.Cells[9].Value = $"{city}, {state}, {country}";
+            row.Cells[10].Value = company.Enabled;
+            row.Cells[11].Value = company.UpdatedOn;
+            row.Cells[12].Value = company.CreatedOn;
             count++;
         }
 
@@ -153,27 +154,8 @@ public sealed partial class CompanyListViewForm : Form
         UpdateStatusLabel();
     }
 
-    private string TranslateCompanyType(CompanyType type)
-    {
-        switch (type)
-        {
-            case CompanyType.Public:
-                return "Pública";
-            case CompanyType.Private:
-                return "Privada";
-            case CompanyType.Industrial:
-                return "Industrial";
-            case CompanyType.Services:
-                return "Servicios";
-            case CompanyType.Other:
-                return "Otro";
-            default:
-                throw new UnreachableException();
-        }
-    }
-
     private void UpdateStatusLabel()
     {
-        lbl_StatusLabel.Text = $"Página {_currentPage}    Número de registros: {dgv_ListView.RowCount}";
+        lbl_StatusLabel.Text = $"Página {_currentPage}; Número de registros: {dgv_ListView.RowCount}";
     }
 }

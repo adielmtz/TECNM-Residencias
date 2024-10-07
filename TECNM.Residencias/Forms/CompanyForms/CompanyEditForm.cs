@@ -21,7 +21,6 @@ public sealed partial class CompanyEditForm : Form
     {
         InitializeComponent();
         closeConfirmService = new FormConfirmClosingService(this);
-        cb_CompanyType.SelectedIndex = AppSettings.Default.CompanyType;
     }
 
     public CompanyEditForm(Company? entity) : this()
@@ -29,7 +28,6 @@ public sealed partial class CompanyEditForm : Form
         if (entity != null)
         {
             _company = entity;
-            cb_CompanyType.SelectedIndex = (int) entity.Type;
             tb_CompanyRfc.Text = entity.Rfc;
             tb_CompanyName.Text = entity.Name;
             tb_CompanyEmail.Text = entity.Email;
@@ -47,6 +45,26 @@ public sealed partial class CompanyEditForm : Form
     private void CompanyEditForm_Load(object sender, EventArgs e)
     {
         using var context = new AppDbContext();
+
+        bool companySelected = false;
+        foreach (CompanyType type in context.CompanyTypes.EnumerateAll())
+        {
+            int index = cb_CompanyType.Items.Add(type);
+            if (!companySelected)
+            {
+                if (_company.TypeId == type.Id)
+                {
+                    cb_CompanyType.SelectedIndex = index;
+                    companySelected = true;
+                }
+
+                if (AppSettings.Default.CompanyType == type.Id)
+                {
+                    cb_CompanyType.SelectedIndex = index;
+                }
+            }
+        }
+
         IReadOnlyList<Country> countries = context.Countries.GetCountries();
 
         foreach (Country country in countries)
@@ -161,8 +179,8 @@ public sealed partial class CompanyEditForm : Form
 
     private void Save()
     {
-        _company.Type = (CompanyType) cb_CompanyType.SelectedIndex;
-        _company.Rfc = tb_CompanyRfc.Text.Trim();
+        _company.TypeId = ((CompanyType) cb_CompanyType.SelectedItem!).Id;
+        _company.Rfc = tb_CompanyRfc.Text.Trim().ToUpper();
         _company.Name = tb_CompanyName.Text.Trim();
         _company.Email = tb_CompanyEmail.Text.Trim();
         _company.Phone = mtb_CompanyPhone.Text.Trim();
