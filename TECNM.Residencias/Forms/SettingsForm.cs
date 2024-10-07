@@ -49,7 +49,7 @@ public sealed partial class SettingsForm : Form
     {
         var info = new ProcessStartInfo
         {
-            FileName = App.SourceCodeUrl,
+            FileName = "https://github.com/adielmtz/TECNM-Residencias",
             UseShellExecute = true,
         };
 

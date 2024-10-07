@@ -43,8 +43,6 @@ internal static class App
 
     public static string Name => "Archivo de residencias | TECNM";
 
-    public static string SourceCodeUrl => "https://github.com/adielmtz/TECNM-Residencias";
-
     public static Version Version => s_version;
 
     public static bool Initialized => s_initialized;
