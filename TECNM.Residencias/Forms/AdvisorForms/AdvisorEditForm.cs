@@ -21,7 +21,6 @@ public sealed partial class AdvisorEditForm : Form
     {
         InitializeComponent();
         closeConfirmService = new FormConfirmClosingService(this);
-        cb_AdvisorType.SelectedIndex = AppSettings.Default.AdvisorType;
     }
 
     public AdvisorEditForm(Company company, Advisor? entity) : this()
@@ -33,7 +32,7 @@ public sealed partial class AdvisorEditForm : Form
         if (entity != null)
         {
             _advisor = entity;
-            cb_AdvisorType.SelectedIndex = (int) entity.Type;
+            chk_AdvisorInternal.Checked = entity.Internal;
             tb_AdvisorFirstName.Text = entity.FirstName;
             tb_AdvisorLastName.Text = entity.LastName;
             tb_AdvisorSection.Text = entity.Section;
@@ -93,7 +92,7 @@ public sealed partial class AdvisorEditForm : Form
     private void Save()
     {
         _advisor.CompanyId = _company.Id;
-        _advisor.Type = (AdvisorType) cb_AdvisorType.SelectedIndex;
+        _advisor.Internal = chk_AdvisorInternal.Checked;
         _advisor.FirstName = tb_AdvisorFirstName.Text.Trim();
         _advisor.LastName = tb_AdvisorLastName.Text.Trim();
         _advisor.Section = tb_AdvisorSection.Text.Trim();

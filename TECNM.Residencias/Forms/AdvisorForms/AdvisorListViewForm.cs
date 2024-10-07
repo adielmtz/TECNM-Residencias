@@ -2,7 +2,6 @@ namespace TECNM.Residencias.Forms.AdvisorForms;
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Extensions;
@@ -69,29 +68,20 @@ public sealed partial class AdvisorListViewForm : Form
 
             row.Tag = advisor;
             row.Cells[0].Value = advisor.ToString();
-            row.Cells[1].Value = TranslateAdvisorTypeEnum(advisor.Type);
+            row.Cells[1].Value = advisor.Internal;
             row.Cells[2].Value = advisor.Section;
             row.Cells[3].Value = advisor.Role;
             row.Cells[4].Value = advisor.Email;
             row.Cells[5].Value = advisor.Phone;
-            row.Cells[6].Value = advisor.Enabled;
-            row.Cells[7].Value = advisor.UpdatedOn;
-            row.Cells[8].Value = advisor.CreatedOn;
+            row.Cells[6].Value = advisor.Extension;
+            row.Cells[7].Value = advisor.Enabled;
+            row.Cells[8].Value = advisor.UpdatedOn;
+            row.Cells[9].Value = advisor.CreatedOn;
             count++;
         }
 
         dgv_ListView.ClearSelection();
         UpdateStatusLabel();
-    }
-
-    private string TranslateAdvisorTypeEnum(AdvisorType type)
-    {
-        return type switch
-        {
-            AdvisorType.Internal => "Interno",
-            AdvisorType.External => "Externo",
-            _ => throw new UnreachableException(),
-        };
     }
 
     private void UpdateStatusLabel()

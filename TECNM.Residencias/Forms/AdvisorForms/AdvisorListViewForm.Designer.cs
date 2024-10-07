@@ -33,11 +33,12 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             button1 = new System.Windows.Forms.Button();
             lbl_StatusLabel = new System.Windows.Forms.Label();
             ListAdvisorName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ListAdvisorType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            ListAdvisorType = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             ListAdvisorSection = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ListAdvisorRole = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ListAdvisorEmail = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ListAdvisorPhone = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            ListAdvisorPhoneExt = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ListAdvisorEnabled = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             ListAdvisorUpdatedOn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ListAdvisorCreatedOn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -52,7 +53,7 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             dgv_ListView.AllowUserToResizeRows = false;
             dgv_ListView.Anchor =  System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             dgv_ListView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgv_ListView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { ListAdvisorName, ListAdvisorType, ListAdvisorSection, ListAdvisorRole, ListAdvisorEmail, ListAdvisorPhone, ListAdvisorEnabled, ListAdvisorUpdatedOn, ListAdvisorCreatedOn, ListAdvisorActions });
+            dgv_ListView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { ListAdvisorName, ListAdvisorType, ListAdvisorSection, ListAdvisorRole, ListAdvisorEmail, ListAdvisorPhone, ListAdvisorPhoneExt, ListAdvisorEnabled, ListAdvisorUpdatedOn, ListAdvisorCreatedOn, ListAdvisorActions });
             dgv_ListView.Location = new System.Drawing.Point(12, 12);
             dgv_ListView.Name = "dgv_ListView";
             dgv_ListView.ReadOnly = true;
@@ -94,10 +95,12 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             // ListAdvisorType
             // 
             ListAdvisorType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            ListAdvisorType.HeaderText = "Tipo";
+            ListAdvisorType.HeaderText = "Interno";
             ListAdvisorType.Name = "ListAdvisorType";
             ListAdvisorType.ReadOnly = true;
-            ListAdvisorType.Width = 55;
+            ListAdvisorType.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            ListAdvisorType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            ListAdvisorType.Width = 70;
             // 
             // ListAdvisorSection
             // 
@@ -130,6 +133,14 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             ListAdvisorPhone.Name = "ListAdvisorPhone";
             ListAdvisorPhone.ReadOnly = true;
             ListAdvisorPhone.Width = 77;
+            // 
+            // ListAdvisorPhoneExt
+            // 
+            ListAdvisorPhoneExt.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            ListAdvisorPhoneExt.HeaderText = "Extension";
+            ListAdvisorPhoneExt.Name = "ListAdvisorPhoneExt";
+            ListAdvisorPhoneExt.ReadOnly = true;
+            ListAdvisorPhoneExt.Width = 83;
             // 
             // ListAdvisorEnabled
             // 
@@ -187,11 +198,12 @@ namespace TECNM.Residencias.Forms.AdvisorForms
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label lbl_StatusLabel;
         private System.Windows.Forms.DataGridViewTextBoxColumn ListAdvisorName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ListAdvisorType;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn ListAdvisorType;
         private System.Windows.Forms.DataGridViewTextBoxColumn ListAdvisorSection;
         private System.Windows.Forms.DataGridViewTextBoxColumn ListAdvisorRole;
         private System.Windows.Forms.DataGridViewTextBoxColumn ListAdvisorEmail;
         private System.Windows.Forms.DataGridViewTextBoxColumn ListAdvisorPhone;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ListAdvisorPhoneExt;
         private System.Windows.Forms.DataGridViewCheckBoxColumn ListAdvisorEnabled;
         private System.Windows.Forms.DataGridViewTextBoxColumn ListAdvisorUpdatedOn;
         private System.Windows.Forms.DataGridViewTextBoxColumn ListAdvisorCreatedOn;

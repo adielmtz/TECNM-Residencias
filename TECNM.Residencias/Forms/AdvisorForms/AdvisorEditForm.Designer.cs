@@ -30,8 +30,6 @@ namespace TECNM.Residencias.Forms.AdvisorForms
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdvisorEditForm));
             btn_CancelEdit = new System.Windows.Forms.Button();
-            cb_AdvisorType = new System.Windows.Forms.ComboBox();
-            label1 = new System.Windows.Forms.Label();
             label2 = new System.Windows.Forms.Label();
             tb_AdvisorFirstName = new System.Windows.Forms.TextBox();
             label3 = new System.Windows.Forms.Label();
@@ -51,6 +49,7 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             tb_AdvisorExtension = new System.Windows.Forms.TextBox();
             btn_ChooseCompany = new System.Windows.Forms.Button();
             tb_AdvisorCompany = new System.Windows.Forms.TextBox();
+            chk_AdvisorInternal = new System.Windows.Forms.CheckBox();
             SuspendLayout();
             // 
             // btn_CancelEdit
@@ -63,30 +62,10 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             btn_CancelEdit.Text = "Cancelar";
             btn_CancelEdit.UseVisualStyleBackColor = true;
             // 
-            // cb_AdvisorType
-            // 
-            cb_AdvisorType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            cb_AdvisorType.FormattingEnabled = true;
-            cb_AdvisorType.Items.AddRange(new object[] { "Interno", "Externo" });
-            cb_AdvisorType.Location = new System.Drawing.Point(12, 27);
-            cb_AdvisorType.Name = "cb_AdvisorType";
-            cb_AdvisorType.Size = new System.Drawing.Size(83, 23);
-            cb_AdvisorType.TabIndex = 0;
-            cb_AdvisorType.TabStop = false;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(12, 9);
-            label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(35, 15);
-            label1.TabIndex = 0;
-            label1.Text = "Tipo*";
-            // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new System.Drawing.Point(100, 9);
+            label2.Location = new System.Drawing.Point(12, 9);
             label2.Name = "label2";
             label2.Size = new System.Drawing.Size(56, 15);
             label2.TabIndex = 0;
@@ -94,9 +73,9 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             // 
             // tb_AdvisorFirstName
             // 
-            tb_AdvisorFirstName.Location = new System.Drawing.Point(100, 27);
+            tb_AdvisorFirstName.Location = new System.Drawing.Point(12, 27);
             tb_AdvisorFirstName.Name = "tb_AdvisorFirstName";
-            tb_AdvisorFirstName.Size = new System.Drawing.Size(146, 23);
+            tb_AdvisorFirstName.Size = new System.Drawing.Size(190, 23);
             tb_AdvisorFirstName.TabIndex = 1;
             tb_AdvisorFirstName.KeyPress += QuickSave_KeyPress;
             // 
@@ -195,7 +174,7 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new System.Drawing.Point(252, 9);
+            label8.Location = new System.Drawing.Point(208, 9);
             label8.Name = "label8";
             label8.Size = new System.Drawing.Size(61, 15);
             label8.TabIndex = 0;
@@ -203,9 +182,9 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             // 
             // tb_AdvisorLastName
             // 
-            tb_AdvisorLastName.Location = new System.Drawing.Point(252, 27);
+            tb_AdvisorLastName.Location = new System.Drawing.Point(208, 27);
             tb_AdvisorLastName.Name = "tb_AdvisorLastName";
-            tb_AdvisorLastName.Size = new System.Drawing.Size(146, 23);
+            tb_AdvisorLastName.Size = new System.Drawing.Size(190, 23);
             tb_AdvisorLastName.TabIndex = 2;
             tb_AdvisorLastName.KeyPress += QuickSave_KeyPress;
             // 
@@ -257,6 +236,16 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             tb_AdvisorCompany.TabIndex = 0;
             tb_AdvisorCompany.TabStop = false;
             // 
+            // chk_AdvisorInternal
+            // 
+            chk_AdvisorInternal.AutoSize = true;
+            chk_AdvisorInternal.Location = new System.Drawing.Point(98, 276);
+            chk_AdvisorInternal.Name = "chk_AdvisorInternal";
+            chk_AdvisorInternal.Size = new System.Drawing.Size(64, 19);
+            chk_AdvisorInternal.TabIndex = 10;
+            chk_AdvisorInternal.Text = "Interno";
+            chk_AdvisorInternal.UseVisualStyleBackColor = true;
+            // 
             // AdvisorEditForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -264,6 +253,7 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             CancelButton = btn_CancelEdit;
             ClientSize = new System.Drawing.Size(410, 337);
             ControlBox = false;
+            Controls.Add(chk_AdvisorInternal);
             Controls.Add(tb_AdvisorCompany);
             Controls.Add(btn_ChooseCompany);
             Controls.Add(tb_AdvisorExtension);
@@ -283,8 +273,6 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             Controls.Add(label3);
             Controls.Add(tb_AdvisorFirstName);
             Controls.Add(label2);
-            Controls.Add(label1);
-            Controls.Add(cb_AdvisorType);
             Controls.Add(btn_CancelEdit);
             Icon = (System.Drawing.Icon) resources.GetObject("$this.Icon");
             Name = "AdvisorEditForm";
@@ -297,8 +285,6 @@ namespace TECNM.Residencias.Forms.AdvisorForms
         #endregion
 
         private System.Windows.Forms.Button btn_CancelEdit;
-        private System.Windows.Forms.ComboBox cb_AdvisorType;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox tb_AdvisorFirstName;
         private System.Windows.Forms.Label label3;
@@ -318,5 +304,6 @@ namespace TECNM.Residencias.Forms.AdvisorForms
         private System.Windows.Forms.TextBox tb_AdvisorExtension;
         private System.Windows.Forms.Button btn_ChooseCompany;
         private System.Windows.Forms.TextBox tb_AdvisorCompany;
+        private System.Windows.Forms.CheckBox chk_AdvisorInternal;
     }
 }
