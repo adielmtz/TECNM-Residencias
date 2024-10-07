@@ -4,6 +4,7 @@ using Microsoft.Data.Sqlite;
 using TECNM.Residencias.Data;
 using TECNM.Residencias.Data.Sets;
 using TECNM.Residencias.Data.Sets.Location;
+using TECNM.Residencias.Data.Sets.Types;
 
 internal sealed class AppDbContext : IDbContext
 {
@@ -37,17 +38,29 @@ internal sealed class AppDbContext : IDbContext
     private SpecialtyDbSet? _specialties;
     public SpecialtyDbSet Specialties => _specialties ??= new SpecialtyDbSet(this);
 
+    private CompanyTypeDbSet? _companyTypes;
+    public CompanyTypeDbSet CompanyTypes => _companyTypes ??= new CompanyTypeDbSet(this);
+
     private CompanyDbSet? _companies;
     public CompanyDbSet Companies => _companies ??= new CompanyDbSet(this);
 
     private AdvisorDbSet? _advisors;
     public AdvisorDbSet Advisors => _advisors ??= new AdvisorDbSet(this);
 
+    private GenderDbSet? _genders;
+    public GenderDbSet Genders => _genders ??= new GenderDbSet(this);
+
     private StudentDbSet? _students;
     public StudentDbSet Students => _students ??= new StudentDbSet(this);
 
+    private DocumentTypeDbSet? _documentTypes;
+    public DocumentTypeDbSet DocumentTypes => _documentTypes ??= new DocumentTypeDbSet(this);
+
     private DocumentDbSet? _documents;
     public DocumentDbSet Documents => _documents ??= new DocumentDbSet(this);
+
+    private ExtraTypeDbSet? _extraTypes;
+    public ExtraTypeDbSet ExtraTypes => _extraTypes ??= new ExtraTypeDbSet(this);
 
     private ExtraDbSet? _extras;
     public ExtraDbSet Extras => _extras ??= new ExtraDbSet(this);
