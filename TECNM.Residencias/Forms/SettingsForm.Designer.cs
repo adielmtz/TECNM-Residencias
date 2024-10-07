@@ -47,15 +47,11 @@ namespace TECNM.Residencias.Forms
             label5 = new System.Windows.Forms.Label();
             cb_CompanyType = new System.Windows.Forms.ComboBox();
             button4 = new System.Windows.Forms.Button();
-            groupBox4 = new System.Windows.Forms.GroupBox();
-            label4 = new System.Windows.Forms.Label();
-            cb_AdvisorType = new System.Windows.Forms.ComboBox();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
             groupBox6.SuspendLayout();
             groupBox5.SuspendLayout();
-            groupBox4.SuspendLayout();
             SuspendLayout();
             // 
             // lbl_SqliteVersion
@@ -165,7 +161,6 @@ namespace TECNM.Residencias.Forms
             groupBox3.Controls.Add(groupBox6);
             groupBox3.Controls.Add(groupBox5);
             groupBox3.Controls.Add(button4);
-            groupBox3.Controls.Add(groupBox4);
             groupBox3.Location = new System.Drawing.Point(12, 12);
             groupBox3.Name = "groupBox3";
             groupBox3.Size = new System.Drawing.Size(523, 429);
@@ -177,7 +172,7 @@ namespace TECNM.Residencias.Forms
             // 
             groupBox6.Controls.Add(cb_StudentCareer);
             groupBox6.Controls.Add(label6);
-            groupBox6.Location = new System.Drawing.Point(6, 138);
+            groupBox6.Location = new System.Drawing.Point(6, 80);
             groupBox6.Name = "groupBox6";
             groupBox6.Size = new System.Drawing.Size(511, 52);
             groupBox6.TabIndex = 7;
@@ -206,7 +201,7 @@ namespace TECNM.Residencias.Forms
             // 
             groupBox5.Controls.Add(label5);
             groupBox5.Controls.Add(cb_CompanyType);
-            groupBox5.Location = new System.Drawing.Point(6, 80);
+            groupBox5.Location = new System.Drawing.Point(6, 22);
             groupBox5.Name = "groupBox5";
             groupBox5.Size = new System.Drawing.Size(511, 52);
             groupBox5.TabIndex = 6;
@@ -226,7 +221,6 @@ namespace TECNM.Residencias.Forms
             // 
             cb_CompanyType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             cb_CompanyType.FormattingEnabled = true;
-            cb_CompanyType.Items.AddRange(new object[] { "Ninguno", "Pública", "Privada", "Industrial", "Servicios", "Otro" });
             cb_CompanyType.Location = new System.Drawing.Point(121, 16);
             cb_CompanyType.Name = "cb_CompanyType";
             cb_CompanyType.Size = new System.Drawing.Size(118, 23);
@@ -242,36 +236,6 @@ namespace TECNM.Residencias.Forms
             button4.Text = "Guardar";
             button4.UseVisualStyleBackColor = true;
             button4.Click += SaveAppSettings_Click;
-            // 
-            // groupBox4
-            // 
-            groupBox4.Controls.Add(label4);
-            groupBox4.Controls.Add(cb_AdvisorType);
-            groupBox4.Location = new System.Drawing.Point(6, 22);
-            groupBox4.Name = "groupBox4";
-            groupBox4.Size = new System.Drawing.Size(511, 52);
-            groupBox4.TabIndex = 4;
-            groupBox4.TabStop = false;
-            groupBox4.Text = "Asesores";
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Location = new System.Drawing.Point(6, 19);
-            label4.Name = "label4";
-            label4.Size = new System.Drawing.Size(94, 15);
-            label4.TabIndex = 3;
-            label4.Text = "Tipo por defecto";
-            // 
-            // cb_AdvisorType
-            // 
-            cb_AdvisorType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            cb_AdvisorType.FormattingEnabled = true;
-            cb_AdvisorType.Items.AddRange(new object[] { "Ninguno", "Interno", "Externo" });
-            cb_AdvisorType.Location = new System.Drawing.Point(121, 16);
-            cb_AdvisorType.Name = "cb_AdvisorType";
-            cb_AdvisorType.Size = new System.Drawing.Size(118, 23);
-            cb_AdvisorType.TabIndex = 1;
             // 
             // SettingsForm
             // 
@@ -297,8 +261,6 @@ namespace TECNM.Residencias.Forms
             groupBox6.PerformLayout();
             groupBox5.ResumeLayout(false);
             groupBox5.PerformLayout();
-            groupBox4.ResumeLayout(false);
-            groupBox4.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -315,9 +277,6 @@ namespace TECNM.Residencias.Forms
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ComboBox cb_AdvisorType;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.ComboBox cb_CompanyType;

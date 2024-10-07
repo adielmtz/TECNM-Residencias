@@ -18,7 +18,7 @@ public sealed partial class SettingsForm : Form
     {
         lbl_SqliteVersion.Text = "SQLite " + GetSqliteVersion();
         lbl_AppVersion.Text = "Versión " + App.Version.ToString(fieldCount: 3);
-        LoadSavedSettings();
+        LoadComboBoxItems();
     }
 
     private void DatabaseOptimize_Click(object sender, EventArgs e)
@@ -58,25 +58,32 @@ public sealed partial class SettingsForm : Form
 
     private void SaveAppSettings_Click(object sender, EventArgs e)
     {
-        AppSettings.Default.AdvisorType = cb_AdvisorType.SelectedIndex - 1;
-        AppSettings.Default.CompanyType = cb_CompanyType.SelectedIndex - 1;
+        AppSettings.Default.CompanyType = ((CompanyType) cb_CompanyType.SelectedItem!).Id;
         AppSettings.Default.StudentCareer = ((Career) cb_StudentCareer.SelectedItem!).Id;
         AppSettings.Default.Save();
         Close();
     }
 
-    private void LoadSavedSettings()
+    private void LoadComboBoxItems()
     {
-        cb_AdvisorType.SelectedIndex = AppSettings.Default.AdvisorType + 1;
-        cb_CompanyType.SelectedIndex = AppSettings.Default.CompanyType + 1;
-
         using var context = new AppDbContext();
-        IEnumerable<Career> careers = context.Careers.EnumerateCareers();
 
-        cb_StudentCareer.Items.Add(new Career { Id = -1, Name = "Ninguno" });
+        cb_CompanyType.Items.Add(new CompanyType { Id = 0, Label = "Ninguno" });
+        cb_CompanyType.SelectedIndex = 0;
+
+        foreach (CompanyType type in context.CompanyTypes.EnumerateAll())
+        {
+            int index = cb_CompanyType.Items.Add(type);
+            if (AppSettings.Default.CompanyType == type.Id)
+            {
+                cb_CompanyType.SelectedIndex = index;
+            }
+        }
+
+        cb_StudentCareer.Items.Add(new Career { Id = 0, Name = "Ninguno" });
         cb_StudentCareer.SelectedIndex = 0;
 
-        foreach (Career career in careers)
+        foreach (Career career in context.Careers.EnumerateCareers(enabled: true))
         {
             int index = cb_StudentCareer.Items.Add(career);
             if (AppSettings.Default.StudentCareer == career.Id)

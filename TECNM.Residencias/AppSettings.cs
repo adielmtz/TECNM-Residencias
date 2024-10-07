@@ -6,7 +6,6 @@ using TECNM.Residencias.Data.Entities;
 
 internal sealed class AppSettings
 {
-    private static readonly int DefaultAdvisorType = -1;
     private static readonly int DefaultCompanyType = -1;
     private static readonly long DefaultStudentCareer = -1;
     private static readonly string DefaultLastManualBackupDate = "2024-10-01 13:00:00";
@@ -43,13 +42,7 @@ internal sealed class AppSettings
         _settings = settings;
     }
 
-    public int AdvisorType
-    {
-        get => int.Parse(GetSetting(nameof(AdvisorType), DefaultAdvisorType).Value);
-        set => SetSetting(nameof(AdvisorType), value);
-    }
-
-    public int CompanyType
+    public long CompanyType
     {
         get => int.Parse(GetSetting(nameof(CompanyType), DefaultCompanyType).Value);
         set => SetSetting(nameof(CompanyType), value);
