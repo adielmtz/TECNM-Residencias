@@ -8,7 +8,7 @@ public sealed class Advisor
 
     public long CompanyId { get; set; }
 
-    public AdvisorType Type { get; set; }
+    public bool Internal { get; set; }
 
     public string FirstName { get; set; } = "";
 
@@ -34,10 +34,4 @@ public sealed class Advisor
     {
         return $"{FirstName} {LastName}";
     }
-}
-
-public enum AdvisorType
-{
-    Internal,
-    External,
 }

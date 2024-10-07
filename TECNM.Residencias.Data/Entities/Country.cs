@@ -1,11 +1,24 @@
 namespace TECNM.Residencias.Data.Entities;
 
-public sealed record Country
+/// <summary>
+/// Represents a country entity in the database.
+/// </summary>
+public sealed class Country
 {
-    public required long Id { get; init; }
+    /// <summary>
+    /// Gets or sets the unique rowid of the entity.
+    /// </summary>
+    public long Id { get; set; }
 
-    public required string Name { get; init; }
+    /// <summary>
+    /// Gets or sets the name of the country.
+    /// </summary>
+    public string Name { get; set; } = "";
 
+    /// <summary>
+    /// Returns the country name as string representation.
+    /// </summary>
+    /// <returns>The name of the country.</returns>
     public override string ToString()
     {
         return Name;

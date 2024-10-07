@@ -16,7 +16,7 @@ public sealed class Student
 
     public string Phone { get; set; } = "";
 
-    public Gender Gender { get; set; }
+    public long GenderId { get; set; }
 
     public string Semester { get; set; } = "";
 
@@ -26,21 +26,21 @@ public sealed class Student
 
     public string Project { get; set; } = "";
 
+    public long CompanyId { get; set; }
+
     public long? InternalAdvisorId { get; set; }
 
     public long? ExternalAdvisorId { get; set; }
 
     public long? ReviewerAdvisorId { get; set; }
 
-    public long CompanyId { get; set; }
-
-    public string Department { get; set; } = "";
+    public string Section { get; set; } = "";
 
     public string Schedule { get; set; } = "";
 
     public string Notes { get; set; } = "";
 
-    public bool IsClosed { get; set; }
+    public bool Closed { get; set; }
 
     public DateTime UpdatedOn { get; set; }
 
@@ -50,11 +50,4 @@ public sealed class Student
     {
         return $"[{Id}] {FirstName} {LastName}";
     }
-}
-
-public enum Gender
-{
-    Male,
-    Female,
-    Other,
 }

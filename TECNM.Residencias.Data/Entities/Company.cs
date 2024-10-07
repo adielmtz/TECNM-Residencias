@@ -6,9 +6,9 @@ public sealed class Company
 {
     public long Id { get; set; }
 
-    public string? Rfc { get; set; }
+    public long TypeId { get; set; }
 
-    public CompanyType Type { get; set; }
+    public string? Rfc { get; set; }
 
     public string Name { get; set; } = "";
 
@@ -36,13 +36,4 @@ public sealed class Company
     {
         return Name;
     }
-}
-
-public enum CompanyType
-{
-    Public,
-    Private,
-    Industrial,
-    Services,
-    Other,
 }

@@ -1,18 +1,10 @@
 namespace TECNM.Residencias.Data.Entities;
 
-public sealed record Extra
+public sealed class Extra
 {
-    public required long Id { get; init; }
+    public long Id { get; set; }
 
-    public required ExtraType Type { get; init; }
+    public long TypeId { get; set; }
 
-    public required string Value { get; init; }
-}
-
-public enum ExtraType
-{
-    Database,
-    Editor,
-    Language,
-    Methodology,
+    public string Value { get; set; } = "";
 }

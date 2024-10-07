@@ -1,13 +1,29 @@
 namespace TECNM.Residencias.Data.Entities;
 
-public sealed record State
+/// <summary>
+/// Represents a state entity in the database.
+/// </summary>
+public sealed class State
 {
-    public required long Id { get; init; }
+    /// <summary>
+    /// Gets or sets the unique rowid of the entity.
+    /// </summary>
+    public long Id { get; set; }
 
-    public required long CountryId { get; init; }
+    /// <summary>
+    /// Gets or sets the unique rowid for the country to which the state belongs.
+    /// </summary>
+    public long CountryId { get; set; }
 
-    public required string Name { get; init; }
+    /// <summary>
+    /// Gets or sets the name of the state.
+    /// </summary>
+    public string Name { get; set; } = "";
 
+    /// <summary>
+    /// Returns the state name as string representation.
+    /// </summary>
+    /// <returns>The name of the state.</returns>
     public override string ToString()
     {
         return Name;

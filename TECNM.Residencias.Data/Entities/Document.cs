@@ -8,7 +8,7 @@ public sealed class Document
 
     public long StudentId { get; set; }
 
-    public int Type { get; set; }
+    public long TypeId { get; set; }
 
     public string FullPath { get; set; } = "";
 

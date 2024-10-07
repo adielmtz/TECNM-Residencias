@@ -4,11 +4,9 @@ using System;
 
 public sealed class Setting
 {
-    public long Id { get; set; }
+    public string Name { get; set; } = "";
 
-    public required string Name { get; set; }
-
-    public required string Value { get; set; }
+    public string Value { get; set; } = "";
 
     public DateTime UpdatedOn { get; set; }
 
