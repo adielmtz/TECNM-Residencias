@@ -2,7 +2,6 @@ namespace TECNM.Residencias.Forms.StudentForms;
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Extensions;
@@ -29,6 +28,16 @@ public sealed partial class StudentListViewForm : Form
     {
         var grid = (DataGridView) sender;
         if (grid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
+        {
+            var student = (Student) grid.Rows[e.RowIndex].Tag!;
+            ShowStudentEditDialog(student);
+        }
+    }
+
+    private void ListView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+    {
+        var grid = (DataGridView) sender;
+        if (e.RowIndex >= 0)
         {
             var student = (Student) grid.Rows[e.RowIndex].Tag!;
             ShowStudentEditDialog(student);
@@ -96,6 +105,8 @@ public sealed partial class StudentListViewForm : Form
     private void SearchStudents()
     {
         string query = tb_SearchQuery.Text.Trim();
+        dgv_ListView.Rows.Clear();
+
         if (query.Length == 0)
         {
             return;
@@ -117,6 +128,7 @@ public sealed partial class StudentListViewForm : Form
             int index = dgv_ListView.Rows.Add();
             DataGridViewRow row = dgv_ListView.Rows[index];
 
+            Gender gender = context.Genders.GetGenderById(student.GenderId)!;
             Specialty specialty = context.Specialties.GetSpecialtyById(student.SpecialtyId)!;
             Advisor? internAdvisor = context.Advisors.GetAdvisorById(student.InternalAdvisorId ?? 0);
             Advisor? externAdvisor = context.Advisors.GetAdvisorById(student.ExternalAdvisorId ?? 0);
@@ -126,7 +138,7 @@ public sealed partial class StudentListViewForm : Form
             row.Tag = student;
             row.Cells[0].Value = student.Id;
             row.Cells[1].Value = $"{student.FirstName} {student.LastName}";
-            row.Cells[2].Value = TranslateGenderEnum(student.Gender);
+            row.Cells[2].Value = gender;
             row.Cells[3].Value = student.Email;
             row.Cells[4].Value = specialty.Name;
             row.Cells[5].Value = student.Semester;
@@ -136,9 +148,9 @@ public sealed partial class StudentListViewForm : Form
             row.Cells[9].Value = externAdvisor?.ToString() ?? "SIN ASIGNAR";
             row.Cells[10].Value = reviewer?.ToString() ?? "SIN ASIGNAR";
             row.Cells[11].Value = company.Name;
-            row.Cells[12].Value = student.Department;
+            row.Cells[12].Value = student.Section;
             row.Cells[13].Value = student.Schedule;
-            row.Cells[14].Value = student.IsClosed;
+            row.Cells[14].Value = student.Closed;
             row.Cells[15].Value = student.Notes;
             row.Cells[16].Value = student.UpdatedOn;
             row.Cells[17].Value = student.CreatedOn;
@@ -151,29 +163,8 @@ public sealed partial class StudentListViewForm : Form
         UpdateStatusLabel();
     }
 
-    private string TranslateGenderEnum(Gender gender)
-    {
-        return gender switch
-        {
-            Gender.Male => "Hombre",
-            Gender.Female => "Mujer",
-            Gender.Other => "Otro",
-            _ => throw new UnreachableException(),
-        };
-    }
-
     private void UpdateStatusLabel()
     {
-        lbl_StatusLabel.Text = $"Página {_currentPage}    Número de registros: {dgv_ListView.RowCount}";
-    }
-
-    private void ListView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-    {
-        var grid = (DataGridView) sender;
-        if (e.RowIndex >= 0)
-        {
-            var student = (Student) grid.Rows[e.RowIndex].Tag!;
-            ShowStudentEditDialog(student);
-        }
+        lbl_StatusLabel.Text = $"Página {_currentPage}; Número de registros: {dgv_ListView.RowCount}";
     }
 }

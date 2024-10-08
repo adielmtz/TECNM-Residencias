@@ -47,11 +47,6 @@ public sealed partial class AdvisorQuickSearchForm : Form
 
         foreach (Advisor advisor in advisors)
         {
-            if (FilterCompany != null && advisor.CompanyId != FilterCompany.Id)
-            {
-                continue;
-            }
-
             int index = dgv_ListView.Rows.Add();
             DataGridViewRow row = dgv_ListView.Rows[index];
 

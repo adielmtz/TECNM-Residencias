@@ -1,5 +1,6 @@
 namespace TECNM.Residencias.Data.Sets.Types;
 
+using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -13,10 +14,25 @@ public sealed class GenderDbSet : DbSet<Gender>
     {
     }
 
+    public Gender? GetGenderById(long id)
+    {
+        using var command = Context.Database.CreateCommand();
+        command.CommandText = "SELECT Id, Label FROM Gender WHERE Id = $id";
+        command.Parameters.Add("$id", SqliteType.Integer).Value = id;
+        using var reader = command.ExecuteReader();
+
+        if (!reader.Read())
+        {
+            return null;
+        }
+
+        return HydrateObject(reader);
+    }
+
     public IEnumerable<Gender> EnumerateAll()
     {
         using var command = Context.Database.CreateCommand();
-        command.CommandText = "SELECT Id, Label FROM Gender ORDER BY Name";
+        command.CommandText = "SELECT Id, Label FROM Gender ORDER BY Label";
         using var reader = command.ExecuteReader();
 
         while (reader.Read())

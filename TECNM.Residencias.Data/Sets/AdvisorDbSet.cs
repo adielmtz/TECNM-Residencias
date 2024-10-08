@@ -42,20 +42,20 @@ public sealed class AdvisorDbSet : DbSet<Advisor>
 
         if (filterCompanyId != null)
         {
-            extraMatch += "CompanyId MATCH $e1 AND ";
-            command.Parameters.Add("$e1", SqliteType.Integer).Value = filterCompanyId;
+            extraMatch += "CompanyId MATCH $e1 AND";
+            command.Parameters.Add("$e1", SqliteType.Integer).Value = filterCompanyId.Value;
         }
 
         if (filterInternal != null)
         {
-            extraMatch += "Internal MATCH $e2 AND ";
-            command.Parameters.Add("$e2", SqliteType.Integer).Value = filterInternal;
+            extraMatch += "Internal MATCH $e2 AND";
+            command.Parameters.Add("$e2", SqliteType.Integer).Value = filterInternal.Value;
         }
 
         command.CommandText = $"""
         SELECT rowid
         FROM AdvisorSearch
-        WHERE AdvisorSearch MATCH {extraMatch} $query
+        WHERE {extraMatch} AdvisorSearch MATCH $query
         ORDER BY rank
         LIMIT $p0 OFFSET $p1
         """;

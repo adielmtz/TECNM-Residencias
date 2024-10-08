@@ -1,7 +1,6 @@
 namespace TECNM.Residencias.Services;
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Security.Cryptography;
@@ -11,24 +10,7 @@ using TECNM.Residencias.Data.Entities;
 
 internal static class StorageService
 {
-    public static readonly IReadOnlyList<(string, string)> DocumentTypes = [
-        ("Solicitud de residencia",              "SOLICITUD_RESIDENCIAS"),
-        ("Carta de presentación",                "CARTA_PRESENTACION"),
-        ("Carta de aceptación",                  "CARTA_ACEPTACION"),
-        ("Constancia de servicio social",        "CONSTANCIA_SERVICIO_SOCIAL"),
-        ("Anteproyecto",                         "ANTEPROYECTO"),
-        ("Autorización de anteproyecto",         "AUTORIZACION_ANTEPROYECTO"),
-        ("Asignación de asesor",                 "ASIGNACION_ASESOR"),
-        ("1er. reporte de asesoría",             "PRIMER_REPORTE"),
-        ("2do. reporte de asesoría",             "SEGUNDO_REPORTE"),
-        ("Evaluación final",                     "EVALUACION_FINAL"),
-        ("Reporte final (PDF)",                  "REPORTE_FINAL"),
-        ("Portada del reporte final con firmas", "PORTADA"),
-        ("Carta de liberación o terminación",    "CARTA_TERMINACION"),
-        ("Otro",                                 "OTRO"),
-    ];
-
-    public static async Task<Document> SaveFileAsync(Student owner, Document document)
+    public static async Task<Document> SaveFileAsync(Student owner, Document document, DocumentType type)
     {
         Debug.Assert(owner.Id > 0);
         Debug.Assert(document.Id == 0);
@@ -51,7 +33,7 @@ internal static class StorageService
             StudentId = owner.Id,
             Year      = owner.StartDate.Year,
             Semester  = owner.Semester,
-            Type      = document.Type,
+            Type      = type,
             Hash      = hash,
             Extension = Path.GetExtension(document.FullPath),
         };
@@ -62,7 +44,7 @@ internal static class StorageService
         return new Document
         {
             StudentId    = builder.StudentId,
-            Type         = builder.Type,
+            TypeId       = type.Id,
             FullPath     = builder.FullPath,
             OriginalName = document.OriginalName,
             Size         = size,
@@ -127,7 +109,7 @@ internal static class StorageService
         #endregion
 
         #region Properties from Document
-        public required int Type { get; init; }
+        public required DocumentType Type { get; init; }
 
         public required string Hash { get; init; }
 
@@ -180,9 +162,8 @@ internal static class StorageService
 
         private string BuildFileName()
         {
-            string label = DocumentTypes[Type].Item2;
-            string hash = Hash.Substring(0, 8);
-            return $"{Owner}_{Type}_{label}_{hash}{Extension}";
+            string shortHash = Hash.Substring(0, 8);
+            return $"{Owner}_{Type.Id}_{Type.Tag}_{shortHash}{Extension}";
         }
     }
 }

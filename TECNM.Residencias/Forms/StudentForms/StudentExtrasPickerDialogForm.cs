@@ -40,19 +40,18 @@ public sealed partial class StudentExtrasPickerDialogForm : Form
             control.Text = extra.Value;
 
             extrasControls[extra.Id] = control;
-
-            switch (extra.Type)
+            switch (extra.TypeId)
             {
-                case ExtraType.Database:
+                case 1:
                     flp_Databases.Controls.Add(control);
                     break;
-                case ExtraType.Editor:
+                case 2:
                     flp_editors.Controls.Add(control);
                     break;
-                case ExtraType.Language:
+                case 3:
                     flp_Languages.Controls.Add(control);
                     break;
-                case ExtraType.Methodology:
+                case 4:
                     flp_methodologies.Controls.Add(control);
                     break;
             }

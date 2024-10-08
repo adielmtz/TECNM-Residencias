@@ -196,7 +196,7 @@ public sealed class StudentDbSet : DbSet<Student>
             Notes             = $p16,
             Closed            = $p17,
             UpdatedOn         = CURRENT_TIMESTAMP
-        WHERE Id = $id
+        WHERE Id = $pid
         """;
 
         command.Parameters.Add("$p00", SqliteType.Integer).Value = entity.SpecialtyId;

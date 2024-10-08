@@ -69,7 +69,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             label13 = new System.Windows.Forms.Label();
             tb_StudentSchedule = new System.Windows.Forms.TextBox();
             label12 = new System.Windows.Forms.Label();
-            tb_StudentDepartment = new System.Windows.Forms.TextBox();
+            tb_StudentSection = new System.Windows.Forms.TextBox();
             label11 = new System.Windows.Forms.Label();
             tb_StudentCompany = new System.Windows.Forms.TextBox();
             label10 = new System.Windows.Forms.Label();
@@ -155,7 +155,6 @@ namespace TECNM.Residencias.Forms.StudentForms
             // 
             cb_StudentGender.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             cb_StudentGender.FormattingEnabled = true;
-            cb_StudentGender.Items.AddRange(new object[] { "Masculino", "Femenino", "Otro" });
             cb_StudentGender.Location = new System.Drawing.Point(6, 86);
             cb_StudentGender.Name = "cb_StudentGender";
             cb_StudentGender.Size = new System.Drawing.Size(97, 23);
@@ -296,7 +295,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             gb_ProjectInfo.Controls.Add(label13);
             gb_ProjectInfo.Controls.Add(tb_StudentSchedule);
             gb_ProjectInfo.Controls.Add(label12);
-            gb_ProjectInfo.Controls.Add(tb_StudentDepartment);
+            gb_ProjectInfo.Controls.Add(tb_StudentSection);
             gb_ProjectInfo.Controls.Add(label11);
             gb_ProjectInfo.Controls.Add(tb_StudentCompany);
             gb_ProjectInfo.Controls.Add(label10);
@@ -507,10 +506,10 @@ namespace TECNM.Residencias.Forms.StudentForms
             // 
             // tb_StudentDepartment
             // 
-            tb_StudentDepartment.Location = new System.Drawing.Point(6, 130);
-            tb_StudentDepartment.Name = "tb_StudentDepartment";
-            tb_StudentDepartment.Size = new System.Drawing.Size(420, 23);
-            tb_StudentDepartment.TabIndex = 2;
+            tb_StudentSection.Location = new System.Drawing.Point(6, 130);
+            tb_StudentSection.Name = "tb_StudentDepartment";
+            tb_StudentSection.Size = new System.Drawing.Size(420, 23);
+            tb_StudentSection.TabIndex = 2;
             // 
             // label11
             // 
@@ -706,7 +705,7 @@ namespace TECNM.Residencias.Forms.StudentForms
         private System.Windows.Forms.TextBox tb_StudentProjectName;
         private System.Windows.Forms.TextBox tb_StudentSchedule;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.TextBox tb_StudentDepartment;
+        private System.Windows.Forms.TextBox tb_StudentSection;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.DateTimePicker dtp_StudentEndDate;
         private System.Windows.Forms.Label label15;

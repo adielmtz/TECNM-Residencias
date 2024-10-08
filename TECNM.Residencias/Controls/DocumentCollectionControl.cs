@@ -29,7 +29,7 @@ public sealed partial class DocumentCollectionControl : UserControl
     {
         var document = new Document
         {
-            Type = 0,
+            TypeId = 0,
             FullPath = filename,
             OriginalName = Path.GetFileName(filename),
         };
@@ -62,7 +62,7 @@ public sealed partial class DocumentCollectionControl : UserControl
         {
             if (control is DocumentListItemControl listItem && listItem.IsNew)
             {
-                await SaveDocument(set, owner, listItem.Document);
+                await SaveDocument(set, owner, listItem.Document, listItem.DocumentType!);
             }
         }
     }
@@ -79,9 +79,9 @@ public sealed partial class DocumentCollectionControl : UserControl
         }
     }
 
-    private async Task SaveDocument(DbSet<Document> set, Student owner, Document original)
+    private async Task SaveDocument(DbSet<Document> set, Student owner, Document original, DocumentType type)
     {
-        Document stored = await StorageService.SaveFileAsync(owner, original);
+        Document stored = await StorageService.SaveFileAsync(owner, original, type);
         Debug.Assert(stored.StudentId == owner.Id);
         set.Insert(stored);
     }

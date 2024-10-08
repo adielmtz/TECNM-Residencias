@@ -32,7 +32,7 @@ public sealed partial class StudentEditForm : Form
         closeConfirmService = new FormConfirmClosingService(this);
 
         DateTime now = DateTime.Now;
-        cb_StudentSemester.SelectedIndex = now.Month >= 1 && now.Month < 7 ? 0 : 1;
+        cb_StudentSemester.SelectedIndex = now.Month >= 1 && now.Month <= 7 ? 0 : 1;
     }
 
     public StudentEditForm(Student? entity) : this()
@@ -49,18 +49,17 @@ public sealed partial class StudentEditForm : Form
 
             tb_StudentFirstName.Text = entity.FirstName;
             tb_StudentLastName.Text = entity.LastName;
-            cb_StudentGender.SelectedIndex = (int) entity.Gender;
             tb_StudentEmail.Text = entity.Email;
             mtb_StudentPhone.Text = entity.Phone;
 
             /// PROYECTO
             tb_StudentProjectName.Text = entity.Project;
-            tb_StudentDepartment.Text = entity.Department;
+            tb_StudentSection.Text = entity.Section;
             tb_StudentSchedule.Text = entity.Schedule;
             cb_StudentSemester.SelectedIndex = entity.Semester == "ENE-JUN" ? 0 : 1;
             dtp_StudentStartDate.Value = entity.StartDate;
             dtp_StudentEndDate.Value = entity.EndDate;
-            chk_StudentClosed.Checked = entity.IsClosed;
+            chk_StudentClosed.Checked = entity.Closed;
             tb_StudentNotes.Text = entity.Notes;
 
             cb_StudentSemester.Enabled = false;
@@ -71,11 +70,18 @@ public sealed partial class StudentEditForm : Form
     private void StudentEditForm_Load(object sender, EventArgs e)
     {
         using var context = new AppDbContext();
-        IEnumerable<Career> careers = context.Careers.EnumerateCareers(enabled: true);
+
+        foreach (Gender gender in context.Genders.EnumerateAll())
+        {
+            int index = cb_StudentGender.Items.Add(gender);
+            if (gender.Id == _student.GenderId)
+            {
+                cb_StudentGender.SelectedIndex = index;
+            }
+        }
 
         Career? prefetchCareer = null;
-
-        foreach (Career career in careers)
+        foreach (Career career in context.Careers.EnumerateCareers(enabled: true))
         {
             int index = cb_StudentCareer.Items.Add(career);
             if (AppSettings.Default.StudentCareer == career.Id)
@@ -161,7 +167,7 @@ public sealed partial class StudentEditForm : Form
         while (true)
         {
             using var dialog = new AdvisorQuickSearchForm();
-            dialog.FilterType = AdvisorType.Internal;
+            dialog.FilterInternal = true;
             dialog.ShowDialog();
 
             Advisor? selected = dialog.SelectedAdvisor;
@@ -219,7 +225,7 @@ public sealed partial class StudentEditForm : Form
         while (true)
         {
             using var dialog = new AdvisorQuickSearchForm();
-            dialog.FilterType = AdvisorType.Internal;
+            dialog.FilterInternal = true;
             dialog.ShowDialog();
 
             Advisor? selected = dialog.SelectedAdvisor;
@@ -370,7 +376,7 @@ public sealed partial class StudentEditForm : Form
             _student.LastName = tb_StudentLastName.Text.Trim();
             _student.Email = tb_StudentEmail.Text.Trim();
             _student.Phone = mtb_StudentPhone.Text.Trim();
-            _student.Gender = (Gender) cb_StudentGender.SelectedIndex;
+            _student.GenderId = ((Gender?) cb_StudentGender.SelectedItem)?.Id ?? 0;
             _student.Semester = semester ?? "";
             _student.StartDate = dtp_StudentStartDate.Value;
             _student.EndDate = dtp_StudentEndDate.Value;
@@ -379,10 +385,10 @@ public sealed partial class StudentEditForm : Form
             _student.ExternalAdvisorId = _externalAdvisor?.Id;
             _student.ReviewerAdvisorId = _reviewerAdvisor?.Id;
             _student.CompanyId = _company.Id;
-            _student.Department = tb_StudentDepartment.Text.Trim();
+            _student.Section = tb_StudentSection.Text.Trim();
             _student.Schedule = tb_StudentSchedule.Text.Trim();
             _student.Notes = tb_StudentNotes.Text.Trim();
-            _student.IsClosed = chk_StudentClosed.Checked;
+            _student.Closed = chk_StudentClosed.Checked;
 
             ValidationResult result = _validator.Validate(_student);
 
@@ -511,7 +517,7 @@ public sealed partial class StudentEditForm : Form
             dcc_Documents.Add(document);
         }
 
-        chk_StudentClosed.Checked = _student.IsClosed;
+        chk_StudentClosed.Checked = _student.Closed;
         if (chk_StudentClosed.Checked)
         {
             gb_GeneralInfo.Enabled = false;
@@ -528,6 +534,7 @@ public sealed partial class StudentEditForm : Form
         _company = company;
         tb_StudentCompany.Text = company.Name;
         btn_ChoseExternalAdvisor.Enabled = true;
+        SetExternalAdvisor(null);
     }
 
     private void SetInternalAdvisor(Advisor? advisor)
