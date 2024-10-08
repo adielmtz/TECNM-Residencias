@@ -35,13 +35,27 @@ public sealed class AdvisorDbSet : DbSet<Advisor>
         return HydrateObject(reader);
     }
 
-    public IEnumerable<Advisor> Search(string query, int count, int page)
+    public IEnumerable<Advisor> Search(string query, int count, int page, long? filterCompanyId = null, bool? filterInternal = null)
     {
         using var command = Context.Database.CreateCommand();
-        command.CommandText = """
+        string extraMatch = "";
+
+        if (filterCompanyId != null)
+        {
+            extraMatch += "CompanyId MATCH $e1 AND ";
+            command.Parameters.Add("$e1", SqliteType.Integer).Value = filterCompanyId;
+        }
+
+        if (filterInternal != null)
+        {
+            extraMatch += "Internal MATCH $e2 AND ";
+            command.Parameters.Add("$e2", SqliteType.Integer).Value = filterInternal;
+        }
+
+        command.CommandText = $"""
         SELECT rowid
         FROM AdvisorSearch
-        WHERE AdvisorSearch MATCH $query
+        WHERE AdvisorSearch MATCH {extraMatch} $query
         ORDER BY rank
         LIMIT $p0 OFFSET $p1
         """;

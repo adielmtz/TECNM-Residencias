@@ -7,14 +7,16 @@ using TECNM.Residencias.Data.Entities;
 
 public sealed partial class AdvisorQuickSearchForm : Form
 {
-    public Advisor? SelectedAdvisor { get; private set; }
-    public Company? FilterCompany { get; set; }
-    public AdvisorType? FilterType { get; set; }
-
     public AdvisorQuickSearchForm()
     {
         InitializeComponent();
     }
+
+    public Advisor? SelectedAdvisor { get; private set; }
+
+    public Company? FilterCompany { get; set; }
+
+    public bool? FilterInternal { get; set; }
 
     private void RunSearch_Click(object sender, EventArgs e)
     {
@@ -39,18 +41,11 @@ public sealed partial class AdvisorQuickSearchForm : Form
         }
 
         using var context = new AppDbContext();
-        IEnumerable<Advisor> advisors = context.Advisors.Search(query, 50, 1);
-
-        dgv_ListView.Rows.Clear();
+        IEnumerable<Advisor> advisors = context.Advisors.Search(query, 50, 1, FilterCompany?.Id, FilterInternal);
 
         foreach (Advisor advisor in advisors)
         {
             if (FilterCompany != null && advisor.CompanyId != FilterCompany.Id)
-            {
-                continue;
-            }
-
-            if (FilterType != null && advisor.Type != FilterType)
             {
                 continue;
             }

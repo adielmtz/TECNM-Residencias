@@ -43,8 +43,8 @@ CREATE TRIGGER TGG_Advisor_After_Insert
 AFTER INSERT ON Advisor
 WHEN NEW.Enabled = 1
 BEGIN
-    INSERT INTO AdvisorSearch (rowid, Internal, FirstName, LastName)
-    VALUES (NEW.Id, NEW.Internal, NEW.FirstName, NEW.LastName);
+    INSERT INTO AdvisorSearch (rowid, CompanyId, Internal, FirstName, LastName)
+    VALUES (NEW.Id, NEW.CompanyId, NEW.Internal, NEW.FirstName, NEW.LastName);
 END;
 
 CREATE TRIGGER TGG_Advisor_After_Delete
@@ -59,7 +59,8 @@ AFTER UPDATE ON Advisor
 WHEN OLD.Enabled = 1 AND NEW.Enabled = 1
 BEGIN
     UPDATE AdvisorSearch
-    SET Internal = NEW.Internal,
+    SET CompanyId = NEW.CompanyId,
+        Internal = NEW.Internal,
         FirstName = NEW.FirstName,
         LastName = NEW.LastName
     WHERE rowid = NEW.Id;
@@ -77,8 +78,8 @@ CREATE TRIGGER TGG_Advisor_After_Update_Add
 AFTER UPDATE ON Advisor
 WHEN OLD.Enabled = 0 AND NEW.Enabled = 1
 BEGIN
-    INSERT INTO AdvisorSearch (rowid, Internal, FirstName, LastName)
-    VALUES (NEW.Id, NEW.Internal, NEW.FirstName, NEW.LastName);
+    INSERT INTO AdvisorSearch (rowid, CompanyId, Internal, FirstName, LastName)
+    VALUES (NEW.Id, NEW.CompanyId, NEW.Internal, NEW.FirstName, NEW.LastName);
 END;
 
 CREATE TRIGGER TGG_Student_After_Insert

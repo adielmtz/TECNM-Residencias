@@ -235,6 +235,7 @@ CREATE VIRTUAL TABLE CompanySearch USING fts5 (
 );
 
 CREATE VIRTUAL TABLE AdvisorSearch USING fts5 (
+    CompanyId,
     Internal,
     FirstName,
     LastName,
