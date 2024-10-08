@@ -31,6 +31,8 @@ public sealed partial class CompanyQuickSearchForm : Form
     private void SearchCompanies()
     {
         string query = tb_SearchQuery.Text.Trim();
+        dgv_ListView.Rows.Clear();
+
         if (query.Length == 0)
         {
             return;
@@ -38,8 +40,6 @@ public sealed partial class CompanyQuickSearchForm : Form
 
         using var context = new AppDbContext();
         IEnumerable<Company> companies = context.Companies.Search(query, 50, 1);
-
-        dgv_ListView.Rows.Clear();
 
         foreach (Company company in companies)
         {

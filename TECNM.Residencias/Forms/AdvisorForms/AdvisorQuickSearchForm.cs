@@ -35,6 +35,8 @@ public sealed partial class AdvisorQuickSearchForm : Form
     private void SearchAdvisors()
     {
         string query = tb_SearchQuery.Text.Trim();
+        dgv_ListView.Rows.Clear();
+
         if (query.Length == 0)
         {
             return;
