@@ -35,13 +35,13 @@ public sealed record class StudentFullDetailsDto
 
     public required Company Company { get; init; }
 
-    public required string Department { get; init; }
+    public required string Section { get; init; }
 
     public required string Schedule { get; init; }
 
     public required string Notes { get; init; }
 
-    public required bool IsClosed { get; init; }
+    public required bool Closed { get; init; }
 
     public required DateTime UpdatedOn { get; init; }
 
