@@ -35,7 +35,19 @@ public sealed partial class StudentListItemViewControl : UserControl
 
     private void StudentListItemViewControl_DoubleClick(object sender, EventArgs e)
     {
-        using var dialog = new StudentEditForm(_student);
+        Student? student;
+        using (var context = new AppDbContext())
+        {
+            student = context.Students.GetStudentById(_student.Id);
+        }
+
+        if (student == null)
+        {
+            MessageBox.Show("Este registro no existe.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return;
+        }
+
+        using var dialog = new StudentEditForm(student);
         dialog.ShowDialog();
     }
 
