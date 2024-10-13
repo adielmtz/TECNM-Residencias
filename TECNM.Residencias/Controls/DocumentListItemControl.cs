@@ -43,7 +43,6 @@ public partial class DocumentListItemControl : UserControl
             }
         }
 
-        cb_DocumentType.SelectedIndex = 0;
         cb_DocumentType.SelectedIndexChanged += DocumentType_SelectedIndexChanged;
 
         if (!IsNew)
