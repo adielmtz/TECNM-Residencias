@@ -52,6 +52,7 @@ namespace TECNM.Residencias.Controls
             cb_DocumentType.Name = "cb_DocumentType";
             cb_DocumentType.Size = new System.Drawing.Size(200, 23);
             cb_DocumentType.TabIndex = 1;
+            cb_DocumentType.SelectedIndexChanged += DocumentType_SelectedIndexChanged;
             // 
             // button1
             // 

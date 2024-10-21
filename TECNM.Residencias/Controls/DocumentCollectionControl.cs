@@ -1,5 +1,6 @@
 namespace TECNM.Residencias.Controls;
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -12,16 +13,26 @@ using TECNM.Residencias.Services;
 
 public sealed partial class DocumentCollectionControl : UserControl
 {
-    private readonly IList<Document> _deleted = [];
+    private readonly List<DocumentType> _documentTypes = [];
+    private readonly List<Document> _deleted = [];
 
     public DocumentCollectionControl()
     {
         InitializeComponent();
     }
 
+    private void DocumentCollectionControl_Load(object sender, EventArgs e)
+    {
+        if (_documentTypes.Count == 0)
+        {
+            using var context = new AppDbContext();
+            _documentTypes.AddRange(context.DocumentTypes.EnumerateAll());
+        }
+    }
+
     public void Add(Document document)
     {
-        var control = new DocumentListItemControl(document, OnDocumentDeleted);
+        var control = new DocumentListItemControl(_documentTypes, document, OnDocumentDeleted);
         flp_ControlContainer.Controls.Add(control);
     }
 

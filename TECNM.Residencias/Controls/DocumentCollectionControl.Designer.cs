@@ -50,6 +50,7 @@ namespace TECNM.Residencias.Controls
             DoubleBuffered = true;
             Name = "DocumentCollectionControl";
             Size = new System.Drawing.Size(442, 308);
+            Load += DocumentCollectionControl_Load;
             ResumeLayout(false);
         }
 
