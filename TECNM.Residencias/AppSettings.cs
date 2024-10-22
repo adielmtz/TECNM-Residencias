@@ -11,7 +11,7 @@ internal sealed class AppSettings
     private static readonly string DefaultLastManualBackupDate = "2024-10-01 13:00:00";
     private static readonly string DefaultLastAutomaticBackupDate = "2024-10-01 13:00:00";
     private static readonly TimeSpan DefaultManualBackupFrequency = TimeSpan.FromDays(30);
-    private static readonly TimeSpan DefaultAutomaticBackupFrequency = TimeSpan.FromDays(7);
+    private static readonly TimeSpan DefaultAutomaticBackupFrequency = TimeSpan.FromDays(3);
 
     private static AppSettings? s_instance;
     private IDictionary<string, Setting> _settings;
