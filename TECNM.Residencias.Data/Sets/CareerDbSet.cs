@@ -13,13 +13,18 @@ public sealed class CareerDbSet : DbSet<Career>
     {
     }
 
+    /// <summary>
+    /// Gets a career entity by its unique rowid.
+    /// </summary>
+    /// <param name="id">The unique rowid of the career entity.</param>
+    /// <returns>A <see cref="Career"/> instance if a career with the specified rowid exists; otherwise <see langword="null"/>.</returns>
     public Career? GetCareer(long id)
     {
         using var command = CreateCommand("SELECT Id, Name, Enabled, UpdatedOn, CreatedOn FROM Career WHERE Id = $id");
         command.Parameters.Add("$id", SqliteType.Integer).Value = id;
         using var reader = command.ExecuteReader();
 
-        while (reader.Read())
+        if (reader.Read())
         {
             return HydrateObject(reader);
         }
