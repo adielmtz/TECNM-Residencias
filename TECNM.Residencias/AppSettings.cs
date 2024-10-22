@@ -94,6 +94,11 @@ internal sealed class AppSettings
         context.Commit();
     }
 
+    public void Clear()
+    {
+        _settings.Clear();
+    }
+
     private Setting GetSetting(string name, object defaultValue)
     {
         Setting? setting;

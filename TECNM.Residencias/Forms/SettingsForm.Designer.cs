@@ -40,6 +40,7 @@ namespace TECNM.Residencias.Forms
             lbl_AppVersion = new System.Windows.Forms.Label();
             linkLabel1 = new System.Windows.Forms.LinkLabel();
             groupBox3 = new System.Windows.Forms.GroupBox();
+            button2 = new System.Windows.Forms.Button();
             groupBox6 = new System.Windows.Forms.GroupBox();
             cb_StudentCareer = new System.Windows.Forms.ComboBox();
             label6 = new System.Windows.Forms.Label();
@@ -158,6 +159,7 @@ namespace TECNM.Residencias.Forms
             // 
             // groupBox3
             // 
+            groupBox3.Controls.Add(button2);
             groupBox3.Controls.Add(groupBox6);
             groupBox3.Controls.Add(groupBox5);
             groupBox3.Controls.Add(button4);
@@ -167,6 +169,16 @@ namespace TECNM.Residencias.Forms
             groupBox3.TabIndex = 4;
             groupBox3.TabStop = false;
             groupBox3.Text = "Configuración";
+            // 
+            // button2
+            // 
+            button2.Location = new System.Drawing.Point(402, 138);
+            button2.Name = "button2";
+            button2.Size = new System.Drawing.Size(115, 23);
+            button2.TabIndex = 8;
+            button2.Text = "Restaurar default";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += ResetDefaults_Click;
             // 
             // groupBox6
             // 
@@ -285,5 +297,6 @@ namespace TECNM.Residencias.Forms
         private System.Windows.Forms.ComboBox cb_StudentCareer;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label lbl_AppVersion;
+        private System.Windows.Forms.Button button2;
     }
 }

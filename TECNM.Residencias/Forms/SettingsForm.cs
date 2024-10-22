@@ -56,6 +56,13 @@ public sealed partial class SettingsForm : Form
         Process.Start(info);
     }
 
+    private void ResetDefaults_Click(object sender, EventArgs e)
+    {
+        AppSettings.Default.Clear();
+        AppSettings.Default.Save();
+        LoadComboBoxItems();
+    }
+
     private void SaveAppSettings_Click(object sender, EventArgs e)
     {
         AppSettings.Default.CompanyType = ((CompanyType) cb_CompanyType.SelectedItem!).Id;
@@ -68,6 +75,7 @@ public sealed partial class SettingsForm : Form
     {
         using var context = new AppDbContext();
 
+        cb_CompanyType.Items.Clear();
         cb_CompanyType.Items.Add(new CompanyType { Id = 0, Label = "Ninguno" });
         cb_CompanyType.SelectedIndex = 0;
 
@@ -80,6 +88,7 @@ public sealed partial class SettingsForm : Form
             }
         }
 
+        cb_StudentCareer.Items.Clear();
         cb_StudentCareer.Items.Add(new Career { Id = 0, Name = "Ninguno" });
         cb_StudentCareer.SelectedIndex = 0;
 
