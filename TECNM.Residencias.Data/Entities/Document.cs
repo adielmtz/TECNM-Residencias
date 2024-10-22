@@ -45,5 +45,5 @@ public sealed class Document
     /// <summary>
     /// Gets or sets the date and time when the entity was created.
     /// </summary>
-    public DateTime CreatedOn { get; set; }
+    public DateTimeOffset CreatedOn { get; set; }
 }

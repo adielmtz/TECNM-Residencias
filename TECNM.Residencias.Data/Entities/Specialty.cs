@@ -30,12 +30,12 @@ public sealed class Specialty
     /// <summary>
     /// Gets or sets the date and time when the entity was last updated.
     /// </summary>
-    public DateTime UpdatedOn { get; set; }
+    public DateTimeOffset UpdatedOn { get; set; }
 
     /// <summary>
     /// Gets or sets the date and time when the entity was created.
     /// </summary>
-    public DateTime CreatedOn { get; set; }
+    public DateTimeOffset CreatedOn { get; set; }
 
     /// <summary>
     /// Returns the specialty name as string representation.
