@@ -38,7 +38,6 @@ CREATE TABLE Setting (
     Value     TEXT NOT NULL,
     UpdatedOn TEXT NOT NULL,
     CreatedOn TEXT NOT NULL
-                   DEFAULT (CURRENT_TIMESTAMP) 
 )
 WITHOUT ROWID,
 STRICT;
@@ -51,7 +50,6 @@ CREATE TABLE Career (
     Enabled   INTEGER NOT NULL,
     UpdatedOn TEXT    NOT NULL,
     CreatedOn TEXT    NOT NULL
-                      DEFAULT (CURRENT_TIMESTAMP) 
 )
 STRICT;
 
@@ -63,8 +61,7 @@ CREATE TABLE Specialty (
     Name      TEXT    NOT NULL,
     Enabled   INTEGER NOT NULL,
     UpdatedOn TEXT    NOT NULL,
-    CreatedOn TEXT    NOT NULL
-                      DEFAULT (CURRENT_TIMESTAMP),
+    CreatedOn TEXT    NOT NULL,
     CONSTRAINT AK_Specialty_Identity UNIQUE (
         CareerId,
         Name
@@ -98,7 +95,6 @@ CREATE TABLE Company (
     Enabled    INTEGER NOT NULL,
     UpdatedOn  TEXT    NOT NULL,
     CreatedOn  TEXT    NOT NULL
-                       DEFAULT (CURRENT_TIMESTAMP) 
 )
 STRICT;
 
@@ -118,7 +114,6 @@ CREATE TABLE Advisor (
     Enabled   INTEGER NOT NULL,
     UpdatedOn TEXT    NOT NULL,
     CreatedOn TEXT    NOT NULL
-                      DEFAULT (CURRENT_TIMESTAMP) 
 )
 STRICT;
 
@@ -157,7 +152,6 @@ CREATE TABLE Student (
     Closed            INTEGER NOT NULL,
     UpdatedOn         TEXT    NOT NULL,
     CreatedOn         TEXT    NOT NULL
-                              DEFAULT (CURRENT_TIMESTAMP) 
 )
 STRICT;
 
@@ -182,8 +176,7 @@ CREATE TABLE Document (
     OriginalName TEXT    NOT NULL,
     Size         INTEGER NOT NULL,
     Hash         TEXT    NOT NULL,
-    CreatedOn    TEXT    NOT NULL
-                         DEFAULT (CURRENT_TIMESTAMP),
+    CreatedOn    TEXT    NOT NULL,
     CONSTRAINT AK_Document_Identity UNIQUE (
         StudentId,
         TypeId,
