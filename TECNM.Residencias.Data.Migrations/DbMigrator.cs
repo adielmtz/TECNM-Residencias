@@ -25,10 +25,7 @@ public sealed class DbMigrator : IDisposable
     /// Initializes a new instance of the <see cref="DbMigrator"/> class.
     /// </summary>
     /// <param name="connection">The database connection to be migrated.</param>
-    public DbMigrator(IDbConnection connection)
-    {
-        _connection = connection;
-    }
+    public DbMigrator(IDbConnection connection) => _connection = connection;
 
     /// <summary>
     /// Gets a value indicating whether there are pending migrations to be applied.
@@ -48,10 +45,7 @@ public sealed class DbMigrator : IDisposable
     /// Releases the resources used by the <see cref="DbMigrator"/> class
     /// and closes the database connection.
     /// </summary>
-    public void Dispose()
-    {
-        _connection.Dispose();
-    }
+    public void Dispose() => _connection.Dispose();
 
     /// <summary>
     /// Applies any pending migrations to the database.
@@ -123,7 +117,6 @@ public sealed class DbMigrator : IDisposable
         using var command = _connection.CreateCommand();
         command.CommandText = sql;
         command.ExecuteNonQuery();
-
         UserVersion = version;
     }
 

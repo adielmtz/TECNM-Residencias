@@ -41,8 +41,5 @@ public sealed class Specialty
     /// Returns the specialty name as string representation.
     /// </summary>
     /// <returns>The name of the specialty.</returns>
-    public override string ToString()
-    {
-        return Name;
-    }
+    public override string ToString() => Name;
 }

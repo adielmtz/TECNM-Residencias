@@ -19,8 +19,5 @@ public sealed class CompanyType
     /// Returns the company type label as string representation.
     /// </summary>
     /// <returns>The label of the company type.</returns>
-    public override string ToString()
-    {
-        return Label;
-    }
+    public override string ToString() => Label;
 }

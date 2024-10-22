@@ -36,8 +36,5 @@ public sealed class Career
     /// Returns the career name as string representation.
     /// </summary>
     /// <returns>The name of the career.</returns>
-    public override string ToString()
-    {
-        return Name;
-    }
+    public override string ToString() => Name;
 }

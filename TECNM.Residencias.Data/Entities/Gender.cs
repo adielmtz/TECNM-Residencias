@@ -19,8 +19,5 @@ public sealed class Gender
     /// Returns the gender label as string representation.
     /// </summary>
     /// <returns>The label of the gender.</returns>
-    public override string ToString()
-    {
-        return Label;
-    }
+    public override string ToString() => Label;
 }

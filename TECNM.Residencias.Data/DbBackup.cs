@@ -51,10 +51,7 @@ public sealed class DbBackup : IDisposable
     /// <summary>
     /// Disposes the source database.
     /// </summary>
-    public void Dispose()
-    {
-        _source.Dispose();
-    }
+    public void Dispose() => _source.Dispose();
 
     /// <summary>
     /// Executes the backup operation and returns the full path of the resulting backup file.

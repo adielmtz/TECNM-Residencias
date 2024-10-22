@@ -116,8 +116,5 @@ public sealed class Student
     /// Returns the first name and last name as string representation.
     /// </summary>
     /// <returns>The full name of the student.</returns>
-    public override string ToString()
-    {
-        return $"[{Id}] {FirstName} {LastName}";
-    }
+    public override string ToString() => $"[{Id}] {FirstName} {LastName}";
 }

@@ -40,16 +40,10 @@ public abstract class DbContext : IDisposable
     /// <summary>
     /// Commits the changes made in the current context.
     /// </summary>
-    public virtual void SaveChanges()
-    {
-        _transaction.Commit();
-    }
+    public void SaveChanges() => _transaction.Commit();
 
     /// <summary>
     /// Reverts the changes made in the current context.
     /// </summary>
-    public virtual void RejectChanges()
-    {
-        _transaction.Rollback();
-    }
+    public void RejectChanges() => _transaction.Rollback();
 }

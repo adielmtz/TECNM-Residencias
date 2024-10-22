@@ -16,10 +16,7 @@ public abstract class DbSet<T> where T : class, new()
     /// Initializes a new instance of the <see cref="DbSet{T}"/> class with a given <see cref="DbContext"/>.
     /// </summary>
     /// <param name="context">The <see cref="DbContext"/> that this DbSet is associated with.</param>
-    protected DbSet(DbContext context)
-    {
-        _context = context;
-    }
+    protected DbSet(DbContext context) => _context = context;
 
     /// <summary>
     /// Gets the <see cref="DbContext"/> associated with this DbSet.
@@ -73,4 +70,16 @@ public abstract class DbSet<T> where T : class, new()
     /// <param name="reader">The <see cref="SqliteDataReader"/> containing the data.</param>
     /// <returns>An instance of <typeparamref name="T"/> representing the hydrated object.</returns>
     protected abstract T HydrateObject(SqliteDataReader reader);
+
+    /// <summary>
+    /// Creates a new <see cref="SqliteCommand"/> instance with the specified SQL query.
+    /// </summary>
+    /// <param name="query">The SQL query string to be executed by the command.</param>
+    /// <returns>A <see cref="SqliteCommand"/> configured with the provided query.</returns>
+    protected SqliteCommand CreateCommand(string query)
+    {
+        var command = Context.Connection.CreateCommand();
+        command.CommandText = query;
+        return command;
+    }
 }

@@ -76,8 +76,5 @@ public sealed class Advisor
     /// Returns the first name and last name as string representation.
     /// </summary>
     /// <returns>The full name of the advisor.</returns>
-    public override string ToString()
-    {
-        return $"{FirstName} {LastName}";
-    }
+    public override string ToString() => $"{FirstName} {LastName}";
 }

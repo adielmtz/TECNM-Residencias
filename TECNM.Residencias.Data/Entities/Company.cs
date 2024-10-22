@@ -82,8 +82,5 @@ public sealed class Company
     /// Returns the company name as string representation.
     /// </summary>
     /// <returns>The name of the company.</returns>
-    public override string ToString()
-    {
-        return Name;
-    }
+    public override string ToString() => Name;
 }
