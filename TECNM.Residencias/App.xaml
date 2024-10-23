@@ -1,0 +1,24 @@
+<Application x:Class="TECNM.Residencias.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+
+        <SolidColorBrush x:Key="PrimaryA1" Color="#EBC881"/>
+        <SolidColorBrush x:Key="PrimaryA2" Color="#E3B04B"/>
+        <SolidColorBrush x:Key="PrimaryA3" Color="#9F7B35"/>
+
+        <SolidColorBrush x:Key="PrimaryB1" Color="#80807E"/>
+        <SolidColorBrush x:Key="PrimaryB2" Color="#2B2B28"/>
+        <SolidColorBrush x:Key="PrimaryB3" Color="#0D0D0C"/>
+
+        <SolidColorBrush x:Key="Neutral1" Color="#FAFAFA"/>
+        <SolidColorBrush x:Key="Neutral2" Color="#F8F8F8"/>
+        <SolidColorBrush x:Key="Neutral3" Color="#AEAEAE"/>
+
+        <SolidColorBrush x:Key="Accent1" Color="#FAFAFA"/>
+        <SolidColorBrush x:Key="Accent2" Color="#F8F8F8"/>
+        <SolidColorBrush x:Key="Accent3" Color="#AEAEAE"/>
+        
+    </Application.Resources>
+</Application>
