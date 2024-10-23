@@ -1,17 +1,19 @@
 namespace TECNM.Residencias.Data.Validators.Common;
 
-internal static class DataValidator
+internal static class PhoneValidator
 {
+    private const int PHONE_NUMBER_MIN_LENGTH = 7;
+
     internal static bool BeAPhoneNumber(string input)
     {
-        if (string.IsNullOrEmpty(input) || input.Length < 7)
+        if (string.IsNullOrEmpty(input) || input.Length < PHONE_NUMBER_MIN_LENGTH)
         {
             return false;
         }
 
         foreach (char c in input)
         {
-            if (!IsValidPhoneChar(c))
+            if (!IsValidPhoneNumberChar(c))
             {
                 return false;
             }
@@ -20,7 +22,7 @@ internal static class DataValidator
         return true;
     }
 
-    private static bool IsValidPhoneChar(char c)
+    private static bool IsValidPhoneNumberChar(char c)
     {
         return char.IsDigit(c) || c == ' ' || c == '+' || c == '-';
     }

@@ -9,10 +9,26 @@ public sealed class AdvisorValidator : AbstractValidator<Advisor>
     public AdvisorValidator()
     {
         ClassLevelCascadeMode = CascadeMode.Stop;
-        RuleFor(a => a.CompanyId).GreaterThan(0).WithMessage("El asesor debe asignarse a una empresa.");
-        RuleFor(a => a.FirstName).NotEmpty().WithName("Nombre");
-        RuleFor(a => a.LastName).NotEmpty().WithName("Apellidos");
-        RuleFor(a => a.Email).EmailAddress().When(c => c.Email.Length > 0).WithName("Correo");
-        RuleFor(a => a.Phone).Must(DataValidator.BeAPhoneNumber).When(c => c.Phone.Length > 0).WithMessage("Introduzca un número de teléfono válido.");
+        RuleFor(it => it.CompanyId)
+            .GreaterThan(0)
+            .WithMessage("El asesor debe asignarse a una empresa.");
+
+        RuleFor(it => it.FirstName)
+            .NotEmpty()
+            .WithName("Nombre");
+
+        RuleFor(it => it.LastName)
+            .NotEmpty()
+            .WithName("Apellidos");
+
+        RuleFor(it => it.Email)
+            .EmailAddress()
+            .When(it => it.Email.Length > 0)
+            .WithName("Correo");
+
+        RuleFor(it => it.Phone)
+            .Must(PhoneValidator.BeAPhoneNumber)
+            .When(it => it.Phone.Length > 0)
+            .WithMessage("Introduzca un número de teléfono válido.");
     }
 }
