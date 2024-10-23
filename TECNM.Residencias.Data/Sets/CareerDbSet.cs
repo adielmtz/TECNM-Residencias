@@ -53,10 +53,10 @@ public sealed class CareerDbSet : DbSet<Career>
         RETURNING Id
         """);
 
-        command.Parameters.Add("$p0", SqliteType.Text).Value = entity.Name;
+        command.Parameters.Add("$p0", SqliteType.Text).Value    = entity.Name;
         command.Parameters.Add("$p1", SqliteType.Integer).Value = entity.Enabled;
-        command.Parameters.Add("$p2", SqliteType.Text).Value = entity.UpdatedOn;
-        command.Parameters.Add("$p3", SqliteType.Text).Value = entity.CreatedOn;
+        command.Parameters.Add("$p2", SqliteType.Text).Value    = DateTimeOffset.Now;
+        command.Parameters.Add("$p3", SqliteType.Text).Value    = DateTimeOffset.Now;
         object? result = command.ExecuteScalar();
 
         if (result is long rowid)
@@ -78,9 +78,9 @@ public sealed class CareerDbSet : DbSet<Career>
         WHERE Id = $id;
         """);
 
-        command.Parameters.Add("$p0", SqliteType.Text).Value = entity.Name;
+        command.Parameters.Add("$p0", SqliteType.Text).Value    = entity.Name;
         command.Parameters.Add("$p1", SqliteType.Integer).Value = entity.Enabled;
-        command.Parameters.Add("$p2", SqliteType.Text).Value = entity.UpdatedOn;
+        command.Parameters.Add("$p2", SqliteType.Text).Value    = DateTimeOffset.Now;
         command.Parameters.Add("$id", SqliteType.Integer).Value = entity.Id;
         return command.ExecuteNonQuery();
     }

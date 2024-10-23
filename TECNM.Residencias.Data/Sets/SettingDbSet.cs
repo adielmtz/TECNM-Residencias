@@ -33,8 +33,8 @@ public sealed class SettingDbSet : DbSet<Setting>
     public override bool AddOrUpdate(Setting entity)
     {
         using var command = CreateCommand("""
-        INSERT INTO Setting (Name, Value, UpdatedOn)
-        VALUES ($p0, $p1, CURRENT_TIMESTAMP)
+        INSERT INTO Setting (Name, Value, UpdatedOn, CreatedOn)
+        VALUES ($p0, $p1, $p2, $p3)
         ON CONFLICT(Name) DO UPDATE
         SET Value     = excluded.Value,
             UpdatedOn = excluded.UpdatedOn
@@ -42,6 +42,8 @@ public sealed class SettingDbSet : DbSet<Setting>
 
         command.Parameters.Add("$p0", SqliteType.Text).Value = entity.Name;
         command.Parameters.Add("$p1", SqliteType.Text).Value = entity.Value;
+        command.Parameters.Add("$p2", SqliteType.Text).Value = DateTimeOffset.Now;
+        command.Parameters.Add("$p3", SqliteType.Text).Value = DateTimeOffset.Now;
         return command.ExecuteNonQuery() == 1;
     }
 
