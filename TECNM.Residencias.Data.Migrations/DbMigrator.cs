@@ -103,7 +103,7 @@ public sealed class DbMigrator : IDisposable
     /// </summary>
     private void ConfigureDatabase()
     {
-        SetPragma("page_size", 4096);
+        SetPragma("page_size", 65536);
         SetPragma("journal_mode", "WAL");
     }
 
