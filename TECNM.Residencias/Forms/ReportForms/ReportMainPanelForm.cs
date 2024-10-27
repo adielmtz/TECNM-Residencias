@@ -419,7 +419,7 @@ public sealed partial class ReportMainPanelForm : Form
         pie.Slices[2].Label = $"Otros {stats.GenderOtherPercentage:0}%";
 
         pie.ExplodeFraction = 0;
-        pie.ShowSliceLabels = true;
+        //pie.ShowSliceLabels = true;
 
         plot.Title("Residentes por género.");
         plot.ShowLegend();
@@ -456,7 +456,7 @@ public sealed partial class ReportMainPanelForm : Form
         var pie = plot.Add.Pie(slices);
 
         pie.ExplodeFraction = 0;
-        pie.ShowSliceLabels = true;
+        //pie.ShowSliceLabels = true;
 
         plot.Title("Conteo por especialidad.");
         plot.ShowLegend();
@@ -487,7 +487,7 @@ public sealed partial class ReportMainPanelForm : Form
         pie.Slices[4].Label = $"Otro {stats.CompanyTypeOtherPercentage:0}%";
 
         pie.ExplodeFraction = 0;
-        pie.ShowSliceLabels = true;
+        //pie.ShowSliceLabels = true;
 
         plot.Title("Residentes por tipo de empresa.");
         plot.ShowLegend();
