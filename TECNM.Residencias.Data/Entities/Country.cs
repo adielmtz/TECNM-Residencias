@@ -19,8 +19,5 @@ public sealed class Country
     /// Returns the country name as string representation.
     /// </summary>
     /// <returns>The name of the country.</returns>
-    public override string ToString()
-    {
-        return Name;
-    }
+    public override string ToString() => Name;
 }
