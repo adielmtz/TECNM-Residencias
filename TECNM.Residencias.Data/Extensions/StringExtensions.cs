@@ -2,13 +2,16 @@ namespace TECNM.Residencias.Data.Extensions;
 
 using System.Text;
 
-internal static class StringExtensions
+/// <summary>
+/// Provides extension methods for the <see cref="string"/> class.
+/// </summary>
+public static class StringExtensions
 {
     /// <summary>
-    /// Produce un query con carácteres especiales removidos y encapsulado entre comillas dobles.
+    /// Converts a string into a format suitable for full-text search queries.
     /// </summary>
-    /// <param name="str">El string para escapar.</param>
-    /// <returns>El string escapado y listo para usar en consultas FTS5 de SQLite.</returns>
+    /// <param name="str">The input string to be converted.</param>
+    /// <returns>A modified string suitable for full-text search queries.</returns>
     public static string ToFtsQuery(this string str)
     {
         var builder = new StringBuilder(str.Length);

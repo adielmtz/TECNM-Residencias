@@ -2,8 +2,16 @@ namespace TECNM.Residencias.Data.Extensions;
 
 using System.Text;
 
-internal static class StringBuilderExtensions
+/// <summary>
+/// Provides extension methods for the <see cref="StringBuilder"/> class.
+/// </summary>
+public static class StringBuilderExtensions
 {
+    /// <summary>
+    /// Trims leading and trailing whitespace characters from the <see cref="StringBuilder"/>.
+    /// </summary>
+    /// <param name="sb">The <see cref="StringBuilder"/> instance to trim.</param>
+    /// <returns>The same <see cref="StringBuilder"/> instance.</returns>
     public static StringBuilder Trim(this StringBuilder sb)
     {
         int start = 0;
