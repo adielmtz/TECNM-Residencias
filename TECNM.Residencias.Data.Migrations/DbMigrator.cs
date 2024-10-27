@@ -9,107 +9,92 @@ using System.Reflection;
 /// <summary>
 /// The <see cref="DbMigrator"/> class is responsible for managing and applying
 /// database migrations. It ensures that the database schema is up-to-date.
+/// This migrator class is intended exclusively for SQLite databases.
 /// </summary>
 public sealed class DbMigrator : IDisposable
 {
     /// <summary>
-    /// The current version of the database schema. Must only be increased.
-    /// This number must match the migration SQL scripts numbering.
+    /// The current version of the database schema. It must only increase.
+    /// This number must match the SQL migration scrips numbering.
     /// </summary>
-    private const long CURRENT_VERSION = 4;
+    public static readonly long CurrentVersion = 4;
 
     private readonly IDbConnection _connection;
-    private IDbTransaction? _transaction;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="DbMigrator"/> class.
     /// </summary>
     /// <param name="connection">The database connection to be migrated.</param>
-    public DbMigrator(IDbConnection connection)
+    public DbMigrator(IDbConnection connection) => _connection = connection;
+
+    /// <summary>
+    /// Gets a value indicating whether there are pending migrations to be applied.
+    /// </summary>
+    public bool HasPendingMigrations => UserVersion < CurrentVersion;
+
+    /// <summary>
+    /// Gets or sets the user version of the database schema.
+    /// </summary>
+    public long UserVersion
     {
-        _connection = connection;
+        get => GetPragma<long>("user_version");
+        private set => SetPragma("user_version", value);
     }
 
     /// <summary>
-    /// Gets a value indicating if the database needs to be migrated.
+    /// Releases the resources used by the <see cref="DbMigrator"/> class
+    /// and closes the database connection.
     /// </summary>
-    public bool NeedsMigration => UserVersion < CURRENT_VERSION;
+    public void Dispose() => _connection.Dispose();
 
     /// <summary>
-    /// Gets or sets the current user version of the database schema.
-    /// </summary>
-    private long UserVersion
-    {
-        get => Convert.ToInt64(GetPragma("user_version"));
-        set => SetPragma("user_version", value);
-    }
-
-    /// <summary>
-    /// Gets or sets the page size of the database.
-    /// </summary>
-    private long PageSize
-    {
-        get => Convert.ToInt64(GetPragma("page_size"));
-        set => SetPragma("page_size", value);
-    }
-
-    /// <summary>
-    /// Gets or sets the journal mode of the database.
-    /// </summary>
-    private string JournalMode
-    {
-        get => (string) GetPragma("journal_mode")!;
-        set => SetPragma("journal_mode", value);
-    }
-
-    /// <summary>
-    /// Applies any required migration to the database.
+    /// Applies any pending migrations to the database.
+    /// If there are no pending migrations, this method is a no-op.
     /// </summary>
     public void Migrate()
     {
+        if (!HasPendingMigrations)
+        {
+            return;
+        }
+
         long version = UserVersion;
         ConfigureDatabase();
-        _transaction = _connection.BeginTransaction();
 
-        for (long i = version + 1; i <= CURRENT_VERSION; i++)
+        using var transaction = _connection.BeginTransaction();
+
+        for (long i = version + 1; i <= CurrentVersion; i++)
         {
             ApplyMigration(i);
         }
 
-        _transaction.Commit();
-        SetPragma("wal_checkpoint", "full");
-    }
-
-    /// <summary>
-    /// Disposes of the active transaction and closes the database connection.
-    /// </summary>
-    public void Dispose()
-    {
-        _transaction?.Dispose();
-        _connection.Dispose();
+        transaction.Commit();
+        SetPragma("wal_checkpoint", "FULL");
     }
 
     /// <summary>
     /// Executes a <c>PRAGMA</c> command to retrieve a database property.
     /// </summary>
-    /// <param name="pragma">The name of the <c>PRAGMA</c> command to execute.</param>
-    /// <returns>The result of the <c>PRAGMA</c> command.</returns>
-    private object? GetPragma(string pragma)
+    /// <typeparam name="T">The type of the value to be retrieved.</typeparam>
+    /// <param name="name">The name of the <c>PRAGMA</c> command to execute.</param>
+    /// <returns>The value of the <c>PRAGMA</c>.</returns>
+    private T GetPragma<T>(string name)
     {
         using var command = _connection.CreateCommand();
-        command.CommandText = $"PRAGMA {pragma};";
-        return command.ExecuteScalar();
+        command.CommandText = $"PRAGMA {name}";
+        return (T) command.ExecuteScalar()!;
     }
 
     /// <summary>
     /// Executes a <c>PRAGMA</c> command to set a database property.
     /// </summary>
-    /// <param name="pragma">The name of the <c>PRAGMA</c> command.</param>
-    /// <param name="value">The value to assign.</param>
-    private void SetPragma(string pragma, object value)
+    /// <typeparam name="T">The type of the value to be set.</typeparam>
+    /// <param name="name">The name of the <c>PRAGMA</c> command to execute.</param>
+    /// <param name="value">The value to set.</param>
+    private void SetPragma<T>(string name, T value)
     {
         using var command = _connection.CreateCommand();
-        command.CommandText = $"PRAGMA {pragma}={value};";
+        command.CommandText = $"PRAGMA {name}={value}";
         command.ExecuteNonQuery();
     }
 
@@ -118,8 +103,8 @@ public sealed class DbMigrator : IDisposable
     /// </summary>
     private void ConfigureDatabase()
     {
-        PageSize = 4096;
-        JournalMode = "wal";
+        SetPragma("page_size", 4096);
+        SetPragma("journal_mode", "WAL");
     }
 
     /// <summary>
@@ -132,7 +117,6 @@ public sealed class DbMigrator : IDisposable
         using var command = _connection.CreateCommand();
         command.CommandText = sql;
         command.ExecuteNonQuery();
-
         UserVersion = version;
     }
 
@@ -144,8 +128,9 @@ public sealed class DbMigrator : IDisposable
     private string GetStringResource(long version)
     {
         Assembly assembly = typeof(DbMigrator).Assembly;
-        using var stream = assembly.GetManifestResourceStream($"TECNM.Residencias.Data.Migrations.Resources.migration_{version}.sql");
-        Debug.Assert(stream != null);
+        string resource = $"TECNM.Residencias.Data.Migrations.Resources.migration_{version}.sql";
+        using var stream = assembly.GetManifestResourceStream(resource);
+        Trace.Assert(stream is not null, $"Failed to get migration script resource: '{resource}'.");
 
         using var reader = new StreamReader(stream);
         return reader.ReadToEnd();

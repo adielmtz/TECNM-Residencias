@@ -79,7 +79,7 @@ internal static class App
         using var sqlite = Database.Open();
         using var migrator = new DbMigrator(sqlite);
 
-        if (migrator.NeedsMigration)
+        if (migrator.HasPendingMigrations)
         {
             MakeDbBackup(sqlite);
             migrator.Migrate();
