@@ -172,11 +172,11 @@ namespace TECNM.Residencias.Forms
             // 
             // button2
             // 
-            button2.Location = new System.Drawing.Point(402, 138);
+            button2.Location = new System.Drawing.Point(387, 400);
             button2.Name = "button2";
-            button2.Size = new System.Drawing.Size(115, 23);
+            button2.Size = new System.Drawing.Size(130, 23);
             button2.TabIndex = 8;
-            button2.Text = "Restaurar default";
+            button2.Text = "Reestablecer valores";
             button2.UseVisualStyleBackColor = true;
             button2.Click += ResetDefaults_Click;
             // 
@@ -240,7 +240,7 @@ namespace TECNM.Residencias.Forms
             // 
             // button4
             // 
-            button4.Location = new System.Drawing.Point(6, 395);
+            button4.Location = new System.Drawing.Point(6, 400);
             button4.Name = "button4";
             button4.Size = new System.Drawing.Size(75, 23);
             button4.TabIndex = 0;
