@@ -145,7 +145,7 @@ public sealed class CompanyDbSet : DbSet<Company>
     /// <returns>An <see cref="IEnumerable{T}"/> enumerating all the entities.</returns>
     public IEnumerable<CompanyType> EnumerateCompanyTypes()
     {
-        using var command = CreateCommand("SELECT Id, Label FROM CompanyType ORDER BY Label");
+        using var command = CreateCommand("SELECT Id, Label FROM CompanyType ORDER BY Id");
         using var reader = command.ExecuteReader();
 
         while (reader.Read())
