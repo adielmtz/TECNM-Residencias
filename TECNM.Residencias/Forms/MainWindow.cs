@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using TECNM.Residencias.Controls;
 using TECNM.Residencias.Data;
 using TECNM.Residencias.Data.Entities;
+using TECNM.Residencias.Data.Entities.DTO;
 using TECNM.Residencias.Forms.CareerForms;
 using TECNM.Residencias.Forms.CompanyForms;
 using TECNM.Residencias.Forms.ReportForms;
@@ -103,7 +104,7 @@ public sealed partial class MainWindow : Form
 
     private void MakeDatabaseBackup()
     {
-        using var sqlite = App.Database.Open();
+        using var sqlite = App.Database.CreateConnection();
         using var backup = new DbBackup(sqlite, App.DatabaseBackupDirectory);
         backup.Execute();
 
@@ -116,12 +117,12 @@ public sealed partial class MainWindow : Form
     private void LoadLastModifiedStudents()
     {
         using var context = new AppDbContext();
-        IEnumerable<Student> students = context.Students.EnumerateStudents(count: 20);
+        IEnumerable<StudentLastModifiedDto> recentlyModifiedStudent = context.Students.EnumerateRecentlyModified(20);
         flp_LastModifiedStudents.Controls.Clear();
 
-        foreach (Student student in students)
+        foreach (StudentLastModifiedDto student in recentlyModifiedStudent)
         {
-            var control = new StudentListItemViewControl(student);
+            var control = new StudentListItemViewControl(student.Id, student.ToString());
             flp_LastModifiedStudents.Controls.Add(control);
         }
     }
@@ -137,11 +138,11 @@ public sealed partial class MainWindow : Form
         }
 
         using var context = new AppDbContext();
-        IEnumerable<Student> students = context.Students.Search(query, 20, 1);
+        IEnumerable<StudentSearchResultDto> searchResults = context.Students.Search(query, 20, 1);
 
-        foreach (Student student in students)
+        foreach (StudentSearchResultDto student in searchResults)
         {
-            var control = new StudentListItemViewControl(student);
+            var control = new StudentListItemViewControl(student.Id, student.ToString());
             flp_QuickSearchResults.Controls.Add(control);
         }
     }

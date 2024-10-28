@@ -9,7 +9,7 @@ using TECNM.Residencias.Forms.StudentForms;
 public sealed partial class StudentListItemViewControl : UserControl
 {
     private readonly Label lbl_StudentName;
-    private Student _student = new Student();
+    private long _studentId;
 
     public StudentListItemViewControl()
     {
@@ -27,10 +27,10 @@ public sealed partial class StudentListItemViewControl : UserControl
         Controls.Add(lbl_StudentName);
     }
 
-    public StudentListItemViewControl(Student student) : this()
+    public StudentListItemViewControl(long id, string label) : this()
     {
-        _student = student;
-        lbl_StudentName.Text = student.ToString();
+        _studentId = id;
+        lbl_StudentName.Text = label;
     }
 
     private void StudentListItemViewControl_DoubleClick(object sender, EventArgs e)
@@ -38,7 +38,7 @@ public sealed partial class StudentListItemViewControl : UserControl
         Student? student;
         using (var context = new AppDbContext())
         {
-            student = context.Students.GetStudentById(_student.Id);
+            student = context.Students.GetStudent(_studentId);
         }
 
         if (student == null)
