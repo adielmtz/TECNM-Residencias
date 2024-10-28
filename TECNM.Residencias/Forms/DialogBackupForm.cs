@@ -98,7 +98,7 @@ public sealed partial class DialogBackupForm : Form
         SetProgressBarMaximum(1);
         UpdateProgressStatus("Respaldando base de datos...", 1);
 
-        using var sqlite = App.Database.Open();
+        using var sqlite = App.Database.CreateConnection();
         string target = App.DatabaseBackupDirectory;
 
         using var backup = new DbBackup(sqlite, target, backupTime);
