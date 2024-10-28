@@ -64,7 +64,7 @@ public sealed class StateDbSet : DbSet<State>
     /// <returns>An <see cref="IEnumerable{T}"/> enumerating all the entities.</returns>
     public IEnumerable<State> EnumerateAll(long countryId)
     {
-        using var command = CreateCommand("SELECT Id, CountryId, Name WHERE CountryId = $cid ORDER BY Name");
+        using var command = CreateCommand("SELECT Id, CountryId, Name FROM State WHERE CountryId = $cid ORDER BY Name");
         command.Parameters.Add("$cid", SqliteType.Integer).Value = countryId;
         using var reader = command.ExecuteReader();
 
