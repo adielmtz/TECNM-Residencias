@@ -25,7 +25,7 @@ internal sealed class AppSettings
                 using var context = new AppDbContext();
                 var settings = new Dictionary<string, Setting>();
 
-                foreach (Setting setting in context.Settings.EnumerateSettings())
+                foreach (Setting setting in context.Settings.EnumerateAll())
                 {
                     settings[setting.Name] = setting;
                 }
@@ -88,10 +88,10 @@ internal sealed class AppSettings
 
         foreach (Setting setting in _settings.Values)
         {
-            context.Settings.InsertOrUpdate(setting);
+            context.Settings.AddOrUpdate(setting);
         }
 
-        context.Commit();
+        context.SaveChanges();
     }
 
     public void Clear()

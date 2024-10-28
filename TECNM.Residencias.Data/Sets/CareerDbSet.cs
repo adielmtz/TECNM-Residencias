@@ -3,105 +3,106 @@ namespace TECNM.Residencias.Data.Sets;
 using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Diagnostics;
+using TECNM.Residencias.Data;
 using TECNM.Residencias.Data.Entities;
-using TECNM.Residencias.Data.Extensions;
-using TECNM.Residencias.Data.Sets.Common;
 
 public sealed class CareerDbSet : DbSet<Career>
 {
-    public CareerDbSet(IDbContext context) : base(context)
+    public CareerDbSet(DbContext context) : base(context)
     {
     }
 
-    public IEnumerable<Career> EnumerateCareers()
+    /// <summary>
+    /// Gets a career entity by its unique rowid.
+    /// </summary>
+    /// <param name="id">The unique rowid of the career entity.</param>
+    /// <returns>A <see cref="Career"/> instance if a career with the specified rowid exists; otherwise <see langword="null"/>.</returns>
+    public Career? GetCareer(long id)
     {
-        using var command = Context.Database.CreateCommand();
-        command.CommandText = "SELECT Id, Name, Enabled, UpdatedOn, CreatedOn FROM Career ORDER BY Name";
+        using var command = CreateCommand("SELECT Id, Name, Enabled, UpdatedOn, CreatedOn FROM Career WHERE Id = $id");
+        command.Parameters.Add("$id", SqliteType.Integer).Value = id;
+        using var reader = command.ExecuteReader();
+
+        if (reader.Read())
+        {
+            return HydrateObject(reader);
+        }
+
+        return null;
+    }
+
+    public override IEnumerable<Career> EnumerateAll()
+    {
+        using var command = CreateCommand("SELECT Id, Name, Enabled, UpdatedOn, CreatedOn FROM Career ORDER BY Name");
         using var reader = command.ExecuteReader();
 
         while (reader.Read())
         {
-            Career career = HydrateObject(reader);
-            yield return career;
+            yield return HydrateObject(reader);
         }
     }
 
-    public IEnumerable<Career> EnumerateCareers(bool enabled)
-    {
-        using var command = Context.Database.CreateCommand();
-        command.CommandText = "SELECT Id, Name, Enabled, UpdatedOn, CreatedOn FROM Career WHERE Enabled = $p0 ORDER BY Name";
-        command.Parameters.Add("$p0", SqliteType.Integer).Value = enabled;
-        using var reader = command.ExecuteReader();
+    public override bool Contains(Career entity) => throw new NotImplementedException();
 
-        while (reader.Read())
-        {
-            Career career = HydrateObject(reader);
-            yield return career;
-        }
-    }
-
-    public override bool Insert(Career entity)
+    public override bool Add(Career entity)
     {
-        using var command = Context.Database.CreateCommand();
-        command.CommandText = "INSERT INTO Career (Name, Enabled, UpdatedOn) VALUES ($p0, $p1, CURRENT_TIMESTAMP) RETURNING Id";
-        command.Parameters.Add("$p0", SqliteType.Text).Value = entity.Name;
+        using var command = CreateCommand("""
+        INSERT INTO Career (Name, Enabled, UpdatedOn, CreatedOn)
+        VALUES ($p0, $p1, $p2, $p3)
+        RETURNING Id
+        """);
+
+        command.Parameters.Add("$p0", SqliteType.Text).Value    = entity.Name;
         command.Parameters.Add("$p1", SqliteType.Integer).Value = entity.Enabled;
+        command.Parameters.Add("$p2", SqliteType.Text).Value    = DateTimeOffset.Now;
+        command.Parameters.Add("$p3", SqliteType.Text).Value    = DateTimeOffset.Now;
         object? result = command.ExecuteScalar();
 
-        entity.Id = Convert.ToInt64(result);
-        return result != null;
+        if (result is long rowid)
+        {
+            entity.Id = rowid;
+            return true;
+        }
+
+        return false;
     }
 
     public override int Update(Career entity)
     {
-        using var command = Context.Database.CreateCommand();
-        command.CommandText = "UPDATE Career SET Name = $p0, Enabled = $p1, UpdatedOn = CURRENT_TIMESTAMP WHERE Id = $id";
-        command.Parameters.Add("$p0", SqliteType.Text).Value = entity.Name;
+        using var command = CreateCommand("""
+        UPDATE Career
+        SET Name      = $p0,
+            Enabled   = $p1,
+            UpdatedOn = $p2
+        WHERE Id = $id;
+        """);
+
+        command.Parameters.Add("$p0", SqliteType.Text).Value    = entity.Name;
         command.Parameters.Add("$p1", SqliteType.Integer).Value = entity.Enabled;
+        command.Parameters.Add("$p2", SqliteType.Text).Value    = DateTimeOffset.Now;
         command.Parameters.Add("$id", SqliteType.Integer).Value = entity.Id;
         return command.ExecuteNonQuery();
     }
 
-    public override int Delete(Career entity)
+    public override bool AddOrUpdate(Career entity)
     {
-        using var command = Context.Database.CreateCommand();
-        command.CommandText = "DELETE FROM Career WHERE Id = $id";
-        command.Parameters.Add("$id", SqliteType.Integer).Value = entity.Id;
-        return command.ExecuteNonQuery();
+        return entity.Id > 0 ? Update(entity) > 0 : Add(entity);
     }
 
-    public override bool InsertOrUpdate(Career entity)
-    {
-        using var command = Context.Database.CreateCommand();
-        command.CommandText = """
-        INSERT INTO Career (Name, Enabled, UpdatedOn)
-        VALUES ($p0, $p1, CURRENT_TIMESTAMP)
-        ON CONFLICT(Name) DO UPDATE
-        SET Enabled   = excluded.Enabled,
-            UpdatedOn = excluded.UpdatedOn
-        RETURNING Id
-        """;
+    public override int Remove(Career entity) => throw new NotImplementedException();
 
-        command.Parameters.Add("$p0", SqliteType.Text).Value = entity.Name;
-        command.Parameters.Add("$p1", SqliteType.Integer).Value = entity.Enabled;
-        object? result = command.ExecuteScalar();
-
-        entity.Id = Convert.ToInt64(result);
-        return result != null;
-    }
-
-    protected override Career HydrateObject(IDataReader reader)
+    protected override Career HydrateObject(SqliteDataReader reader)
     {
         Debug.Assert(reader.FieldCount == 5);
+        int index = 0;
         return new Career
         {
-            Id        = reader.GetInt64(0),
-            Name      = reader.GetString(1),
-            Enabled   = reader.GetBoolean(2),
-            UpdatedOn = reader.GetLocalDateTime(3),
-            CreatedOn = reader.GetLocalDateTime(4),
+            Id        = reader.GetInt64(index++),
+            Name      = reader.GetString(index++),
+            Enabled   = reader.GetBoolean(index++),
+            UpdatedOn = reader.GetDateTimeOffset(index++),
+            CreatedOn = reader.GetDateTimeOffset(index++),
         };
     }
 }

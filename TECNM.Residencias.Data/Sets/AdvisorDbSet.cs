@@ -3,192 +3,147 @@ namespace TECNM.Residencias.Data.Sets;
 using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Diagnostics;
+using TECNM.Residencias.Data;
 using TECNM.Residencias.Data.Entities;
-using TECNM.Residencias.Data.Extensions;
-using TECNM.Residencias.Data.Sets.Common;
 
 public sealed class AdvisorDbSet : DbSet<Advisor>
 {
-    public AdvisorDbSet(IDbContext context) : base(context)
+    public AdvisorDbSet(DbContext context) : base(context)
     {
     }
 
-    public Advisor? GetAdvisorById(long id)
+    /// <summary>
+    /// Gets an advisor entity by its unique rowid.
+    /// </summary>
+    /// <param name="id">The unique rowid of the advisor entity.</param>
+    /// <returns>A <see cref="Advisor"/> instance if an advisor with the specified rowid exists; otherwise <see langword="null"/>.</returns>
+    public Advisor? GetAdvisor(long id)
     {
-        using var command = Context.Database.CreateCommand();
-        command.CommandText = """
+        using var command = CreateCommand("""
         SELECT Id, CompanyId, Internal, FirstName, LastName, Section, Role, Email, Phone, Extension, Enabled, UpdatedOn, CreatedOn
         FROM Advisor
         WHERE Id = $id
-        """;
+        """);
 
         command.Parameters.Add("$id", SqliteType.Integer).Value = id;
         using var reader = command.ExecuteReader();
 
-        if (!reader.Read())
+        if (reader.Read())
         {
-            return null;
+            return HydrateObject(reader);
         }
 
-        return HydrateObject(reader);
+        return null;
     }
 
-    public IEnumerable<Advisor> Search(string query, int count, int page, long? filterCompanyId = null, bool? filterInternal = null)
+    public override IEnumerable<Advisor> EnumerateAll()
     {
-        using var command = Context.Database.CreateCommand();
-        string extraMatch = "";
-
-        if (filterCompanyId != null)
-        {
-            extraMatch += "CompanyId MATCH $e1 AND";
-            command.Parameters.Add("$e1", SqliteType.Integer).Value = filterCompanyId.Value;
-        }
-
-        if (filterInternal != null)
-        {
-            extraMatch += "Internal MATCH $e2 AND";
-            command.Parameters.Add("$e2", SqliteType.Integer).Value = filterInternal.Value;
-        }
-
-        command.CommandText = $"""
-        SELECT rowid
-        FROM AdvisorSearch
-        WHERE {extraMatch} AdvisorSearch MATCH $query
-        ORDER BY rank
-        LIMIT $p0 OFFSET $p1
-        """;
-
-        command.Parameters.Add("$query", SqliteType.Text).Value = query.ToFtsQuery();
-        command.Parameters.Add("$p0", SqliteType.Integer).Value = count;
-        command.Parameters.Add("$p1", SqliteType.Integer).Value = (page - 1) * count;
-        using var reader = command.ExecuteReader();
-
-        while (reader.Read())
-        {
-            long rowid = reader.GetInt64(0);
-            Advisor advisor = GetAdvisorById(rowid)!;
-            yield return advisor;
-        }
-    }
-
-    public IEnumerable<Advisor> EnumerateAdvisorsByCompany(long companyId)
-    {
-        using var command = Context.Database.CreateCommand();
-        command.CommandText = """
+        using var command = CreateCommand("""
         SELECT Id, CompanyId, Internal, FirstName, LastName, Section, Role, Email, Phone, Extension, Enabled, UpdatedOn, CreatedOn
         FROM Advisor
-        WHERE CompanyId = $p0
-        ORDER BY FirstName, LastName
-        """;
+        ORDER BY CompanyId, FirstName, LastName
+        """);
 
-        command.Parameters.Add("$p0", SqliteType.Integer).Value = companyId;
         using var reader = command.ExecuteReader();
-
         while (reader.Read())
         {
-            Advisor advisor = HydrateObject(reader);
-            yield return advisor;
+            yield return HydrateObject(reader);
         }
     }
 
-    public override bool Insert(Advisor entity)
-    {
-        using var command = Context.Database.CreateCommand();
-        command.CommandText = """
-        INSERT INTO Advisor (CompanyId, Internal, FirstName, LastName, Section, Role, Email, Phone, Extension, Enabled, UpdatedOn)
-        VALUES ($p0, $p1, $p2, $p3, $p4, $p5, $p6, $p7, $p8, $p9, CURRENT_TIMESTAMP)
-        RETURNING Id
-        """;
+    public override bool Contains(Advisor entity) => throw new NotImplementedException();
 
-        command.Parameters.Add("$p0", SqliteType.Integer).Value = entity.CompanyId;
-        command.Parameters.Add("$p1", SqliteType.Integer).Value = entity.Internal;
-        command.Parameters.Add("$p2", SqliteType.Text).Value = entity.FirstName;
-        command.Parameters.Add("$p3", SqliteType.Text).Value = entity.LastName;
-        command.Parameters.Add("$p4", SqliteType.Text).Value = entity.Section;
-        command.Parameters.Add("$p5", SqliteType.Text).Value = entity.Role;
-        command.Parameters.Add("$p6", SqliteType.Text).Value = entity.Email;
-        command.Parameters.Add("$p7", SqliteType.Text).Value = entity.Phone;
-        command.Parameters.Add("$p8", SqliteType.Text).Value = entity.Extension;
-        command.Parameters.Add("$p9", SqliteType.Integer).Value = entity.Enabled;
+    public override bool Add(Advisor entity)
+    {
+        using var command = CreateCommand("""
+        INSERT INTO Advisor (CompanyId, Internal, FirstName, LastName, Section, Role, Email, Phone, Extension, Enabled, UpdatedOn, CreatedOn)
+        VALUES ($p00, $p01, $p02, $p03, $p04, $p05, $p06, $p07, $p08, $p09, $p10, $p11)
+        RETURNING Id
+        """);
+
+        command.Parameters.Add("$p00", SqliteType.Integer).Value = entity.CompanyId;
+        command.Parameters.Add("$p01", SqliteType.Integer).Value = entity.Internal;
+        command.Parameters.Add("$p02", SqliteType.Text).Value    = entity.FirstName;
+        command.Parameters.Add("$p03", SqliteType.Text).Value    = entity.LastName;
+        command.Parameters.Add("$p04", SqliteType.Text).Value    = entity.Section;
+        command.Parameters.Add("$p05", SqliteType.Text).Value    = entity.Role;
+        command.Parameters.Add("$p06", SqliteType.Text).Value    = entity.Email;
+        command.Parameters.Add("$p07", SqliteType.Text).Value    = entity.Phone;
+        command.Parameters.Add("$p08", SqliteType.Text).Value    = entity.Extension;
+        command.Parameters.Add("$p09", SqliteType.Integer).Value = entity.Enabled;
+        command.Parameters.Add("$p10", SqliteType.Text).Value    = DateTimeOffset.Now;
+        command.Parameters.Add("$p11", SqliteType.Text).Value    = DateTimeOffset.Now;
         object? result = command.ExecuteScalar();
 
-        entity.Id = Convert.ToInt64(result);
-        return result != null;
+        if (result is long rowid)
+        {
+            entity.Id = rowid;
+            return true;
+        }
+
+        return false;
     }
 
     public override int Update(Advisor entity)
     {
-        using var command = Context.Database.CreateCommand();
-        command.CommandText = """
+        using var command = CreateCommand("""
         UPDATE Advisor
-        SET CompanyId = $p0,
-            Internal  = $p1,
-            FirstName = $p2,
-            LastName  = $p3,
-            Section   = $p4,
-            Role      = $p5,
-            Email     = $p6,
-            Phone     = $p7,
-            Extension = $p8,
-            Enabled   = $p9,
-            UpdatedOn = CURRENT_TIMESTAMP
-        WHERE Id = $id
-        """;
+        SET CompanyId = $p00,
+            Internal  = $p01,
+            FirstName = $p02,
+            LastName  = $p03,
+            Section   = $p04,
+            Role      = $p05,
+            Email     = $p06,
+            Phone     = $p07,
+            Extension = $p08,
+            Enabled   = $p09,
+            UpdatedOn = $p10
+        WHERE Id = $pid
+        """);
 
-        command.Parameters.Add("$p0", SqliteType.Integer).Value = entity.CompanyId;
-        command.Parameters.Add("$p1", SqliteType.Integer).Value = entity.Internal;
-        command.Parameters.Add("$p2", SqliteType.Text).Value = entity.FirstName;
-        command.Parameters.Add("$p3", SqliteType.Text).Value = entity.LastName;
-        command.Parameters.Add("$p4", SqliteType.Text).Value = entity.Section;
-        command.Parameters.Add("$p5", SqliteType.Text).Value = entity.Role;
-        command.Parameters.Add("$p6", SqliteType.Text).Value = entity.Email;
-        command.Parameters.Add("$p7", SqliteType.Text).Value = entity.Phone;
-        command.Parameters.Add("$p8", SqliteType.Text).Value = entity.Extension;
-        command.Parameters.Add("$p9", SqliteType.Integer).Value = entity.Enabled;
-        command.Parameters.Add("$id", SqliteType.Integer).Value = entity.Id;
+        command.Parameters.Add("$p00", SqliteType.Integer).Value = entity.CompanyId;
+        command.Parameters.Add("$p01", SqliteType.Integer).Value = entity.Internal;
+        command.Parameters.Add("$p02", SqliteType.Text).Value    = entity.FirstName;
+        command.Parameters.Add("$p03", SqliteType.Text).Value    = entity.LastName;
+        command.Parameters.Add("$p04", SqliteType.Text).Value    = entity.Section;
+        command.Parameters.Add("$p05", SqliteType.Text).Value    = entity.Role;
+        command.Parameters.Add("$p06", SqliteType.Text).Value    = entity.Email;
+        command.Parameters.Add("$p07", SqliteType.Text).Value    = entity.Phone;
+        command.Parameters.Add("$p08", SqliteType.Text).Value    = entity.Extension;
+        command.Parameters.Add("$p09", SqliteType.Integer).Value = entity.Enabled;
+        command.Parameters.Add("$p10", SqliteType.Text).Value    = DateTimeOffset.Now;
+        command.Parameters.Add("$pid", SqliteType.Integer).Value = entity.Id;
         return command.ExecuteNonQuery();
     }
 
-    public override int Delete(Advisor entity)
+    public override bool AddOrUpdate(Advisor entity)
     {
-        using var command = Context.Database.CreateCommand();
-        command.CommandText = "DELETE FROM Advisor WHERE Id = $id";
-        command.Parameters.Add("$id", SqliteType.Integer).Value = entity.Id;
-        return command.ExecuteNonQuery();
+        return entity.Id > 0 ? Update(entity) > 0 : Add(entity);
     }
 
-    public override bool InsertOrUpdate(Advisor entity)
-    {
-        if (entity.Id > 0)
-        {
-            return Update(entity) > 0;
-        }
-        else
-        {
-            return Insert(entity);
-        }
-    }
+    public override int Remove(Advisor entity) => throw new NotImplementedException();
 
-    protected override Advisor HydrateObject(IDataReader reader)
+    protected override Advisor HydrateObject(SqliteDataReader reader)
     {
         Debug.Assert(reader.FieldCount == 13);
+        int index = 0;
         return new Advisor
         {
-            Id        = reader.GetInt64(0),
-            CompanyId = reader.GetInt64(1),
-            Internal  = reader.GetBoolean(2),
-            FirstName = reader.GetString(3),
-            LastName  = reader.GetString(4),
-            Section   = reader.GetString(5),
-            Role      = reader.GetString(6),
-            Email     = reader.GetString(7),
-            Phone     = reader.GetString(8),
-            Extension = reader.GetString(9),
-            Enabled   = reader.GetBoolean(10),
-            UpdatedOn = reader.GetLocalDateTime(11),
-            CreatedOn = reader.GetLocalDateTime(12),
+            Id        = reader.GetInt64(index++),
+            CompanyId = reader.GetInt64(index++),
+            Internal  = reader.GetBoolean(index++),
+            FirstName = reader.GetString(index++),
+            LastName  = reader.GetString(index++),
+            Section   = reader.GetString(index++),
+            Role      = reader.GetString(index++),
+            Email     = reader.GetString(index++),
+            Phone     = reader.GetString(index++),
+            Extension = reader.GetString(index++),
+            Enabled   = reader.GetBoolean(index++),
+            UpdatedOn = reader.GetDateTimeOffset(index++),
+            CreatedOn = reader.GetDateTimeOffset(index++),
         };
     }
 }
