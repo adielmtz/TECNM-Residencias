@@ -74,12 +74,19 @@ public abstract class DbSet<T> where T : class, new()
     /// <summary>
     /// Creates a new <see cref="SqliteCommand"/> instance with the specified SQL query.
     /// </summary>
-    /// <param name="query">The SQL query string to be executed by the command.</param>
-    /// <returns>A <see cref="SqliteCommand"/> configured with the provided query.</returns>
-    protected SqliteCommand CreateCommand(string query)
+    /// <param name="query">The SQL query string to be executed by the command.
+    /// This parameter can be null, in which case the command will be created without a specific query.</param>
+    /// <returns>
+    /// A <see cref="SqliteCommand"/> configured with the provided query, if any.</returns>
+    protected SqliteCommand CreateCommand(string? query = null)
     {
         var command = Context.Connection.CreateCommand();
-        command.CommandText = query;
+
+        if (query is not null)
+        {
+            command.CommandText = query;
+        }
+
         return command;
     }
 }
