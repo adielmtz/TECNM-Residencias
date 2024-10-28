@@ -24,7 +24,7 @@ public sealed class StateDbSet : DbSet<State>
     /// <returns>A <see cref="State"/> instance if a state with the specified rowid exists; otherwise <see langword="null"/>.</returns>
     public State? GetState(long id)
     {
-        using var command = CreateCommand("SELECT Id, CountryId, Name WHERE Id = $id");
+        using var command = CreateCommand("SELECT Id, CountryId, Name FROM State WHERE Id = $id");
         command.Parameters.Add("$id", SqliteType.Integer).Value = id;
         using var reader = command.ExecuteReader();
 
