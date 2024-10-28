@@ -45,7 +45,6 @@ public sealed partial class CompanyEditForm : Form
     private void CompanyEditForm_Load(object sender, EventArgs e)
     {
         using var context = new AppDbContext();
-
         bool companySelected = false;
         foreach (CompanyType type in context.Companies.EnumerateCompanyTypes())
         {
@@ -71,8 +70,6 @@ public sealed partial class CompanyEditForm : Form
             cb_CompanyCountry.Items.Add(country);
         }
 
-        cb_CompanyCountry.Enabled = true;
-
         if (_company.Id > 0)
         {
             LoadLocationData(context);
@@ -95,15 +92,13 @@ public sealed partial class CompanyEditForm : Form
             return;
         }
 
-        cb_CompanyState.Enabled = false;
-        cb_CompanyState.Items.Clear();
         cb_CompanyState.SelectedIndex = -1;
         cb_CompanyState.ResetText();
+        cb_CompanyState.Items.Clear();
 
-        cb_CompanyCity.Enabled = false;
-        cb_CompanyCity.Items.Clear();
         cb_CompanyCity.SelectedIndex = -1;
         cb_CompanyCity.ResetText();
+        cb_CompanyCity.Items.Clear();
 
         using var context = new AppDbContext();
         IEnumerable<State> states = context.States.EnumerateAll(country!);
@@ -112,8 +107,6 @@ public sealed partial class CompanyEditForm : Form
         {
             cb_CompanyState.Items.Add(state);
         }
-
-        cb_CompanyState.Enabled = true;
     }
 
     private void CompanyState_SelectedIndexChanged(object? sender, EventArgs e)
@@ -124,10 +117,9 @@ public sealed partial class CompanyEditForm : Form
             return;
         }
 
-        cb_CompanyCity.Enabled = false;
-        cb_CompanyCity.Items.Clear();
         cb_CompanyCity.SelectedIndex = -1;
         cb_CompanyCity.ResetText();
+        cb_CompanyCity.Items.Clear();
 
         using var context = new AppDbContext();
         IEnumerable<City> cities = context.Cities.EnumerateAll(state!);
@@ -136,8 +128,6 @@ public sealed partial class CompanyEditForm : Form
         {
             cb_CompanyCity.Items.Add(city);
         }
-
-        cb_CompanyCity.Enabled = true;
     }
 
     private void SaveEdit_Click(object sender, EventArgs e)
@@ -172,8 +162,6 @@ public sealed partial class CompanyEditForm : Form
         }
 
         cb_CompanyCountry.SelectedIndex = (int) countryId - 1;
-        cb_CompanyState.Enabled = true;
-        cb_CompanyCity.Enabled = true;
     }
 
     private void Save()

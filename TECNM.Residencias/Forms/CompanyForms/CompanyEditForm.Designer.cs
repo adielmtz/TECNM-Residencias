@@ -71,7 +71,6 @@ namespace TECNM.Residencias.Forms.CompanyForms
             // 
             cb_CompanyCountry.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             cb_CompanyCountry.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            cb_CompanyCountry.Enabled = false;
             cb_CompanyCountry.FormattingEnabled = true;
             cb_CompanyCountry.Location = new System.Drawing.Point(12, 291);
             cb_CompanyCountry.Name = "cb_CompanyCountry";
@@ -91,7 +90,6 @@ namespace TECNM.Residencias.Forms.CompanyForms
             // 
             cb_CompanyState.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             cb_CompanyState.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            cb_CompanyState.Enabled = false;
             cb_CompanyState.FormattingEnabled = true;
             cb_CompanyState.Location = new System.Drawing.Point(139, 291);
             cb_CompanyState.Name = "cb_CompanyState";
@@ -111,7 +109,6 @@ namespace TECNM.Residencias.Forms.CompanyForms
             // 
             cb_CompanyCity.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             cb_CompanyCity.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            cb_CompanyCity.Enabled = false;
             cb_CompanyCity.FormattingEnabled = true;
             cb_CompanyCity.Location = new System.Drawing.Point(266, 291);
             cb_CompanyCity.Name = "cb_CompanyCity";
