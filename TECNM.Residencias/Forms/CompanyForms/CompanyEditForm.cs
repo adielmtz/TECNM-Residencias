@@ -47,7 +47,7 @@ public sealed partial class CompanyEditForm : Form
         using var context = new AppDbContext();
 
         bool companySelected = false;
-        foreach (CompanyType type in context.CompanyTypes.EnumerateAll())
+        foreach (CompanyType type in context.Companies.EnumerateCompanyTypes())
         {
             int index = cb_CompanyType.Items.Add(type);
             if (!companySelected)
@@ -65,8 +65,7 @@ public sealed partial class CompanyEditForm : Form
             }
         }
 
-        IReadOnlyList<Country> countries = context.Countries.GetCountries();
-
+        IEnumerable<Country> countries = context.Countries.EnumerateAll();
         foreach (Country country in countries)
         {
             cb_CompanyCountry.Items.Add(country);
@@ -107,7 +106,7 @@ public sealed partial class CompanyEditForm : Form
         cb_CompanyCity.ResetText();
 
         using var context = new AppDbContext();
-        IReadOnlyList<State> states = context.States.GetStatesByCountry(country!);
+        IEnumerable<State> states = context.States.EnumerateAll(country!);
 
         foreach (State state in states)
         {
@@ -131,7 +130,7 @@ public sealed partial class CompanyEditForm : Form
         cb_CompanyCity.ResetText();
 
         using var context = new AppDbContext();
-        IReadOnlyList<City> cities = context.Cities.GetCitiesByState(state!);
+        IEnumerable<City> cities = context.Cities.EnumerateAll(state!);
 
         foreach (City city in cities)
         {
@@ -148,11 +147,11 @@ public sealed partial class CompanyEditForm : Form
 
     private void LoadLocationData(AppDbContext context)
     {
-        long stateId = context.Cities.GetCityById(_company.CityId).StateId;
-        IReadOnlyList<City> cities = context.Cities.GetCitiesByState(stateId);
+        long stateId = context.Cities.GetCity(_company.CityId)!.StateId;
+        IEnumerable<City> cities = context.Cities.EnumerateAll(stateId);
 
-        long countryId = context.States.GetStateById(stateId).CountryId;
-        IReadOnlyList<State> states = context.States.GetStatesByCountry(countryId);
+        long countryId = context.States.GetState(stateId)!.CountryId;
+        IEnumerable<State> states = context.States.EnumerateAll(countryId);
 
         foreach (State state in states)
         {
@@ -211,14 +210,7 @@ public sealed partial class CompanyEditForm : Form
 
         try
         {
-            if (_company.Id > 0)
-            {
-                context.Companies.Update(_company);
-            }
-            else
-            {
-                context.Companies.Insert(_company);
-            }
+            context.Companies.AddOrUpdate(_company);
         }
         catch (SqliteException e) when (e.SqliteErrorCode == SQLitePCL.raw.SQLITE_CONSTRAINT)
         {
@@ -229,11 +221,11 @@ public sealed partial class CompanyEditForm : Form
                 MessageBoxIcon.Error
             );
 
-            context.Rollback();
+            context.RejectChanges();
             return;
         }
 
-        context.Commit();
+        context.SaveChanges();
         Close();
     }
 }

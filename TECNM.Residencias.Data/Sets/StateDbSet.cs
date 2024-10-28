@@ -50,11 +50,22 @@ public sealed class StateDbSet : DbSet<State>
     /// <summary>
     /// Retrieves and enumerates all entities of type <see cref="State"/> that belongs to the given <see cref="Country"/>.
     /// </summary>
+    /// <param name="country">A <see cref="Country"/> instance to filter the states.</param>
     /// <returns>An <see cref="IEnumerable{T}"/> enumerating all the entities.</returns>
     public IEnumerable<State> EnumerateAll(Country country)
     {
+        return EnumerateAll(country.Id);
+    }
+
+    /// <summary>
+    /// Retrieves and enumerates all entities of type <see cref="State"/> that belongs to the specified country.
+    /// </summary>
+    /// <param name="countryId">A rowid of the country entity to filter.</param>
+    /// <returns>An <see cref="IEnumerable{T}"/> enumerating all the entities.</returns>
+    public IEnumerable<State> EnumerateAll(long countryId)
+    {
         using var command = CreateCommand("SELECT Id, CountryId, Name WHERE CountryId = $cid ORDER BY Name");
-        command.Parameters.Add("$cid", SqliteType.Integer).Value = country.Id;
+        command.Parameters.Add("$cid", SqliteType.Integer).Value = countryId;
         using var reader = command.ExecuteReader();
 
         while (reader.Read())

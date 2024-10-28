@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using TECNM.Residencias.Data;
 using TECNM.Residencias.Data.Entities;
+using TECNM.Residencias.Data.Entities.DTO;
 using TECNM.Residencias.Data.Extensions;
 
 public sealed class CompanyDbSet : DbSet<Company>
@@ -15,10 +16,10 @@ public sealed class CompanyDbSet : DbSet<Company>
     }
 
     /// <summary>
-    /// Gets a specialty entity by its unique rowid.
+    /// Gets a company entity by its unique rowid.
     /// </summary>
-    /// <param name="id">The unique rowid of the specialty entity.</param>
-    /// <returns>A <see cref="Specialty"/> instance if a specialty with the specified rowid exists; otherwise <see langword="null"/>.</returns>
+    /// <param name="id">The unique rowid of the company entity.</param>
+    /// <returns>A <see cref="Company"/> instance if a company with the specified rowid exists; otherwise <see langword="null"/>.</returns>
     public Company? GetCompany(long id)
     {
         using var command = CreateCommand("""
@@ -38,6 +39,41 @@ public sealed class CompanyDbSet : DbSet<Company>
         return null;
     }
 
+    /// <summary>
+    /// Searches for companies based on the specified query.
+    /// </summary>
+    /// <param name="query">The search term used to find companies.</param>
+    /// <param name="count">The number of results to return per page.</param>
+    /// <param name="page">The page number to retrieve, starting from 1.</param>
+    /// <returns>
+    /// An <see cref="IEnumerable{T}"/> containing the search results.
+    /// Each item in the collection represents a company matching the search criteria.
+    /// </returns>
+    public IEnumerable<CompanySearchResultDto> Search(string query, int count, int page)
+    {
+        using var command = CreateCommand("""
+        SELECT rowid, Rfc, Name
+        FROM CompanySearch
+        WHERE CompanySearch MATCH $query
+        ORDER BY rank
+        LIMIT $page, $count
+        """);
+
+        command.Parameters.Add("$query", SqliteType.Text).Value = query.ToFtsQuery();
+        command.Parameters.Add("$page", SqliteType.Integer).Value = (page - 1) * count;
+        command.Parameters.Add("$count", SqliteType.Integer).Value = count;
+        using var reader = command.ExecuteReader();
+
+        while (reader.Read())
+        {
+            yield return new CompanySearchResultDto(
+                Id:   reader.GetInt64(0),
+                Rfc:  reader.GetOptionalString(1),
+                Name: reader.GetString(2)
+            );
+        }
+    }
+
     public override IEnumerable<Company> EnumerateAll()
     {
         using var command = CreateCommand("""
@@ -51,6 +87,56 @@ public sealed class CompanyDbSet : DbSet<Company>
         {
             yield return HydrateObject(reader);
         }
+    }
+
+    /// <summary>
+    /// Retrieves and enumerates a paginated collection of company entities.
+    /// </summary>
+    /// <param name="count">The number of results to return per page.</param>
+    /// <param name="page">The page number to retrieve, starting from 1.</param>
+    /// <returns>
+    /// An <see cref="IEnumerable{Company}"/> containing the companies for the specified page.
+    /// </returns>
+    public IEnumerable<Company> EnumerateAll(int count, int page)
+    {
+        using var command = CreateCommand("""
+        SELECT Id, TypeId, Rfc, Name, Email, Phone, Extension, Address, Locality, PostalCode, CityId, Enabled, UpdatedOn, CreatedOn
+        FROM Company
+        ORDER BY Name
+        LIMIT $page, $count
+        """);
+
+        command.Parameters.Add("$page", SqliteType.Integer).Value = (page - 1) * count;
+        command.Parameters.Add("$count", SqliteType.Integer).Value = count;
+        using var reader = command.ExecuteReader();
+
+        while (reader.Read())
+        {
+            yield return HydrateObject(reader);
+        }
+    }
+
+    /// <summary>
+    /// Gets a company type entity by its unique rowid.
+    /// </summary>
+    /// <param name="id">The unique rowid of the company type entity.</param>
+    /// <returns>A <see cref="CompanyType"/> instance if a company type with the specified rowid exists; otherwise <see langword="null"/>.</returns>
+    public CompanyType? GetCompanyType(long id)
+    {
+        using var command = CreateCommand("SELECT Id, Label FROM CompanyType WHERE Id = $id");
+        command.Parameters.Add("$id", SqliteType.Integer).Value = id;
+        using var reader = command.ExecuteReader();
+
+        if (reader.Read())
+        {
+            return new CompanyType
+            {
+                Id    = reader.GetInt64(0),
+                Label = reader.GetString(1),
+            };
+        }
+
+        return null;
     }
 
     /// <summary>

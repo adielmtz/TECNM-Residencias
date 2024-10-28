@@ -46,11 +46,22 @@ public sealed class CityDbSet : DbSet<City>
     /// <summary>
     /// Retrieves and enumerates all entities of type <see cref="City"/> that belongs to the given <see cref="State"/>.
     /// </summary>
+    /// <param name="state">A <see cref="State"/> instance to filter cities.</param>
     /// <returns>An <see cref="IEnumerable{T}"/> enumerating all the entities.</returns>
     public IEnumerable<City> EnumerateAll(State state)
     {
+        return EnumerateAll(state.Id);
+    }
+
+    /// <summary>
+    /// Retrieves and enumerates all entities of type <see cref="City"/> that belongs to the given state rowid.
+    /// </summary>
+    /// <param name="stateId">The rowid of the state entity to filter.</param>
+    /// <returns>An <see cref="IEnumerable{T}"/> enumerating all the entities.</returns>
+    public IEnumerable<City> EnumerateAll(long stateId)
+    {
         using var command = CreateCommand("SELECT Id, StateId, Name FROM City WHERE StateId = $sid ORDER BY Name");
-        command.Parameters.Add("$sid", SqliteType.Integer).Value = state.Id;
+        command.Parameters.Add("$sid", SqliteType.Integer).Value = stateId;
         using var reader = command.ExecuteReader();
 
         while (reader.Read())

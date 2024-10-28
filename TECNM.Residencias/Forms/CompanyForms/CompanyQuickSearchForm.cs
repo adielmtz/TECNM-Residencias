@@ -3,11 +3,11 @@ namespace TECNM.Residencias.Forms.CompanyForms;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using TECNM.Residencias.Data.Entities;
+using TECNM.Residencias.Data.Entities.DTO;
 
 public sealed partial class CompanyQuickSearchForm : Form
 {
-    public Company? SelectedCompany { get; private set; }
+    public CompanySearchResultDto? SelectedCompany { get; private set; }
 
     public CompanyQuickSearchForm()
     {
@@ -39,9 +39,9 @@ public sealed partial class CompanyQuickSearchForm : Form
         }
 
         using var context = new AppDbContext();
-        IEnumerable<Company> companies = context.Companies.Search(query, 50, 1);
+        IEnumerable<CompanySearchResultDto> companies = context.Companies.Search(query, 50, 1);
 
-        foreach (Company company in companies)
+        foreach (CompanySearchResultDto company in companies)
         {
             int index = dgv_ListView.Rows.Add();
             DataGridViewRow row = dgv_ListView.Rows[index];
@@ -59,7 +59,7 @@ public sealed partial class CompanyQuickSearchForm : Form
         var grid = (DataGridView) sender;
         if (grid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
         {
-            SelectedCompany = (Company) grid.Rows[e.RowIndex].Tag!;
+            SelectedCompany = (CompanySearchResultDto) grid.Rows[e.RowIndex].Tag!;
             Close();
         }
     }

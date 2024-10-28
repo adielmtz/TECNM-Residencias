@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
+using TECNM.Residencias.Data.Entities.DTO;
 using TECNM.Residencias.Extensions;
 using TECNM.Residencias.Forms.AdvisorForms;
 
@@ -98,7 +99,7 @@ public sealed partial class CompanyListViewForm : Form
         }
 
         using var context = new AppDbContext();
-        IEnumerable<Company> companies = context.Companies.EnumerateCompanies(_rowsPerPage, _currentPage);
+        IEnumerable<Company> companies = context.Companies.EnumerateAll(_rowsPerPage, _currentPage);
         PopulateTable(context, companies);
     }
 
@@ -112,7 +113,15 @@ public sealed partial class CompanyListViewForm : Form
 
         _refreshFromSearch = true;
         using var context = new AppDbContext();
-        IEnumerable<Company> companies = context.Companies.Search(query, _rowsPerPage, _currentPage);
+        IEnumerable<CompanySearchResultDto> searchResult = context.Companies.Search(query, _rowsPerPage, _currentPage);
+        List<Company> companies = [];
+
+        foreach (CompanySearchResultDto result in searchResult)
+        {
+            Company company = context.Companies.GetCompany(result.Id)!;
+            companies.Add(company);
+        }
+
         PopulateTable(context, companies);
     }
 
@@ -126,10 +135,10 @@ public sealed partial class CompanyListViewForm : Form
             int index = dgv_ListView.Rows.Add();
             DataGridViewRow row = dgv_ListView.Rows[index];
 
-            City city = context.Cities.GetCityById(company.CityId);
-            State state = context.States.GetStateById(city.StateId);
-            Country country = context.Countries.GetCountryById(state.CountryId);
-            CompanyType type = context.CompanyTypes.GetCompanyTypeById(company.TypeId)!;
+            City city = context.Cities.GetCity(company.CityId)!;
+            State state = context.States.GetState(city.StateId)!;
+            Country country = context.Countries.GetCountry(state.CountryId)!;
+            CompanyType type = context.Companies.GetCompanyType(company.TypeId)!;
 
             row.Tag = company;
             row.Cells[0].Value = company.Name;
