@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
+using TECNM.Residencias.Data.Entities.DTO;
 
 public sealed partial class AdvisorQuickSearchForm : Form
 {
@@ -12,7 +13,7 @@ public sealed partial class AdvisorQuickSearchForm : Form
         InitializeComponent();
     }
 
-    public Advisor? SelectedAdvisor { get; private set; }
+    public AdvisorSearchResultDto? SelectedAdvisor { get; private set; }
 
     public Company? FilterCompany { get; set; }
 
@@ -43,9 +44,9 @@ public sealed partial class AdvisorQuickSearchForm : Form
         }
 
         using var context = new AppDbContext();
-        IEnumerable<Advisor> advisors = context.Advisors.Search(query, 50, 1, FilterCompany?.Id, FilterInternal);
+        IEnumerable<AdvisorSearchResultDto> searchResults = context.Advisors.Search(query, 50, 1, FilterCompany?.Id, FilterInternal);
 
-        foreach (Advisor advisor in advisors)
+        foreach (AdvisorSearchResultDto advisor in searchResults)
         {
             int index = dgv_ListView.Rows.Add();
             DataGridViewRow row = dgv_ListView.Rows[index];
@@ -62,7 +63,7 @@ public sealed partial class AdvisorQuickSearchForm : Form
         var grid = (DataGridView) sender;
         if (grid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
         {
-            SelectedAdvisor = (Advisor) grid.Rows[e.RowIndex].Tag!;
+            SelectedAdvisor = (AdvisorSearchResultDto) grid.Rows[e.RowIndex].Tag!;
             Close();
         }
     }

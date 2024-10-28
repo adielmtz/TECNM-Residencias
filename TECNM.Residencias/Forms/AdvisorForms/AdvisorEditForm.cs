@@ -112,8 +112,8 @@ public sealed partial class AdvisorEditForm : Form
         }
 
         using var context = new AppDbContext();
-        context.Advisors.InsertOrUpdate(_advisor);
-        context.Commit();
+        context.Advisors.AddOrUpdate(_advisor);
+        context.SaveChanges();
         Close();
     }
 }

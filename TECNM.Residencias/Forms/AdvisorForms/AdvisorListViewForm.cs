@@ -52,7 +52,7 @@ public sealed partial class AdvisorListViewForm : Form
     private void RefreshList()
     {
         using var context = new AppDbContext();
-        IEnumerable<Advisor> advisors = context.Advisors.EnumerateAdvisorsByCompany(_company.Id);
+        IEnumerable<Advisor> advisors = context.Advisors.EnumerateAll(_company);
         PopulateTable(context, advisors);
     }
 

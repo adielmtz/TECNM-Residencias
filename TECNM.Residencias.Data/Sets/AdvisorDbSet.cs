@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using TECNM.Residencias.Data;
 using TECNM.Residencias.Data.Entities;
+using TECNM.Residencias.Data.Entities.DTO;
+using TECNM.Residencias.Data.Extensions;
 
 public sealed class AdvisorDbSet : DbSet<Advisor>
 {
@@ -37,6 +39,59 @@ public sealed class AdvisorDbSet : DbSet<Advisor>
         return null;
     }
 
+    /// <summary>
+    /// Searches for advisors based on the specified query and pagination parameters.
+    /// </summary>
+    /// <param name="query">The search term used to find advisors.</param>
+    /// <param name="count">The number of results to return per page.</param>
+    /// <param name="page">The page number to retrieve, starting from 1.</param>
+    /// <param name="filterCompanyId">Optional. A specific company ID to filter the results by. If null, no company filter is applied.</param>
+    /// <param name="filterInternal">Optional. A boolean value indicating whether to filter for internal advisors. If null, no internal filter is applied.</param>
+    /// <returns>
+    /// An <see cref="IEnumerable{T}"/> enumerating a collection of <see cref="AdvisorSearchResultDto"/> representing the search results.
+    /// </returns>
+    public IEnumerable<AdvisorSearchResultDto> Search(string query, int count, int page, long? filterCompanyId = null, bool? filterInternal = null)
+    {
+        using var command = CreateCommand();
+        string extraMatch = "";
+
+        if (filterCompanyId.HasValue)
+        {
+            extraMatch += "CompanyId MATCH $e1 AND";
+            command.Parameters.Add("$e1", SqliteType.Integer).Value = filterCompanyId.Value;
+        }
+
+        if (filterInternal.HasValue)
+        {
+            extraMatch += "Internal MATCH $e2 AND";
+            command.Parameters.Add("$e2", SqliteType.Integer).Value = filterInternal.Value;
+        }
+
+        command.CommandText = $"""
+        SELECT rowid, CompanyId, Internal, FirstName, LastName
+        FROM AdvisorSearch
+        WHERE {extraMatch} AdvisorSearch MATCH $query
+        ORDER BY rank
+        LIMIT $page, $count
+        """;
+
+        command.Parameters.Add("$query", SqliteType.Text).Value = query.ToFtsQuery();
+        command.Parameters.Add("$page", SqliteType.Integer).Value = (page - 1) * count;
+        command.Parameters.Add("$count", SqliteType.Integer).Value = count;
+        using var reader = command.ExecuteReader();
+
+        while (reader.Read())
+        {
+            yield return new AdvisorSearchResultDto(
+                Id:        reader.GetInt64(0),
+                CompanyId: reader.GetInt64(1),
+                Internal:  reader.GetBoolean(2),
+                FirstName: reader.GetString(3),
+                LastName:  reader.GetString(4)
+            );
+        }
+    }
+
     public override IEnumerable<Advisor> EnumerateAll()
     {
         using var command = CreateCommand("""
@@ -46,6 +101,29 @@ public sealed class AdvisorDbSet : DbSet<Advisor>
         """);
 
         using var reader = command.ExecuteReader();
+        while (reader.Read())
+        {
+            yield return HydrateObject(reader);
+        }
+    }
+
+    /// <summary>
+    /// Retrieves and enumerates all advisor entities that belong to the specified company.
+    /// </summary>
+    /// <param name="company">A <see cref="Company"/> instance to use as filter.</param>
+    /// <returns>An <see cref="IEnumerable{T}"/> enumerating all the entities.</returns>
+    public IEnumerable<Advisor> EnumerateAll(Company company)
+    {
+        using var command = CreateCommand("""
+        SELECT Id, CompanyId, Internal, FirstName, LastName, Section, Role, Email, Phone, Extension, Enabled, UpdatedOn, CreatedOn
+        FROM Advisor
+        WHERE CompanyId = $cid
+        ORDER BY FirstName, LastName
+        """);
+
+        command.Parameters.Add("$cid", SqliteType.Integer).Value = company.Id;
+        using var reader = command.ExecuteReader();
+
         while (reader.Read())
         {
             yield return HydrateObject(reader);
