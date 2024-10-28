@@ -5,13 +5,14 @@ using System;
 using System.IO;
 
 /// <summary>
-/// Represents a SQLite database backup operation.
+/// Represents a database backup operation.
+/// This class is intended exclusively for SQLite databases.
 /// </summary>
 public sealed class DbBackup : IDisposable
 {
-    private readonly SqliteConnection source;
-    private readonly DateTime backupDateTime;
-    private readonly string directory;
+    private readonly SqliteConnection _source;
+    private readonly DateTime _backupDateTime;
+    private readonly string _directory;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="DbBackup"/> class with a specified SQLite
@@ -22,9 +23,9 @@ public sealed class DbBackup : IDisposable
     /// <param name="backupDateTime">The date and time of the backup.</param>
     public DbBackup(SqliteConnection source, string directory, DateTime backupDateTime)
     {
-        this.source = source;
-        this.directory = directory;
-        this.backupDateTime = backupDateTime;
+        _source = source;
+        _directory = directory;
+        _backupDateTime = backupDateTime;
     }
 
     /// <summary>
@@ -38,14 +39,19 @@ public sealed class DbBackup : IDisposable
     }
 
     /// <summary>
-    /// Gets the directory where the backup is stored.
-    /// </summary>
-    public string BackupDirectory => directory;
-
-    /// <summary>
     /// Gets the date and time when the backup is created.
     /// </summary>
-    public DateTime BackupDateTime => backupDateTime;
+    public DateTime BackupDateTime => _backupDateTime;
+
+    /// <summary>
+    /// Gets the directory where the backup is saved.
+    /// </summary>
+    public string BackupDirectory => _directory;
+
+    /// <summary>
+    /// Disposes the source database.
+    /// </summary>
+    public void Dispose() => _source.Dispose();
 
     /// <summary>
     /// Executes the backup operation and returns the full path of the resulting backup file.
@@ -53,6 +59,7 @@ public sealed class DbBackup : IDisposable
     /// <returns>The full path of the backup file.</returns>
     public string Execute()
     {
+        SqliteConnection source = _source;
         string filename = $"database.db.{BackupDateTime:yyyyMMddHHmmss}.bak";
         string fullpath = Path.Combine(BackupDirectory, filename);
 
@@ -66,13 +73,5 @@ public sealed class DbBackup : IDisposable
         source.BackupDatabase(destination);
         SqliteConnection.ClearPool(destination);
         return fullpath;
-    }
-
-    /// <summary>
-    /// Disposes the source database.
-    /// </summary>
-    public void Dispose()
-    {
-        source.Dispose();
     }
 }

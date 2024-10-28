@@ -2,38 +2,46 @@ namespace TECNM.Residencias.Data;
 
 using Microsoft.Data.Sqlite;
 
+/// <summary>
+/// Factory class for creating database connections.
+/// This class is intended exclusively for SQLite databases.
+/// </summary>
 public sealed class DbFactory
 {
     private readonly string _dataSource;
-    private string? _connectionString;
+    private readonly string _connectionString;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DbFactory"/> class with the specified data source.
+    /// </summary>
+    /// <param name="dataSource">The data source for the SQLite database.</param>
     public DbFactory(string dataSource)
     {
         _dataSource = dataSource;
+        _connectionString = new SqliteConnectionStringBuilder
+        {
+            DataSource = dataSource,
+            ForeignKeys = true,
+            DefaultTimeout = 5,
+            RecursiveTriggers = true,
+        }.ConnectionString;
     }
 
+    /// <summary>
+    /// Gets the connection data source.
+    /// </summary>
     public string DataSource => _dataSource;
 
-    public string ConnectionString
-    {
-        get
-        {
-            if (string.IsNullOrEmpty(_connectionString))
-            {
-                _connectionString = new SqliteConnectionStringBuilder
-                {
-                    DataSource = DataSource,
-                    ForeignKeys = true,
-                    DefaultTimeout = 10,
-                    RecursiveTriggers = true,
-                }.ConnectionString;
-            }
+    /// <summary>
+    /// Gets the connection string used to connect to the database.
+    /// </summary>
+    public string ConnectionString => _connectionString;
 
-            return _connectionString;
-        }
-    }
-
-    public SqliteConnection Open()
+    /// <summary>
+    /// Creates and opens a new <see cref="SqliteConnection"/> instance to the database.
+    /// </summary>
+    /// <returns>A <see cref="SqliteConnection"/> object that is ready for use.</returns>
+    public SqliteConnection CreateConnection()
     {
         var sqlite = new SqliteConnection(ConnectionString);
         sqlite.Open();
