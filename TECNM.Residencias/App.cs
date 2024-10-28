@@ -76,7 +76,7 @@ internal static class App
 
     private static void InitializeDatabase()
     {
-        using var sqlite = Database.Open();
+        using var sqlite = Database.CreateConnection();
         using var migrator = new DbMigrator(sqlite);
 
         if (migrator.HasPendingMigrations)
