@@ -44,17 +44,12 @@ public sealed class StudentDbSet : DbSet<Student>
     /// <summary>
     /// Searches for student records based on the provided query.
     /// </summary>
-    /// <param name="query">The search term used to filter student records.</param>
-    /// <param name="count">The maximum number of search results to return.</param>
-    /// <param name="page">The page number for pagination of the results.</param>
+    /// <param name="query">The search term used to find students.</param>
+    /// <param name="count">The number of results to return per page.</param>
+    /// <param name="page">The page number to retrieve, starting from 1.</param>
     /// <returns>
     /// An <see cref="IEnumerable{T}"/> containing the search results.
     /// </returns>
-    /// <remarks>
-    /// This method supports pagination. The <paramref name="count"/> parameter specifies 
-    /// how many results are returned per page, while <paramref name="page"/> specifies 
-    /// which page of results to retrieve.
-    /// </remarks>
     public IEnumerable<StudentSearchResultDto> Search(string query, int count, int page)
     {
         using var command = CreateCommand("""

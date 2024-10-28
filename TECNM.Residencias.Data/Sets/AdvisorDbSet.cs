@@ -40,7 +40,7 @@ public sealed class AdvisorDbSet : DbSet<Advisor>
     }
 
     /// <summary>
-    /// Searches for advisors based on the specified query and pagination parameters.
+    /// Searches for advisors based on the specified query.
     /// </summary>
     /// <param name="query">The search term used to find advisors.</param>
     /// <param name="count">The number of results to return per page.</param>
