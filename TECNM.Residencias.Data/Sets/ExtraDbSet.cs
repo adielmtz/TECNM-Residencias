@@ -25,6 +25,30 @@ public sealed class ExtraDbSet : DbSet<Extra>
     }
 
     /// <summary>
+    /// Retrieves and enumerates all extra entities that belong to the specified student.
+    /// </summary>
+    /// <param name="student">The <see cref="Student"/> instance to filter.</param>
+    /// <returns>An <see cref="IEnumerable{T}"/> enumerating all the entities.</returns>
+    public IEnumerable<Extra> EnumerateAll(Student student)
+    {
+        using var command = CreateCommand("""
+        SELECT Id, TypeId, Value
+        FROM Extra
+        INNER JOIN StudentExtras
+        ON Id = ExtraId
+        WHERE StudentId = $p0
+        """);
+
+        command.Parameters.Add("$p0", SqliteType.Integer).Value = student.Id;
+        using var reader = command.ExecuteReader();
+
+        while (reader.Read())
+        {
+            yield return HydrateObject(reader);
+        }
+    }
+
+    /// <summary>
     /// Retrieves and enumerates all entities of type <see cref="ExtraType"/> from the underlying database.
     /// </summary>
     /// <returns>An <see cref="IEnumerable{T}"/> enumerating all the entities.</returns>

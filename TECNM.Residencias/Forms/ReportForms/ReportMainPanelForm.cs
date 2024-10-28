@@ -114,14 +114,14 @@ public sealed partial class ReportMainPanelForm : Form
             Specialty? specialty;
             if (!specialtyCache.TryGetValue(student.SpecialtyId, out specialty))
             {
-                specialty = context.Specialties.GetSpecialtyById(student.SpecialtyId);
+                specialty = context.Specialties.GetSpecialty(student.SpecialtyId);
                 specialtyCache[student.SpecialtyId] = specialty!;
             }
 
             Company? company;
             if (!companyCache.TryGetValue(student.CompanyId, out company))
             {
-                company = context.Companies.GetCompanyById(student.CompanyId);
+                company = context.Companies.GetCompany(student.CompanyId);
                 companyCache[student.CompanyId] = company!;
             }
 
@@ -135,7 +135,7 @@ public sealed partial class ReportMainPanelForm : Form
                 long rowid = (long) advisorId;
                 if (!advisorCache.TryGetValue(rowid, out Advisor? advisor))
                 {
-                    advisor = context.Advisors.GetAdvisorById(rowid);
+                    advisor = context.Advisors.GetAdvisor(rowid);
                     advisorCache[rowid] = advisor!;
                 }
             }
@@ -148,7 +148,7 @@ public sealed partial class ReportMainPanelForm : Form
                 LastName        = student.LastName,
                 Email           = student.Email,
                 Phone           = student.Phone,
-                Gender          = context.Genders.GetGenderById(student.GenderId)!,
+                Gender          = context.Students.GetGender(student.GenderId)!,
                 Semester        = student.Semester,
                 StartDate       = student.StartDate,
                 EndDate         = student.EndDate,
@@ -163,7 +163,7 @@ public sealed partial class ReportMainPanelForm : Form
                 Closed          = student.Closed,
                 UpdatedOn       = student.UpdatedOn,
                 CreatedOn       = student.CreatedOn,
-                Extras          = context.Extras.EnumerateExtras(student.Id).ToList(),
+                Extras          = context.Extras.EnumerateAll(student).ToList(),
             };
 
             result.Add(dto);

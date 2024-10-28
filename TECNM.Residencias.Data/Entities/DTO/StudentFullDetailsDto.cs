@@ -21,9 +21,9 @@ public sealed record class StudentFullDetailsDto
 
     public required string Semester { get; init; }
 
-    public required DateTime StartDate { get; init; }
+    public required DateOnly StartDate { get; init; }
 
-    public required DateTime EndDate { get; init; }
+    public required DateOnly EndDate { get; init; }
 
     public required string Project { get; init; }
 
@@ -43,9 +43,9 @@ public sealed record class StudentFullDetailsDto
 
     public required bool Closed { get; init; }
 
-    public required DateTime UpdatedOn { get; init; }
+    public required DateTimeOffset UpdatedOn { get; init; }
 
-    public required DateTime CreatedOn { get; init; }
+    public required DateTimeOffset CreatedOn { get; init; }
 
     public required IReadOnlyList<Extra> Extras { get; init; }
 }

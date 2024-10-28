@@ -119,6 +119,63 @@ public sealed class StudentDbSet : DbSet<Student>
     }
 
     /// <summary>
+    /// Retrieves and enumerates a collection of students enrolled in a specified academic year and semester.
+    /// </summary>
+    /// <param name="year">The academic year for which to retrieve students. Must be a valid year (e.g., 2023).</param>
+    /// <param name="semester">An optional string representing the semester (e.g., "ENE-JUN", "AGO-DIC"). If null, students from all semesters will be included.</param>
+    /// <returns>An <see cref="IEnumerable{T}"/> containing the students that match the specified year and semester.</returns>
+    public IEnumerable<Student> EnumerateStudents(int year, string? semester)
+    {
+        using var command = CreateCommand();
+        string extraParam = "";
+
+        if (semester is not null)
+        {
+            extraParam = "AND Semester = $p1";
+            command.Parameters.Add("$p1", SqliteType.Text).Value = semester!;
+        }
+
+        command.CommandText = $"""
+        SELECT Id,                SpecialtyId, FirstName, LastName, Email,     Phone,             GenderId,
+               Semester,          StartDate,   EndDate,   Project,  CompanyId, InternalAdvisorId, ExternalAdvisorId,
+               ReviewerAdvisorId, Section,     Schedule,  Notes,    Closed,    UpdatedOn,         CreatedOn
+        FROM Student
+        WHERE strftime('%Y', StartDate) = $p0 {extraParam}
+        """;
+
+        command.Parameters.Add("$p0", SqliteType.Text).Value = year.ToString();
+        using var reader = command.ExecuteReader();
+
+        while (reader.Read())
+        {
+            yield return HydrateObject(reader);
+        }
+    }
+
+    /// <summary>
+    /// Gets a gender entity by its unique rowid.
+    /// </summary>
+    /// <param name="id">The unique rowid of the gender entity.</param>
+    /// <returns>A <see cref="Gender"/> instance if a gender with the specified rowid exists; otherwise <see langword="null"/>.</returns>
+    public Gender? GetGender(long id)
+    {
+        using var command = CreateCommand("SELECT Id, Label FROM Gender WHERE Id = $id");
+        command.Parameters.Add("$id", SqliteType.Integer).Value = id;
+        using var reader = command.ExecuteReader();
+
+        if (reader.Read())
+        {
+            return new Gender
+            {
+                Id    = reader.GetInt64(0),
+                Label = reader.GetString(1),
+            };
+        }
+
+        return null;
+    }
+
+    /// <summary>
     /// Retrieves and enumerates all entities of type <see cref="Gender"/> from the underlying database.
     /// </summary>
     /// <returns>An <see cref="IEnumerable{T}"/> enumerating all the entities.</returns>
