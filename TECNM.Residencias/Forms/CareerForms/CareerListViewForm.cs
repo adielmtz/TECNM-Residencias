@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
+using TECNM.Residencias.Extensions;
 using TECNM.Residencias.Forms.SpecialtyForms;
 
 public sealed partial class CareerListViewForm : Form
@@ -12,6 +13,7 @@ public sealed partial class CareerListViewForm : Form
     {
         InitializeComponent();
         Text = $"Listado de carreras | {App.Name}";
+        dgv_ListView.DoubleBuffered(true);
     }
 
     private void CareerListViewForm_Load(object sender, EventArgs e)
