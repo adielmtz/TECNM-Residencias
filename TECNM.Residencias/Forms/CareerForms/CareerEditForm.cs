@@ -69,7 +69,7 @@ public sealed partial class CareerEditForm : Form
         {
             try
             {
-                context.Careers.Insert(_career);
+                context.Careers.Add(_career);
             }
             catch (SqliteException)
             {
@@ -80,12 +80,12 @@ public sealed partial class CareerEditForm : Form
                     MessageBoxIcon.Error
                 );
 
-                context.Rollback();
+                context.RejectChanges();
                 return;
             }
         }
 
-        context.Commit();
+        context.SaveChanges();
         Close();
     }
 }

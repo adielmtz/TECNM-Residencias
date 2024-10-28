@@ -1,7 +1,6 @@
 namespace TECNM.Residencias.Forms;
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
@@ -25,7 +24,7 @@ public sealed partial class SettingsForm : Form
     {
         Enabled = false;
 
-        using var sqlite = App.Database.Open();
+        using var sqlite = App.Database.CreateConnection();
         using var command = sqlite.CreateCommand();
 
         command.CommandText = "ANALYZE";
@@ -79,7 +78,7 @@ public sealed partial class SettingsForm : Form
         cb_CompanyType.Items.Add(new CompanyType { Id = 0, Label = "Ninguno" });
         cb_CompanyType.SelectedIndex = 0;
 
-        foreach (CompanyType type in context.CompanyTypes.EnumerateAll())
+        foreach (CompanyType type in context.Companies.EnumerateCompanyTypes())
         {
             int index = cb_CompanyType.Items.Add(type);
             if (AppSettings.Default.CompanyType == type.Id)
@@ -92,7 +91,7 @@ public sealed partial class SettingsForm : Form
         cb_StudentCareer.Items.Add(new Career { Id = 0, Name = "Ninguno" });
         cb_StudentCareer.SelectedIndex = 0;
 
-        foreach (Career career in context.Careers.EnumerateCareers(enabled: true))
+        foreach (Career career in context.Careers.EnumerateAll(enabled: true))
         {
             int index = cb_StudentCareer.Items.Add(career);
             if (AppSettings.Default.StudentCareer == career.Id)
@@ -104,7 +103,7 @@ public sealed partial class SettingsForm : Form
 
     private string GetSqliteVersion()
     {
-        using var sqlite = App.Database.Open();
+        using var sqlite = App.Database.CreateConnection();
         using var command = sqlite.CreateCommand();
         command.CommandText = "SELECT sqlite_version()";
         object? result = command.ExecuteScalar();

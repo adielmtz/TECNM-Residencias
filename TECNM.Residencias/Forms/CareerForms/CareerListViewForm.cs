@@ -54,7 +54,7 @@ public sealed partial class CareerListViewForm : Form
     private void RefreshList()
     {
         using var context = new AppDbContext();
-        IEnumerable<Career> careers = context.Careers.EnumerateCareers();
+        IEnumerable<Career> careers = context.Careers.EnumerateAll();
 
         dgv_ListView.Rows.Clear();
 

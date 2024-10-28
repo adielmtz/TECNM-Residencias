@@ -43,6 +43,27 @@ public sealed class CareerDbSet : DbSet<Career>
         }
     }
 
+    /// <summary>
+    /// Retrieves an enumerable collection of <see cref="Career"/> objects.
+    /// </summary>
+    /// <param name="enabled">Indicates whether to filter the careers based on their enabled status. 
+    /// If true, only enabled careers will be included in the result. 
+    /// If false, only disabled careers will be returned.</param>
+    /// <returns>
+    /// An <see cref="IEnumerable{T}"/> containing the careers that match the specified filter.
+    /// </returns>
+    public IEnumerable<Career> EnumerateAll(bool enabled)
+    {
+        using var command = CreateCommand("SELECT Id, Name, Enabled, UpdatedOn, CreatedOn FROM Career WHERE Enabled = $p0 ORDER BY Name");
+        command.Parameters.Add("$p0", SqliteType.Integer).Value = enabled;
+        using var reader = command.ExecuteReader();
+
+        while (reader.Read())
+        {
+            yield return HydrateObject(reader);
+        }
+    }
+
     public override bool Contains(Career entity) => throw new NotImplementedException();
 
     public override bool Add(Career entity)
