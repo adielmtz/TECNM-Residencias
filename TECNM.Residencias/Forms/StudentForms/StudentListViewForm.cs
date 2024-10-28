@@ -161,8 +161,8 @@ public sealed partial class StudentListViewForm : Form
             row.Cells[13].Value = student.Schedule;
             row.Cells[14].Value = student.Closed;
             row.Cells[15].Value = student.Notes;
-            row.Cells[16].Value = student.UpdatedOn;
-            row.Cells[17].Value = student.CreatedOn;
+            row.Cells[16].Value = student.UpdatedOn.ToString("g");
+            row.Cells[17].Value = student.CreatedOn.ToString("g");
             count++;
         }
 

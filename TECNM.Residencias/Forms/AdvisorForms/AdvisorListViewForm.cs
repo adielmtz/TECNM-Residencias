@@ -75,8 +75,8 @@ public sealed partial class AdvisorListViewForm : Form
             row.Cells[5].Value = advisor.Phone;
             row.Cells[6].Value = advisor.Extension;
             row.Cells[7].Value = advisor.Enabled;
-            row.Cells[8].Value = advisor.UpdatedOn;
-            row.Cells[9].Value = advisor.CreatedOn;
+            row.Cells[8].Value = advisor.UpdatedOn.ToString("g");
+            row.Cells[9].Value = advisor.CreatedOn.ToString("g");
             count++;
         }
 

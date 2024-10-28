@@ -152,8 +152,8 @@ public sealed partial class CompanyListViewForm : Form
             row.Cells[8].Value = company.PostalCode;
             row.Cells[9].Value = $"{city}, {state}, {country}";
             row.Cells[10].Value = company.Enabled;
-            row.Cells[11].Value = company.UpdatedOn;
-            row.Cells[12].Value = company.CreatedOn;
+            row.Cells[11].Value = company.UpdatedOn.ToString("g");
+            row.Cells[12].Value = company.CreatedOn.ToString("g");
             count++;
         }
 

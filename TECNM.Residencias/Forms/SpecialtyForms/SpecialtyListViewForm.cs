@@ -65,8 +65,8 @@ public sealed partial class SpecialtyListViewForm : Form
             row.Tag = specialty;
             row.Cells[0].Value = specialty.Name;
             row.Cells[1].Value = specialty.Enabled;
-            row.Cells[2].Value = specialty.UpdatedOn;
-            row.Cells[3].Value = specialty.CreatedOn;
+            row.Cells[2].Value = specialty.UpdatedOn.ToString("g");
+            row.Cells[3].Value = specialty.CreatedOn.ToString("g");
         }
 
         dgv_ListView.ClearSelection();

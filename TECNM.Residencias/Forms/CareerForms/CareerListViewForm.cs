@@ -66,8 +66,8 @@ public sealed partial class CareerListViewForm : Form
             row.Tag = career;
             row.Cells[0].Value = career.Name;
             row.Cells[1].Value = career.Enabled;
-            row.Cells[2].Value = career.UpdatedOn;
-            row.Cells[3].Value = career.CreatedOn;
+            row.Cells[2].Value = career.UpdatedOn.ToString("g");
+            row.Cells[3].Value = career.CreatedOn.ToString("g");
         }
 
         dgv_ListView.ClearSelection();
