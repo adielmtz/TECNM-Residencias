@@ -95,7 +95,7 @@ public sealed class CompanyDbSet : DbSet<Company>
     /// <param name="count">The number of results to return per page.</param>
     /// <param name="page">The page number to retrieve, starting from 1.</param>
     /// <returns>
-    /// An <see cref="IEnumerable{Company}"/> containing the companies for the specified page.
+    /// An <see cref="IEnumerable{T}"/> containing the companies for the specified page.
     /// </returns>
     public IEnumerable<Company> EnumerateAll(int count, int page)
     {

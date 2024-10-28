@@ -5,10 +5,12 @@ using FluentValidation.Results;
 using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
+using TECNM.Residencias.Data.Entities.DTO;
 using TECNM.Residencias.Data.Validators;
 using TECNM.Residencias.Forms.AdvisorForms;
 using TECNM.Residencias.Forms.CompanyForms;
@@ -19,7 +21,7 @@ public sealed partial class StudentEditForm : Form
     private readonly AbstractValidator<Student> _validator = new StudentValidator();
     private readonly FormConfirmClosingService closeConfirmService;
     private Student _student = new Student();
-    private Company _company = new Company();
+    private Company? _company;
     private Advisor? _internalAdvisor;
     private Advisor? _externalAdvisor;
     private Advisor? _reviewerAdvisor;
@@ -57,8 +59,8 @@ public sealed partial class StudentEditForm : Form
             tb_StudentSection.Text = entity.Section;
             tb_StudentSchedule.Text = entity.Schedule;
             cb_StudentSemester.SelectedIndex = entity.Semester == "ENE-JUN" ? 0 : 1;
-            dtp_StudentStartDate.Value = entity.StartDate;
-            dtp_StudentEndDate.Value = entity.EndDate;
+            dtp_StudentStartDate.Value = entity.StartDate.ToDateTime(TimeOnly.MinValue);
+            dtp_StudentEndDate.Value = entity.EndDate.ToDateTime(TimeOnly.MinValue);
             chk_StudentClosed.Checked = entity.Closed;
             tb_StudentNotes.Text = entity.Notes;
 
@@ -71,7 +73,7 @@ public sealed partial class StudentEditForm : Form
     {
         using var context = new AppDbContext();
 
-        foreach (Gender gender in context.Genders.EnumerateAll())
+        foreach (Gender gender in context.Students.EnumerateGenders())
         {
             int index = cb_StudentGender.Items.Add(gender);
             if (gender.Id == _student.GenderId)
@@ -81,7 +83,7 @@ public sealed partial class StudentEditForm : Form
         }
 
         Career? prefetchCareer = null;
-        foreach (Career career in context.Careers.EnumerateCareers(enabled: true))
+        foreach (Career career in context.Careers.EnumerateAll(enabled: true))
         {
             int index = cb_StudentCareer.Items.Add(career);
             if (AppSettings.Default.StudentCareer == career.Id)
@@ -95,7 +97,7 @@ public sealed partial class StudentEditForm : Form
 
         if (prefetchCareer != null)
         {
-            IEnumerable<Specialty> specialties = context.Specialties.EnumerateSpecialtiesByCareer(prefetchCareer);
+            IEnumerable<Specialty> specialties = context.Specialties.EnumerateAll(prefetchCareer);
             PopulateSpecialtyCombobox(specialties);
         }
 
@@ -116,7 +118,7 @@ public sealed partial class StudentEditForm : Form
         }
 
         using var context = new AppDbContext();
-        IEnumerable<Specialty> specialties = context.Specialties.EnumerateSpecialtiesByCareer(career.Id, enabled: true);
+        IEnumerable<Specialty> specialties = context.Specialties.EnumerateAll(career, enabled: true);
         PopulateSpecialtyCombobox(specialties);
     }
 
@@ -141,7 +143,7 @@ public sealed partial class StudentEditForm : Form
             using var dialog = new CompanyQuickSearchForm();
             dialog.ShowDialog();
 
-            Company? selected = dialog.SelectedCompany;
+            CompanySearchResultDto? selected = dialog.SelectedCompany;
             if (selected != null)
             {
                 SetCompany(selected);
@@ -170,7 +172,7 @@ public sealed partial class StudentEditForm : Form
             dialog.FilterInternal = true;
             dialog.ShowDialog();
 
-            Advisor? selected = dialog.SelectedAdvisor;
+            AdvisorSearchResultDto? selected = dialog.SelectedAdvisor;
             if (selected != null)
             {
                 SetInternalAdvisor(selected);
@@ -196,10 +198,10 @@ public sealed partial class StudentEditForm : Form
         while (true)
         {
             using var dialog = new AdvisorQuickSearchForm();
-            dialog.FilterCompany = _company;
+            dialog.FilterCompany = _company?.Id;
             dialog.ShowDialog();
 
-            Advisor? selected = dialog.SelectedAdvisor;
+            AdvisorSearchResultDto? selected = dialog.SelectedAdvisor;
             if (selected != null)
             {
                 SetExternalAdvisor(selected);
@@ -228,7 +230,7 @@ public sealed partial class StudentEditForm : Form
             dialog.FilterInternal = true;
             dialog.ShowDialog();
 
-            Advisor? selected = dialog.SelectedAdvisor;
+            AdvisorSearchResultDto? selected = dialog.SelectedAdvisor;
             if (selected != null)
             {
                 SetReviewerAdvisor(selected);
@@ -253,7 +255,7 @@ public sealed partial class StudentEditForm : Form
     {
         if (ConfirmAdvisorRemovalDialog() == DialogResult.OK)
         {
-            SetInternalAdvisor(null);
+            SetInternalAdvisor(advisor: null);
             btn_RemoveInternalAdvisor.Enabled = false;
         }
     }
@@ -262,7 +264,7 @@ public sealed partial class StudentEditForm : Form
     {
         if (ConfirmAdvisorRemovalDialog() == DialogResult.OK)
         {
-            SetExternalAdvisor(null);
+            SetExternalAdvisor(advisor: null);
             btn_RemoveExternalAdvisor.Enabled = false;
         }
     }
@@ -271,7 +273,7 @@ public sealed partial class StudentEditForm : Form
     {
         if (ConfirmAdvisorRemovalDialog() == DialogResult.OK)
         {
-            SetReviewerAdvisor(null);
+            SetReviewerAdvisor(advisor: null);
             btn_RemoveReviewerAdvisor.Enabled = false;
         }
     }
@@ -355,8 +357,8 @@ public sealed partial class StudentEditForm : Form
 
         using var context = new AppDbContext();
         dcc_Documents.RemoveAll(context.Documents);
-        context.Students.Delete(_student);
-        context.Commit();
+        context.Students.Remove(_student);
+        context.SaveChanges();
         Close();
     }
 
@@ -378,13 +380,13 @@ public sealed partial class StudentEditForm : Form
             _student.Phone = mtb_StudentPhone.Text.Trim();
             _student.GenderId = ((Gender?) cb_StudentGender.SelectedItem)?.Id ?? 0;
             _student.Semester = semester ?? "";
-            _student.StartDate = dtp_StudentStartDate.Value;
-            _student.EndDate = dtp_StudentEndDate.Value;
+            _student.StartDate = DateOnly.FromDateTime(dtp_StudentStartDate.Value);
+            _student.EndDate = DateOnly.FromDateTime(dtp_StudentEndDate.Value);
             _student.Project = tb_StudentProjectName.Text.Trim();
             _student.InternalAdvisorId = _internalAdvisor?.Id;
             _student.ExternalAdvisorId = _externalAdvisor?.Id;
             _student.ReviewerAdvisorId = _reviewerAdvisor?.Id;
-            _student.CompanyId = _company.Id;
+            _student.CompanyId = _company?.Id ?? 0;
             _student.Section = tb_StudentSection.Text.Trim();
             _student.Schedule = tb_StudentSchedule.Text.Trim();
             _student.Notes = tb_StudentNotes.Text.Trim();
@@ -404,7 +406,7 @@ public sealed partial class StudentEditForm : Form
 
             if (_isNewRecord)
             {
-                context.Students.Insert(_student);
+                context.Students.Add(_student);
             }
             else
             {
@@ -418,7 +420,7 @@ public sealed partial class StudentEditForm : Form
             }
 
             await dcc_Documents.SaveAsync(context.Documents, _student);
-            context.Commit();
+            context.SaveChanges();
             Close();
         }
         catch (SqliteException ex) when (ex.SqliteErrorCode == SQLitePCL.raw.SQLITE_CONSTRAINT)
@@ -465,8 +467,8 @@ public sealed partial class StudentEditForm : Form
 
     private void LoadStudentData(AppDbContext context)
     {
-        long careerId = context.Specialties.GetSpecialtyById(_student.SpecialtyId)!.CareerId;
-        IEnumerable<Specialty> specialties = context.Specialties.EnumerateSpecialtiesByCareer(careerId);
+        long careerId = context.Specialties.GetSpecialty(_student.SpecialtyId)!.CareerId;
+        IEnumerable<Specialty> specialties = context.Specialties.EnumerateAll(careerId);
 
         for (int i = 0; i < cb_StudentCareer.Items.Count; i++)
         {
@@ -489,29 +491,29 @@ public sealed partial class StudentEditForm : Form
 
         cb_StudentSpecialty.Enabled = cb_StudentSpecialty.Items.Count > 0;
 
-        Company company = context.Companies.GetCompanyById(_student.CompanyId)!;
+        Company company = context.Companies.GetCompany(_student.CompanyId)!;
         SetCompany(company);
 
         if (_student.InternalAdvisorId != null)
         {
-            Advisor? internalAdvisor = context.Advisors.GetAdvisorById((long) _student.InternalAdvisorId);
+            Advisor? internalAdvisor = context.Advisors.GetAdvisor((long) _student.InternalAdvisorId);
             SetInternalAdvisor(internalAdvisor);
         }
 
         if (_student.ExternalAdvisorId != null)
         {
-            Advisor? externalAdvisor = context.Advisors.GetAdvisorById((long) _student.ExternalAdvisorId);
+            Advisor? externalAdvisor = context.Advisors.GetAdvisor((long) _student.ExternalAdvisorId);
             SetExternalAdvisor(externalAdvisor);
         }
 
         if (_student.ReviewerAdvisorId != null)
         {
-            Advisor? reviewAdvisor = context.Advisors.GetAdvisorById((long) _student.ReviewerAdvisorId);
+            Advisor? reviewAdvisor = context.Advisors.GetAdvisor((long) _student.ReviewerAdvisorId);
             SetReviewerAdvisor(reviewAdvisor);
         }
 
         // Load documents
-        IEnumerable<Document> documents = context.Documents.EnumerateDocumentsByStudent(_student.Id);
+        IEnumerable<Document> documents = context.Documents.EnumerateAll(_student);
         foreach (Document document in documents)
         {
             dcc_Documents.Add(document);
@@ -534,7 +536,17 @@ public sealed partial class StudentEditForm : Form
         _company = company;
         tb_StudentCompany.Text = company.Name;
         btn_ChoseExternalAdvisor.Enabled = true;
-        SetExternalAdvisor(null);
+        SetExternalAdvisor(advisor: null);
+    }
+
+    private void SetCompany(CompanySearchResultDto company)
+    {
+        SetCompany(new Company
+        {
+            Id   = company.Id,
+            Rfc  = company.Rfc,
+            Name = company.Name,
+        });
     }
 
     private void SetInternalAdvisor(Advisor? advisor)
@@ -544,6 +556,18 @@ public sealed partial class StudentEditForm : Form
         btn_RemoveInternalAdvisor.Enabled = advisor != null;
     }
 
+    private void SetInternalAdvisor(AdvisorSearchResultDto advisorDto)
+    {
+        SetInternalAdvisor(new Advisor
+        {
+            Id        = advisorDto.Id,
+            CompanyId = advisorDto.CompanyId,
+            Internal  = advisorDto.Internal,
+            FirstName = advisorDto.FirstName,
+            LastName  = advisorDto.LastName,
+        });
+    }
+
     private void SetExternalAdvisor(Advisor? advisor)
     {
         _externalAdvisor = advisor;
@@ -551,11 +575,35 @@ public sealed partial class StudentEditForm : Form
         btn_RemoveExternalAdvisor.Enabled = advisor != null;
     }
 
+    private void SetExternalAdvisor(AdvisorSearchResultDto advisorDto)
+    {
+        SetExternalAdvisor(new Advisor
+        {
+            Id        = advisorDto.Id,
+            CompanyId = advisorDto.CompanyId,
+            Internal  = advisorDto.Internal,
+            FirstName = advisorDto.FirstName,
+            LastName  = advisorDto.LastName,
+        });
+    }
+
     private void SetReviewerAdvisor(Advisor? advisor)
     {
         _reviewerAdvisor = advisor;
         tb_StudentReviewerAdvisor.Text = advisor != null ? advisor.ToString() : "SIN ASIGNAR";
         btn_RemoveReviewerAdvisor.Enabled = advisor != null;
+    }
+
+    private void SetReviewerAdvisor(AdvisorSearchResultDto advisorDto)
+    {
+        SetReviewerAdvisor(new Advisor
+        {
+            Id        = advisorDto.Id,
+            CompanyId = advisorDto.CompanyId,
+            Internal  = advisorDto.Internal,
+            FirstName = advisorDto.FirstName,
+            LastName  = advisorDto.LastName,
+        });
     }
 
     private long TryConvertLong(string input)

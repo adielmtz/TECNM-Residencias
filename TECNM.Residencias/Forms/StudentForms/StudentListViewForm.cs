@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
+using TECNM.Residencias.Data.Entities.DTO;
 using TECNM.Residencias.Extensions;
 
 public sealed partial class StudentListViewForm : Form
@@ -98,7 +99,7 @@ public sealed partial class StudentListViewForm : Form
         }
 
         using var context = new AppDbContext();
-        IEnumerable<Student> students = context.Students.EnumerateStudents(_rowsPerPage, _currentPage);
+        IEnumerable<Student> students = context.Students.EnumerateAll(_rowsPerPage, _currentPage);
         PopulateTable(context, students);
     }
 
@@ -114,7 +115,15 @@ public sealed partial class StudentListViewForm : Form
 
         _refreshFromSearch = true;
         using var context = new AppDbContext();
-        IEnumerable<Student> students = context.Students.Search(query, _rowsPerPage, _currentPage);
+        IEnumerable<StudentSearchResultDto> searchResults = context.Students.Search(query, _rowsPerPage, _currentPage);
+        List<Student> students = [];
+
+        foreach (StudentSearchResultDto result in searchResults)
+        {
+            Student student = context.Students.GetStudent(result.Id)!;
+            students.Add(student);
+        }
+
         PopulateTable(context, students);
     }
 
@@ -128,12 +137,12 @@ public sealed partial class StudentListViewForm : Form
             int index = dgv_ListView.Rows.Add();
             DataGridViewRow row = dgv_ListView.Rows[index];
 
-            Gender gender = context.Genders.GetGenderById(student.GenderId)!;
-            Specialty specialty = context.Specialties.GetSpecialtyById(student.SpecialtyId)!;
-            Advisor? internAdvisor = context.Advisors.GetAdvisorById(student.InternalAdvisorId ?? 0);
-            Advisor? externAdvisor = context.Advisors.GetAdvisorById(student.ExternalAdvisorId ?? 0);
-            Advisor? reviewer = context.Advisors.GetAdvisorById(student.ReviewerAdvisorId ?? 0);
-            Company company = context.Companies.GetCompanyById(student.CompanyId)!;
+            Gender gender = context.Students.GetGender(student.GenderId)!;
+            Specialty specialty = context.Specialties.GetSpecialty(student.SpecialtyId)!;
+            Advisor? internAdvisor = context.Advisors.GetAdvisor(student.InternalAdvisorId ?? 0);
+            Advisor? externAdvisor = context.Advisors.GetAdvisor(student.ExternalAdvisorId ?? 0);
+            Advisor? reviewer = context.Advisors.GetAdvisor(student.ReviewerAdvisorId ?? 0);
+            Company company = context.Companies.GetCompany(student.CompanyId)!;
 
             row.Tag = student;
             row.Cells[0].Value = student.Id;

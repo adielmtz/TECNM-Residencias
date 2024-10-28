@@ -2,6 +2,7 @@ namespace TECNM.Residencias.Data.Sets;
 
 using Microsoft.Data.Sqlite;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using TECNM.Residencias.Data;
@@ -48,10 +49,31 @@ public sealed class SpecialtyDbSet : DbSet<Specialty>
     /// </summary>
     /// <param name="career">The <see cref="Career"/> instance to filter.</param>
     /// <returns>An <see cref="IEnumerable{T}"/> enumerating all the entities.</returns>
-    public IEnumerable<Specialty> EnumerateAll(Career career)
+    public IEnumerable<Specialty> EnumerateAll(Career career, bool? enabled = null)
+    {
+        using var command = CreateCommand();
+        string query = "SELECT Id, CareerId, Name, Enabled, UpdatedOn, CreatedOn FROM Specialty WHERE CareerId = $p0 ";
+
+        if (enabled is not null)
+        {
+            query += "AND Enabled = $p1 ";
+            command.Parameters.Add("$p1", SqliteType.Integer).Value = enabled!;
+        }
+
+        command.CommandText = query + "ORDER BY Name";
+        command.Parameters.Add("$p0", SqliteType.Integer).Value = career.Id;
+        using var reader = command.ExecuteReader();
+
+        while (reader.Read())
+        {
+            yield return HydrateObject(reader);
+        }
+    }
+
+    public IEnumerable<Specialty> EnumerateAll(long careerId)
     {
         using var command = CreateCommand("SELECT Id, CareerId, Name, Enabled, UpdatedOn, CreatedOn FROM Specialty WHERE CareerId = $p0 ORDER BY Name");
-        command.Parameters.Add("$p0", SqliteType.Integer).Value = career.Id;
+        command.Parameters.Add("$p0", SqliteType.Integer).Value = careerId;
         using var reader = command.ExecuteReader();
 
         while (reader.Read())

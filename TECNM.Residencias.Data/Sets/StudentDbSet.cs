@@ -94,6 +94,35 @@ public sealed class StudentDbSet : DbSet<Student>
     }
 
     /// <summary>
+    /// Retrieves and enumerates a paginated collection of student entities.
+    /// </summary>
+    /// <param name="count">The number of results to return per page.</param>
+    /// <param name="page">The page number to retrieve, starting from 1.</param>
+    /// <returns>
+    /// An <see cref="IEnumerable{T}"/> containing the companies for the specified page.
+    /// </returns>
+    public IEnumerable<Student> EnumerateAll(int count, int page)
+    {
+        using var command = CreateCommand("""
+        SELECT Id,                SpecialtyId, FirstName, LastName, Email,     Phone,             GenderId,
+               Semester,          StartDate,   EndDate,   Project,  CompanyId, InternalAdvisorId, ExternalAdvisorId,
+               ReviewerAdvisorId, Section,     Schedule,  Notes,    Closed,    UpdatedOn,         CreatedOn
+        FROM Student
+        ORDER BY Id
+        LIMIT $page, $count
+        """);
+
+        command.Parameters.Add("$page", SqliteType.Integer).Value = (page - 1) * count;
+        command.Parameters.Add("$count", SqliteType.Integer).Value = count;
+        using var reader = command.ExecuteReader();
+
+        while (reader.Read())
+        {
+            yield return HydrateObject(reader);
+        }
+    }
+
+    /// <summary>
     /// Retrieves and enumerates all recently modified student records.
     /// </summary>
     /// <param name="count">The maximum number of recently modified students to retrieve.</param>
@@ -124,7 +153,7 @@ public sealed class StudentDbSet : DbSet<Student>
     /// <param name="year">The academic year for which to retrieve students. Must be a valid year (e.g., 2023).</param>
     /// <param name="semester">An optional string representing the semester (e.g., "ENE-JUN", "AGO-DIC"). If null, students from all semesters will be included.</param>
     /// <returns>An <see cref="IEnumerable{T}"/> containing the students that match the specified year and semester.</returns>
-    public IEnumerable<Student> EnumerateStudents(int year, string? semester)
+    public IEnumerable<Student> EnumerateAll(int year, string? semester)
     {
         using var command = CreateCommand();
         string extraParam = "";

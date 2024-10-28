@@ -109,7 +109,7 @@ public sealed partial class ReportMainPanelForm : Form
         var companyCache = new Dictionary<long, Company>();
         var advisorCache = new Dictionary<long, Advisor>();
 
-        foreach (Student student in context.Students.EnumerateStudents(year, semester))
+        foreach (Student student in context.Students.EnumerateAll(year, semester))
         {
             Specialty? specialty;
             if (!specialtyCache.TryGetValue(student.SpecialtyId, out specialty))

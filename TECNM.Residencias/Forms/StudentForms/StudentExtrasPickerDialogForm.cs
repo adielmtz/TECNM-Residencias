@@ -30,7 +30,7 @@ public sealed partial class StudentExtrasPickerDialogForm : Form
     private void StudentExtrasPickerDialogForm_Load(object sender, EventArgs e)
     {
         using var context = new AppDbContext();
-        IEnumerable<Extra> extras = context.Extras.EnumerateExtras();
+        IEnumerable<Extra> extras = context.Extras.EnumerateAll();
 
         foreach (Extra extra in extras)
         {
@@ -65,11 +65,11 @@ public sealed partial class StudentExtrasPickerDialogForm : Form
 
     private void MarkCheckedExtras(AppDbContext context)
     {
-        IEnumerable<long> extrasRowIds = context.Extras.EnumerateExtras(_student!);
+        IEnumerable<Extra> extras = context.Extras.EnumerateAll(_student!);
 
-        foreach (long rowid in extrasRowIds)
+        foreach (Extra extra in extras)
         {
-            extrasControls[rowid].Checked = true;
+            extrasControls[extra.Id].Checked = true;
         }
     }
 

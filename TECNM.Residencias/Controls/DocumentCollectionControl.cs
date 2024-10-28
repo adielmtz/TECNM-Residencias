@@ -7,8 +7,8 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TECNM.Residencias.Data;
 using TECNM.Residencias.Data.Entities;
-using TECNM.Residencias.Data.Sets.Common;
 using TECNM.Residencias.Services;
 
 public sealed partial class DocumentCollectionControl : UserControl
@@ -26,7 +26,7 @@ public sealed partial class DocumentCollectionControl : UserControl
         if (_documentTypes.Count == 0)
         {
             using var context = new AppDbContext();
-            _documentTypes.AddRange(context.DocumentTypes.EnumerateAll());
+            _documentTypes.AddRange(context.Documents.EnumerateDocumentTypes());
         }
     }
 
@@ -82,7 +82,7 @@ public sealed partial class DocumentCollectionControl : UserControl
     {
         foreach (Document document in _deleted)
         {
-            int result = set.Delete(document);
+            int result = set.Remove(document);
             if (result > 0)
             {
                 StorageService.DeleteFile(document.FullPath);
@@ -94,7 +94,7 @@ public sealed partial class DocumentCollectionControl : UserControl
     {
         Document stored = await StorageService.SaveFileAsync(owner, original, type);
         Debug.Assert(stored.StudentId == owner.Id);
-        set.Insert(stored);
+        set.Add(stored);
     }
 
     private void OnDocumentDeleted(DocumentListItemControl control)

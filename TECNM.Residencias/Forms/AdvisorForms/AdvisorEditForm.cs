@@ -6,6 +6,7 @@ using System;
 using System.Diagnostics;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
+using TECNM.Residencias.Data.Entities.DTO;
 using TECNM.Residencias.Data.Validators;
 using TECNM.Residencias.Forms.CompanyForms;
 using TECNM.Residencias.Services;
@@ -53,10 +54,16 @@ public sealed partial class AdvisorEditForm : Form
             using var dialog = new CompanyQuickSearchForm();
             dialog.ShowDialog();
 
-            Company? selected = dialog.SelectedCompany;
-            if (selected != null)
+            CompanySearchResultDto? selected = dialog.SelectedCompany;
+            if (selected is not null)
             {
-                _company = selected;
+                _company = new Company
+                {
+                    Id   = selected.Id,
+                    Rfc  = selected.Rfc,
+                    Name = selected.Name,
+                };
+
                 tb_AdvisorCompany.Text = selected.Name;
                 break;
             }

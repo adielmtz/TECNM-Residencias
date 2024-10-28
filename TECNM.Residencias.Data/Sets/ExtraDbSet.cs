@@ -13,6 +13,30 @@ public sealed class ExtraDbSet : DbSet<Extra>
     {
     }
 
+    public int DeleteExtrasForStudent(Student student)
+    {
+        using var command = CreateCommand("DELETE FROM StudentExtras WHERE StudentId = $id");
+        command.Parameters.Add("$id", SqliteType.Integer).Value = student.Id;
+        return command.ExecuteNonQuery();
+    }
+
+    public int InsertExtrasForStudent(Student student, IList<Extra> extras)
+    {
+        using var command = CreateCommand("INSERT INTO StudentExtras (StudentId, ExtraId) VALUES ($p0, $p1) ON CONFLICT DO NOTHING");
+        command.Parameters.Add("$p0", SqliteType.Integer).Value = student.Id;
+
+        SqliteParameter parameter = command.Parameters.Add("$p1", SqliteType.Integer);
+        int count = 0;
+
+        foreach (Extra extra in extras)
+        {
+            parameter.Value = extra.Id;
+            count += command.ExecuteNonQuery();
+        }
+
+        return count;
+    }
+
     public override IEnumerable<Extra> EnumerateAll()
     {
         using var command = CreateCommand("SELECT Id, TypeId, Value FROM Extra ORDER BY TypeId, Value");
