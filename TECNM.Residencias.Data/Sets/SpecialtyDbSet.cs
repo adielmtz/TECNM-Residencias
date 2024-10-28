@@ -43,6 +43,23 @@ public sealed class SpecialtyDbSet : DbSet<Specialty>
         }
     }
 
+    /// <summary>
+    /// Retrieves and enumerates all specialty entities that belong to the specified career.
+    /// </summary>
+    /// <param name="career">The <see cref="Career"/> instance to filter.</param>
+    /// <returns>An <see cref="IEnumerable{T}"/> enumerating all the entities.</returns>
+    public IEnumerable<Specialty> EnumerateAll(Career career)
+    {
+        using var command = CreateCommand("SELECT Id, CareerId, Name, Enabled, UpdatedOn, CreatedOn FROM Specialty WHERE CareerId = $p0 ORDER BY Name");
+        command.Parameters.Add("$p0", SqliteType.Integer).Value = career.Id;
+        using var reader = command.ExecuteReader();
+
+        while (reader.Read())
+        {
+            yield return HydrateObject(reader);
+        }
+    }
+
     public override bool Contains(Specialty entity) => throw new NotImplementedException();
 
     public override bool Add(Specialty entity)

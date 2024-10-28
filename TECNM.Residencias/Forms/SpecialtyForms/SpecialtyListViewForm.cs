@@ -53,7 +53,7 @@ public sealed partial class SpecialtyListViewForm : Form
     private void RefreshList()
     {
         using var context = new AppDbContext();
-        IEnumerable<Specialty> specialties = context.Specialties.EnumerateSpecialtiesByCareer(_career);
+        IEnumerable<Specialty> specialties = context.Specialties.EnumerateAll(_career);
 
         dgv_ListView.Rows.Clear();
 

@@ -80,7 +80,7 @@ public sealed partial class SpecialtyEditForm : Form
         {
             try
             {
-                context.Specialties.Insert(_specialty);
+                context.Specialties.Add(_specialty);
             }
             catch (SqliteException)
             {
@@ -91,12 +91,12 @@ public sealed partial class SpecialtyEditForm : Form
                     MessageBoxIcon.Error
                 );
 
-                context.Rollback();
+                context.RejectChanges();
                 return;
             }
         }
 
-        context.Commit();
+        context.SaveChanges();
         Close();
     }
 }
