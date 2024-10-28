@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using TECNM.Residencias.Data;
 using TECNM.Residencias.Data.Entities;
+using TECNM.Residencias.Data.Extensions;
 
 public sealed class DocumentDbSet : DbSet<Document>
 {
@@ -75,7 +76,7 @@ public sealed class DocumentDbSet : DbSet<Document>
         command.Parameters.Add("$p3", SqliteType.Text).Value    = entity.OriginalName;
         command.Parameters.Add("$p4", SqliteType.Integer).Value = entity.Size;
         command.Parameters.Add("$p5", SqliteType.Text).Value    = entity.Hash;
-        command.Parameters.Add("$p6", SqliteType.Text).Value    = DateTimeOffset.Now;
+        command.Parameters.Add("$p6", SqliteType.Text).Value    = DateTimeOffset.Now.ToRfc3339();
         object? result = command.ExecuteScalar();
 
         if (result is long rowid)

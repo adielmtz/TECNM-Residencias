@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using TECNM.Residencias.Data;
 using TECNM.Residencias.Data.Entities;
+using TECNM.Residencias.Data.Extensions;
 
 public sealed class SettingDbSet : DbSet<Setting>
 {
@@ -42,8 +43,8 @@ public sealed class SettingDbSet : DbSet<Setting>
 
         command.Parameters.Add("$p0", SqliteType.Text).Value = entity.Name;
         command.Parameters.Add("$p1", SqliteType.Text).Value = entity.Value;
-        command.Parameters.Add("$p2", SqliteType.Text).Value = DateTimeOffset.Now;
-        command.Parameters.Add("$p3", SqliteType.Text).Value = DateTimeOffset.Now;
+        command.Parameters.Add("$p2", SqliteType.Text).Value = DateTimeOffset.Now.ToRfc3339();
+        command.Parameters.Add("$p3", SqliteType.Text).Value = DateTimeOffset.Now.ToRfc3339();
         return command.ExecuteNonQuery() == 1;
     }
 

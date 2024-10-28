@@ -253,8 +253,8 @@ public sealed class StudentDbSet : DbSet<Student>
         command.Parameters.Add("$p16", SqliteType.Text).Value    = entity.Schedule;
         command.Parameters.Add("$p17", SqliteType.Text).Value    = entity.Notes;
         command.Parameters.Add("$p18", SqliteType.Integer).Value = entity.Closed;
-        command.Parameters.Add("$p19", SqliteType.Text).Value    = DateTimeOffset.Now;
-        command.Parameters.Add("$p20", SqliteType.Text).Value    = DateTimeOffset.Now;
+        command.Parameters.Add("$p19", SqliteType.Text).Value    = DateTimeOffset.Now.ToRfc3339();
+        command.Parameters.Add("$p20", SqliteType.Text).Value    = DateTimeOffset.Now.ToRfc3339();
         return command.ExecuteNonQuery() == 1;
     }
 
@@ -302,7 +302,7 @@ public sealed class StudentDbSet : DbSet<Student>
         command.Parameters.Add("$p15", SqliteType.Text).Value    = entity.Schedule;
         command.Parameters.Add("$p16", SqliteType.Text).Value    = entity.Notes;
         command.Parameters.Add("$p17", SqliteType.Integer).Value = entity.Closed;
-        command.Parameters.Add("$p18", SqliteType.Text).Value    = DateTimeOffset.Now;
+        command.Parameters.Add("$p18", SqliteType.Text).Value    = DateTimeOffset.Now.ToRfc3339();
         command.Parameters.Add("$pid", SqliteType.Integer).Value = entity.Id;
         return command.ExecuteNonQuery();
     }

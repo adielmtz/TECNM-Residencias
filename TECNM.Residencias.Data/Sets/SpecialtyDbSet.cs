@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using TECNM.Residencias.Data;
 using TECNM.Residencias.Data.Entities;
+using TECNM.Residencias.Data.Extensions;
 
 public sealed class SpecialtyDbSet : DbSet<Specialty>
 {
@@ -95,8 +96,8 @@ public sealed class SpecialtyDbSet : DbSet<Specialty>
         command.Parameters.Add("$p0", SqliteType.Integer).Value = entity.CareerId;
         command.Parameters.Add("$p1", SqliteType.Text).Value    = entity.Name;
         command.Parameters.Add("$p2", SqliteType.Integer).Value = entity.Enabled;
-        command.Parameters.Add("$p3", SqliteType.Text).Value    = DateTimeOffset.Now;
-        command.Parameters.Add("$p4", SqliteType.Text).Value    = DateTimeOffset.Now;
+        command.Parameters.Add("$p3", SqliteType.Text).Value    = DateTimeOffset.Now.ToRfc3339();
+        command.Parameters.Add("$p4", SqliteType.Text).Value    = DateTimeOffset.Now.ToRfc3339();
         object? result = command.ExecuteScalar();
 
         if (result is long rowid)
@@ -122,7 +123,7 @@ public sealed class SpecialtyDbSet : DbSet<Specialty>
         command.Parameters.Add("$p0", SqliteType.Integer).Value = entity.CareerId;
         command.Parameters.Add("$p1", SqliteType.Text).Value    = entity.Name;
         command.Parameters.Add("$p2", SqliteType.Integer).Value = entity.Enabled;
-        command.Parameters.Add("$p3", SqliteType.Text).Value    = DateTimeOffset.Now;
+        command.Parameters.Add("$p3", SqliteType.Text).Value    = DateTimeOffset.Now.ToRfc3339();
         command.Parameters.Add("$id", SqliteType.Integer).Value = entity.Id;
         return command.ExecuteNonQuery();
     }

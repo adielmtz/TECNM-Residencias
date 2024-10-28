@@ -179,8 +179,8 @@ public sealed class CompanyDbSet : DbSet<Company>
         command.Parameters.Add("$p08", SqliteType.Text).Value    = entity.PostalCode;
         command.Parameters.Add("$p09", SqliteType.Integer).Value = entity.CityId;
         command.Parameters.Add("$p10", SqliteType.Integer).Value = entity.Enabled;
-        command.Parameters.Add("$p11", SqliteType.Text).Value    = DateTimeOffset.Now;
-        command.Parameters.Add("$p12", SqliteType.Text).Value    = DateTimeOffset.Now;
+        command.Parameters.Add("$p11", SqliteType.Text).Value    = DateTimeOffset.Now.ToRfc3339();
+        command.Parameters.Add("$p12", SqliteType.Text).Value    = DateTimeOffset.Now.ToRfc3339();
         object? result = command.ExecuteScalar();
 
         if (result is long rowid)
@@ -222,7 +222,7 @@ public sealed class CompanyDbSet : DbSet<Company>
         command.Parameters.Add("$p08", SqliteType.Text).Value    = entity.PostalCode;
         command.Parameters.Add("$p09", SqliteType.Integer).Value = entity.CityId;
         command.Parameters.Add("$p10", SqliteType.Integer).Value = entity.Enabled;
-        command.Parameters.Add("$p11", SqliteType.Text).Value    = DateTimeOffset.Now;
+        command.Parameters.Add("$p11", SqliteType.Text).Value    = DateTimeOffset.Now.ToRfc3339();
         command.Parameters.Add("$pid", SqliteType.Integer).Value = entity.Id;
         return command.ExecuteNonQuery();
     }

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using TECNM.Residencias.Data;
 using TECNM.Residencias.Data.Entities;
+using TECNM.Residencias.Data.Extensions;
 
 public sealed class CareerDbSet : DbSet<Career>
 {
@@ -76,8 +77,8 @@ public sealed class CareerDbSet : DbSet<Career>
 
         command.Parameters.Add("$p0", SqliteType.Text).Value    = entity.Name;
         command.Parameters.Add("$p1", SqliteType.Integer).Value = entity.Enabled;
-        command.Parameters.Add("$p2", SqliteType.Text).Value    = DateTimeOffset.Now;
-        command.Parameters.Add("$p3", SqliteType.Text).Value    = DateTimeOffset.Now;
+        command.Parameters.Add("$p2", SqliteType.Text).Value    = DateTimeOffset.Now.ToRfc3339();
+        command.Parameters.Add("$p3", SqliteType.Text).Value    = DateTimeOffset.Now.ToRfc3339();
         object? result = command.ExecuteScalar();
 
         if (result is long rowid)
@@ -101,7 +102,7 @@ public sealed class CareerDbSet : DbSet<Career>
 
         command.Parameters.Add("$p0", SqliteType.Text).Value    = entity.Name;
         command.Parameters.Add("$p1", SqliteType.Integer).Value = entity.Enabled;
-        command.Parameters.Add("$p2", SqliteType.Text).Value    = DateTimeOffset.Now;
+        command.Parameters.Add("$p2", SqliteType.Text).Value    = DateTimeOffset.Now.ToRfc3339();
         command.Parameters.Add("$id", SqliteType.Integer).Value = entity.Id;
         return command.ExecuteNonQuery();
     }

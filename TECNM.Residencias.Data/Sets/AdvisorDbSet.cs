@@ -150,8 +150,8 @@ public sealed class AdvisorDbSet : DbSet<Advisor>
         command.Parameters.Add("$p07", SqliteType.Text).Value    = entity.Phone;
         command.Parameters.Add("$p08", SqliteType.Text).Value    = entity.Extension;
         command.Parameters.Add("$p09", SqliteType.Integer).Value = entity.Enabled;
-        command.Parameters.Add("$p10", SqliteType.Text).Value    = DateTimeOffset.Now;
-        command.Parameters.Add("$p11", SqliteType.Text).Value    = DateTimeOffset.Now;
+        command.Parameters.Add("$p10", SqliteType.Text).Value    = DateTimeOffset.Now.ToRfc3339();
+        command.Parameters.Add("$p11", SqliteType.Text).Value    = DateTimeOffset.Now.ToRfc3339();
         object? result = command.ExecuteScalar();
 
         if (result is long rowid)
@@ -191,7 +191,7 @@ public sealed class AdvisorDbSet : DbSet<Advisor>
         command.Parameters.Add("$p07", SqliteType.Text).Value    = entity.Phone;
         command.Parameters.Add("$p08", SqliteType.Text).Value    = entity.Extension;
         command.Parameters.Add("$p09", SqliteType.Integer).Value = entity.Enabled;
-        command.Parameters.Add("$p10", SqliteType.Text).Value    = DateTimeOffset.Now;
+        command.Parameters.Add("$p10", SqliteType.Text).Value    = DateTimeOffset.Now.ToRfc3339();
         command.Parameters.Add("$pid", SqliteType.Integer).Value = entity.Id;
         return command.ExecuteNonQuery();
     }
