@@ -21,11 +21,6 @@ public sealed class DocumentType
     public string Tag { get; set; } = "";
 
     /// <summary>
-    /// Gets or sets the document type keywords.
-    /// </summary>
-    public string Keywords { get; set; } = "";
-
-    /// <summary>
     /// Returns the document type label as string representation.
     /// </summary>
     /// <returns>The label of the document type.</returns>

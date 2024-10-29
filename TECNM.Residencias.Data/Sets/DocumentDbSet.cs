@@ -45,7 +45,7 @@ public sealed class DocumentDbSet : DbSet<Document>
     /// <returns>An <see cref="IEnumerable{T}"/> enumerating all the entities.</returns>
     public IEnumerable<DocumentType> EnumerateDocumentTypes()
     {
-        using var command = CreateCommand("SELECT Id, Label, Tag, Keywords FROM DocumentType ORDER BY Label");
+        using var command = CreateCommand("SELECT Id, Label, Tag FROM DocumentType ORDER BY Label");
         using var reader = command.ExecuteReader();
 
         while (reader.Read())
@@ -55,7 +55,6 @@ public sealed class DocumentDbSet : DbSet<Document>
                 Id       = reader.GetInt64(0),
                 Label    = reader.GetString(1),
                 Tag      = reader.GetString(2),
-                Keywords = reader.GetString(3),
             };
         }
     }

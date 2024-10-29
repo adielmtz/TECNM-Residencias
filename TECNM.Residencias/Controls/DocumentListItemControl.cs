@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Text;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
 
@@ -40,6 +39,8 @@ public partial class DocumentListItemControl : UserControl
 
     private void DocumentListItemControl_Load(object sender, EventArgs e)
     {
+        cb_DocumentType.SelectedIndex = 0;
+
         if (!IsNew)
         {
             for (int i = 0; i < _documentTypes.Count; i++)
@@ -54,19 +55,6 @@ public partial class DocumentListItemControl : UserControl
 
             cb_DocumentType.Enabled = false;
             return;
-        }
-
-        cb_DocumentType.SelectedIndex = 0;
-        string filename = _document.OriginalName;
-
-        for (int i = 0; i < _documentTypes.Count; i++)
-        {
-            string keywords = _documentTypes[i].Keywords;
-            if (FilenameMatchesKeywords(filename, keywords))
-            {
-                cb_DocumentType.SelectedIndex = i;
-                break;
-            }
         }
     }
 
@@ -113,38 +101,5 @@ public partial class DocumentListItemControl : UserControl
         {
             _onDelete?.Invoke(this);
         }
-    }
-
-    private bool FilenameMatchesKeywords(string filename, string keywords)
-    {
-        string normalized = NormalizeString(filename);
-        string[] list = keywords.Split(',', StringSplitOptions.TrimEntries);
-
-        foreach (string kw in list)
-        {
-            if (normalized.Contains(kw))
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private string NormalizeString(string str)
-    {
-        string normalized = str.Normalize(NormalizationForm.FormKD);
-        var builder = new StringBuilder(str.Length);
-
-        foreach (char c in normalized)
-        {
-            if (char.IsAsciiLetterOrDigit(c))
-            {
-                // Hack to convert ASCII char to lowercase
-                builder.Append((char) (byte) (c | 0x20));
-            }
-        }
-
-        return builder.ToString();
     }
 }
