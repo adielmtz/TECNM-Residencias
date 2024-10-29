@@ -19,6 +19,16 @@ public sealed class DbMigrator : IDisposable
     /// </summary>
     public static readonly long CurrentVersion = 4;
 
+    /// <summary>
+    /// The default page size for the SQLite database.
+    /// </summary>
+    public static readonly long DefaultPageSize = 65536;
+
+    /// <summary>
+    /// The default SQLite journal mode for transactions.
+    /// </summary>
+    public static readonly string DefaultJournalMode = "WAL";
+
     private readonly IDbConnection _connection;
 
     /// <summary>
@@ -103,8 +113,8 @@ public sealed class DbMigrator : IDisposable
     /// </summary>
     private void ConfigureDatabase()
     {
-        SetPragma("page_size", 65536);
-        SetPragma("journal_mode", "WAL");
+        SetPragma("page_size", DefaultPageSize);
+        SetPragma("journal_mode", DefaultJournalMode);
     }
 
     /// <summary>
