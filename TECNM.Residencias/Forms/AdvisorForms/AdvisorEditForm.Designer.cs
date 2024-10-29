@@ -58,7 +58,7 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             btn_CancelEdit.Location = new System.Drawing.Point(298, 302);
             btn_CancelEdit.Name = "btn_CancelEdit";
             btn_CancelEdit.Size = new System.Drawing.Size(100, 23);
-            btn_CancelEdit.TabIndex = 9;
+            btn_CancelEdit.TabIndex = 10;
             btn_CancelEdit.Text = "Cancelar";
             btn_CancelEdit.UseVisualStyleBackColor = true;
             // 
@@ -157,7 +157,7 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             button1.Location = new System.Drawing.Point(12, 302);
             button1.Name = "button1";
             button1.Size = new System.Drawing.Size(100, 23);
-            button1.TabIndex = 8;
+            button1.TabIndex = 9;
             button1.Text = "Guardar";
             button1.UseVisualStyleBackColor = true;
             button1.Click += SaveEdit_Click;
@@ -242,7 +242,7 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             chk_AdvisorInternal.Location = new System.Drawing.Point(98, 276);
             chk_AdvisorInternal.Name = "chk_AdvisorInternal";
             chk_AdvisorInternal.Size = new System.Drawing.Size(64, 19);
-            chk_AdvisorInternal.TabIndex = 10;
+            chk_AdvisorInternal.TabIndex = 8;
             chk_AdvisorInternal.Text = "Interno";
             chk_AdvisorInternal.UseVisualStyleBackColor = true;
             // 

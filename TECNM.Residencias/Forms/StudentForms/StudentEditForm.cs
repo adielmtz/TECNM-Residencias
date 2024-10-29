@@ -5,7 +5,6 @@ using FluentValidation.Results;
 using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
@@ -14,12 +13,10 @@ using TECNM.Residencias.Data.Entities.DTO;
 using TECNM.Residencias.Data.Validators;
 using TECNM.Residencias.Forms.AdvisorForms;
 using TECNM.Residencias.Forms.CompanyForms;
-using TECNM.Residencias.Services;
 
-public sealed partial class StudentEditForm : Form
+public sealed partial class StudentEditForm : EditForm
 {
     private readonly AbstractValidator<Student> _validator = new StudentValidator();
-    private readonly FormConfirmClosingService closeConfirmService;
     private Student _student = new Student();
     private Company? _company;
     private Advisor? _internalAdvisor;
@@ -31,7 +28,6 @@ public sealed partial class StudentEditForm : Form
     public StudentEditForm()
     {
         InitializeComponent();
-        closeConfirmService = new FormConfirmClosingService(this);
 
         DateTime now = DateTime.Now;
         cb_StudentSemester.SelectedIndex = now.Month >= 1 && now.Month <= 7 ? 0 : 1;

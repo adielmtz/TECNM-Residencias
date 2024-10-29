@@ -4,11 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
-using TECNM.Residencias.Services;
 
-public sealed partial class StudentExtrasPickerDialogForm : Form
+public sealed partial class StudentExtrasPickerDialogForm : EditForm
 {
-    private readonly FormConfirmClosingService closeConfirmService;
     private Dictionary<long, CheckBox> extrasControls = new Dictionary<long, CheckBox>();
     private IList<Extra> selectedExtras = new List<Extra>();
     private Student? _student;
@@ -16,7 +14,6 @@ public sealed partial class StudentExtrasPickerDialogForm : Form
     public StudentExtrasPickerDialogForm()
     {
         InitializeComponent();
-        closeConfirmService = new FormConfirmClosingService(this);
         Text = $"Seleccionar extras | {App.Name}";
     }
 

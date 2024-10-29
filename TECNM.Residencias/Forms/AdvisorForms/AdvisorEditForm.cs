@@ -9,19 +9,16 @@ using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Data.Entities.DTO;
 using TECNM.Residencias.Data.Validators;
 using TECNM.Residencias.Forms.CompanyForms;
-using TECNM.Residencias.Services;
 
-public sealed partial class AdvisorEditForm : Form
+public sealed partial class AdvisorEditForm : EditForm
 {
     private readonly AbstractValidator<Advisor> _validator = new AdvisorValidator();
-    private readonly FormConfirmClosingService closeConfirmService;
     private Company _company = new Company();
     private Advisor _advisor = new Advisor();
 
     public AdvisorEditForm()
     {
         InitializeComponent();
-        closeConfirmService = new FormConfirmClosingService(this);
     }
 
     public AdvisorEditForm(Company company, Advisor? entity) : this()
@@ -30,18 +27,18 @@ public sealed partial class AdvisorEditForm : Form
         tb_AdvisorCompany.Text = company.Name;
         btn_ChooseCompany.Enabled = false;
 
-        if (entity != null)
+        if (entity is not null)
         {
             _advisor = entity;
             chk_AdvisorInternal.Checked = entity.Internal;
-            tb_AdvisorFirstName.Text = entity.FirstName;
-            tb_AdvisorLastName.Text = entity.LastName;
-            tb_AdvisorSection.Text = entity.Section;
-            tb_AdvisorRole.Text = entity.Role;
-            tb_AdvisorEmail.Text = entity.Email;
-            mtb_AdvisorPhone.Text = entity.Phone;
-            tb_AdvisorExtension.Text = entity.Extension;
-            chk_AdvisorEnabled.Checked = entity.Enabled;
+            tb_AdvisorFirstName.Text    = entity.FirstName;
+            tb_AdvisorLastName.Text     = entity.LastName;
+            tb_AdvisorSection.Text      = entity.Section;
+            tb_AdvisorRole.Text         = entity.Role;
+            tb_AdvisorEmail.Text        = entity.Email;
+            mtb_AdvisorPhone.Text       = entity.Phone;
+            tb_AdvisorExtension.Text    = entity.Extension;
+            chk_AdvisorEnabled.Checked  = entity.Enabled;
         }
     }
 
@@ -98,18 +95,21 @@ public sealed partial class AdvisorEditForm : Form
 
     private void Save()
     {
-        _advisor.CompanyId = _company.Id;
-        _advisor.Internal = chk_AdvisorInternal.Checked;
-        _advisor.FirstName = tb_AdvisorFirstName.Text.Trim();
-        _advisor.LastName = tb_AdvisorLastName.Text.Trim();
-        _advisor.Section = tb_AdvisorSection.Text.Trim();
-        _advisor.Role = tb_AdvisorRole.Text.Trim();
-        _advisor.Email = tb_AdvisorEmail.Text.Trim();
-        _advisor.Phone = mtb_AdvisorPhone.Text.Trim();
-        _advisor.Extension = tb_AdvisorExtension.Text.Trim();
-        _advisor.Enabled = chk_AdvisorEnabled.Checked;
+        Advisor advisor = _advisor;
+        Company company = _company;
 
-        ValidationResult result = _validator.Validate(_advisor);
+        advisor.CompanyId = company.Id;
+        advisor.Internal  = chk_AdvisorInternal.Checked;
+        advisor.FirstName = tb_AdvisorFirstName.Text.Trim();
+        advisor.LastName  = tb_AdvisorLastName.Text.Trim();
+        advisor.Section   = tb_AdvisorSection.Text.Trim();
+        advisor.Role      = tb_AdvisorRole.Text.Trim();
+        advisor.Email     = tb_AdvisorEmail.Text.Trim();
+        advisor.Phone     = mtb_AdvisorPhone.Text.Trim();
+        advisor.Extension = tb_AdvisorExtension.Text.Trim();
+        advisor.Enabled   = chk_AdvisorEnabled.Checked;
+
+        ValidationResult result = _validator.Validate(advisor);
 
         if (!result.IsValid)
         {
@@ -119,7 +119,7 @@ public sealed partial class AdvisorEditForm : Form
         }
 
         using var context = new AppDbContext();
-        context.Advisors.AddOrUpdate(_advisor);
+        context.Advisors.AddOrUpdate(advisor);
         context.SaveChanges();
         Close();
     }

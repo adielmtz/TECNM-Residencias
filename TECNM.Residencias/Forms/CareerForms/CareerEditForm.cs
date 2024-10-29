@@ -8,18 +8,15 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Data.Validators;
-using TECNM.Residencias.Services;
 
-public sealed partial class CareerEditForm : Form
+public sealed partial class CareerEditForm : EditForm
 {
     private readonly AbstractValidator<Career> _validator = new CareerValidator();
-    private readonly FormConfirmClosingService closeConfirmService;
     private Career _career = new Career();
 
     public CareerEditForm()
     {
         InitializeComponent();
-        closeConfirmService = new FormConfirmClosingService(this);
     }
 
     public CareerEditForm(Career? entity) : this()

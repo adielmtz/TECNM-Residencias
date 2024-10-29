@@ -8,17 +8,16 @@ using System.Windows.Forms;
 using TECNM.Residencias.Data;
 using TECNM.Residencias.Services;
 
-public sealed partial class DialogBackupForm : Form
+public sealed partial class DialogBackupForm : EditForm
 {
     private static readonly TimeSpan refreshFrequency = TimeSpan.FromMilliseconds(100);
-    private readonly FormConfirmClosingService closeConfirmService;
     private CancellationTokenSource? tokenSource;
 
     public DialogBackupForm()
     {
         InitializeComponent();
-        closeConfirmService = new FormConfirmClosingService(this, CancelAndCleanup);
-        closeConfirmService.Prompt = "¿Cancelar copia de seguridad?";
+        CancelledEditHandler = CancelAndCleanup;
+        CancelPromptMessage = "¿Cancelar copia de seguridad?";
         lbl_FileCount.Text = "";
     }
 
