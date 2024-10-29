@@ -8,7 +8,7 @@ using TECNM.Residencias.Data.Entities;
 public sealed partial class StudentExtrasPickerDialogForm : EditForm
 {
     private Dictionary<long, CheckBox> extrasControls = new Dictionary<long, CheckBox>();
-    private IList<Extra> selectedExtras = new List<Extra>();
+    private HashSet<Extra> selectedExtras = [];
     private Student? _student;
 
     public StudentExtrasPickerDialogForm()
@@ -22,7 +22,7 @@ public sealed partial class StudentExtrasPickerDialogForm : EditForm
         _student = student;
     }
 
-    public IList<Extra> SelectedExtras => selectedExtras;
+    public ISet<Extra> SelectedExtras => selectedExtras;
 
     private void StudentExtrasPickerDialogForm_Load(object sender, EventArgs e)
     {
@@ -63,10 +63,12 @@ public sealed partial class StudentExtrasPickerDialogForm : EditForm
     private void MarkCheckedExtras(AppDbContext context)
     {
         IEnumerable<Extra> extras = context.Extras.EnumerateAll(_student!);
+        selectedExtras.Clear();
 
         foreach (Extra extra in extras)
         {
             extrasControls[extra.Id].Checked = true;
+            selectedExtras.Add(extra);
         }
     }
 

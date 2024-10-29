@@ -22,7 +22,7 @@ public sealed partial class StudentEditForm : EditForm
     private Advisor? _internalAdvisor;
     private Advisor? _externalAdvisor;
     private Advisor? _reviewerAdvisor;
-    private IList<Extra>? extras;
+    private ISet<Extra>? extras;
     private bool _isNewRecord = true;
 
     public StudentEditForm()

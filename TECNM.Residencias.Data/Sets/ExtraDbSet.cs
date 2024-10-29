@@ -20,7 +20,7 @@ public sealed class ExtraDbSet : DbSet<Extra>
         return command.ExecuteNonQuery();
     }
 
-    public int InsertExtrasForStudent(Student student, IList<Extra> extras)
+    public int InsertExtrasForStudent(Student student, IEnumerable<Extra> extras)
     {
         using var command = CreateCommand("INSERT INTO StudentExtras (StudentId, ExtraId) VALUES ($p0, $p1) ON CONFLICT DO NOTHING");
         command.Parameters.Add("$p0", SqliteType.Integer).Value = student.Id;
