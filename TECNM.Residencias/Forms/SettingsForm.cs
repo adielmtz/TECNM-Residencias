@@ -64,8 +64,8 @@ public sealed partial class SettingsForm : Form
 
     private void SaveAppSettings_Click(object sender, EventArgs e)
     {
-        AppSettings.Default.CompanyType = ((CompanyType) cb_CompanyType.SelectedItem!).Id;
-        AppSettings.Default.StudentCareer = ((Career) cb_StudentCareer.SelectedItem!).Id;
+        AppSettings.Default.DefaultCompanyType = ((CompanyType) cb_CompanyType.SelectedItem!).Id;
+        AppSettings.Default.DefaultStudentCareer = ((Career) cb_StudentCareer.SelectedItem!).Id;
         AppSettings.Default.Save();
         Close();
     }
@@ -81,7 +81,7 @@ public sealed partial class SettingsForm : Form
         foreach (CompanyType type in context.Companies.EnumerateCompanyTypes())
         {
             int index = cb_CompanyType.Items.Add(type);
-            if (AppSettings.Default.CompanyType == type.Id)
+            if (AppSettings.Default.DefaultCompanyType == type.Id)
             {
                 cb_CompanyType.SelectedIndex = index;
             }
@@ -94,7 +94,7 @@ public sealed partial class SettingsForm : Form
         foreach (Career career in context.Careers.EnumerateAll(enabled: true))
         {
             int index = cb_StudentCareer.Items.Add(career);
-            if (AppSettings.Default.StudentCareer == career.Id)
+            if (AppSettings.Default.DefaultStudentCareer == career.Id)
             {
                 cb_StudentCareer.SelectedIndex = index;
             }

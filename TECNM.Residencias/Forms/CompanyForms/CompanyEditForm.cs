@@ -54,7 +54,7 @@ public sealed partial class CompanyEditForm : EditForm
                     companySelected = true;
                 }
 
-                if (AppSettings.Default.CompanyType == type.Id)
+                if (AppSettings.Default.DefaultCompanyType == type.Id)
                 {
                     cb_CompanyType.SelectedIndex = index;
                 }

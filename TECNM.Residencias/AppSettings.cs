@@ -7,12 +7,10 @@ using TECNM.Residencias.Data.Extensions;
 
 internal sealed class AppSettings
 {
-    private static readonly int DefaultCompanyType = -1;
-    private static readonly long DefaultStudentCareer = -1;
-    private static readonly string DefaultLastManualBackupDate = DateTimeOffset.Now.ToRfc3339();
-    private static readonly string DefaultLastAutomaticBackupDate = DateTimeOffset.Now.ToRfc3339();
-    private static readonly TimeSpan DefaultManualBackupFrequency = TimeSpan.FromDays(30);
-    private static readonly TimeSpan DefaultAutomaticBackupFrequency = TimeSpan.FromDays(3);
+    private static readonly string DefaultLastStorageBackupDate = DateTimeOffset.Now.ToRfc3339();
+    private static readonly string DefaultLastDatabaseBackupDate = DateTimeOffset.Now.ToRfc3339();
+    private static readonly TimeSpan DefaultStorageBackupFrequency = TimeSpan.FromDays(30);
+    private static readonly TimeSpan DefaultDatabaseBackupFrequency = TimeSpan.FromDays(3);
 
     private static AppSettings? s_instance;
     private IDictionary<string, Setting> _settings;
@@ -43,45 +41,45 @@ internal sealed class AppSettings
         _settings = settings;
     }
 
-    public long CompanyType
+    public long DefaultCompanyType
     {
-        get => int.Parse(GetSetting(nameof(CompanyType), DefaultCompanyType).Value);
-        set => SetSetting(nameof(CompanyType), value);
+        get => int.Parse(GetSetting(nameof(DefaultCompanyType), -1).Value);
+        set => SetSetting(nameof(DefaultCompanyType), value);
     }
 
-    public long StudentCareer
+    public long DefaultStudentCareer
     {
-        get => long.Parse(GetSetting(nameof(StudentCareer), DefaultStudentCareer).Value);
-        set => SetSetting(nameof(StudentCareer), value);
+        get => long.Parse(GetSetting(nameof(DefaultStudentCareer), -1).Value);
+        set => SetSetting(nameof(DefaultStudentCareer), value);
     }
 
-    public DateTimeOffset LastManualBackupDate
+    public DateTimeOffset LastStorageBackupDate
     {
-        get => DateTimeOffset.Parse(GetSetting(nameof(LastManualBackupDate), DefaultLastManualBackupDate).Value);
-        set => SetSetting(nameof(LastManualBackupDate), value.ToRfc3339());
+        get => DateTimeOffset.Parse(GetSetting(nameof(LastStorageBackupDate), DefaultLastStorageBackupDate).Value);
+        set => SetSetting(nameof(LastStorageBackupDate), value.ToRfc3339());
     }
 
-    public TimeSpan ManualBackupFrequency
+    public TimeSpan StorageBackupFrequency
     {
-        get => TimeSpan.Parse(GetSetting(nameof(ManualBackupFrequency), DefaultManualBackupFrequency).Value);
-        set => SetSetting(nameof(ManualBackupFrequency), value);
+        get => TimeSpan.Parse(GetSetting(nameof(StorageBackupFrequency), DefaultStorageBackupFrequency).Value);
+        set => SetSetting(nameof(StorageBackupFrequency), value);
     }
 
-    public DateTimeOffset LastAutomaticBackupDate
+    public DateTimeOffset LastDatabaseBackupDate
     {
-        get => DateTimeOffset.Parse(GetSetting(nameof(LastAutomaticBackupDate), DefaultLastAutomaticBackupDate).Value);
-        set => SetSetting(nameof(LastAutomaticBackupDate), value.ToRfc3339());
+        get => DateTimeOffset.Parse(GetSetting(nameof(LastDatabaseBackupDate), DefaultLastDatabaseBackupDate).Value);
+        set => SetSetting(nameof(LastDatabaseBackupDate), value.ToRfc3339());
     }
 
-    public TimeSpan AutomaticBackupFrequency
+    public TimeSpan DatabaseBackupFrequency
     {
-        get => TimeSpan.Parse(GetSetting(nameof(AutomaticBackupFrequency), DefaultAutomaticBackupFrequency).Value);
-        set => SetSetting(nameof(AutomaticBackupFrequency), value);
+        get => TimeSpan.Parse(GetSetting(nameof(DatabaseBackupFrequency), DefaultDatabaseBackupFrequency).Value);
+        set => SetSetting(nameof(DatabaseBackupFrequency), value);
     }
 
-    public bool IsManualBackupRequired => DateTimeOffset.Now > (LastManualBackupDate + ManualBackupFrequency);
+    public bool IsStorageBackupRequired => DateTimeOffset.Now > (LastStorageBackupDate + StorageBackupFrequency);
 
-    public bool IsAutomaticBackupRequired => DateTimeOffset.Now > (LastAutomaticBackupDate + AutomaticBackupFrequency);
+    public bool IsDatabaseBackupRequired => DateTimeOffset.Now > (LastDatabaseBackupDate + DatabaseBackupFrequency);
 
     public void Save()
     {

@@ -82,7 +82,7 @@ public sealed partial class StudentEditForm : EditForm
         foreach (Career career in context.Careers.EnumerateAll(enabled: true))
         {
             int index = cb_StudentCareer.Items.Add(career);
-            if (AppSettings.Default.StudentCareer == career.Id)
+            if (AppSettings.Default.DefaultStudentCareer == career.Id)
             {
                 cb_StudentCareer.SelectedIndex = index;
                 prefetchCareer = career;

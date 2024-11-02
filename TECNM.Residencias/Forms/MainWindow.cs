@@ -25,7 +25,7 @@ public sealed partial class MainWindow : Form
     {
         App.Initialize();
 
-        if (AppSettings.Default.IsManualBackupRequired)
+        if (AppSettings.Default.IsStorageBackupRequired)
         {
             MessageBox.Show(
                 "Es necesario realizar una copia de seguridad.",
@@ -37,7 +37,7 @@ public sealed partial class MainWindow : Form
             FormManagerService.OpenDialog<DialogBackupForm>();
         }
 
-        if (AppSettings.Default.IsAutomaticBackupRequired)
+        if (AppSettings.Default.IsDatabaseBackupRequired)
         {
             MakeDatabaseBackup();
         }
@@ -108,7 +108,7 @@ public sealed partial class MainWindow : Form
         using var backup = new DbBackup(sqlite, App.DatabaseBackupDirectory);
         backup.Execute();
 
-        AppSettings.Default.LastAutomaticBackupDate = DateTime.Now;
+        AppSettings.Default.LastDatabaseBackupDate = DateTime.Now;
         AppSettings.Default.Save();
 
         DirectoryCleanupService.DeleteOldFiles(App.DatabaseBackupDirectory, 20);

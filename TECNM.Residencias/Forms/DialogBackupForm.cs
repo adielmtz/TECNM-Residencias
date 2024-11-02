@@ -65,7 +65,7 @@ public sealed partial class DialogBackupForm : EditForm
         {
             string backupFile = await RunStorageBackupAsync(destination, chk_EnableCompression.Checked, backupTime);
 
-            AppSettings.Default.LastManualBackupDate = backupTime;
+            AppSettings.Default.LastStorageBackupDate = backupTime;
             AppSettings.Default.Save();
 
             if (chk_OpenBackupFolder.Checked)
