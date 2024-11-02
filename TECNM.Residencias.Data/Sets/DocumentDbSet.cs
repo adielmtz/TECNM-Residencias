@@ -96,7 +96,7 @@ public sealed class DocumentDbSet : DbSet<Document>
             FullPath     = $p2,
             OriginalName = $p3,
             Size         = $p4,
-            Hash         = $p5,
+            Hash         = $p5
         WHERE Id = $id
         """);
 

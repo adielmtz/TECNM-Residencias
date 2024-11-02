@@ -207,7 +207,7 @@ public sealed class CompanyDbSet : DbSet<Company>
             PostalCode = $p08,
             CityId     = $p09,
             Enabled    = $p10,
-            UpdatedOn  = $p11,
+            UpdatedOn  = $p11
         WHERE Id = $pid
         """);
 
