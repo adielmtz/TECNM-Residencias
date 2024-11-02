@@ -3,13 +3,14 @@ namespace TECNM.Residencias;
 using System;
 using System.Collections.Generic;
 using TECNM.Residencias.Data.Entities;
+using TECNM.Residencias.Data.Extensions;
 
 internal sealed class AppSettings
 {
     private static readonly int DefaultCompanyType = -1;
     private static readonly long DefaultStudentCareer = -1;
-    private static readonly string DefaultLastManualBackupDate = "2024-10-01 13:00:00";
-    private static readonly string DefaultLastAutomaticBackupDate = "2024-10-01 13:00:00";
+    private static readonly string DefaultLastManualBackupDate = DateTimeOffset.Now.ToRfc3339();
+    private static readonly string DefaultLastAutomaticBackupDate = DateTimeOffset.Now.ToRfc3339();
     private static readonly TimeSpan DefaultManualBackupFrequency = TimeSpan.FromDays(30);
     private static readonly TimeSpan DefaultAutomaticBackupFrequency = TimeSpan.FromDays(3);
 
@@ -54,10 +55,10 @@ internal sealed class AppSettings
         set => SetSetting(nameof(StudentCareer), value);
     }
 
-    public DateTime LastManualBackupDate
+    public DateTimeOffset LastManualBackupDate
     {
-        get => DateTime.Parse(GetSetting(nameof(LastManualBackupDate), DefaultLastManualBackupDate).Value);
-        set => SetSetting(nameof(LastManualBackupDate), $"{value:yyyy-MM-dd HH:mm:ss}");
+        get => DateTimeOffset.Parse(GetSetting(nameof(LastManualBackupDate), DefaultLastManualBackupDate).Value);
+        set => SetSetting(nameof(LastManualBackupDate), value.ToRfc3339());
     }
 
     public TimeSpan ManualBackupFrequency
@@ -66,10 +67,10 @@ internal sealed class AppSettings
         set => SetSetting(nameof(ManualBackupFrequency), value);
     }
 
-    public DateTime LastAutomaticBackupDate
+    public DateTimeOffset LastAutomaticBackupDate
     {
-        get => DateTime.Parse(GetSetting(nameof(LastAutomaticBackupDate), DefaultLastAutomaticBackupDate).Value);
-        set => SetSetting(nameof(LastAutomaticBackupDate), $"{value:yyyy-MM-dd HH:mm:ss}");
+        get => DateTimeOffset.Parse(GetSetting(nameof(LastAutomaticBackupDate), DefaultLastAutomaticBackupDate).Value);
+        set => SetSetting(nameof(LastAutomaticBackupDate), value.ToRfc3339());
     }
 
     public TimeSpan AutomaticBackupFrequency
@@ -78,9 +79,9 @@ internal sealed class AppSettings
         set => SetSetting(nameof(AutomaticBackupFrequency), value);
     }
 
-    public bool IsManualBackupRequired => DateTime.Now > (LastManualBackupDate + ManualBackupFrequency);
+    public bool IsManualBackupRequired => DateTimeOffset.Now > (LastManualBackupDate + ManualBackupFrequency);
 
-    public bool IsAutomaticBackupRequired => DateTime.Now > (LastAutomaticBackupDate + AutomaticBackupFrequency);
+    public bool IsAutomaticBackupRequired => DateTimeOffset.Now > (LastAutomaticBackupDate + AutomaticBackupFrequency);
 
     public void Save()
     {
