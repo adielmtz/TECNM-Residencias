@@ -47,12 +47,12 @@ namespace TECNM.Residencias.Controls
             // cb_DocumentType
             // 
             cb_DocumentType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            cb_DocumentType.Enabled = false;
             cb_DocumentType.FormattingEnabled = true;
             cb_DocumentType.Location = new System.Drawing.Point(36, 3);
             cb_DocumentType.Name = "cb_DocumentType";
             cb_DocumentType.Size = new System.Drawing.Size(200, 23);
             cb_DocumentType.TabIndex = 1;
-            cb_DocumentType.SelectedIndexChanged += DocumentType_SelectedIndexChanged;
             // 
             // button1
             // 
@@ -94,7 +94,6 @@ namespace TECNM.Residencias.Controls
             Controls.Add(label1);
             Name = "DocumentListItemControl";
             Size = new System.Drawing.Size(400, 45);
-            Load += DocumentListItemControl_Load;
             ResumeLayout(false);
             PerformLayout();
         }

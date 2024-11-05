@@ -9,26 +9,34 @@ using TECNM.Residencias.Data.Entities;
 
 public partial class DocumentListItemControl : UserControl
 {
-    private readonly List<DocumentType> _documentTypes = [];
-    private Document _document = new Document();
+    private static readonly DocumentType DocumentTypePlaceholder = new DocumentType { Id = -1, Label = "SELECCIONAR", Tag = "NONE", };
+
+    private readonly List<DocumentType> _documentTypes = [DocumentTypePlaceholder];
     private Action<DocumentListItemControl>? _onDelete;
+    private Document _document = new Document();
 
     public DocumentListItemControl()
     {
         InitializeComponent();
     }
 
-    public DocumentListItemControl(List<DocumentType> documentTypes, Document document, Action<DocumentListItemControl> onDelete) : this()
+    public DocumentListItemControl(IReadOnlyList<DocumentType> types, FileInfo fileInfo, Action<DocumentListItemControl> onDelete) : this()
     {
-        _documentTypes = documentTypes;
-        _document = document;
-        lbl_OriginalName.Text = document.OriginalName;
+        _document.FullPath = fileInfo.FullName;
+        _document.OriginalName = fileInfo.Name;
+        _document.Size = fileInfo.Length;
         _onDelete = onDelete;
+        lbl_OriginalName.Text = fileInfo.Name;
+        _documentTypes.AddRange(types);
+    }
 
-        foreach (DocumentType type in _documentTypes)
-        {
-            cb_DocumentType.Items.Add(type);
-        }
+    public DocumentListItemControl(IReadOnlyList<DocumentType> types, Document document, Action<DocumentListItemControl> onDelete) : this()
+    {
+        Debug.Assert(document.Id > 0, "Document must exist in the database and have a valid rowid!");
+        _document = document;
+        _onDelete = onDelete;
+        lbl_OriginalName.Text = document.OriginalName;
+        _documentTypes.AddRange(types);
     }
 
     public Document Document => _document;
@@ -37,24 +45,30 @@ public partial class DocumentListItemControl : UserControl
 
     public bool IsNew => _document.Id == 0;
 
-    private void DocumentListItemControl_Load(object sender, EventArgs e)
+    protected override void OnLoad(EventArgs e)
     {
-        cb_DocumentType.SelectedIndex = 0;
+        base.OnLoad(e);
 
-        if (!IsNew)
+        bool selectedItem = false;
+        foreach (DocumentType type in _documentTypes)
         {
-            for (int i = 0; i < _documentTypes.Count; i++)
+            int index = cb_DocumentType.Items.Add(type);
+            if (type.Id == _document.TypeId)
             {
-                DocumentType type = _documentTypes[i];
-                if (type.Id == _document.TypeId)
-                {
-                    cb_DocumentType.SelectedIndex = i;
-                    break;
-                }
+                cb_DocumentType.SelectedIndex = index;
+                selectedItem = true;
             }
+        }
 
-            cb_DocumentType.Enabled = false;
-            return;
+        if (!selectedItem)
+        {
+            cb_DocumentType.SelectedIndex = 0;
+        }
+
+        if (IsNew)
+        {
+            cb_DocumentType.Enabled = true;
+            cb_DocumentType.SelectedIndexChanged += DocumentType_SelectedIndexChanged;
         }
     }
 

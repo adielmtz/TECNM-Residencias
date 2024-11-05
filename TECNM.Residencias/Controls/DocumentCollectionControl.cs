@@ -1,5 +1,7 @@
 namespace TECNM.Residencias.Controls;
 
+using FluentValidation;
+using FluentValidation.Results;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,10 +11,12 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using TECNM.Residencias.Data;
 using TECNM.Residencias.Data.Entities;
+using TECNM.Residencias.Data.Validators;
 using TECNM.Residencias.Services;
 
 public sealed partial class DocumentCollectionControl : UserControl
 {
+    private readonly AbstractValidator<Document> _validator = new DocumentValidator();
     private readonly List<DocumentType> _documentTypes = [];
     private readonly List<Document> _deleted = [];
 
@@ -36,16 +40,10 @@ public sealed partial class DocumentCollectionControl : UserControl
         flp_ControlContainer.Controls.Add(control);
     }
 
-    public void Add(string filename)
+    public void Add(FileInfo fileInfo)
     {
-        var document = new Document
-        {
-            TypeId = 0,
-            FullPath = filename,
-            OriginalName = Path.GetFileName(filename),
-        };
-
-        Add(document);
+        var control = new DocumentListItemControl(_documentTypes, fileInfo, OnDocumentDeleted);
+        flp_ControlContainer.Controls.Add(control);
     }
 
     public void RemoveAll(DbSet<Document> set)
@@ -65,9 +63,14 @@ public sealed partial class DocumentCollectionControl : UserControl
         PurgeDeletedDocuments(set);
     }
 
-    public async Task SaveAsync(DbSet<Document> set, Student owner)
+    public async Task<bool> SaveAsync(DbSet<Document> set, Student owner)
     {
         PurgeDeletedDocuments(set);
+
+        if (!CheckValidDocuments(owner))
+        {
+            return false;
+        }
 
         foreach (var control in flp_ControlContainer.Controls)
         {
@@ -76,6 +79,30 @@ public sealed partial class DocumentCollectionControl : UserControl
                 await SaveDocument(set, owner, listItem.Document, listItem.DocumentType!);
             }
         }
+
+        return true;
+    }
+
+    private bool CheckValidDocuments(Student owner)
+    {
+        foreach (var control in flp_ControlContainer.Controls)
+        {
+            if (control is DocumentListItemControl listItem && listItem.IsNew)
+            {
+                Document document = listItem.Document;
+                document.StudentId = owner.Id;
+
+                ValidationResult result = _validator.Validate(document);
+                if (!result.IsValid)
+                {
+                    Debug.Assert(result.Errors.Count > 0);
+                    MessageBox.Show(result.Errors[0].ErrorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     private void PurgeDeletedDocuments(DbSet<Document> set)

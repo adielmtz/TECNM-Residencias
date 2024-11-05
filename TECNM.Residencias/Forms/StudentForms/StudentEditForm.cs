@@ -295,7 +295,20 @@ public sealed partial class StudentEditForm : EditForm
         {
             foreach (string filename in dialog.FileNames)
             {
-                dcc_Documents.Add(filename);
+                var info = new FileInfo(filename);
+                if (info.Length == 0)
+                {
+                    MessageBox.Show(
+                        "Se ignorarán los archivos vacíos.",
+                        "Información",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information
+                    );
+
+                    continue;
+                }
+
+                dcc_Documents.Add(info);
             }
         }
     }
@@ -415,9 +428,17 @@ public sealed partial class StudentEditForm : EditForm
                 context.Extras.InsertExtrasForStudent(_student, extras);
             }
 
-            await dcc_Documents.SaveAsync(context.Documents, _student);
-            context.SaveChanges();
-            Close();
+
+            bool savedDocuments = await dcc_Documents.SaveAsync(context.Documents, _student);
+            if (savedDocuments)
+            {
+                context.SaveChanges();
+                Close();
+            }
+            else
+            {
+                Enabled = true;
+            }
         }
         catch (SqliteException ex) when (ex.SqliteErrorCode == SQLitePCL.raw.SQLITE_CONSTRAINT)
         {
