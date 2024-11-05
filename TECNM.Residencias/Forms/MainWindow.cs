@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using TECNM.Residencias.Controls;
 using TECNM.Residencias.Data;
-using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Data.Entities.DTO;
 using TECNM.Residencias.Forms.CareerForms;
 using TECNM.Residencias.Forms.CompanyForms;
@@ -21,8 +20,9 @@ public sealed partial class MainWindow : Form
         Text = $"Panel de administración | {App.Name}";
     }
 
-    private void MainWindow_Load(object sender, EventArgs e)
+    protected override void OnLoad(EventArgs e)
     {
+        base.OnLoad(e);
         App.Initialize();
 
         if (AppSettings.Default.IsStorageBackupRequired)
@@ -45,12 +45,10 @@ public sealed partial class MainWindow : Form
         LoadLastModifiedStudents();
     }
 
-    private void MainWindow_Activated(object sender, EventArgs e)
+    protected override void OnGotFocus(EventArgs e)
     {
-        if (App.Initialized)
-        {
-            LoadLastModifiedStudents();
-        }
+        base.OnGotFocus(e);
+        LoadLastModifiedStudents();
     }
 
     private void ShowStudents_Click(object sender, EventArgs e)
@@ -116,14 +114,17 @@ public sealed partial class MainWindow : Form
 
     private void LoadLastModifiedStudents()
     {
-        using var context = new AppDbContext();
-        IEnumerable<StudentLastModifiedDto> recentlyModifiedStudent = context.Students.EnumerateRecentlyModified(20);
-        flp_LastModifiedStudents.Controls.Clear();
-
-        foreach (StudentLastModifiedDto student in recentlyModifiedStudent)
+        if (App.Initialized)
         {
-            var control = new StudentListItemViewControl(student.Id, student.ToString());
-            flp_LastModifiedStudents.Controls.Add(control);
+            using var context = new AppDbContext();
+            IEnumerable<StudentLastModifiedDto> recentlyModifiedStudent = context.Students.EnumerateRecentlyModified(20);
+            flp_LastModifiedStudents.Controls.Clear();
+
+            foreach (StudentLastModifiedDto student in recentlyModifiedStudent)
+            {
+                var control = new StudentListItemViewControl(student.Id, student.ToString());
+                flp_LastModifiedStudents.Controls.Add(control);
+            }
         }
     }
 
