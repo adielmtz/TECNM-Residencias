@@ -3,6 +3,7 @@ CREATE TABLE Country (
                  NOT NULL,
     Name TEXT    UNIQUE
                  NOT NULL
+                 COLLATE NOCASE
 )
 STRICT;
 
@@ -11,7 +12,8 @@ CREATE TABLE State (
                       NOT NULL,
     CountryId INTEGER REFERENCES Country (Id) ON DELETE RESTRICT
                       NOT NULL,
-    Name      TEXT    NOT NULL,
+    Name      TEXT    NOT NULL
+                      COLLATE NOCASE,
     CONSTRAINT AK_State_Identity UNIQUE (
         CountryId,
         Name
@@ -24,7 +26,8 @@ CREATE TABLE City (
                     NOT NULL,
     StateId INTEGER REFERENCES State (Id) ON DELETE RESTRICT
                     NOT NULL,
-    Name    TEXT    NOT NULL,
+    Name    TEXT    NOT NULL
+                    COLLATE NOCASE,
     CONSTRAINT AK_City_Identity UNIQUE (
         StateId,
         Name
@@ -46,7 +49,8 @@ CREATE TABLE Career (
     Id        INTEGER PRIMARY KEY AUTOINCREMENT
                       NOT NULL,
     Name      TEXT    UNIQUE
-                      NOT NULL,
+                      NOT NULL
+                      COLLATE NOCASE,
     Enabled   INTEGER NOT NULL,
     UpdatedOn TEXT    NOT NULL,
     CreatedOn TEXT    NOT NULL
@@ -58,7 +62,8 @@ CREATE TABLE Specialty (
                       NOT NULL,
     CareerId  INTEGER REFERENCES Career (Id) ON DELETE RESTRICT
                       NOT NULL,
-    Name      TEXT    NOT NULL,
+    Name      TEXT    NOT NULL
+                      COLLATE NOCASE,
     Enabled   INTEGER NOT NULL,
     UpdatedOn TEXT    NOT NULL,
     CreatedOn TEXT    NOT NULL,
@@ -82,8 +87,10 @@ CREATE TABLE Company (
                        NOT NULL,
     TypeId     INTEGER REFERENCES CompanyType (Id) ON DELETE RESTRICT
                        NOT NULL,
-    Rfc        TEXT    UNIQUE,
-    Name       TEXT    NOT NULL,
+    Rfc        TEXT    UNIQUE
+                       COLLATE NOCASE,
+    Name       TEXT    NOT NULL
+                       COLLATE NOCASE,
     Email      TEXT    NOT NULL,
     Phone      TEXT    NOT NULL,
     Extension  TEXT    NOT NULL,
@@ -104,8 +111,10 @@ CREATE TABLE Advisor (
     CompanyId INTEGER REFERENCES Company (Id) ON DELETE RESTRICT
                       NOT NULL,
     Internal  INTEGER NOT NULL,
-    FirstName TEXT    NOT NULL,
-    LastName  TEXT    NOT NULL,
+    FirstName TEXT    NOT NULL
+                      COLLATE NOCASE,
+    LastName  TEXT    NOT NULL
+                      COLLATE NOCASE,
     Section   TEXT    NOT NULL,
     Role      TEXT    NOT NULL,
     Email     TEXT    NOT NULL,
@@ -130,10 +139,13 @@ CREATE TABLE Student (
                               NOT NULL,
     SpecialtyId       INTEGER REFERENCES Specialty (Id) ON DELETE RESTRICT
                               NOT NULL,
-    FirstName         TEXT    NOT NULL,
-    LastName          TEXT    NOT NULL,
+    FirstName         TEXT    NOT NULL
+                              COLLATE NOCASE,
+    LastName          TEXT    NOT NULL
+                              COLLATE NOCASE,
     Email             TEXT    UNIQUE
-                              NOT NULL,
+                              NOT NULL
+                              COLLATE NOCASE,
     Phone             TEXT    NOT NULL,
     GenderId          INTEGER REFERENCES Gender (Id) ON DELETE RESTRICT
                               NOT NULL,
@@ -171,7 +183,8 @@ CREATE TABLE Document (
                          NOT NULL,
     TypeId       INTEGER REFERENCES DocumentType (Id) ON DELETE RESTRICT
                          NOT NULL,
-    FullPath     TEXT    NOT NULL,
+    FullPath     TEXT    NOT NULL
+                         COLLATE NOCASE,
     OriginalName TEXT    NOT NULL,
     Size         INTEGER NOT NULL,
     Hash         TEXT    NOT NULL,

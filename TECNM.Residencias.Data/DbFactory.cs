@@ -1,6 +1,7 @@
 namespace TECNM.Residencias.Data;
 
 using Microsoft.Data.Sqlite;
+using System.Diagnostics;
 
 /// <summary>
 /// Factory class for creating database connections.
@@ -44,7 +45,13 @@ public sealed class DbFactory
     public SqliteConnection CreateConnection()
     {
         var sqlite = new SqliteConnection(ConnectionString);
+        RegisterCollations(sqlite);
         sqlite.Open();
         return sqlite;
+    }
+
+    private void RegisterCollations(SqliteConnection sqlite)
+    {
+        sqlite.CreateCollation("NOCASE", (a, b) => string.Compare(a, b, ignoreCase: true));
     }
 }
