@@ -4,6 +4,7 @@ using System;
 using System.Diagnostics;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
+using TECNM.Residencias.Data.Extensions;
 
 public sealed partial class SettingsForm : Form
 {
@@ -25,13 +26,11 @@ public sealed partial class SettingsForm : Form
         Enabled = false;
 
         using var sqlite = App.Database.CreateConnection();
-        using var command = sqlite.CreateCommand();
 
-        command.CommandText = "ANALYZE";
-        command.ExecuteNonQuery();
-
-        command.CommandText = "PRAGMA wal_checkpoint(FULL)";
-        command.ExecuteNonQuery();
+        sqlite.Execute("REINDEX;");
+        sqlite.Execute("ANALYZE;");
+        sqlite.Execute("VACUUM;");
+        sqlite.Execute("PRAGMA wal_checkpoint(FULL);");
 
         Enabled = true;
 
