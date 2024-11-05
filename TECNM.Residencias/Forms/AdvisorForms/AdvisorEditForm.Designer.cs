@@ -144,10 +144,10 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             chk_AdvisorEnabled.AutoSize = true;
             chk_AdvisorEnabled.Checked = true;
             chk_AdvisorEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
-            chk_AdvisorEnabled.Location = new System.Drawing.Point(12, 276);
+            chk_AdvisorEnabled.Location = new System.Drawing.Point(98, 276);
             chk_AdvisorEnabled.Name = "chk_AdvisorEnabled";
             chk_AdvisorEnabled.Size = new System.Drawing.Size(71, 19);
-            chk_AdvisorEnabled.TabIndex = 7;
+            chk_AdvisorEnabled.TabIndex = 8;
             chk_AdvisorEnabled.Text = "Habilitar";
             chk_AdvisorEnabled.UseVisualStyleBackColor = true;
             // 
@@ -239,10 +239,10 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             // chk_AdvisorInternal
             // 
             chk_AdvisorInternal.AutoSize = true;
-            chk_AdvisorInternal.Location = new System.Drawing.Point(98, 276);
+            chk_AdvisorInternal.Location = new System.Drawing.Point(12, 276);
             chk_AdvisorInternal.Name = "chk_AdvisorInternal";
             chk_AdvisorInternal.Size = new System.Drawing.Size(64, 19);
-            chk_AdvisorInternal.TabIndex = 8;
+            chk_AdvisorInternal.TabIndex = 7;
             chk_AdvisorInternal.Text = "Interno";
             chk_AdvisorInternal.UseVisualStyleBackColor = true;
             // 
