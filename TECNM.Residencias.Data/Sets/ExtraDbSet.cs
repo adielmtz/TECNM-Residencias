@@ -39,7 +39,7 @@ public sealed class ExtraDbSet : DbSet<Extra>
 
     public override IEnumerable<Extra> EnumerateAll()
     {
-        using var command = CreateCommand("SELECT Id, TypeId, Value FROM Extra ORDER BY TypeId, Value");
+        using var command = CreateCommand("SELECT Id, TypeId, Value FROM Extra ORDER BY Id");
         using var reader = command.ExecuteReader();
 
         while (reader.Read())

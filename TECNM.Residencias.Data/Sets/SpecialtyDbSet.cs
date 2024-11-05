@@ -2,7 +2,6 @@ namespace TECNM.Residencias.Data.Sets;
 
 using Microsoft.Data.Sqlite;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using TECNM.Residencias.Data;

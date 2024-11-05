@@ -1,7 +1,6 @@
 namespace TECNM.Residencias.Data;
 
 using Microsoft.Data.Sqlite;
-using System.Diagnostics;
 
 /// <summary>
 /// Factory class for creating database connections.
@@ -50,7 +49,16 @@ public sealed class DbFactory
         return sqlite;
     }
 
-    private void RegisterCollations(SqliteConnection sqlite)
+    /// <summary>
+    /// Registers a custom collation for case-insensitive string comparison in a SQLite database.
+    /// </summary>
+    /// <param name="sqlite">The <see cref="SqliteConnection"/> instance to register the collation with.</param>
+    /// <remarks>
+    /// This method defines a custom collation named "NOCASE" that performs a case-insensitive string comparison
+    /// by using <see cref="string.Compare(string, string, bool)"/> with the <c>ignoreCase</c> parameter set to <see langword="true"/>.
+    /// It enables the use of the "NOCASE" collation for sorting or comparing string values in SQL queries.
+    /// </remarks>
+    private static void RegisterCollations(SqliteConnection sqlite)
     {
         sqlite.CreateCollation("NOCASE", (a, b) => string.Compare(a, b, ignoreCase: true));
     }

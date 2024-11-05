@@ -7,7 +7,7 @@ using System;
 /// </summary>
 public static class DateTimeOffsetExtensions
 {
-    private const string RFC_3339 = @"yyyy\-MM\-dd\THH\:mm\:sszzz";
+    private const string DATE_RFC3339 = @"yyyy\-MM\-dd\THH\:mm\:sszzz";
 
     /// <summary>
     /// Converts a <see cref="DateTimeOffset"/> to its string representation in RFC 3339 format.
@@ -16,6 +16,6 @@ public static class DateTimeOffsetExtensions
     /// <returns>A string representating the date and time in RFC 3339 format.</returns>
     public static string ToRfc3339(this DateTimeOffset dto)
     {
-        return dto.ToString(RFC_3339);
+        return dto.ToString(DATE_RFC3339);
     }
 }
