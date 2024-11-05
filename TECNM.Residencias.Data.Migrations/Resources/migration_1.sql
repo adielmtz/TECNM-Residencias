@@ -79,6 +79,7 @@ CREATE TABLE CompanyType (
                   NOT NULL,
     Label TEXT    UNIQUE
                   NOT NULL
+                  COLLATE NOCASE
 )
 STRICT;
 
@@ -131,6 +132,7 @@ CREATE TABLE Gender (
                   NOT NULL,
     Label TEXT    UNIQUE
                   NOT NULL
+                  COLLATE NOCASE
 )
 STRICT;
 
@@ -202,6 +204,7 @@ CREATE TABLE ExtraType (
                   NOT NULL,
     Label TEXT    UNIQUE
                   NOT NULL
+                  COLLATE NOCASE
 )
 STRICT;
 
@@ -210,7 +213,8 @@ CREATE TABLE Extra (
                    NOT NULL,
     TypeId INTEGER REFERENCES ExtraType (Id) ON DELETE RESTRICT
                    NOT NULL,
-    Value  TEXT    NOT NULL,
+    Value  TEXT    NOT NULL
+                   COLLATE NOCASE,
     CONSTRAINT AK_Extra_Identity UNIQUE (
         TypeId,
         Value
