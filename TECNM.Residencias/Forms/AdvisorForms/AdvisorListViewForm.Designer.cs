@@ -33,7 +33,6 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             button1 = new System.Windows.Forms.Button();
             lbl_StatusLabel = new System.Windows.Forms.Label();
             ListAdvisorName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ListAdvisorType = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             ListAdvisorSection = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ListAdvisorRole = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ListAdvisorEmail = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -53,7 +52,7 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             dgv_ListView.AllowUserToResizeRows = false;
             dgv_ListView.Anchor =  System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             dgv_ListView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgv_ListView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { ListAdvisorName, ListAdvisorType, ListAdvisorSection, ListAdvisorRole, ListAdvisorEmail, ListAdvisorPhone, ListAdvisorPhoneExt, ListAdvisorEnabled, ListAdvisorUpdatedOn, ListAdvisorCreatedOn, ListAdvisorActions });
+            dgv_ListView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { ListAdvisorName, ListAdvisorSection, ListAdvisorRole, ListAdvisorEmail, ListAdvisorPhone, ListAdvisorPhoneExt, ListAdvisorEnabled, ListAdvisorUpdatedOn, ListAdvisorCreatedOn, ListAdvisorActions });
             dgv_ListView.Location = new System.Drawing.Point(12, 12);
             dgv_ListView.Name = "dgv_ListView";
             dgv_ListView.ReadOnly = true;
@@ -91,16 +90,6 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             ListAdvisorName.Name = "ListAdvisorName";
             ListAdvisorName.ReadOnly = true;
             ListAdvisorName.Width = 76;
-            // 
-            // ListAdvisorType
-            // 
-            ListAdvisorType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            ListAdvisorType.HeaderText = "Interno";
-            ListAdvisorType.Name = "ListAdvisorType";
-            ListAdvisorType.ReadOnly = true;
-            ListAdvisorType.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            ListAdvisorType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            ListAdvisorType.Width = 70;
             // 
             // ListAdvisorSection
             // 
@@ -186,7 +175,6 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             Name = "AdvisorListViewForm";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "AdvisorListViewForm";
-            Load += AdvisorListViewForm_Load;
             ((System.ComponentModel.ISupportInitialize) dgv_ListView).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -198,7 +186,6 @@ namespace TECNM.Residencias.Forms.AdvisorForms
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label lbl_StatusLabel;
         private System.Windows.Forms.DataGridViewTextBoxColumn ListAdvisorName;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn ListAdvisorType;
         private System.Windows.Forms.DataGridViewTextBoxColumn ListAdvisorSection;
         private System.Windows.Forms.DataGridViewTextBoxColumn ListAdvisorRole;
         private System.Windows.Forms.DataGridViewTextBoxColumn ListAdvisorEmail;

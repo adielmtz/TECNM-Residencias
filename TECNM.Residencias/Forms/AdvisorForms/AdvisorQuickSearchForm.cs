@@ -16,8 +16,6 @@ public sealed partial class AdvisorQuickSearchForm : Form
 
     public long? FilterCompany { get; set; }
 
-    public bool? FilterInternal { get; set; }
-
     private void RunSearch_Click(object sender, EventArgs e)
     {
         SearchAdvisors();
@@ -43,7 +41,7 @@ public sealed partial class AdvisorQuickSearchForm : Form
         }
 
         using var context = new AppDbContext();
-        IEnumerable<AdvisorSearchResultDto> searchResults = context.Advisors.Search(query, 50, 1, FilterCompany, FilterInternal);
+        IEnumerable<AdvisorSearchResultDto> searchResults = context.Advisors.Search(query, 50, 1, FilterCompany);
 
         foreach (AdvisorSearchResultDto advisor in searchResults)
         {

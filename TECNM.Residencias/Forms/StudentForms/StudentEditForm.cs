@@ -10,6 +10,7 @@ using System.IO;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Data.Entities.DTO;
+using TECNM.Residencias.Data.Sets;
 using TECNM.Residencias.Data.Validators;
 using TECNM.Residencias.Forms.AdvisorForms;
 using TECNM.Residencias.Forms.CompanyForms;
@@ -165,7 +166,7 @@ public sealed partial class StudentEditForm : EditForm
         while (true)
         {
             using var dialog = new AdvisorQuickSearchForm();
-            dialog.FilterInternal = true;
+            dialog.FilterCompany = CompanyDbSet.MasterRecordRowid;
             dialog.ShowDialog();
 
             AdvisorSearchResultDto? selected = dialog.SelectedAdvisor;
@@ -223,7 +224,7 @@ public sealed partial class StudentEditForm : EditForm
         while (true)
         {
             using var dialog = new AdvisorQuickSearchForm();
-            dialog.FilterInternal = true;
+            dialog.FilterCompany = CompanyDbSet.MasterRecordRowid;
             dialog.ShowDialog();
 
             AdvisorSearchResultDto? selected = dialog.SelectedAdvisor;
@@ -342,7 +343,7 @@ public sealed partial class StudentEditForm : EditForm
 
     private void OpenExtrasDialog_Click(object sender, EventArgs e)
     {
-        using var dialog = new StudentExtrasPickerDialogForm(_student);
+        using var dialog = new StudentExtrasPickerDialogForm(_student, extras);
         dialog.ShowDialog();
         extras = dialog.SelectedExtras;
     }
@@ -579,7 +580,6 @@ public sealed partial class StudentEditForm : EditForm
         {
             Id        = advisorDto.Id,
             CompanyId = advisorDto.CompanyId,
-            Internal  = advisorDto.Internal,
             FirstName = advisorDto.FirstName,
             LastName  = advisorDto.LastName,
         });
@@ -598,7 +598,6 @@ public sealed partial class StudentEditForm : EditForm
         {
             Id        = advisorDto.Id,
             CompanyId = advisorDto.CompanyId,
-            Internal  = advisorDto.Internal,
             FirstName = advisorDto.FirstName,
             LastName  = advisorDto.LastName,
         });
@@ -617,7 +616,6 @@ public sealed partial class StudentEditForm : EditForm
         {
             Id        = advisorDto.Id,
             CompanyId = advisorDto.CompanyId,
-            Internal  = advisorDto.Internal,
             FirstName = advisorDto.FirstName,
             LastName  = advisorDto.LastName,
         });

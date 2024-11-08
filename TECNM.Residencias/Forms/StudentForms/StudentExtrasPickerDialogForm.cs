@@ -17,9 +17,14 @@ public sealed partial class StudentExtrasPickerDialogForm : EditForm
         Text = $"Seleccionar extras | {App.Name}";
     }
 
-    internal StudentExtrasPickerDialogForm(Student student) : this()
+    internal StudentExtrasPickerDialogForm(Student student, ISet<Extra>? extras) : this()
     {
         _student = student;
+
+        if (extras is not null)
+        {
+            selectedExtras.UnionWith(extras);
+        }
     }
 
     public ISet<Extra> SelectedExtras => selectedExtras;

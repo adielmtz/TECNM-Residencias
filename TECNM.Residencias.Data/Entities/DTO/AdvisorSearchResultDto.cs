@@ -3,7 +3,6 @@ namespace TECNM.Residencias.Data.Entities.DTO;
 public sealed record AdvisorSearchResultDto(
     long Id,
     long CompanyId,
-    bool Internal,
     string FirstName,
     string LastName
 )

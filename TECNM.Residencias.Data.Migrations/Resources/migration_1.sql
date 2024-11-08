@@ -111,7 +111,6 @@ CREATE TABLE Advisor (
                       NOT NULL,
     CompanyId INTEGER REFERENCES Company (Id) ON DELETE RESTRICT
                       NOT NULL,
-    Internal  INTEGER NOT NULL,
     FirstName TEXT    NOT NULL
                       COLLATE NOCASE,
     LastName  TEXT    NOT NULL
@@ -243,7 +242,6 @@ CREATE VIRTUAL TABLE CompanySearch USING fts5 (
 
 CREATE VIRTUAL TABLE AdvisorSearch USING fts5 (
     CompanyId,
-    Internal,
     FirstName,
     LastName,
     tokenize = 'unicode61 remove_diacritics 2'

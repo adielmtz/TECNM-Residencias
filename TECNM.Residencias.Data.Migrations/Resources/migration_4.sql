@@ -2503,6 +2503,7 @@ INSERT INTO CompanyType VALUES (2, 'Privada');
 INSERT INTO CompanyType VALUES (3, 'Industrial');
 INSERT INTO CompanyType VALUES (4, 'Servicios');
 INSERT INTO CompanyType VALUES (5, 'Otra');
+INSERT INTO Company VALUES (1, 1, NULL, 'EDITA ESTE REGISTRO', '', '', '', '', '', '', 1, 1, strftime('%FT%T+00:00'), strftime('%FT%T+00:00'));
 INSERT INTO Gender VALUES (1, 'Femenino');
 INSERT INTO Gender VALUES (2, 'Masculino');
 INSERT INTO Gender VALUES (3, 'Otro');

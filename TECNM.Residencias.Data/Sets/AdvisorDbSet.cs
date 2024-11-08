@@ -23,7 +23,7 @@ public sealed class AdvisorDbSet : DbSet<Advisor>
     public Advisor? GetAdvisor(long id)
     {
         using var command = CreateCommand("""
-        SELECT Id, CompanyId, Internal, FirstName, LastName, Section, Role, Email, Phone, Extension, Enabled, UpdatedOn, CreatedOn
+        SELECT Id, CompanyId, FirstName, LastName, Section, Role, Email, Phone, Extension, Enabled, UpdatedOn, CreatedOn
         FROM Advisor
         WHERE Id = $id
         """);
@@ -46,11 +46,10 @@ public sealed class AdvisorDbSet : DbSet<Advisor>
     /// <param name="count">The number of results to return per page.</param>
     /// <param name="page">The page number to retrieve, starting from 1.</param>
     /// <param name="filterCompanyId">Optional. A specific company ID to filter the results by. If null, no company filter is applied.</param>
-    /// <param name="filterInternal">Optional. A boolean value indicating whether to filter for internal advisors. If null, no internal filter is applied.</param>
     /// <returns>
     /// An <see cref="IEnumerable{T}"/> enumerating a collection of <see cref="AdvisorSearchResultDto"/> representing the search results.
     /// </returns>
-    public IEnumerable<AdvisorSearchResultDto> Search(string query, int count, int page, long? filterCompanyId = null, bool? filterInternal = null)
+    public IEnumerable<AdvisorSearchResultDto> Search(string query, int count, int page, long? filterCompanyId = null)
     {
         using var command = CreateCommand();
         string extraMatch = "";
@@ -61,14 +60,8 @@ public sealed class AdvisorDbSet : DbSet<Advisor>
             command.Parameters.Add("$e1", SqliteType.Integer).Value = filterCompanyId.Value;
         }
 
-        if (filterInternal.HasValue)
-        {
-            extraMatch += "Internal MATCH $e2 AND";
-            command.Parameters.Add("$e2", SqliteType.Integer).Value = filterInternal.Value;
-        }
-
         command.CommandText = $"""
-        SELECT rowid, CompanyId, Internal, FirstName, LastName
+        SELECT rowid, CompanyId, FirstName, LastName
         FROM AdvisorSearch
         WHERE {extraMatch} AdvisorSearch MATCH $query
         ORDER BY rank
@@ -85,9 +78,8 @@ public sealed class AdvisorDbSet : DbSet<Advisor>
             yield return new AdvisorSearchResultDto(
                 Id:        reader.GetInt64(0),
                 CompanyId: reader.GetInt64(1),
-                Internal:  reader.GetBoolean(2),
-                FirstName: reader.GetString(3),
-                LastName:  reader.GetString(4)
+                FirstName: reader.GetString(2),
+                LastName:  reader.GetString(3)
             );
         }
     }
@@ -95,7 +87,7 @@ public sealed class AdvisorDbSet : DbSet<Advisor>
     public override IEnumerable<Advisor> EnumerateAll()
     {
         using var command = CreateCommand("""
-        SELECT Id, CompanyId, Internal, FirstName, LastName, Section, Role, Email, Phone, Extension, Enabled, UpdatedOn, CreatedOn
+        SELECT Id, CompanyId, FirstName, LastName, Section, Role, Email, Phone, Extension, Enabled, UpdatedOn, CreatedOn
         FROM Advisor
         ORDER BY CompanyId, FirstName, LastName
         """);
@@ -115,7 +107,7 @@ public sealed class AdvisorDbSet : DbSet<Advisor>
     public IEnumerable<Advisor> EnumerateAll(Company company)
     {
         using var command = CreateCommand("""
-        SELECT Id, CompanyId, Internal, FirstName, LastName, Section, Role, Email, Phone, Extension, Enabled, UpdatedOn, CreatedOn
+        SELECT Id, CompanyId, FirstName, LastName, Section, Role, Email, Phone, Extension, Enabled, UpdatedOn, CreatedOn
         FROM Advisor
         WHERE CompanyId = $cid
         ORDER BY FirstName, LastName
@@ -135,23 +127,22 @@ public sealed class AdvisorDbSet : DbSet<Advisor>
     public override bool Add(Advisor entity)
     {
         using var command = CreateCommand("""
-        INSERT INTO Advisor (CompanyId, Internal, FirstName, LastName, Section, Role, Email, Phone, Extension, Enabled, UpdatedOn, CreatedOn)
-        VALUES ($p00, $p01, $p02, $p03, $p04, $p05, $p06, $p07, $p08, $p09, $p10, $p11)
+        INSERT INTO Advisor (CompanyId, FirstName, LastName, Section, Role, Email, Phone, Extension, Enabled, UpdatedOn, CreatedOn)
+        VALUES ($p00, $p01, $p02, $p03, $p04, $p05, $p06, $p07, $p08, $p09, $p10)
         RETURNING Id
         """);
 
         command.Parameters.Add("$p00", SqliteType.Integer).Value = entity.CompanyId;
-        command.Parameters.Add("$p01", SqliteType.Integer).Value = entity.Internal;
-        command.Parameters.Add("$p02", SqliteType.Text).Value    = entity.FirstName;
-        command.Parameters.Add("$p03", SqliteType.Text).Value    = entity.LastName;
-        command.Parameters.Add("$p04", SqliteType.Text).Value    = entity.Section;
-        command.Parameters.Add("$p05", SqliteType.Text).Value    = entity.Role;
-        command.Parameters.Add("$p06", SqliteType.Text).Value    = entity.Email;
-        command.Parameters.Add("$p07", SqliteType.Text).Value    = entity.Phone;
-        command.Parameters.Add("$p08", SqliteType.Text).Value    = entity.Extension;
-        command.Parameters.Add("$p09", SqliteType.Integer).Value = entity.Enabled;
+        command.Parameters.Add("$p01", SqliteType.Text).Value    = entity.FirstName;
+        command.Parameters.Add("$p02", SqliteType.Text).Value    = entity.LastName;
+        command.Parameters.Add("$p03", SqliteType.Text).Value    = entity.Section;
+        command.Parameters.Add("$p04", SqliteType.Text).Value    = entity.Role;
+        command.Parameters.Add("$p05", SqliteType.Text).Value    = entity.Email;
+        command.Parameters.Add("$p06", SqliteType.Text).Value    = entity.Phone;
+        command.Parameters.Add("$p07", SqliteType.Text).Value    = entity.Extension;
+        command.Parameters.Add("$p08", SqliteType.Integer).Value = entity.Enabled;
+        command.Parameters.Add("$p09", SqliteType.Text).Value    = DateTimeOffset.Now.ToRfc3339();
         command.Parameters.Add("$p10", SqliteType.Text).Value    = DateTimeOffset.Now.ToRfc3339();
-        command.Parameters.Add("$p11", SqliteType.Text).Value    = DateTimeOffset.Now.ToRfc3339();
         object? result = command.ExecuteScalar();
 
         if (result is long rowid)
@@ -167,32 +158,30 @@ public sealed class AdvisorDbSet : DbSet<Advisor>
     {
         using var command = CreateCommand("""
         UPDATE Advisor
-        SET CompanyId = $p00,
-            Internal  = $p01,
-            FirstName = $p02,
-            LastName  = $p03,
-            Section   = $p04,
-            Role      = $p05,
-            Email     = $p06,
-            Phone     = $p07,
-            Extension = $p08,
-            Enabled   = $p09,
-            UpdatedOn = $p10
-        WHERE Id = $pid
+        SET CompanyId = $p0,
+            FirstName = $p1,
+            LastName  = $p2,
+            Section   = $p3,
+            Role      = $p4,
+            Email     = $p5,
+            Phone     = $p6,
+            Extension = $p7,
+            Enabled   = $p8,
+            UpdatedOn = $p9
+        WHERE Id = $id
         """);
 
-        command.Parameters.Add("$p00", SqliteType.Integer).Value = entity.CompanyId;
-        command.Parameters.Add("$p01", SqliteType.Integer).Value = entity.Internal;
-        command.Parameters.Add("$p02", SqliteType.Text).Value    = entity.FirstName;
-        command.Parameters.Add("$p03", SqliteType.Text).Value    = entity.LastName;
-        command.Parameters.Add("$p04", SqliteType.Text).Value    = entity.Section;
-        command.Parameters.Add("$p05", SqliteType.Text).Value    = entity.Role;
-        command.Parameters.Add("$p06", SqliteType.Text).Value    = entity.Email;
-        command.Parameters.Add("$p07", SqliteType.Text).Value    = entity.Phone;
-        command.Parameters.Add("$p08", SqliteType.Text).Value    = entity.Extension;
-        command.Parameters.Add("$p09", SqliteType.Integer).Value = entity.Enabled;
-        command.Parameters.Add("$p10", SqliteType.Text).Value    = DateTimeOffset.Now.ToRfc3339();
-        command.Parameters.Add("$pid", SqliteType.Integer).Value = entity.Id;
+        command.Parameters.Add("$p0", SqliteType.Integer).Value = entity.CompanyId;
+        command.Parameters.Add("$p1", SqliteType.Text).Value    = entity.FirstName;
+        command.Parameters.Add("$p2", SqliteType.Text).Value    = entity.LastName;
+        command.Parameters.Add("$p3", SqliteType.Text).Value    = entity.Section;
+        command.Parameters.Add("$p4", SqliteType.Text).Value    = entity.Role;
+        command.Parameters.Add("$p5", SqliteType.Text).Value    = entity.Email;
+        command.Parameters.Add("$p6", SqliteType.Text).Value    = entity.Phone;
+        command.Parameters.Add("$p7", SqliteType.Text).Value    = entity.Extension;
+        command.Parameters.Add("$p8", SqliteType.Integer).Value = entity.Enabled;
+        command.Parameters.Add("$p9", SqliteType.Text).Value    = DateTimeOffset.Now.ToRfc3339();
+        command.Parameters.Add("$id", SqliteType.Integer).Value = entity.Id;
         return command.ExecuteNonQuery();
     }
 
@@ -211,7 +200,6 @@ public sealed class AdvisorDbSet : DbSet<Advisor>
         {
             Id        = reader.GetInt64(index++),
             CompanyId = reader.GetInt64(index++),
-            Internal  = reader.GetBoolean(index++),
             FirstName = reader.GetString(index++),
             LastName  = reader.GetString(index++),
             Section   = reader.GetString(index++),

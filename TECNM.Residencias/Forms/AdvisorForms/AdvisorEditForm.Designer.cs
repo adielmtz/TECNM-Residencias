@@ -47,9 +47,7 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             mtb_AdvisorPhone = new System.Windows.Forms.MaskedTextBox();
             label9 = new System.Windows.Forms.Label();
             tb_AdvisorExtension = new System.Windows.Forms.TextBox();
-            btn_ChooseCompany = new System.Windows.Forms.Button();
             tb_AdvisorCompany = new System.Windows.Forms.TextBox();
-            chk_AdvisorInternal = new System.Windows.Forms.CheckBox();
             SuspendLayout();
             // 
             // btn_CancelEdit
@@ -144,7 +142,7 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             chk_AdvisorEnabled.AutoSize = true;
             chk_AdvisorEnabled.Checked = true;
             chk_AdvisorEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
-            chk_AdvisorEnabled.Location = new System.Drawing.Point(98, 276);
+            chk_AdvisorEnabled.Location = new System.Drawing.Point(12, 277);
             chk_AdvisorEnabled.Name = "chk_AdvisorEnabled";
             chk_AdvisorEnabled.Size = new System.Drawing.Size(71, 19);
             chk_AdvisorEnabled.TabIndex = 8;
@@ -216,35 +214,14 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             tb_AdvisorExtension.TabStop = false;
             tb_AdvisorExtension.KeyPress += QuickSave_KeyPress;
             // 
-            // btn_ChooseCompany
-            // 
-            btn_ChooseCompany.Location = new System.Drawing.Point(12, 71);
-            btn_ChooseCompany.Name = "btn_ChooseCompany";
-            btn_ChooseCompany.Size = new System.Drawing.Size(83, 23);
-            btn_ChooseCompany.TabIndex = 0;
-            btn_ChooseCompany.TabStop = false;
-            btn_ChooseCompany.Text = "Seleccionar";
-            btn_ChooseCompany.UseVisualStyleBackColor = true;
-            btn_ChooseCompany.Click += ChooseCompany_Click;
-            // 
             // tb_AdvisorCompany
             // 
             tb_AdvisorCompany.Enabled = false;
-            tb_AdvisorCompany.Location = new System.Drawing.Point(100, 71);
+            tb_AdvisorCompany.Location = new System.Drawing.Point(12, 71);
             tb_AdvisorCompany.Name = "tb_AdvisorCompany";
-            tb_AdvisorCompany.Size = new System.Drawing.Size(298, 23);
+            tb_AdvisorCompany.Size = new System.Drawing.Size(386, 23);
             tb_AdvisorCompany.TabIndex = 0;
             tb_AdvisorCompany.TabStop = false;
-            // 
-            // chk_AdvisorInternal
-            // 
-            chk_AdvisorInternal.AutoSize = true;
-            chk_AdvisorInternal.Location = new System.Drawing.Point(12, 276);
-            chk_AdvisorInternal.Name = "chk_AdvisorInternal";
-            chk_AdvisorInternal.Size = new System.Drawing.Size(64, 19);
-            chk_AdvisorInternal.TabIndex = 7;
-            chk_AdvisorInternal.Text = "Interno";
-            chk_AdvisorInternal.UseVisualStyleBackColor = true;
             // 
             // AdvisorEditForm
             // 
@@ -253,9 +230,7 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             CancelButton = btn_CancelEdit;
             ClientSize = new System.Drawing.Size(410, 337);
             ControlBox = false;
-            Controls.Add(chk_AdvisorInternal);
             Controls.Add(tb_AdvisorCompany);
-            Controls.Add(btn_ChooseCompany);
             Controls.Add(tb_AdvisorExtension);
             Controls.Add(label9);
             Controls.Add(mtb_AdvisorPhone);
@@ -302,8 +277,6 @@ namespace TECNM.Residencias.Forms.AdvisorForms
         private System.Windows.Forms.MaskedTextBox mtb_AdvisorPhone;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox tb_AdvisorExtension;
-        private System.Windows.Forms.Button btn_ChooseCompany;
         private System.Windows.Forms.TextBox tb_AdvisorCompany;
-        private System.Windows.Forms.CheckBox chk_AdvisorInternal;
     }
 }

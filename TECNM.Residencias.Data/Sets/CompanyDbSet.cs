@@ -11,6 +11,11 @@ using TECNM.Residencias.Data.Extensions;
 
 public sealed class CompanyDbSet : DbSet<Company>
 {
+    /// <summary>
+    /// Gets the rowid of the company master record.
+    /// </summary>
+    public static readonly long MasterRecordRowid = 1;
+
     public CompanyDbSet(DbContext context) : base(context)
     {
     }
@@ -37,6 +42,17 @@ public sealed class CompanyDbSet : DbSet<Company>
         }
 
         return null;
+    }
+
+    /// <summary>
+    /// Gets the master (initial) entry that represents the host school.
+    /// </summary>
+    /// <returns>A <see cref="Company"/> instance that represents the rowid.</returns>
+    public Company GetMasterEntry()
+    {
+        Company? company = GetCompany(MasterRecordRowid);
+        Trace.Assert(company is not null);
+        return company!;
     }
 
     /// <summary>

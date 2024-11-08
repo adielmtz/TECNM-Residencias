@@ -18,11 +18,6 @@ public sealed class Advisor
     public long CompanyId { get; set; }
 
     /// <summary>
-    /// Gets or sets a value indicating whether the advisor is internal or not.
-    /// </summary>
-    public bool Internal { get; set; }
-
-    /// <summary>
     /// Gets or sets the first name.
     /// </summary>
     public string FirstName { get; set; } = "";

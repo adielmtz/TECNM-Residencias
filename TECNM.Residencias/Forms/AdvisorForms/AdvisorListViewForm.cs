@@ -22,8 +22,9 @@ public sealed partial class AdvisorListViewForm : Form
         _company = company;
     }
 
-    private void AdvisorListViewForm_Load(object sender, EventArgs e)
+    protected override void OnLoad(EventArgs e)
     {
+        base.OnLoad(e);
         RefreshList();
     }
 
@@ -68,15 +69,14 @@ public sealed partial class AdvisorListViewForm : Form
 
             row.Tag = advisor;
             row.Cells[0].Value = advisor.ToString();
-            row.Cells[1].Value = advisor.Internal;
-            row.Cells[2].Value = advisor.Section;
-            row.Cells[3].Value = advisor.Role;
-            row.Cells[4].Value = advisor.Email;
-            row.Cells[5].Value = advisor.Phone;
-            row.Cells[6].Value = advisor.Extension;
-            row.Cells[7].Value = advisor.Enabled;
-            row.Cells[8].Value = advisor.UpdatedOn.ToString("g");
-            row.Cells[9].Value = advisor.CreatedOn.ToString("g");
+            row.Cells[1].Value = advisor.Section;
+            row.Cells[2].Value = advisor.Role;
+            row.Cells[3].Value = advisor.Email;
+            row.Cells[4].Value = advisor.Phone;
+            row.Cells[5].Value = advisor.Extension;
+            row.Cells[6].Value = advisor.Enabled;
+            row.Cells[7].Value = advisor.UpdatedOn.ToString("g");
+            row.Cells[8].Value = advisor.CreatedOn.ToString("g");
             count++;
         }
 
