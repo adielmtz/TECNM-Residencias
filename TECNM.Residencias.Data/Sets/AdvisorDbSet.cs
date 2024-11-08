@@ -194,7 +194,7 @@ public sealed class AdvisorDbSet : DbSet<Advisor>
 
     protected override Advisor HydrateObject(SqliteDataReader reader)
     {
-        Debug.Assert(reader.FieldCount == 13);
+        Debug.Assert(reader.FieldCount == 12);
         int index = 0;
         return new Advisor
         {
