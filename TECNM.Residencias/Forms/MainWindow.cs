@@ -45,9 +45,9 @@ public sealed partial class MainWindow : Form
         LoadLastModifiedStudents();
     }
 
-    protected override void OnGotFocus(EventArgs e)
+    protected override void OnActivated(EventArgs e)
     {
-        base.OnGotFocus(e);
+        base.OnActivated(e);
         LoadLastModifiedStudents();
     }
 
