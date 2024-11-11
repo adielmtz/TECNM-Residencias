@@ -1,5 +1,6 @@
 namespace TECNM.Residencias.Forms;
 
+using Microsoft.Data.Sqlite;
 using System;
 using System.Diagnostics;
 using System.Windows.Forms;
@@ -29,7 +30,7 @@ public sealed partial class SettingsForm : Form
 
         sqlite.Execute("REINDEX;");
         sqlite.Execute("ANALYZE;");
-        sqlite.Execute("VACUUM;");
+        //sqlite.Execute("VACUUM;");
         sqlite.Execute("PRAGMA wal_checkpoint(FULL);");
 
         Enabled = true;
@@ -103,15 +104,6 @@ public sealed partial class SettingsForm : Form
     private string GetSqliteVersion()
     {
         using var sqlite = App.Database.CreateConnection();
-        using var command = sqlite.CreateCommand();
-        command.CommandText = "SELECT sqlite_version()";
-        object? result = command.ExecuteScalar();
-
-        if (result is string s)
-        {
-            return $"v{s}";
-        }
-
-        return "unknown version";
+        return sqlite.ServerVersion;
     }
 }
