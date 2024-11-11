@@ -106,6 +106,14 @@ public sealed partial class StudentEditForm : EditForm
         cb_StudentCareer.SelectedIndexChanged += StudentCareer_SelectedIndexChanged;
     }
 
+    private void StudentId_Leave(object sender, EventArgs e)
+    {
+        if (mtb_StudentId.Text.Length == 8 && string.IsNullOrEmpty(tb_StudentEmail.Text))
+        {
+            tb_StudentEmail.Text = $"L{mtb_StudentId.Text}@cdmadero.tecnm.mx";
+        }
+    }
+
     private void StudentCareer_SelectedIndexChanged(object? sender, EventArgs e)
     {
         Career? career = (Career?) cb_StudentCareer.SelectedItem;

@@ -141,6 +141,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             mtb_StudentId.Name = "mtb_StudentId";
             mtb_StudentId.Size = new System.Drawing.Size(64, 23);
             mtb_StudentId.TabIndex = 1;
+            mtb_StudentId.Leave += StudentId_Leave;
             // 
             // label8
             // 
@@ -504,10 +505,10 @@ namespace TECNM.Residencias.Forms.StudentForms
             label12.TabIndex = 0;
             label12.Text = "Horario";
             // 
-            // tb_StudentDepartment
+            // tb_StudentSection
             // 
             tb_StudentSection.Location = new System.Drawing.Point(6, 130);
-            tb_StudentSection.Name = "tb_StudentDepartment";
+            tb_StudentSection.Name = "tb_StudentSection";
             tb_StudentSection.Size = new System.Drawing.Size(420, 23);
             tb_StudentSection.TabIndex = 2;
             // 
