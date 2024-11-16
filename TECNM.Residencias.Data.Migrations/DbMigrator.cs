@@ -22,7 +22,7 @@ public sealed class DbMigrator : IDisposable
     /// <summary>
     /// The default page size for the SQLite database.
     /// </summary>
-    public static readonly long DefaultPageSize = 65536;
+    public static readonly long DefaultPageSize = 32768;
 
     /// <summary>
     /// The default SQLite journal mode for transactions.
