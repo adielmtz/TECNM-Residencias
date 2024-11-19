@@ -2,19 +2,28 @@ namespace TECNM.Residencias.Forms.AdvisorForms;
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows.Forms;
+using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Data.Entities.DTO;
 
 public sealed partial class AdvisorQuickSearchForm : Form
 {
+    private readonly long _filterCompany;
+
     public AdvisorQuickSearchForm()
     {
         InitializeComponent();
     }
 
+    public AdvisorQuickSearchForm(long filterCompany) : this()
+    {
+        _filterCompany = filterCompany;
+    }
+
     public AdvisorSearchResultDto? SelectedAdvisor { get; private set; }
 
-    public long? FilterCompany { get; set; }
+    public long FilterCompany => _filterCompany;
 
     private void RunSearch_Click(object sender, EventArgs e)
     {
@@ -67,7 +76,11 @@ public sealed partial class AdvisorQuickSearchForm : Form
 
     private void QuickAddAdvisor_Click(object sender, EventArgs e)
     {
-        using var dialog = new AdvisorEditForm();
+        using var context = new AppDbContext();
+        Company company = context.Companies.GetCompany(FilterCompany)!;
+        Trace.Assert(company is not null);
+
+        using var dialog = new AdvisorEditForm(company, null);
         dialog.ShowDialog();
 
         string name = dialog.Advisor.ToString();

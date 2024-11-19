@@ -180,8 +180,7 @@ public sealed partial class StudentEditForm : EditForm
     {
         while (true)
         {
-            using var dialog = new AdvisorQuickSearchForm();
-            dialog.FilterCompany = CompanyDbSet.MasterRecordRowid;
+            using var dialog = new AdvisorQuickSearchForm(CompanyDbSet.MasterRecordRowid);
             dialog.ShowDialog();
 
             AdvisorSearchResultDto? selected = dialog.SelectedAdvisor;
@@ -207,10 +206,10 @@ public sealed partial class StudentEditForm : EditForm
 
     private void ChoseExternalAdvisor_Click(object sender, EventArgs e)
     {
+        Debug.Assert(_company is not null, "Company must be set before allowing this method call!");
         while (true)
         {
-            using var dialog = new AdvisorQuickSearchForm();
-            dialog.FilterCompany = _company?.Id;
+            using var dialog = new AdvisorQuickSearchForm(_company!.Id);
             dialog.ShowDialog();
 
             AdvisorSearchResultDto? selected = dialog.SelectedAdvisor;
@@ -238,8 +237,7 @@ public sealed partial class StudentEditForm : EditForm
     {
         while (true)
         {
-            using var dialog = new AdvisorQuickSearchForm();
-            dialog.FilterCompany = CompanyDbSet.MasterRecordRowid;
+            using var dialog = new AdvisorQuickSearchForm(CompanyDbSet.MasterRecordRowid);
             dialog.ShowDialog();
 
             AdvisorSearchResultDto? selected = dialog.SelectedAdvisor;
