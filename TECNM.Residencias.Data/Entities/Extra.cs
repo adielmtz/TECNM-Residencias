@@ -11,12 +11,23 @@ public sealed class Extra
     public long Id { get; set; }
 
     /// <summary>
-    /// Gets or sets the unique rowid of the extra type.
+    /// Gets or sets the extra type.
     /// </summary>
-    public long TypeId { get; set; }
+    public ExtraType Type { get; set; }
 
     /// <summary>
     /// Gets or sets the value of the extra.
     /// </summary>
     public string Value { get; set; } = "";
+}
+
+/// <summary>
+/// Represents the type of soft skill.
+/// </summary>
+public enum ExtraType
+{
+    Database,
+    Editor,
+    Language,
+    Methodology,
 }

@@ -23,7 +23,7 @@ public sealed class StudentDbSet : DbSet<Student>
     public Student? GetStudent(long id)
     {
         using var command = CreateCommand("""
-        SELECT Id,                SpecialtyId, FirstName, LastName, Email,     Phone,             GenderId,
+        SELECT Id,                SpecialtyId, FirstName, LastName, Email,     Phone,             Gender,
                Semester,          StartDate,   EndDate,   Project,  CompanyId, InternalAdvisorId, ExternalAdvisorId,
                ReviewerAdvisorId, Section,     Schedule,  Notes,    Closed,    UpdatedOn,         CreatedOn
         FROM Student
@@ -79,7 +79,7 @@ public sealed class StudentDbSet : DbSet<Student>
     public override IEnumerable<Student> EnumerateAll()
     {
         using var command = CreateCommand("""
-        SELECT Id,                SpecialtyId, FirstName, LastName, Email,     Phone,             GenderId,
+        SELECT Id,                SpecialtyId, FirstName, LastName, Email,     Phone,             Gender,
                Semester,          StartDate,   EndDate,   Project,  CompanyId, InternalAdvisorId, ExternalAdvisorId,
                ReviewerAdvisorId, Section,     Schedule,  Notes,    Closed,    UpdatedOn,         CreatedOn
         FROM Student
@@ -104,7 +104,7 @@ public sealed class StudentDbSet : DbSet<Student>
     public IEnumerable<Student> EnumerateAll(int count, int page)
     {
         using var command = CreateCommand("""
-        SELECT Id,                SpecialtyId, FirstName, LastName, Email,     Phone,             GenderId,
+        SELECT Id,                SpecialtyId, FirstName, LastName, Email,     Phone,             Gender,
                Semester,          StartDate,   EndDate,   Project,  CompanyId, InternalAdvisorId, ExternalAdvisorId,
                ReviewerAdvisorId, Section,     Schedule,  Notes,    Closed,    UpdatedOn,         CreatedOn
         FROM Student
@@ -165,7 +165,7 @@ public sealed class StudentDbSet : DbSet<Student>
         }
 
         command.CommandText = $"""
-        SELECT Id,                SpecialtyId, FirstName, LastName, Email,     Phone,             GenderId,
+        SELECT Id,                SpecialtyId, FirstName, LastName, Email,     Phone,             Gender,
                Semester,          StartDate,   EndDate,   Project,  CompanyId, InternalAdvisorId, ExternalAdvisorId,
                ReviewerAdvisorId, Section,     Schedule,  Notes,    Closed,    UpdatedOn,         CreatedOn
         FROM Student
@@ -181,54 +181,12 @@ public sealed class StudentDbSet : DbSet<Student>
         }
     }
 
-    /// <summary>
-    /// Gets a gender entity by its unique rowid.
-    /// </summary>
-    /// <param name="id">The unique rowid of the gender entity.</param>
-    /// <returns>A <see cref="Gender"/> instance if a gender with the specified rowid exists; otherwise <see langword="null"/>.</returns>
-    public Gender? GetGender(long id)
-    {
-        using var command = CreateCommand("SELECT Id, Label FROM Gender WHERE Id = $id");
-        command.Parameters.Add("$id", SqliteType.Integer).Value = id;
-        using var reader = command.ExecuteReader();
-
-        if (reader.Read())
-        {
-            return new Gender
-            {
-                Id    = reader.GetInt64(0),
-                Label = reader.GetString(1),
-            };
-        }
-
-        return null;
-    }
-
-    /// <summary>
-    /// Retrieves and enumerates all entities of type <see cref="Gender"/> from the underlying database.
-    /// </summary>
-    /// <returns>An <see cref="IEnumerable{T}"/> enumerating all the entities.</returns>
-    public IEnumerable<Gender> EnumerateGenders()
-    {
-        using var command = CreateCommand("SELECT Id, Label FROM Gender ORDER BY Label");
-        using var reader = command.ExecuteReader();
-
-        while (reader.Read())
-        {
-            yield return new Gender
-            {
-                Id    = reader.GetInt64(0),
-                Label = reader.GetString(1),
-            };
-        }
-    }
-
     public override bool Contains(Student entity) => throw new NotImplementedException();
 
     public override bool Add(Student entity)
     {
         using var command = CreateCommand("""
-        INSERT INTO Student (Id,                SpecialtyId, FirstName, LastName, Email,     Phone,             GenderId,
+        INSERT INTO Student (Id,                SpecialtyId, FirstName, LastName, Email,     Phone,             Gender,
                              Semester,          StartDate,   EndDate,   Project,  CompanyId, InternalAdvisorId, ExternalAdvisorId,
                              ReviewerAdvisorId, Section,     Schedule,  Notes,    Closed,    UpdatedOn,         CreatedOn)
         VALUES ($p00, $p01, $p02, $p03, $p04, $p05, $p06, $p07, $p08, $p09, $p10, $p11, $p12, $p13, $p14, $p15, $p16, $p17, $p18, $p19, $p20)
@@ -240,7 +198,7 @@ public sealed class StudentDbSet : DbSet<Student>
         command.Parameters.Add("$p03", SqliteType.Text).Value    = entity.LastName;
         command.Parameters.Add("$p04", SqliteType.Text).Value    = entity.Email;
         command.Parameters.Add("$p05", SqliteType.Text).Value    = entity.Phone;
-        command.Parameters.Add("$p06", SqliteType.Integer).Value = entity.GenderId;
+        command.Parameters.Add("$p06", SqliteType.Text).Value    = entity.Gender.ToString();
         command.Parameters.Add("$p07", SqliteType.Text).Value    = entity.Semester;
         command.Parameters.Add("$p08", SqliteType.Text).Value    = entity.StartDate;
         command.Parameters.Add("$p09", SqliteType.Text).Value    = entity.EndDate;
@@ -267,7 +225,7 @@ public sealed class StudentDbSet : DbSet<Student>
             LastName          = $p02,
             Email             = $p03,
             Phone             = $p04,
-            GenderId          = $p05,
+            Gender            = $p05,
             Semester          = $p06,
             StartDate         = $p07,
             EndDate           = $p08,
@@ -289,7 +247,7 @@ public sealed class StudentDbSet : DbSet<Student>
         command.Parameters.Add("$p02", SqliteType.Text).Value    = entity.LastName;
         command.Parameters.Add("$p03", SqliteType.Text).Value    = entity.Email;
         command.Parameters.Add("$p04", SqliteType.Text).Value    = entity.Phone;
-        command.Parameters.Add("$p05", SqliteType.Integer).Value = entity.GenderId;
+        command.Parameters.Add("$p05", SqliteType.Text).Value    = entity.Gender.ToString();
         command.Parameters.Add("$p06", SqliteType.Text).Value    = entity.Semester;
         command.Parameters.Add("$p07", SqliteType.Text).Value    = entity.StartDate;
         command.Parameters.Add("$p08", SqliteType.Text).Value    = entity.EndDate;
@@ -331,7 +289,7 @@ public sealed class StudentDbSet : DbSet<Student>
             LastName          = reader.GetString(index++),
             Email             = reader.GetString(index++),
             Phone             = reader.GetString(index++),
-            GenderId          = reader.GetInt64(index++),
+            Gender            = reader.GetEnum<Gender>(index++),
             Semester          = reader.GetString(index++),
             StartDate         = reader.GetDateOnly(index++),
             EndDate           = reader.GetDateOnly(index++),

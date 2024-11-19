@@ -38,9 +38,9 @@ public sealed class Student
     public string Phone { get; set; } = "";
 
     /// <summary>
-    /// Gets or sets the unique rowid of the gender.
+    /// Gets or sets the student's gender.
     /// </summary>
-    public long GenderId { get; set; }
+    public Gender Gender { get; set; }
 
     /// <summary>
     /// Gets or sets the semester. Should be "ENE-JUN" or "AGO-DIC".
@@ -116,5 +116,16 @@ public sealed class Student
     /// Returns the first name and last name as string representation.
     /// </summary>
     /// <returns>The full name of the student.</returns>
-    public override string ToString() => $"[{Id}] {FirstName} {LastName}";
+    public override string ToString()
+        => $"[{Id}] {FirstName} {LastName}";
+}
+
+/// <summary>
+/// Represents a gender identity.
+/// </summary>
+public enum Gender
+{
+    Male,
+    Female,
+    NonBinary,
 }

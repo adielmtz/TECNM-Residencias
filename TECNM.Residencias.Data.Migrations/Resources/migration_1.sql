@@ -74,20 +74,10 @@ CREATE TABLE Specialty (
 )
 STRICT;
 
-CREATE TABLE CompanyType (
-    Id    INTEGER PRIMARY KEY AUTOINCREMENT
-                  NOT NULL,
-    Label TEXT    UNIQUE
-                  NOT NULL
-                  COLLATE NOCASE
-)
-STRICT;
-
 CREATE TABLE Company (
     Id         INTEGER PRIMARY KEY AUTOINCREMENT
                        NOT NULL,
-    TypeId     INTEGER REFERENCES CompanyType (Id) ON DELETE RESTRICT
-                       NOT NULL,
+    Type       TEXT    NOT NULL,
     Rfc        TEXT    UNIQUE
                        COLLATE NOCASE,
     Name       TEXT    NOT NULL
@@ -126,15 +116,6 @@ CREATE TABLE Advisor (
 )
 STRICT;
 
-CREATE TABLE Gender (
-    Id    INTEGER PRIMARY KEY AUTOINCREMENT
-                  NOT NULL,
-    Label TEXT    UNIQUE
-                  NOT NULL
-                  COLLATE NOCASE
-)
-STRICT;
-
 CREATE TABLE Student (
     Id                INTEGER PRIMARY KEY AUTOINCREMENT
                               NOT NULL,
@@ -148,8 +129,7 @@ CREATE TABLE Student (
                               NOT NULL
                               COLLATE NOCASE,
     Phone             TEXT    NOT NULL,
-    GenderId          INTEGER REFERENCES Gender (Id) ON DELETE RESTRICT
-                              NOT NULL,
+    Gender            TEXT    NOT NULL,
     Semester          TEXT    NOT NULL,
     StartDate         TEXT    NOT NULL,
     EndDate           TEXT    NOT NULL,
@@ -198,24 +178,14 @@ CREATE TABLE Document (
 )
 STRICT;
 
-CREATE TABLE ExtraType (
+CREATE TABLE Extra (
     Id    INTEGER PRIMARY KEY AUTOINCREMENT
                   NOT NULL,
-    Label TEXT    UNIQUE
-                  NOT NULL
-                  COLLATE NOCASE
-)
-STRICT;
-
-CREATE TABLE Extra (
-    Id     INTEGER PRIMARY KEY AUTOINCREMENT
-                   NOT NULL,
-    TypeId INTEGER REFERENCES ExtraType (Id) ON DELETE RESTRICT
-                   NOT NULL,
-    Value  TEXT    NOT NULL
-                   COLLATE NOCASE,
+    Type  TEXT    NOT NULL,
+    Value TEXT    NOT NULL
+                  COLLATE NOCASE,
     CONSTRAINT AK_Extra_Identity UNIQUE (
-        TypeId,
+        Type,
         Value
     )
 )

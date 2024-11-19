@@ -3,10 +3,6 @@ CREATE INDEX IX_Career_Lookup ON Career (
     Name
 );
 
-CREATE INDEX IX_Company_TypeId ON Company (
-    TypeId
-);
-
 CREATE INDEX IX_Company_CityId ON Company (
     CityId
 );
@@ -23,10 +19,6 @@ CREATE INDEX IX_Advisor_LookupByCompany ON Advisor (
 
 CREATE INDEX IX_Student_SpecialtyId ON Student (
     SpecialtyId
-);
-
-CREATE INDEX IX_Student_GenderId ON Student (
-    GenderId
 );
 
 CREATE INDEX IX_Student_CompanyId ON Student (

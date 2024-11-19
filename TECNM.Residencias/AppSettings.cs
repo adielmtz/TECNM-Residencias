@@ -41,10 +41,10 @@ internal sealed class AppSettings
         _settings = settings;
     }
 
-    public long DefaultCompanyType
+    public CompanyType DefaultCompanyType
     {
-        get => int.Parse(GetSetting(nameof(DefaultCompanyType), -1).Value);
-        set => SetSetting(nameof(DefaultCompanyType), value);
+        get => Enum.Parse<CompanyType>(GetSetting(nameof(DefaultCompanyType), -1).Value);
+        set => SetSetting(nameof(DefaultCompanyType), value.ToString());
     }
 
     public long DefaultStudentCareer

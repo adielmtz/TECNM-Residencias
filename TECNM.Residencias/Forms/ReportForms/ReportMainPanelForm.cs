@@ -12,7 +12,6 @@ using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Data.Entities.DTO;
 
-
 public sealed partial class ReportMainPanelForm : Form
 {
     public ReportMainPanelForm()
@@ -148,7 +147,7 @@ public sealed partial class ReportMainPanelForm : Form
                 LastName        = student.LastName,
                 Email           = student.Email,
                 Phone           = student.Phone,
-                Gender          = context.Students.GetGender(student.GenderId)!,
+                Gender          = student.Gender,
                 Semester        = student.Semester,
                 StartDate       = student.StartDate,
                 EndDate         = student.EndDate,
@@ -189,10 +188,10 @@ public sealed partial class ReportMainPanelForm : Form
             writer.Write("\"{0}\",", student.Company.Name.Replace("\"", "\"\""));
             writer.Write("\"{0}\",", student.Company.Name.Replace("\"", "\"\""));
             writer.Write("\"{0}\",", student.Project.Replace("\"", "\"\""));
-            writer.Write("\"{0}\",", string.Join(", ", student.Extras.Where(it => it.TypeId == 1).Select(it => it.Value)));
-            writer.Write("\"{0}\",", string.Join(", ", student.Extras.Where(it => it.TypeId == 2).Select(it => it.Value)));
-            writer.Write("\"{0}\",", string.Join(", ", student.Extras.Where(it => it.TypeId == 3).Select(it => it.Value)));
-            writer.Write("\"{0}\",", string.Join(", ", student.Extras.Where(it => it.TypeId == 4).Select(it => it.Value)));
+            writer.Write("\"{0}\",", string.Join(", ", student.Extras.Where(it => it.Type == (ExtraType) 1).Select(it => it.Value)));
+            writer.Write("\"{0}\",", string.Join(", ", student.Extras.Where(it => it.Type == (ExtraType) 2).Select(it => it.Value)));
+            writer.Write("\"{0}\",", string.Join(", ", student.Extras.Where(it => it.Type == (ExtraType) 3).Select(it => it.Value)));
+            writer.Write("\"{0}\",", string.Join(", ", student.Extras.Where(it => it.Type == (ExtraType) 4).Select(it => it.Value)));
             writer.WriteLine();
         }
     }
@@ -340,36 +339,36 @@ public sealed partial class ReportMainPanelForm : Form
         var stats = new Statistics();
         foreach (var s in students)
         {
-            switch (s.Gender.Id)
+            switch (s.Gender)
             {
-                case 1:
+                case Gender.Female:
                     stats.GenderFemaleCount++;
                     break;
-                case 2:
+                case Gender.Male:
                     stats.GenderMaleCount++;
                     break;
-                case 3:
+                case Gender.NonBinary:
                     stats.GenderOtherCount++;
                     break;
                 default:
                     throw new UnreachableException();
             }
         
-            switch (s.Company.TypeId)
+            switch (s.Company.Type)
             {
-                case 1:
+                case CompanyType.Public:
                     stats.CompanyTypePublicCount++;
                     break;
-                case 2:
+                case CompanyType.Private:
                     stats.CompanyTypePrivateCount++;
                     break;
-                case 3:
+                case CompanyType.Industrial:
                     stats.CompanyTypeIndustrialCount++;
                     break;
-                case 4:
+                case CompanyType.Services:
                     stats.CompanyTypeServicesCount++;
                     break;
-                case 5:
+                case CompanyType.Other:
                     stats.CompanyTypeOtherCount++;
                     break;
                 default:
@@ -501,7 +500,7 @@ public sealed partial class ReportMainPanelForm : Form
 
     private void PlotBarChartCountImage(Statistics stats, string directory, long type, string title)
     {
-        IEnumerable<KeyValuePair<Extra, int>> items = stats.ExtraStats.Where(it => it.Key.TypeId == type);
+        IEnumerable<KeyValuePair<Extra, int>> items = stats.ExtraStats.Where(it => it.Key.Type == (ExtraType) type);
         List<Tick> ticks = [];
         var plot = new Plot();
         double pos = 1.0;

@@ -337,7 +337,6 @@ namespace TECNM.Residencias.Forms.CompanyForms
             Name = "CompanyEditForm";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "Editar información";
-            Load += CompanyEditForm_Load;
             ResumeLayout(false);
             PerformLayout();
         }

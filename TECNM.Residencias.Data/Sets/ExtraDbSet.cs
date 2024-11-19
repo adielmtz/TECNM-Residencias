@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using TECNM.Residencias.Data;
 using TECNM.Residencias.Data.Entities;
+using TECNM.Residencias.Data.Extensions;
 
 public sealed class ExtraDbSet : DbSet<Extra>
 {
@@ -39,7 +40,7 @@ public sealed class ExtraDbSet : DbSet<Extra>
 
     public override IEnumerable<Extra> EnumerateAll()
     {
-        using var command = CreateCommand("SELECT Id, TypeId, Value FROM Extra ORDER BY Id");
+        using var command = CreateCommand("SELECT Id, Type, Value FROM Extra ORDER BY Id");
         using var reader = command.ExecuteReader();
 
         while (reader.Read())
@@ -56,7 +57,7 @@ public sealed class ExtraDbSet : DbSet<Extra>
     public IEnumerable<Extra> EnumerateAll(Student student)
     {
         using var command = CreateCommand("""
-        SELECT Id, TypeId, Value
+        SELECT Id, Type, Value
         FROM Extra
         INNER JOIN StudentExtras
         ON Id = ExtraId
@@ -69,25 +70,6 @@ public sealed class ExtraDbSet : DbSet<Extra>
         while (reader.Read())
         {
             yield return HydrateObject(reader);
-        }
-    }
-
-    /// <summary>
-    /// Retrieves and enumerates all entities of type <see cref="ExtraType"/> from the underlying database.
-    /// </summary>
-    /// <returns>An <see cref="IEnumerable{T}"/> enumerating all the entities.</returns>
-    public IEnumerable<ExtraType> EnumerateExtraTypes()
-    {
-        using var command = CreateCommand("SELECT Id, Label FROM ExtraType ORDER BY Label");
-        using var reader = command.ExecuteReader();
-
-        while (reader.Read())
-        {
-            yield return new ExtraType
-            {
-                Id    = reader.GetInt64(0),
-                Label = reader.GetString(1),
-            };
         }
     }
 
@@ -107,9 +89,9 @@ public sealed class ExtraDbSet : DbSet<Extra>
         int index = 0;
         return new Extra
         {
-            Id     = reader.GetInt64(index++),
-            TypeId = reader.GetInt64(index++),
-            Value  = reader.GetString(index++),
+            Id    = reader.GetInt64(index++),
+            Type  = reader.GetEnum<ExtraType>(index++),
+            Value = reader.GetString(index++),
         };
     }
 }

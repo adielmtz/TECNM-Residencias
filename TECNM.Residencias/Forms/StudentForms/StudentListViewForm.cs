@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Data.Entities.DTO;
+using TECNM.Residencias.Data.Extensions;
 using TECNM.Residencias.Extensions;
 
 public sealed partial class StudentListViewForm : Form
@@ -20,8 +21,9 @@ public sealed partial class StudentListViewForm : Form
         dgv_ListView.DoubleBuffered(true);
     }
 
-    private void StudentListViewForm_Load(object sender, EventArgs e)
+    protected override void OnLoad(EventArgs e)
     {
+        base.OnLoad(e);
         RefreshList();
     }
 
@@ -137,7 +139,6 @@ public sealed partial class StudentListViewForm : Form
             int index = dgv_ListView.Rows.Add();
             DataGridViewRow row = dgv_ListView.Rows[index];
 
-            Gender gender = context.Students.GetGender(student.GenderId)!;
             Specialty specialty = context.Specialties.GetSpecialty(student.SpecialtyId)!;
             Advisor? internAdvisor = context.Advisors.GetAdvisor(student.InternalAdvisorId ?? 0);
             Advisor? externAdvisor = context.Advisors.GetAdvisor(student.ExternalAdvisorId ?? 0);
@@ -147,7 +148,7 @@ public sealed partial class StudentListViewForm : Form
             row.Tag = student;
             row.Cells[0].Value = student.Id;
             row.Cells[1].Value = $"{student.FirstName} {student.LastName}";
-            row.Cells[2].Value = gender;
+            row.Cells[2].Value = student.Gender.GetLocalizedName();
             row.Cells[3].Value = student.Email;
             row.Cells[4].Value = specialty.Name;
             row.Cells[5].Value = student.Semester;

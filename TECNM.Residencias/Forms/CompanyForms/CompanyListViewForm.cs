@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Data.Entities.DTO;
+using TECNM.Residencias.Data.Extensions;
 using TECNM.Residencias.Extensions;
 using TECNM.Residencias.Forms.AdvisorForms;
 
@@ -138,12 +139,11 @@ public sealed partial class CompanyListViewForm : Form
             City city = context.Cities.GetCity(company.CityId)!;
             State state = context.States.GetState(city.StateId)!;
             Country country = context.Countries.GetCountry(state.CountryId)!;
-            CompanyType type = context.Companies.GetCompanyType(company.TypeId)!;
 
             row.Tag = company;
             row.Cells[0].Value = company.Name;
             row.Cells[1].Value = company.Rfc;
-            row.Cells[2].Value = type.ToString();
+            row.Cells[2].Value = company.Type.GetLocalizedName();
             row.Cells[3].Value = company.Email;
             row.Cells[4].Value = company.Phone;
             row.Cells[5].Value = company.Extension;

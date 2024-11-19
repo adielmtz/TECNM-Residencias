@@ -28,7 +28,7 @@ public sealed class CompanyDbSet : DbSet<Company>
     public Company? GetCompany(long id)
     {
         using var command = CreateCommand("""
-        SELECT Id, TypeId, Rfc, Name, Email, Phone, Extension, Address, Locality, PostalCode, CityId, Enabled, UpdatedOn, CreatedOn
+        SELECT Id, Type, Rfc, Name, Email, Phone, Extension, Address, Locality, PostalCode, CityId, Enabled, UpdatedOn, CreatedOn
         FROM Company
         WHERE Id = $id
         """);
@@ -93,7 +93,7 @@ public sealed class CompanyDbSet : DbSet<Company>
     public override IEnumerable<Company> EnumerateAll()
     {
         using var command = CreateCommand("""
-        SELECT Id, TypeId, Rfc, Name, Email, Phone, Extension, Address, Locality, PostalCode, CityId, Enabled, UpdatedOn, CreatedOn
+        SELECT Id, Type, Rfc, Name, Email, Phone, Extension, Address, Locality, PostalCode, CityId, Enabled, UpdatedOn, CreatedOn
         FROM Company
         ORDER BY Name
         """);
@@ -116,7 +116,7 @@ public sealed class CompanyDbSet : DbSet<Company>
     public IEnumerable<Company> EnumerateAll(int count, int page)
     {
         using var command = CreateCommand("""
-        SELECT Id, TypeId, Rfc, Name, Email, Phone, Extension, Address, Locality, PostalCode, CityId, Enabled, UpdatedOn, CreatedOn
+        SELECT Id, Type, Rfc, Name, Email, Phone, Extension, Address, Locality, PostalCode, CityId, Enabled, UpdatedOn, CreatedOn
         FROM Company
         ORDER BY Name
         LIMIT $page, $count
@@ -132,59 +132,17 @@ public sealed class CompanyDbSet : DbSet<Company>
         }
     }
 
-    /// <summary>
-    /// Gets a company type entity by its unique rowid.
-    /// </summary>
-    /// <param name="id">The unique rowid of the company type entity.</param>
-    /// <returns>A <see cref="CompanyType"/> instance if a company type with the specified rowid exists; otherwise <see langword="null"/>.</returns>
-    public CompanyType? GetCompanyType(long id)
-    {
-        using var command = CreateCommand("SELECT Id, Label FROM CompanyType WHERE Id = $id");
-        command.Parameters.Add("$id", SqliteType.Integer).Value = id;
-        using var reader = command.ExecuteReader();
-
-        if (reader.Read())
-        {
-            return new CompanyType
-            {
-                Id    = reader.GetInt64(0),
-                Label = reader.GetString(1),
-            };
-        }
-
-        return null;
-    }
-
-    /// <summary>
-    /// Retrieves and enumerates all entities of type <see cref="CompanyType"/> from the underlying database.
-    /// </summary>
-    /// <returns>An <see cref="IEnumerable{T}"/> enumerating all the entities.</returns>
-    public IEnumerable<CompanyType> EnumerateCompanyTypes()
-    {
-        using var command = CreateCommand("SELECT Id, Label FROM CompanyType ORDER BY Id");
-        using var reader = command.ExecuteReader();
-
-        while (reader.Read())
-        {
-            yield return new CompanyType
-            {
-                Id    = reader.GetInt64(0),
-                Label = reader.GetString(1),
-            };
-        }
-    }
-
     public override bool Contains(Company entity) => throw new NotImplementedException();
 
     public override bool Add(Company entity)
     {
         using var command = CreateCommand("""
-        INSERT INTO Company (TypeId, Rfc, Name, Email, Phone, Extension, Address, Locality, PostalCode, CityId, Enabled, UpdatedOn, CreatedOn)
+        INSERT INTO Company (Type, Rfc, Name, Email, Phone, Extension, Address, Locality, PostalCode, CityId, Enabled, UpdatedOn, CreatedOn)
         VALUES ($p00, $p01, $p02, $p03, $p04, $p05, $p06, $p07, $p08, $p09, $p10, $p11, $p12)
         RETURNING Id
         """);
 
-        command.Parameters.Add("$p00", SqliteType.Integer).Value = entity.TypeId;
+        command.Parameters.Add("$p00", SqliteType.Text).Value    = entity.Type.ToString();
         command.Parameters.Add("$p01", SqliteType.Text).SetValue(entity.Rfc);
         command.Parameters.Add("$p02", SqliteType.Text).Value    = entity.Name;
         command.Parameters.Add("$p03", SqliteType.Text).Value    = entity.Email;
@@ -212,7 +170,7 @@ public sealed class CompanyDbSet : DbSet<Company>
     {
         using var command = CreateCommand("""
         UPDATE Company
-        SET TypeId     = $p00,
+        SET Type       = $p00,
             Rfc        = $p01,
             Name       = $p02,
             Email      = $p03,
@@ -227,7 +185,7 @@ public sealed class CompanyDbSet : DbSet<Company>
         WHERE Id = $pid
         """);
 
-        command.Parameters.Add("$p00", SqliteType.Integer).Value = entity.TypeId;
+        command.Parameters.Add("$p00", SqliteType.Text).Value    = entity.Type.ToString();
         command.Parameters.Add("$p01", SqliteType.Text).SetValue(entity.Rfc);
         command.Parameters.Add("$p02", SqliteType.Text).Value    = entity.Name;
         command.Parameters.Add("$p03", SqliteType.Text).Value    = entity.Email;
@@ -257,7 +215,7 @@ public sealed class CompanyDbSet : DbSet<Company>
         return new Company
         {
             Id         = reader.GetInt64(index++),
-            TypeId     = reader.GetInt64(index++),
+            Type       = reader.GetEnum<CompanyType>(index++),
             Rfc        = reader.GetOptionalString(index++),
             Name       = reader.GetString(index++),
             Email      = reader.GetString(index++),

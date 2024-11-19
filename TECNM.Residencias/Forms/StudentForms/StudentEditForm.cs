@@ -7,9 +7,11 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Data.Entities.DTO;
+using TECNM.Residencias.Data.Extensions;
 using TECNM.Residencias.Data.Sets;
 using TECNM.Residencias.Data.Validators;
 using TECNM.Residencias.Forms.AdvisorForms;
@@ -66,19 +68,24 @@ public sealed partial class StudentEditForm : EditForm
         }
     }
 
-    private void StudentEditForm_Load(object sender, EventArgs e)
+    protected override void OnLoad(EventArgs e)
     {
-        using var context = new AppDbContext();
+        base.OnLoad(e);
 
-        foreach (Gender gender in context.Students.EnumerateGenders())
+        Gender[] genders = Enum.GetValues<Gender>().OrderBy(it => (int) it).ToArray();
+        cb_StudentGender.Items.Add("Seleccionar");
+        cb_StudentGender.SelectedIndex = 0;
+
+        foreach (Gender gender in genders)
         {
-            int index = cb_StudentGender.Items.Add(gender);
-            if (gender.Id == _student.GenderId)
+            int index = cb_StudentGender.Items.Add(gender.GetLocalizedName());
+            if (!_isNewRecord && _student.Gender == gender)
             {
                 cb_StudentGender.SelectedIndex = index;
             }
         }
 
+        using var context = new AppDbContext();
         Career? prefetchCareer = null;
         foreach (Career career in context.Careers.EnumerateAll(enabled: true))
         {
@@ -396,7 +403,7 @@ public sealed partial class StudentEditForm : EditForm
             _student.LastName = tb_StudentLastName.Text.Trim();
             _student.Email = tb_StudentEmail.Text.Trim();
             _student.Phone = mtb_StudentPhone.Text.Trim();
-            _student.GenderId = ((Gender?) cb_StudentGender.SelectedItem)?.Id ?? 0;
+            _student.Gender = (Gender) cb_StudentGender.SelectedIndex - 1;
             _student.Semester = semester ?? "";
             _student.StartDate = DateOnly.FromDateTime(dtp_StudentStartDate.Value);
             _student.EndDate = DateOnly.FromDateTime(dtp_StudentEndDate.Value);

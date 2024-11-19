@@ -13,9 +13,9 @@ public sealed class Company
     public long Id { get; set; }
 
     /// <summary>
-    /// Gets or sets the unique rowid for the company type to which the company belongs.
+    /// Gets or sets company type.
     /// </summary>
-    public long TypeId { get; set; }
+    public CompanyType Type { get; set; }
 
     /// <summary>
     /// Gets or sets the company RFC.
@@ -82,5 +82,18 @@ public sealed class Company
     /// Returns the company name as string representation.
     /// </summary>
     /// <returns>The name of the company.</returns>
-    public override string ToString() => Name;
+    public override string ToString()
+        => Name;
+}
+
+/// <summary>
+/// Represents different types of companies.
+/// </summary>
+public enum CompanyType
+{
+    Public,
+    Private,
+    Industrial,
+    Services,
+    Other,
 }

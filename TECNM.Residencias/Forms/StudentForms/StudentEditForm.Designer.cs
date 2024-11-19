@@ -667,7 +667,6 @@ namespace TECNM.Residencias.Forms.StudentForms
             Name = "StudentEditForm";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "Editar información";
-            Load += StudentEditForm_Load;
             gb_GeneralInfo.ResumeLayout(false);
             gb_GeneralInfo.PerformLayout();
             gb_ProjectInfo.ResumeLayout(false);

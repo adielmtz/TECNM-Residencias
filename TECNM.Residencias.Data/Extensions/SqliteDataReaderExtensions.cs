@@ -36,4 +36,14 @@ public static class SqliteDataReaderExtensions
     /// <returns>The value of the column as <see cref="DateOnly"/>.</returns>
     public static DateOnly GetDateOnly(this SqliteDataReader reader, int ordinal)
         => DateOnly.Parse(reader.GetString(ordinal), CultureInfo.InvariantCulture);
+
+    /// <summary>
+    /// Gets the value of the specified column as an enum of type <typeparamref name="TEnum"/>.
+    /// </summary>
+    /// <typeparam name="TEnum">The type of enum to return.</typeparam>
+    /// <param name="reader">The <see cref="SqliteDataReader"/> instance.</param>
+    /// <param name="ordinal">The zero-based column ordinal.</param>
+    /// <returns>The value of the column as an <typeparamref name="TEnum"/> value.</returns>
+    public static TEnum GetEnum<TEnum>(this SqliteDataReader reader, int ordinal) where TEnum : struct
+        => Enum.Parse<TEnum>(reader.GetString(ordinal));
 }

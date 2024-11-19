@@ -6,8 +6,10 @@ using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
+using TECNM.Residencias.Data.Extensions;
 using TECNM.Residencias.Data.Validators;
 
 public sealed partial class CompanyEditForm : EditForm
@@ -39,29 +41,38 @@ public sealed partial class CompanyEditForm : EditForm
 
     public Company Company => _company;
 
-    private void CompanyEditForm_Load(object sender, EventArgs e)
+    protected override void OnLoad(EventArgs e)
     {
-        using var context = new AppDbContext();
+        base.OnLoad(e);
+
+        CompanyType[] companyTypes = Enum.GetValues<CompanyType>().OrderBy(it => (int) it).ToArray();
         bool companySelected = false;
-        foreach (CompanyType type in context.Companies.EnumerateCompanyTypes())
+
+        cb_CompanyType.Items.Add("Seleccionar");
+        cb_CompanyType.SelectedIndex = 0;
+
+        foreach (CompanyType type in companyTypes)
         {
-            int index = cb_CompanyType.Items.Add(type);
+            int index = cb_CompanyType.Items.Add(type.GetLocalizedName());
             if (!companySelected)
             {
-                if (_company.TypeId == type.Id)
+                if (_company.Id > 0 && _company.Type == type)
                 {
                     cb_CompanyType.SelectedIndex = index;
                     companySelected = true;
+                    continue;
                 }
 
-                if (AppSettings.Default.DefaultCompanyType == type.Id)
+                if (AppSettings.Default.DefaultCompanyType == type)
                 {
                     cb_CompanyType.SelectedIndex = index;
                 }
             }
         }
 
+        using var context = new AppDbContext();
         IEnumerable<Country> countries = context.Countries.EnumerateAll();
+
         foreach (Country country in countries)
         {
             cb_CompanyCountry.Items.Add(country);
@@ -163,7 +174,7 @@ public sealed partial class CompanyEditForm : EditForm
 
     private void Save()
     {
-        _company.TypeId = ((CompanyType) cb_CompanyType.SelectedItem!).Id;
+        _company.Type = (CompanyType) cb_CompanyType.SelectedIndex - 1;
         _company.Rfc = tb_CompanyRfc.Text.Trim().ToUpper();
         _company.Name = tb_CompanyName.Text.Trim();
         _company.Email = tb_CompanyEmail.Text.Trim();

@@ -333,7 +333,6 @@ namespace TECNM.Residencias.Forms.StudentForms
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "StudentListViewForm";
             WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            Load += StudentListViewForm_Load;
             ((System.ComponentModel.ISupportInitialize) dgv_ListView).EndInit();
             ResumeLayout(false);
             PerformLayout();

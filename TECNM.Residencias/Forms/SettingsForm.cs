@@ -3,6 +3,7 @@ namespace TECNM.Residencias.Forms;
 using Microsoft.Data.Sqlite;
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Data.Extensions;
@@ -64,7 +65,7 @@ public sealed partial class SettingsForm : Form
 
     private void SaveAppSettings_Click(object sender, EventArgs e)
     {
-        AppSettings.Default.DefaultCompanyType = ((CompanyType) cb_CompanyType.SelectedItem!).Id;
+        AppSettings.Default.DefaultCompanyType = (CompanyType) cb_CompanyType.SelectedIndex - 1;
         AppSettings.Default.DefaultStudentCareer = ((Career) cb_StudentCareer.SelectedItem!).Id;
         AppSettings.Default.Save();
         Close();
@@ -72,16 +73,15 @@ public sealed partial class SettingsForm : Form
 
     private void LoadComboBoxItems()
     {
-        using var context = new AppDbContext();
-
         cb_CompanyType.Items.Clear();
-        cb_CompanyType.Items.Add(new CompanyType { Id = 0, Label = "Ninguno" });
+        cb_CompanyType.Items.Add("Ninguno");
         cb_CompanyType.SelectedIndex = 0;
 
-        foreach (CompanyType type in context.Companies.EnumerateCompanyTypes())
+        CompanyType[] companyTypes = Enum.GetValues<CompanyType>().OrderBy(it => (int) it).ToArray();
+        foreach (CompanyType type in companyTypes)
         {
-            int index = cb_CompanyType.Items.Add(type);
-            if (AppSettings.Default.DefaultCompanyType == type.Id)
+            int index = cb_CompanyType.Items.Add(type.GetLocalizedName());
+            if (AppSettings.Default.DefaultCompanyType == type)
             {
                 cb_CompanyType.SelectedIndex = index;
             }
@@ -91,6 +91,7 @@ public sealed partial class SettingsForm : Form
         cb_StudentCareer.Items.Add(new Career { Id = 0, Name = "Ninguno" });
         cb_StudentCareer.SelectedIndex = 0;
 
+        using var context = new AppDbContext();
         foreach (Career career in context.Careers.EnumerateAll(enabled: true))
         {
             int index = cb_StudentCareer.Items.Add(career);

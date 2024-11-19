@@ -16,8 +16,8 @@ public sealed class CompanyValidator : AbstractValidator<Company>
             .When(it => it.Rfc is not null)
             .WithMessage("Introduzca un RFC válido.");
 
-        RuleFor(it => it.TypeId)
-            .GreaterThan(0)
+        RuleFor(it => it.Type)
+            .IsInEnum()
             .WithMessage("Seleccione el tipo de empresa.");
 
         RuleFor(it => it.Name)

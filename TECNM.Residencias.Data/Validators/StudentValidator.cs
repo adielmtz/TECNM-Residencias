@@ -35,8 +35,8 @@ public sealed class StudentValidator : AbstractValidator<Student>
             .When(it => it.Phone.Length > 0)
             .WithMessage("Introduzca un número de teléfono válido.");
 
-        RuleFor(it => it.GenderId)
-            .GreaterThan(0)
+        RuleFor(it => it.Gender)
+            .IsInEnum()
             .WithMessage("Seleccione el género del residente.");
 
         RuleFor(it => it.Project)
