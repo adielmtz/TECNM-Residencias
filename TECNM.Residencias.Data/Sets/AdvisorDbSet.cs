@@ -89,7 +89,7 @@ public sealed class AdvisorDbSet : DbSet<Advisor>
         using var command = CreateCommand("""
         SELECT Id, CompanyId, FirstName, LastName, Section, Role, Email, Phone, Extension, Enabled, UpdatedOn, CreatedOn
         FROM Advisor
-        ORDER BY CompanyId, FirstName, LastName
+        ORDER BY CompanyId, LastName, FirstName
         """);
 
         using var reader = command.ExecuteReader();
@@ -110,7 +110,7 @@ public sealed class AdvisorDbSet : DbSet<Advisor>
         SELECT Id, CompanyId, FirstName, LastName, Section, Role, Email, Phone, Extension, Enabled, UpdatedOn, CreatedOn
         FROM Advisor
         WHERE CompanyId = $cid
-        ORDER BY FirstName, LastName
+        ORDER BY LastName, FirstName
         """);
 
         command.Parameters.Add("$cid", SqliteType.Integer).Value = company.Id;

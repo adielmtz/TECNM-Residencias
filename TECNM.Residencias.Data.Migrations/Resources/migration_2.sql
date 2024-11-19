@@ -13,8 +13,8 @@ CREATE INDEX IX_Company_SortName ON Company (
 
 CREATE INDEX IX_Advisor_LookupByCompany ON Advisor (
     CompanyId,
-    FirstName,
-    LastName
+    LastName,
+    FirstName
 );
 
 CREATE INDEX IX_Student_SpecialtyId ON Student (
