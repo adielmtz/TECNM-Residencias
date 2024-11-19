@@ -162,7 +162,7 @@ public sealed partial class ReportMainPanelForm : Form
                 Closed          = student.Closed,
                 UpdatedOn       = student.UpdatedOn,
                 CreatedOn       = student.CreatedOn,
-                Extras          = context.Extras.EnumerateAll(student).ToList(),
+                Extras          = context.Skills.EnumerateAll(student).ToList(),
             };
 
             result.Add(dto);
@@ -188,10 +188,10 @@ public sealed partial class ReportMainPanelForm : Form
             writer.Write("\"{0}\",", student.Company.Name.Replace("\"", "\"\""));
             writer.Write("\"{0}\",", student.Company.Name.Replace("\"", "\"\""));
             writer.Write("\"{0}\",", student.Project.Replace("\"", "\"\""));
-            writer.Write("\"{0}\",", string.Join(", ", student.Extras.Where(it => it.Type == (ExtraType) 1).Select(it => it.Value)));
-            writer.Write("\"{0}\",", string.Join(", ", student.Extras.Where(it => it.Type == (ExtraType) 2).Select(it => it.Value)));
-            writer.Write("\"{0}\",", string.Join(", ", student.Extras.Where(it => it.Type == (ExtraType) 3).Select(it => it.Value)));
-            writer.Write("\"{0}\",", string.Join(", ", student.Extras.Where(it => it.Type == (ExtraType) 4).Select(it => it.Value)));
+            writer.Write("\"{0}\",", string.Join(", ", student.Extras.Where(it => it.Type == (SkillType) 1).Select(it => it.Value)));
+            writer.Write("\"{0}\",", string.Join(", ", student.Extras.Where(it => it.Type == (SkillType) 2).Select(it => it.Value)));
+            writer.Write("\"{0}\",", string.Join(", ", student.Extras.Where(it => it.Type == (SkillType) 3).Select(it => it.Value)));
+            writer.Write("\"{0}\",", string.Join(", ", student.Extras.Where(it => it.Type == (SkillType) 4).Select(it => it.Value)));
             writer.WriteLine();
         }
     }
@@ -375,7 +375,7 @@ public sealed partial class ReportMainPanelForm : Form
                     throw new UnreachableException();
             }
         
-            foreach (Extra extra in s.Extras)
+            foreach (Skill extra in s.Extras)
             {
                 if (!stats.ExtraStats.ContainsKey(extra))
                 {
@@ -500,12 +500,12 @@ public sealed partial class ReportMainPanelForm : Form
 
     private void PlotBarChartCountImage(Statistics stats, string directory, long type, string title)
     {
-        IEnumerable<KeyValuePair<Extra, int>> items = stats.ExtraStats.Where(it => it.Key.Type == (ExtraType) type);
+        IEnumerable<KeyValuePair<Skill, int>> items = stats.ExtraStats.Where(it => it.Key.Type == (SkillType) type);
         List<Tick> ticks = [];
         var plot = new Plot();
         double pos = 1.0;
 
-        foreach (KeyValuePair<Extra, int> kvp in items)
+        foreach (KeyValuePair<Skill, int> kvp in items)
         {
             string label = kvp.Key.Value;
             double value = kvp.Value;
@@ -586,7 +586,7 @@ public sealed partial class ReportMainPanelForm : Form
         public double CompanyTypeOtherPercentage => (CompanyTypeOtherCount / (double) TotalCompanyTypeCount) * 100.0;
 
         public Dictionary<long, SpecialtyStatistics> SpecialtyStats = [];
-        public Dictionary<Extra, int> ExtraStats = [];
+        public Dictionary<Skill, int> ExtraStats = [];
     }
 
     internal sealed class SpecialtyStatistics

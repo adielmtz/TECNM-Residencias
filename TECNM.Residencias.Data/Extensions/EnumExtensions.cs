@@ -25,17 +25,17 @@ public static class EnumExtensions
     };
 
     /// <summary>
-    /// Gets the localized name in spanish for a given <see cref="ExtraType"/>.
+    /// Gets the localized name in spanish for a given <see cref="SkillType"/>.
     /// </summary>
-    /// <param name="type">The <see cref="ExtraType"/> value.</param>
+    /// <param name="type">The <see cref="SkillType"/> value.</param>
     /// <returns>The localized name as string.</returns>
-    /// <exception cref="UnreachableException">Thrown when an unsupported or unknown <see cref="ExtraType"/> is provided.</exception>
-    public static string GetLocalizedName(this ExtraType type) => type switch
+    /// <exception cref="UnreachableException">Thrown when an unsupported or unknown <see cref="SkillType"/> is provided.</exception>
+    public static string GetLocalizedName(this SkillType type) => type switch
     {
-        ExtraType.Database => "Base de datos",
-        ExtraType.Editor => "Entorno de desarrollo o editor",
-        ExtraType.Language => "Lenguaje de programación",
-        ExtraType.Methodology => "Metodología de desarrollo",
+        SkillType.Database => "Base de datos",
+        SkillType.Editor => "Entorno de desarrollo o editor",
+        SkillType.Language => "Lenguaje de programación",
+        SkillType.Methodology => "Metodología de desarrollo",
         _ => throw new UnreachableException(),
     };
 

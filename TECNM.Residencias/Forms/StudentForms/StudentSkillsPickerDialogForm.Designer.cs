@@ -1,6 +1,6 @@
 namespace TECNM.Residencias.Forms.StudentForms
 {
-    partial class StudentExtrasPickerDialogForm
+    partial class StudentSkillsPickerDialogForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@ namespace TECNM.Residencias.Forms.StudentForms
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StudentExtrasPickerDialogForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StudentSkillsPickerDialogForm));
             groupBox1 = new System.Windows.Forms.GroupBox();
             flp_Languages = new System.Windows.Forms.FlowLayoutPanel();
             groupBox2 = new System.Windows.Forms.GroupBox();
@@ -161,7 +161,6 @@ namespace TECNM.Residencias.Forms.StudentForms
             Name = "StudentExtrasPickerDialogForm";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "StudentExtrasPickerDialogForm";
-            Load += StudentExtrasPickerDialogForm_Load;
             groupBox1.ResumeLayout(false);
             groupBox2.ResumeLayout(false);
             groupBox3.ResumeLayout(false);

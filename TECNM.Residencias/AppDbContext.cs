@@ -40,7 +40,7 @@ internal sealed class AppDbContext : DbContext
     private DocumentDbSet? _documents;
     public DocumentDbSet Documents => _documents ??= new DocumentDbSet(this);
 
-    private ExtraDbSet? _extras;
-    public ExtraDbSet Extras => _extras ??= new ExtraDbSet(this);
+    private SkillDbSet? _skills;
+    public SkillDbSet Skills => _skills ??= new SkillDbSet(this);
     #endregion
 }

@@ -1,9 +1,9 @@
 namespace TECNM.Residencias.Data.Entities;
 
 /// <summary>
-/// Represents an extra entity in the database.
+/// Represents an skill entity in the database.
 /// </summary>
-public sealed class Extra
+public sealed class Skill
 {
     /// <summary>
     /// Gets or sets the unique rowid of the entity.
@@ -11,12 +11,12 @@ public sealed class Extra
     public long Id { get; set; }
 
     /// <summary>
-    /// Gets or sets the extra type.
+    /// Gets or sets the skill type.
     /// </summary>
-    public ExtraType Type { get; set; }
+    public SkillType Type { get; set; }
 
     /// <summary>
-    /// Gets or sets the value of the extra.
+    /// Gets or sets the value of the skill.
     /// </summary>
     public string Value { get; set; } = "";
 }
@@ -24,7 +24,7 @@ public sealed class Extra
 /// <summary>
 /// Represents the type of soft skill.
 /// </summary>
-public enum ExtraType
+public enum SkillType
 {
     Database,
     Editor,

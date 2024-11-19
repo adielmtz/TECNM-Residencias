@@ -52,6 +52,6 @@ CREATE INDEX IX_Document_TypeId ON Document (
     TypeId
 );
 
-CREATE INDEX IX_StudentExtras_ExtraId ON StudentExtras (
-    ExtraId
+CREATE INDEX IX_StudentSkills_SkillId ON StudentSkills (
+    SkillId
 );

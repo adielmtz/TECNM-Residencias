@@ -47,5 +47,5 @@ public sealed record class StudentFullDetailsDto
 
     public required DateTimeOffset CreatedOn { get; init; }
 
-    public required IReadOnlyList<Extra> Extras { get; init; }
+    public required IReadOnlyList<Skill> Extras { get; init; }
 }

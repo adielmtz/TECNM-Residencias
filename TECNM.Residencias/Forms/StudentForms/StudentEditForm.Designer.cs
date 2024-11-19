@@ -631,9 +631,9 @@ namespace TECNM.Residencias.Forms.StudentForms
             btn_AddExtras.Name = "btn_AddExtras";
             btn_AddExtras.Size = new System.Drawing.Size(114, 23);
             btn_AddExtras.TabIndex = 22;
-            btn_AddExtras.Text = "Asignar extras";
+            btn_AddExtras.Text = "Habilidades";
             btn_AddExtras.UseVisualStyleBackColor = true;
-            btn_AddExtras.Click += OpenExtrasDialog_Click;
+            btn_AddExtras.Click += OpenSkillsDialog_Click;
             // 
             // btn_DeleteStudent
             // 

@@ -178,27 +178,27 @@ CREATE TABLE Document (
 )
 STRICT;
 
-CREATE TABLE Extra (
+CREATE TABLE Skill (
     Id    INTEGER PRIMARY KEY AUTOINCREMENT
                   NOT NULL,
     Type  TEXT    NOT NULL,
     Value TEXT    NOT NULL
                   COLLATE NOCASE,
-    CONSTRAINT AK_Extra_Identity UNIQUE (
+    CONSTRAINT AK_Skill_Identity UNIQUE (
         Type,
         Value
     )
 )
 STRICT;
 
-CREATE TABLE StudentExtras (
+CREATE TABLE StudentSkills (
     StudentId INTEGER REFERENCES Student (Id) ON DELETE CASCADE
                       NOT NULL,
-    ExtraId   INTEGER REFERENCES Extra (Id) ON DELETE CASCADE
+    SkillId   INTEGER REFERENCES Skill (Id) ON DELETE CASCADE
                       NOT NULL,
     CONSTRAINT PK_StudentExtras PRIMARY KEY (
         StudentId,
-        ExtraId
+        SkillId
     )
 )
 WITHOUT ROWID,

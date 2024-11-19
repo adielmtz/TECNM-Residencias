@@ -25,7 +25,7 @@ public sealed partial class StudentEditForm : EditForm
     private Advisor? _internalAdvisor;
     private Advisor? _externalAdvisor;
     private Advisor? _reviewerAdvisor;
-    private ISet<Extra>? extras;
+    private ISet<long>? _skills;
     private bool _isNewRecord = true;
 
     public StudentEditForm()
@@ -354,11 +354,25 @@ public sealed partial class StudentEditForm : EditForm
         btn_DeleteStudent.Enabled = !enabled;
     }
 
-    private void OpenExtrasDialog_Click(object sender, EventArgs e)
+    private void OpenSkillsDialog_Click(object sender, EventArgs e)
     {
-        using var dialog = new StudentExtrasPickerDialogForm(_student, extras);
+        if (_skills is null)
+        {
+            using var context = new AppDbContext();
+            IEnumerable<Skill> skills = context.Skills.EnumerateAll(_student);
+            _skills = new HashSet<long>();
+
+            foreach (Skill skill in skills)
+            {
+                _skills.Add(skill.Id);
+            }
+        }
+
+        using var dialog = new StudentSkillsPickerDialogForm(_skills);
         dialog.ShowDialog();
-        extras = dialog.SelectedExtras;
+
+        _skills.Clear();
+        _skills.UnionWith(dialog.SelectedSkills);
     }
 
     private void DeleteStudent_Click(object sender, EventArgs e)
@@ -436,10 +450,10 @@ public sealed partial class StudentEditForm : EditForm
                 context.Students.Update(_student);
             }
 
-            if (extras != null)
+            if (_skills != null)
             {
-                context.Extras.DeleteExtrasForStudent(_student);
-                context.Extras.InsertExtrasForStudent(_student, extras);
+                context.Skills.DeleteSkillsOfStudent(_student);
+                context.Skills.AddSkillsOfStudent(_student, _skills);
             }
 
 
