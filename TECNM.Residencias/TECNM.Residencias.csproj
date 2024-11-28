@@ -15,8 +15,6 @@
 
     <ItemGroup>
       <PackageReference Include="ClosedXML" Version="0.104.2" />
-      <PackageReference Include="ScottPlot.WinForms" Version="5.0.46" />
-      <PackageReference Include="System.IO.Packaging" Version="8.0.1" />
     </ItemGroup>
 
     <ItemGroup>
