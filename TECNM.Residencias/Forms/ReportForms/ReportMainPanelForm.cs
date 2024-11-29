@@ -1,19 +1,21 @@
 namespace TECNM.Residencias.Forms.ReportForms;
 
-using ScottPlot;
-using ScottPlot.TickGenerators;
+using ClosedXML.Excel;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
+using System.Reflection;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
-using TECNM.Residencias.Data.Entities.DTO;
+using TECNM.Residencias.Data.Extensions;
+using TECNM.Residencias.Forms.ReportForms.DTO;
 
 public sealed partial class ReportMainPanelForm : Form
 {
+    private readonly Dictionary<long, Company> _companyCache = [];
+
     public ReportMainPanelForm()
     {
         InitializeComponent();
@@ -23,14 +25,23 @@ public sealed partial class ReportMainPanelForm : Form
         cb_Semester.SelectedIndex = now.Month >= 1 && now.Month <= 7 ? 0 : 1;
     }
 
-    private void ReportMainPanelForm_Load(object sender, EventArgs e)
+    protected override void OnLoad(EventArgs e)
     {
+        base.OnLoad(e);
+
         for (int i = DateTime.Today.Year; i >= App.MinimumReportYear; i--)
         {
             cb_Year.Items.Add(i);
         }
 
         cb_Year.SelectedIndex = 0;
+    }
+
+    private sealed class SimpleDataGroup
+    {
+        public required string Name { get; init; }
+
+        public required int Count { get; init; }
     }
 
     private void GenerateStats_Click(object sender, EventArgs e)
@@ -45,35 +56,20 @@ public sealed partial class ReportMainPanelForm : Form
         }
 
         string rootDirectory = GetOuputDirectory(year, semester ?? "Todos");
-        string chartDirectory = Path.Combine(rootDirectory, "Gráficas");
-        string internalAdvisorDirectory = Path.Combine(rootDirectory, "Reportes de asesor interno");
-        string externalAdvisorDirectory = Path.Combine(rootDirectory, "Reportes de asesor externo");
-        string reviewerAdvisorDirectory = Path.Combine(rootDirectory, "Reportes de revisor");
         Directory.CreateDirectory(rootDirectory);
-        Directory.CreateDirectory(chartDirectory);
-        Directory.CreateDirectory(internalAdvisorDirectory);
-        Directory.CreateDirectory(externalAdvisorDirectory);
-        Directory.CreateDirectory(reviewerAdvisorDirectory);
 
         using var context = new AppDbContext();
-        IReadOnlyList<StudentFullDetailsDto> students = FetchStudentData(context, year, semester);
-        GenerateGeneralCsvReport(rootDirectory, students);
-        var internalGrouped = GenerateInternalAdvisorCsvReport(internalAdvisorDirectory, students);
-        var externalGrouped = GenerateExternalAdvisorCsvReport(externalAdvisorDirectory, students);
-        var reviewerGrouped = GenerateReviewerAdvisorCsvReport(reviewerAdvisorDirectory, students);
+        List<StudentExcelDto> students = FetchStudentData(context, year, semester);
 
-        Statistics stats = CollectStatistics(students);
-        PlotGenderCountImage(stats, chartDirectory);
-        PlotCompanyTypeCountImage(stats, chartDirectory);
-        PlotSpecialtyCountImage(stats, chartDirectory);
-        PlotAdvisorStudentCountImage(internalGrouped, chartDirectory, "Conteo residentes por asesor interno");
-        PlotAdvisorStudentCountImage(externalGrouped, chartDirectory, "Conteo residentes por asesor externo");
-        PlotAdvisorStudentCountImage(reviewerGrouped, chartDirectory, "Conteo residentes por revisor");
+        using var stream = GetExcelTemplateStream();
+        using var workbook = new XLWorkbook(stream);
+        PopulateStudentTable(workbook, students);
+        PopulateCompanyTable(workbook, _companyCache.Values.ToList());
 
-        PlotBarChartCountImage(stats, chartDirectory, 1, "Gestores de bases de datos");
-        PlotBarChartCountImage(stats, chartDirectory, 2, "Editores de texto");
-        PlotBarChartCountImage(stats, chartDirectory, 3, "Lenguajes de programación");
-        PlotBarChartCountImage(stats, chartDirectory, 4, "Metodologías de desarrollo");
+        List<SkillCount> skills = FetchStudentSkills(context, students);
+        PopulateSkillTable(workbook, skills);
+
+        workbook.SaveAs(Path.Combine(rootDirectory, "Reporte.xlsx"));
 
         MessageBox.Show("Reportes generados.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -91,6 +87,93 @@ public sealed partial class ReportMainPanelForm : Form
         Close();
     }
 
+    private Stream GetExcelTemplateStream()
+    {
+        Assembly assembly = typeof(ReportMainPanelForm).Assembly;
+        string resource = "TECNM.Residencias.Resources.TemplateDocument.xlsx";
+        Stream? stream = assembly.GetManifestResourceStream(resource);
+        Trace.Assert(stream is not null, $"Failed to create a stream to embedded resource: {resource}");
+        return stream;
+    }
+
+    private void PopulateStudentTable(IXLWorkbook workbook, List<StudentExcelDto> students)
+    {
+        IXLWorksheet sheet = workbook.Worksheet("Residentes");
+        IXLTable table = sheet.Table("TablaResidentes");
+
+        if (students.Count > 1)
+        {
+            table.DataRange.Row(table.RowCount()).InsertRowsBelow(students.Count - 1);
+        }
+
+        for (int i = 0; i < students.Count; i++)
+        {
+            StudentExcelDto dto = students[i];
+
+            sheet.Cell(i + 2, 1).Value = dto.Id;
+            sheet.Cell(i + 2, 2).Value = dto.Name;
+            sheet.Cell(i + 2, 3).Value = dto.SpecialtyName;
+            sheet.Cell(i + 2, 4).Value = dto.GenderName;
+            sheet.Cell(i + 2, 5).Value = dto.Semester;
+            sheet.Cell(i + 2, 6).Value = dto.StartDate.ToString();
+            sheet.Cell(i + 2, 7).Value = dto.EndDate.ToString();
+            sheet.Cell(i + 2, 8).Value = dto.Project;
+            sheet.Cell(i + 2, 9).Value = dto.CompanyName;
+            sheet.Cell(i + 2, 10).Value = dto.InternalAdvisorName;
+            sheet.Cell(i + 2, 11).Value = dto.ExternalAdvisorName;
+            sheet.Cell(i + 2, 12).Value = dto.ReviewerAdvisorName;
+            sheet.Cell(i + 2, 13).Value = dto.Closed;
+        }
+
+        table.SetShowAutoFilter(false);
+        sheet.Columns().AdjustToContents();
+    }
+
+    private void PopulateCompanyTable(IXLWorkbook workbook, List<Company> companies)
+    {
+        IXLWorksheet sheet = workbook.Worksheet("Empresas");
+        IXLTable table = sheet.Table("TablaEmpresas");
+
+        if (companies.Count > 1)
+        {
+            table.DataRange.Row(table.RowCount()).InsertRowsBelow(companies.Count - 1);
+        }
+
+        for (int i = 0; i < companies.Count; i++)
+        {
+            Company company = companies[i];
+
+            sheet.Cell(i + 2, 1).Value = company.Name;
+            sheet.Cell(i + 2, 2).Value = company.Type.GetLocalizedName();
+        }
+
+        table.SetShowAutoFilter(false);
+        sheet.Columns().AdjustToContents();
+    }
+
+    private void PopulateSkillTable(IXLWorkbook workbook, List<SkillCount> skills)
+    {
+        IXLWorksheet sheet = workbook.Worksheet("Habilidades");
+        IXLTable table = sheet.Table("TablaHabilidades");
+
+        if (skills.Count > 1)
+        {
+            table.DataRange.Row(table.RowCount()).InsertRowsBelow(skills.Count - 1);
+        }
+
+        for (int i = 0; i < skills.Count; i++)
+        {
+            SkillCount stat = skills[i];
+
+            sheet.Cell(i + 2, 1).Value = stat.Skill.Value;
+            sheet.Cell(i + 2, 2).Value = stat.Skill.Type.GetLocalizedName();
+            sheet.Cell(i + 2, 3).Value = stat.Count;
+        }
+
+        table.SetShowAutoFilter(false);
+        sheet.Columns().AdjustToContents();
+    }
+
     private string GetOuputDirectory(int year, string semester)
     {
         string documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
@@ -101,497 +184,101 @@ public sealed partial class ReportMainPanelForm : Form
         );
     }
 
-    private IReadOnlyList<StudentFullDetailsDto> FetchStudentData(AppDbContext context, int year, string? semester)
+    private List<StudentExcelDto> FetchStudentData(AppDbContext context, int year, string? semester)
     {
-        List<StudentFullDetailsDto> result = [];
         var specialtyCache = new Dictionary<long, Specialty>();
-        var companyCache = new Dictionary<long, Company>();
         var advisorCache = new Dictionary<long, Advisor>();
+        var result = new List<StudentExcelDto>();
 
         foreach (Student student in context.Students.EnumerateAll(year, semester))
         {
             Specialty? specialty;
             if (!specialtyCache.TryGetValue(student.SpecialtyId, out specialty))
             {
-                specialty = context.Specialties.GetSpecialty(student.SpecialtyId);
-                specialtyCache[student.SpecialtyId] = specialty!;
+                specialty = context.Specialties.GetSpecialty(student.SpecialtyId)!;
+                specialtyCache[specialty.Id] = specialty;
             }
 
             Company? company;
-            if (!companyCache.TryGetValue(student.CompanyId, out company))
+            if (!_companyCache.TryGetValue(student.CompanyId, out company))
             {
-                company = context.Companies.GetCompany(student.CompanyId);
-                companyCache[student.CompanyId] = company!;
+                company = context.Companies.GetCompany(student.CompanyId)!;
+                _companyCache[company.Id] = company;
             }
 
-            foreach (long? advisorId in new long?[] { student.InternalAdvisorId, student.ReviewerAdvisorId, student.ExternalAdvisorId })
+            Advisor? internalAdvisor = null;
+            if (student.InternalAdvisorId.HasValue && !advisorCache.TryGetValue(student.InternalAdvisorId.Value, out internalAdvisor))
             {
-                if (advisorId == null)
-                {
-                    continue;
-                }
-
-                long rowid = (long) advisorId;
-                if (!advisorCache.TryGetValue(rowid, out Advisor? advisor))
-                {
-                    advisor = context.Advisors.GetAdvisor(rowid);
-                    advisorCache[rowid] = advisor!;
-                }
+                internalAdvisor = context.Advisors.GetAdvisor(student.InternalAdvisorId.Value)!;
+                advisorCache[internalAdvisor.Id] = internalAdvisor;
             }
 
-            var dto = new StudentFullDetailsDto
+            Advisor? externalAdvisor = null;
+            if (student.ExternalAdvisorId.HasValue && !advisorCache.TryGetValue(student.ExternalAdvisorId.Value, out externalAdvisor))
+            {
+                externalAdvisor = context.Advisors.GetAdvisor(student.ExternalAdvisorId.Value)!;
+                advisorCache[externalAdvisor.Id] = externalAdvisor;
+            }
+
+            Advisor? reviewerAdvisor = null;
+            if (student.ReviewerAdvisorId.HasValue && !advisorCache.TryGetValue(student.ReviewerAdvisorId.Value, out reviewerAdvisor))
+            {
+                reviewerAdvisor = context.Advisors.GetAdvisor(student.ReviewerAdvisorId.Value)!;
+                advisorCache[reviewerAdvisor.Id] = reviewerAdvisor;
+            }
+
+            result.Add(new StudentExcelDto
             {
                 Id              = student.Id,
-                Specialty       = specialty!,
-                FirstName       = student.FirstName,
-                LastName        = student.LastName,
-                Email           = student.Email,
-                Phone           = student.Phone,
+                Name            = $"{student.FirstName} {student.LastName}",
+                Specialty       = specialty,
                 Gender          = student.Gender,
                 Semester        = student.Semester,
                 StartDate       = student.StartDate,
                 EndDate         = student.EndDate,
                 Project         = student.Project,
-                InternalAdvisor = student.InternalAdvisorId == null ? null : advisorCache[(long) student.InternalAdvisorId],
-                ExternalAdvisor = student.ExternalAdvisorId == null ? null : advisorCache[(long) student.ExternalAdvisorId],
-                ReviewerAdvisor = student.ReviewerAdvisorId == null ? null : advisorCache[(long) student.ReviewerAdvisorId],
-                Company         = company!,
-                Section         = student.Section,
-                Schedule        = student.Schedule,
-                Notes           = student.Notes,
-                Closed          = student.Closed,
-                UpdatedOn       = student.UpdatedOn,
-                CreatedOn       = student.CreatedOn,
-                Extras          = context.Skills.EnumerateAll(student).ToList(),
-            };
-
-            result.Add(dto);
+                Company         = company,
+                InternalAdvisor = internalAdvisor,
+                ExternalAdvisor = externalAdvisor,
+                ReviewerAdvisor = reviewerAdvisor,
+                Closed          = student.Closed ? "Sí" : "No"
+            });
         }
 
         return result;
     }
 
-    private void GenerateGeneralCsvReport(string outputDirectory, IReadOnlyList<StudentFullDetailsDto> studentList)
+    private List<SkillCount> FetchStudentSkills(AppDbContext context, List<StudentExcelDto> students)
     {
-        string filename = Path.Combine(outputDirectory, "[Reporte] Residentes.csv");
-        using var stream = new FileStream(filename, FileMode.Create, FileAccess.Write, FileShare.None);
-        using var writer = new StreamWriter(stream, Encoding.UTF8);
-
-        // Write CSV headers
-        writer.WriteLine("\"N. Control\",\"Nombre\",\"Especialidad\",\"Empresa registrada en el SII\",\"Sector empresarial\",\"Proyecto\",\"Lenguaje(s) de programación utilizados\",\"Bases de datos utilizadas\",\"Entornos de desarrollo utilizados\",\"Metodologías de desarrollo\"");
-
-        foreach (var student in studentList)
+        var skills = new Dictionary<long, SkillCount>();
+        foreach (StudentExcelDto dto in students)
         {
-            writer.Write("{0},", student.Id);
-            writer.Write("\"{0}\",", $"{student.FirstName} {student.LastName}".Replace("\"", "\"\""));
-            writer.Write("\"{0}\",", student.Specialty.Name.Replace("\"", "\"\""));
-            writer.Write("\"{0}\",", student.Company.Name.Replace("\"", "\"\""));
-            writer.Write("\"{0}\",", student.Company.Name.Replace("\"", "\"\""));
-            writer.Write("\"{0}\",", student.Project.Replace("\"", "\"\""));
-            writer.Write("\"{0}\",", string.Join(", ", student.Extras.Where(it => it.Type == (SkillType) 1).Select(it => it.Value)));
-            writer.Write("\"{0}\",", string.Join(", ", student.Extras.Where(it => it.Type == (SkillType) 2).Select(it => it.Value)));
-            writer.Write("\"{0}\",", string.Join(", ", student.Extras.Where(it => it.Type == (SkillType) 3).Select(it => it.Value)));
-            writer.Write("\"{0}\",", string.Join(", ", student.Extras.Where(it => it.Type == (SkillType) 4).Select(it => it.Value)));
-            writer.WriteLine();
-        }
-    }
-
-    private Dictionary<Advisor, IList<StudentFullDetailsDto>> GenerateInternalAdvisorCsvReport(string outputDirectory, IReadOnlyList<StudentFullDetailsDto> studentList)
-    {
-        Dictionary<Advisor, IList<StudentFullDetailsDto>> groupedByAdvisor = new(studentList.Count);
-        foreach (StudentFullDetailsDto student in studentList)
-        {
-            if (student.InternalAdvisor is null)
+            foreach (Skill skill in context.Skills.EnumerateAll(dto.Id))
             {
-                continue;
-            }
+                SkillCount? stat;
 
-            IList<StudentFullDetailsDto>? list;
-            if (!groupedByAdvisor.TryGetValue(student.InternalAdvisor, out list))
-            {
-                list = new List<StudentFullDetailsDto>();
-                groupedByAdvisor[student.InternalAdvisor] = list;
-            }
-
-            list.Add(student);
-        }
-
-        foreach (KeyValuePair<Advisor, IList<StudentFullDetailsDto>> kvp in groupedByAdvisor)
-        {
-            Advisor advisor = kvp.Key;
-            IList<StudentFullDetailsDto> students = kvp.Value;
-
-            string filename = Path.Combine(outputDirectory, $"[Reporte] RESIDENTES {advisor.FirstName} {advisor.LastName}.csv");
-            using var stream = new FileStream(filename, FileMode.Create, FileAccess.Write, FileShare.None);
-            using var writer = new StreamWriter(stream, Encoding.UTF8);
-
-            // Write CSV headers
-            writer.WriteLine("\"N. Control\",\"Nombre\",\"Especialidad\",\"Empresa\",\"Proyecto\"");
-
-            foreach (var student in students)
-            {
-                writer.Write("{0},", student.Id);
-                writer.Write("\"{0}\",", $"{student.FirstName} {student.LastName}".Replace("\"", "\"\""));
-                writer.Write("\"{0}\",", student.Specialty.Name.Replace("\"", "\"\""));
-                writer.Write("\"{0}\",", student.Company.Name.Replace("\"", "\"\""));
-                writer.Write("\"{0}\",", student.Project.Replace("\"", "\"\""));
-                writer.WriteLine();
-            }
-        }
-
-        return groupedByAdvisor;
-    }
-
-    private Dictionary<Advisor, IList<StudentFullDetailsDto>> GenerateReviewerAdvisorCsvReport(string outputDirectory, IReadOnlyList<StudentFullDetailsDto> studentList)
-    {
-        Dictionary<Advisor, IList<StudentFullDetailsDto>> groupedByAdvisor = new(studentList.Count);
-        foreach (StudentFullDetailsDto student in studentList)
-        {
-            if (student.ReviewerAdvisor is null)
-            {
-                continue;
-            }
-
-            IList<StudentFullDetailsDto>? list;
-            if (!groupedByAdvisor.TryGetValue(student.ReviewerAdvisor, out list))
-            {
-                list = new List<StudentFullDetailsDto>();
-                groupedByAdvisor[student.ReviewerAdvisor] = list;
-            }
-
-            list.Add(student);
-        }
-
-        foreach (KeyValuePair<Advisor, IList<StudentFullDetailsDto>> kvp in groupedByAdvisor)
-        {
-            Advisor advisor = kvp.Key;
-            IList<StudentFullDetailsDto> students = kvp.Value;
-
-            string filename = Path.Combine(outputDirectory, $"[Reporte] RESIDENTES {advisor.FirstName} {advisor.LastName}.csv");
-            using var stream = new FileStream(filename, FileMode.Create, FileAccess.Write, FileShare.None);
-            using var writer = new StreamWriter(stream, Encoding.UTF8);
-
-            // Write CSV headers
-            writer.WriteLine("\"N. Control\",\"Nombre\",\"Especialidad\",\"Empresa\",\"Proyecto\"");
-
-            foreach (var student in students)
-            {
-                writer.Write("{0},", student.Id);
-                writer.Write("\"{0}\",", $"{student.FirstName} {student.LastName}".Replace("\"", "\"\""));
-                writer.Write("\"{0}\",", student.Specialty.Name.Replace("\"", "\"\""));
-                writer.Write("\"{0}\",", student.Company.Name.Replace("\"", "\"\""));
-                writer.Write("\"{0}\",", student.Project.Replace("\"", "\"\""));
-                writer.WriteLine();
-            }
-        }
-
-        return groupedByAdvisor;
-    }
-
-    private Dictionary<Advisor, IList<StudentFullDetailsDto>> GenerateExternalAdvisorCsvReport(string outputDirectory, IReadOnlyList<StudentFullDetailsDto> studentList)
-    {
-        Dictionary<Advisor, IList<StudentFullDetailsDto>> groupedByAdvisor = new(studentList.Count);
-        foreach (StudentFullDetailsDto student in studentList)
-        {
-            if (student.ExternalAdvisor is null)
-            {
-                continue;
-            }
-
-            IList<StudentFullDetailsDto>? list;
-            if (!groupedByAdvisor.TryGetValue(student.ExternalAdvisor, out list))
-            {
-                list = new List<StudentFullDetailsDto>();
-                groupedByAdvisor[student.ExternalAdvisor] = list;
-            }
-
-            list.Add(student);
-        }
-
-        foreach (KeyValuePair<Advisor, IList<StudentFullDetailsDto>> kvp in groupedByAdvisor)
-        {
-            Advisor advisor = kvp.Key;
-            IList<StudentFullDetailsDto> students = kvp.Value;
-
-            string filename = Path.Combine(outputDirectory, $"[Reporte] RESIDENTES {advisor.FirstName} {advisor.LastName}.csv");
-            using var stream = new FileStream(filename, FileMode.Create, FileAccess.Write, FileShare.None);
-            using var writer = new StreamWriter(stream, Encoding.UTF8);
-
-            // Write CSV headers
-            writer.WriteLine("\"N. Control\",\"Nombre\",\"Especialidad\",\"Empresa\",\"Proyecto\"");
-
-            foreach (var student in students)
-            {
-                writer.Write("{0},", student.Id);
-                writer.Write("\"{0}\",", $"{student.FirstName} {student.LastName}".Replace("\"", "\"\""));
-                writer.Write("\"{0}\",", student.Specialty.Name.Replace("\"", "\"\""));
-                writer.Write("\"{0}\",", student.Company.Name.Replace("\"", "\"\""));
-                writer.Write("\"{0}\",", student.Project.Replace("\"", "\"\""));
-                writer.WriteLine();
-            }
-        }
-
-        return groupedByAdvisor;
-    }
-
-    private Statistics CollectStatistics(IReadOnlyList<StudentFullDetailsDto> students)
-    {
-        var stats = new Statistics();
-        foreach (var s in students)
-        {
-            switch (s.Gender)
-            {
-                case Gender.Female:
-                    stats.GenderFemaleCount++;
-                    break;
-                case Gender.Male:
-                    stats.GenderMaleCount++;
-                    break;
-                case Gender.NonBinary:
-                    stats.GenderOtherCount++;
-                    break;
-                default:
-                    throw new UnreachableException();
-            }
-        
-            switch (s.Company.Type)
-            {
-                case CompanyType.Public:
-                    stats.CompanyTypePublicCount++;
-                    break;
-                case CompanyType.Private:
-                    stats.CompanyTypePrivateCount++;
-                    break;
-                case CompanyType.Industrial:
-                    stats.CompanyTypeIndustrialCount++;
-                    break;
-                case CompanyType.Services:
-                    stats.CompanyTypeServicesCount++;
-                    break;
-                case CompanyType.Other:
-                    stats.CompanyTypeOtherCount++;
-                    break;
-                default:
-                    throw new UnreachableException();
-            }
-        
-            foreach (Skill extra in s.Extras)
-            {
-                if (!stats.ExtraStats.ContainsKey(extra))
+                if (!skills.TryGetValue(skill.Id, out stat))
                 {
-                    stats.ExtraStats[extra] = 0;
+                    stat = new SkillCount
+                    {
+                        Skill = skill,
+                        Count = 0,
+                    };
+
+                    skills[skill.Id] = stat;
                 }
-        
-                stats.ExtraStats[extra]++;
+
+                stat.Count++;
             }
-        
-            SpecialtyStatistics? specialtyStats;
-            if (!stats.SpecialtyStats.TryGetValue(s.Specialty.Id, out specialtyStats))
-            {
-                specialtyStats = new SpecialtyStatistics
-                {
-                    Specialty = s.Specialty,
-                    Count = 0,
-                };
-        
-                stats.SpecialtyStats[s.Specialty.Id] = specialtyStats;
-            }
-        
-            specialtyStats!.Count++;
         }
 
-        return stats;
+        return skills.Values.OrderBy(s => s.Skill.Type).ToList();
     }
 
-    private void PlotGenderCountImage(Statistics stats, string directory)
+    private class SkillCount
     {
-        var plot = new Plot();
-        var pie = plot.Add.Pie(new double[]
-        {
-            stats.GenderMaleCount,
-            stats.GenderFemaleCount,
-            stats.GenderOtherCount,
-        });
+        public required Skill Skill { get; init; }
 
-        pie.Slices[0].Label = $"Hombres {stats.GenderMalePercentage:0}%";
-        pie.Slices[1].Label = $"Mujeres {stats.GenderFemalePercentage:0}%";
-        pie.Slices[2].Label = $"Otros {stats.GenderOtherPercentage:0}%";
-
-        pie.ExplodeFraction = 0;
-        //pie.ShowSliceLabels = true;
-
-        plot.Title("Residentes por género.");
-        plot.ShowLegend();
-        plot.HideAxesAndGrid();
-        plot.SavePng(
-            Path.Combine(directory, "[Gráfico] Residentes por género.png"),
-            854,
-            480
-        );
-    }
-
-    private void PlotSpecialtyCountImage(Statistics stats, string directory)
-    {
-        List<PieSlice> slices = [];
-        IPalette palette = new ScottPlot.Palettes.Category10();
-
-        int index = 0;
-        foreach (SpecialtyStatistics specialtyStatistics in stats.SpecialtyStats.Values)
-        {
-            Specialty specialty = specialtyStatistics.Specialty;
-
-            var slice = new PieSlice
-            {
-                Label = $"{specialty.Name} ({specialtyStatistics.Count})",
-                Value = specialtyStatistics.Count,
-                FillColor = palette.GetColor(index),
-            };
-
-            slices.Add(slice);
-            index++;
-        }
-
-        var plot = new Plot();
-        var pie = plot.Add.Pie(slices);
-
-        pie.ExplodeFraction = 0;
-        //pie.ShowSliceLabels = true;
-
-        plot.Title("Conteo por especialidad.");
-        plot.ShowLegend();
-        plot.HideAxesAndGrid();
-        plot.SavePng(
-            Path.Combine(directory, "[Gráfico] Conteo por especialidad.png"),
-            1280,
-            720
-        );
-    }
-
-    private void PlotCompanyTypeCountImage(Statistics stats, string directory)
-    {
-        var plot = new Plot();
-        var pie = plot.Add.Pie(new double[]
-        {
-            stats.CompanyTypePublicPercentage,
-            stats.CompanyTypePrivatePercentage,
-            stats.CompanyTypeIndustrialPercentage,
-            stats.CompanyTypeServicesPercentage,
-            stats.CompanyTypeOtherPercentage,
-        });
-
-        pie.Slices[0].Label = $"Pública {stats.CompanyTypePublicPercentage:0}%";
-        pie.Slices[1].Label = $"Privada {stats.CompanyTypePrivatePercentage:0}%";
-        pie.Slices[2].Label = $"Industrial {stats.CompanyTypeIndustrialPercentage:0}%";
-        pie.Slices[3].Label = $"Servicios {stats.CompanyTypeServicesPercentage:0}%";
-        pie.Slices[4].Label = $"Otro {stats.CompanyTypeOtherPercentage:0}%";
-
-        pie.ExplodeFraction = 0;
-        //pie.ShowSliceLabels = true;
-
-        plot.Title("Residentes por tipo de empresa.");
-        plot.ShowLegend();
-        plot.HideAxesAndGrid();
-        plot.SavePng(
-            Path.Combine(directory, "[Gráfico] Giros empresariales.png"),
-            854,
-            480
-        );
-    }
-
-    private void PlotBarChartCountImage(Statistics stats, string directory, long type, string title)
-    {
-        IEnumerable<KeyValuePair<Skill, int>> items = stats.ExtraStats.Where(it => it.Key.Type == (SkillType) type);
-        List<Tick> ticks = [];
-        var plot = new Plot();
-        double pos = 1.0;
-
-        foreach (KeyValuePair<Skill, int> kvp in items)
-        {
-            string label = kvp.Key.Value;
-            double value = kvp.Value;
-
-            var bar = plot.Add.Bar(position: pos, value: value);
-            bar.LegendText = $"({value:0}) {label}";
-
-            ticks.Add(new Tick(pos, label));
-            pos++;
-        }
-
-        plot.Axes.Bottom.TickGenerator = new NumericManual(ticks.ToArray());
-        plot.Axes.Bottom.MajorTickStyle.Length = 0;
-        plot.Axes.Margins(bottom: 0);
-
-        plot.Title(title);
-        plot.SavePng(
-            Path.Combine(directory, $"[Gráfico] {title}.png"),
-            1280,
-            720
-        );
-    }
-
-    private void PlotAdvisorStudentCountImage(Dictionary<Advisor, IList<StudentFullDetailsDto>> grouped, string directory, string title)
-    {
-        List<Tick> ticks = [];
-        var plot = new Plot();
-        double pos = 1.0;
-
-        foreach (var kvp in grouped)
-        {
-            string label = $"{kvp.Key.FirstName} {kvp.Key.LastName}";
-            double value = kvp.Value.Count;
-
-            var bar = plot.Add.Bar(position: pos, value: value);
-            bar.LegendText = $"({value:0}) {label}";
-            bar.Horizontal = true;
-
-            ticks.Add(new Tick(pos, label));
-            pos++;
-        }
-
-        plot.Axes.Left.TickGenerator = new NumericManual(ticks.ToArray());
-        plot.Axes.Left.MajorTickStyle.Length = 0;
-        plot.Axes.Margins(left: 0);
-
-        plot.Title(title);
-        plot.ShowLegend(alignment: Alignment.UpperRight);
-        plot.SavePng(
-            Path.Combine(directory, $"[Gráfico] {title}.png"),
-            1280,
-            720
-        );
-    }
-
-    internal sealed class Statistics
-    {
-        public int GenderMaleCount;
-        public int GenderFemaleCount;
-        public int GenderOtherCount;
-
-        public int TotalGenderCount => GenderMaleCount + GenderFemaleCount + GenderOtherCount;
-        public double GenderMalePercentage => (GenderMaleCount / (double) TotalGenderCount) * 100.0;
-        public double GenderFemalePercentage => (GenderFemaleCount / (double) TotalGenderCount) * 100.0;
-        public double GenderOtherPercentage => (GenderOtherCount / (double) TotalGenderCount) * 100.0;
-
-        public int CompanyTypePublicCount;
-        public int CompanyTypePrivateCount;
-        public int CompanyTypeIndustrialCount;
-        public int CompanyTypeServicesCount;
-        public int CompanyTypeOtherCount;
-
-        public int TotalCompanyTypeCount => CompanyTypePublicCount + CompanyTypePrivateCount + CompanyTypeIndustrialCount + CompanyTypeServicesCount + CompanyTypeOtherCount;
-        public double CompanyTypePublicPercentage => (CompanyTypePublicCount / (double) TotalCompanyTypeCount) * 100.0;
-        public double CompanyTypePrivatePercentage => (CompanyTypePrivateCount / (double) TotalCompanyTypeCount) * 100.0;
-        public double CompanyTypeIndustrialPercentage => (CompanyTypeIndustrialCount / (double) TotalCompanyTypeCount) * 100.0;
-        public double CompanyTypeServicesPercentage => (CompanyTypeServicesCount / (double) TotalCompanyTypeCount) * 100.0;
-        public double CompanyTypeOtherPercentage => (CompanyTypeOtherCount / (double) TotalCompanyTypeCount) * 100.0;
-
-        public Dictionary<long, SpecialtyStatistics> SpecialtyStats = [];
-        public Dictionary<Skill, int> ExtraStats = [];
-    }
-
-    internal sealed class SpecialtyStatistics
-    {
-        public required Specialty Specialty { get; init; }
         public int Count { get; set; }
     }
 }

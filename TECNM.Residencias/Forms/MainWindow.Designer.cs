@@ -249,7 +249,7 @@ namespace TECNM.Residencias.Forms
             groupBox6.Size = new System.Drawing.Size(204, 91);
             groupBox6.TabIndex = 8;
             groupBox6.TabStop = false;
-            groupBox6.Text = "Reportes y gráficas";
+            groupBox6.Text = "Informes y reportes";
             // 
             // button8
             // 

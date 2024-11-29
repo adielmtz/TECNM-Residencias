@@ -8,13 +8,22 @@
         <ApplicationIcon>Resources\logo-itcm-v2.ico</ApplicationIcon>
         <Version>1.1.1.0</Version>
     </PropertyGroup>
+    <ItemGroup>
+      <None Remove="Resources\TemplateDocument.xlsx" />
+    </ItemGroup>
 
     <ItemGroup>
         <Content Include="Resources\logo-itcm-v2.ico" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="ClosedXML" Version="0.104.2" />
+      <EmbeddedResource Include="Resources\TemplateDocument.xlsx" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="ClosedXML" Version="0.104.2" />
+        <PackageReference Include="ScottPlot.WinForms" Version="5.0.46" />
+        <PackageReference Include="System.IO.Packaging" Version="8.0.1" />
     </ItemGroup>
 
     <ItemGroup>

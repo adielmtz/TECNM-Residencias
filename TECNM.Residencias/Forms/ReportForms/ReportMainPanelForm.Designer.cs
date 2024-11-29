@@ -35,6 +35,7 @@ namespace TECNM.Residencias.Forms.ReportForms
             label2 = new System.Windows.Forms.Label();
             button1 = new System.Windows.Forms.Button();
             chk_OpenDirectory = new System.Windows.Forms.CheckBox();
+            checkBox1 = new System.Windows.Forms.CheckBox();
             SuspendLayout();
             // 
             // cb_Semester
@@ -76,7 +77,7 @@ namespace TECNM.Residencias.Forms.ReportForms
             // 
             // button1
             // 
-            button1.Location = new System.Drawing.Point(291, 27);
+            button1.Location = new System.Drawing.Point(12, 284);
             button1.Name = "button1";
             button1.Size = new System.Drawing.Size(75, 23);
             button1.TabIndex = 9;
@@ -89,18 +90,31 @@ namespace TECNM.Residencias.Forms.ReportForms
             chk_OpenDirectory.AutoSize = true;
             chk_OpenDirectory.Checked = true;
             chk_OpenDirectory.CheckState = System.Windows.Forms.CheckState.Checked;
-            chk_OpenDirectory.Location = new System.Drawing.Point(12, 59);
+            chk_OpenDirectory.Location = new System.Drawing.Point(93, 287);
             chk_OpenDirectory.Name = "chk_OpenDirectory";
             chk_OpenDirectory.Size = new System.Drawing.Size(150, 19);
             chk_OpenDirectory.TabIndex = 10;
             chk_OpenDirectory.Text = "Abrir carpeta al finalizar";
             chk_OpenDirectory.UseVisualStyleBackColor = true;
             // 
+            // checkBox1
+            // 
+            checkBox1.AutoSize = true;
+            checkBox1.Checked = true;
+            checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
+            checkBox1.Location = new System.Drawing.Point(12, 56);
+            checkBox1.Name = "checkBox1";
+            checkBox1.Size = new System.Drawing.Size(83, 19);
+            checkBox1.TabIndex = 11;
+            checkBox1.Text = "checkBox1";
+            checkBox1.UseVisualStyleBackColor = true;
+            // 
             // ReportMainPanelForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(379, 90);
+            ClientSize = new System.Drawing.Size(296, 319);
+            Controls.Add(checkBox1);
             Controls.Add(chk_OpenDirectory);
             Controls.Add(button1);
             Controls.Add(label2);
@@ -111,7 +125,6 @@ namespace TECNM.Residencias.Forms.ReportForms
             Name = "ReportMainPanelForm";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "ReportMainPanelForm";
-            Load += ReportMainPanelForm_Load;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -124,5 +137,6 @@ namespace TECNM.Residencias.Forms.ReportForms
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.CheckBox chk_OpenDirectory;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }

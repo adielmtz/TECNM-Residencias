@@ -56,6 +56,16 @@ public sealed class SkillDbSet : DbSet<Skill>
     /// <returns>An <see cref="IEnumerable{T}"/> enumerating all the entities.</returns>
     public IEnumerable<Skill> EnumerateAll(Student student)
     {
+        return EnumerateAll(student.Id);
+    }
+
+    /// <summary>
+    /// Retrieves and enumerates all skill entities that belong to the specified student.
+    /// </summary>
+    /// <param name="studentId">The unique rowid of the student to filter.</param>
+    /// <returns>An <see cref="IEnumerable{T}"/> enumerating all the entities.</returns>
+    public IEnumerable<Skill> EnumerateAll(long studentId)
+    {
         using var command = CreateCommand("""
         SELECT Id, Type, Value
         FROM Skill
@@ -64,7 +74,7 @@ public sealed class SkillDbSet : DbSet<Skill>
         WHERE StudentId = $p0
         """);
 
-        command.Parameters.Add("$p0", SqliteType.Integer).Value = student.Id;
+        command.Parameters.Add("$p0", SqliteType.Integer).Value = studentId;
         using var reader = command.ExecuteReader();
 
         while (reader.Read())
