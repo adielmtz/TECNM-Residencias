@@ -60,7 +60,7 @@ public sealed partial class StudentListViewForm : Form
         }
     }
 
-    private void AddNewCompany_Click(object sender, EventArgs e)
+    private void AddNewStudent_Click(object sender, EventArgs e)
     {
         ShowStudentEditDialog();
     }

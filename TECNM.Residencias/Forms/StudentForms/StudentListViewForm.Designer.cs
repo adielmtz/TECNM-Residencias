@@ -282,7 +282,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             button3.TabIndex = 7;
             button3.Text = "Registrar nuevo";
             button3.UseVisualStyleBackColor = true;
-            button3.Click += AddNewCompany_Click;
+            button3.Click += AddNewStudent_Click;
             // 
             // lbl_StatusLabel
             // 
