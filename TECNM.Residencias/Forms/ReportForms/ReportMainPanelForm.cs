@@ -21,8 +21,8 @@ public sealed partial class ReportMainPanelForm : Form
         InitializeComponent();
         Text = $"Generación de reportes | {App.Name}";
 
-        DateTime now = DateTime.Now;
-        cb_Semester.SelectedIndex = now.Month >= 1 && now.Month <= 7 ? 0 : 1;
+        var today = DateTime.Today;
+        cb_Semester.SelectedIndex = today.Month >= 1 && today.Month < 7 ? 1 : 2;
     }
 
     protected override void OnLoad(EventArgs e)
@@ -35,6 +35,11 @@ public sealed partial class ReportMainPanelForm : Form
         }
 
         cb_Year.SelectedIndex = 0;
+
+        if (AppSettings.Default.DefaultSemesterFilter >= 0)
+        {
+            cb_Semester.SelectedIndex = AppSettings.Default.DefaultSemesterFilter;
+        }
     }
 
     private sealed class SimpleDataGroup
@@ -55,21 +60,34 @@ public sealed partial class ReportMainPanelForm : Form
             semester = null;
         }
 
-        string rootDirectory = GetOuputDirectory(year, semester ?? "Todos");
-        Directory.CreateDirectory(rootDirectory);
+        string destinationDirectory = GetOuputDirectory();
+        string temporaryExcelFile = GetTemporaryExcelFile();
+        Directory.CreateDirectory(destinationDirectory);
 
         using var context = new AppDbContext();
         List<StudentExcelDto> students = FetchStudentData(context, year, semester);
 
         using var stream = GetExcelTemplateStream();
-        using var workbook = new XLWorkbook(stream);
-        PopulateStudentTable(workbook, students);
-        PopulateCompanyTable(workbook, _companyCache.Values.ToList());
+        using (var workbook = new XLWorkbook(stream))
+        {
+            PopulateStudentTable(workbook, students);
+            PopulateCompanyTable(workbook, _companyCache.Values.ToList());
 
-        List<SkillCount> skills = FetchStudentSkills(context, students);
-        PopulateSkillTable(workbook, skills);
+            List<SkillCount> skills = FetchStudentSkills(context, students);
+            PopulateSkillTable(workbook, skills);
 
-        workbook.SaveAs(Path.Combine(rootDirectory, "Reporte.xlsx"));
+            workbook.SaveAs(temporaryExcelFile);
+        }
+
+        string semesterString = semester ?? "Todos";
+        File.Copy(
+            temporaryExcelFile,
+            Path.Combine(
+                destinationDirectory,
+                $"({year} {semesterString}) Residentes {DateTime.Now:yyyy-MM-dd\\_HH.mm.ss}.xlsx"
+            ),
+            overwrite: true
+        );
 
         MessageBox.Show("Reportes generados.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -78,7 +96,7 @@ public sealed partial class ReportMainPanelForm : Form
             var info = new ProcessStartInfo
             {
                 FileName = "explorer.exe",
-                Arguments = rootDirectory,
+                Arguments = destinationDirectory,
             };
 
             Process.Start(info);
@@ -174,14 +192,15 @@ public sealed partial class ReportMainPanelForm : Form
         sheet.Columns().AdjustToContents();
     }
 
-    private string GetOuputDirectory(int year, string semester)
+    private string GetOuputDirectory()
     {
         string documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-        return Path.Combine(
-            documents,
-            "TECNM Reportes",
-            $"[{year} {semester}] {DateTime.Now:yyyy-MM-dd HH.mm.ss}"
-        );
+        return Path.Combine(documents, "TECNM Reportes");
+    }
+
+    private string GetTemporaryExcelFile()
+    {
+        return Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.xlsx");
     }
 
     private List<StudentExcelDto> FetchStudentData(AppDbContext context, int year, string? semester)

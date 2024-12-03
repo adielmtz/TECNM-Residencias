@@ -35,7 +35,6 @@ namespace TECNM.Residencias.Forms.ReportForms
             label2 = new System.Windows.Forms.Label();
             button1 = new System.Windows.Forms.Button();
             chk_OpenDirectory = new System.Windows.Forms.CheckBox();
-            checkBox1 = new System.Windows.Forms.CheckBox();
             SuspendLayout();
             // 
             // cb_Semester
@@ -43,7 +42,7 @@ namespace TECNM.Residencias.Forms.ReportForms
             cb_Semester.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             cb_Semester.FormattingEnabled = true;
             cb_Semester.Items.AddRange(new object[] { "Todo", "ENE-JUN", "AGO-DIC" });
-            cb_Semester.Location = new System.Drawing.Point(12, 27);
+            cb_Semester.Location = new System.Drawing.Point(138, 27);
             cb_Semester.Name = "cb_Semester";
             cb_Semester.Size = new System.Drawing.Size(146, 23);
             cb_Semester.TabIndex = 5;
@@ -51,7 +50,7 @@ namespace TECNM.Residencias.Forms.ReportForms
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(12, 9);
+            label1.Location = new System.Drawing.Point(138, 9);
             label1.Name = "label1";
             label1.Size = new System.Drawing.Size(55, 15);
             label1.TabIndex = 6;
@@ -61,7 +60,7 @@ namespace TECNM.Residencias.Forms.ReportForms
             // 
             cb_Year.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             cb_Year.FormattingEnabled = true;
-            cb_Year.Location = new System.Drawing.Point(164, 27);
+            cb_Year.Location = new System.Drawing.Point(12, 27);
             cb_Year.Name = "cb_Year";
             cb_Year.Size = new System.Drawing.Size(121, 23);
             cb_Year.TabIndex = 7;
@@ -69,7 +68,7 @@ namespace TECNM.Residencias.Forms.ReportForms
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new System.Drawing.Point(164, 9);
+            label2.Location = new System.Drawing.Point(12, 9);
             label2.Name = "label2";
             label2.Size = new System.Drawing.Size(32, 15);
             label2.TabIndex = 8;
@@ -77,7 +76,7 @@ namespace TECNM.Residencias.Forms.ReportForms
             // 
             // button1
             // 
-            button1.Location = new System.Drawing.Point(12, 284);
+            button1.Location = new System.Drawing.Point(12, 56);
             button1.Name = "button1";
             button1.Size = new System.Drawing.Size(75, 23);
             button1.TabIndex = 9;
@@ -90,31 +89,18 @@ namespace TECNM.Residencias.Forms.ReportForms
             chk_OpenDirectory.AutoSize = true;
             chk_OpenDirectory.Checked = true;
             chk_OpenDirectory.CheckState = System.Windows.Forms.CheckState.Checked;
-            chk_OpenDirectory.Location = new System.Drawing.Point(93, 287);
+            chk_OpenDirectory.Location = new System.Drawing.Point(93, 59);
             chk_OpenDirectory.Name = "chk_OpenDirectory";
             chk_OpenDirectory.Size = new System.Drawing.Size(150, 19);
             chk_OpenDirectory.TabIndex = 10;
             chk_OpenDirectory.Text = "Abrir carpeta al finalizar";
             chk_OpenDirectory.UseVisualStyleBackColor = true;
             // 
-            // checkBox1
-            // 
-            checkBox1.AutoSize = true;
-            checkBox1.Checked = true;
-            checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            checkBox1.Location = new System.Drawing.Point(12, 56);
-            checkBox1.Name = "checkBox1";
-            checkBox1.Size = new System.Drawing.Size(83, 19);
-            checkBox1.TabIndex = 11;
-            checkBox1.Text = "checkBox1";
-            checkBox1.UseVisualStyleBackColor = true;
-            // 
             // ReportMainPanelForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(296, 319);
-            Controls.Add(checkBox1);
+            ClientSize = new System.Drawing.Size(296, 92);
             Controls.Add(chk_OpenDirectory);
             Controls.Add(button1);
             Controls.Add(label2);
@@ -137,6 +123,5 @@ namespace TECNM.Residencias.Forms.ReportForms
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.CheckBox chk_OpenDirectory;
-        private System.Windows.Forms.CheckBox checkBox1;
     }
 }
