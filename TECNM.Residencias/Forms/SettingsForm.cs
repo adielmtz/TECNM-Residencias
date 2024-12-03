@@ -26,13 +26,28 @@ public sealed partial class SettingsForm : Form
 
     private void DatabaseOptimize_Click(object sender, EventArgs e)
     {
+        DialogResult result = MessageBox.Show(
+            "¿Desea ejecutar la optimización de la base de datos? " +
+            "Tenga en cuenta que el proceso puede llegar a tardar " +
+            "varios minutos dependiendo del tamaño y la cantidad " +
+            "de información almacenada.",
+            "Confirmar acción",
+            MessageBoxButtons.OKCancel,
+            MessageBoxIcon.Question
+        );
+
+        if (result == DialogResult.Cancel)
+        {
+            return;
+        }
+
         Enabled = false;
 
         using var sqlite = App.Database.CreateConnection();
 
         sqlite.Execute("REINDEX;");
         sqlite.Execute("ANALYZE;");
-        //sqlite.Execute("VACUUM;");
+        sqlite.Execute("VACUUM;");
         sqlite.Execute("PRAGMA wal_checkpoint(FULL);");
 
         Enabled = true;

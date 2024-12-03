@@ -76,7 +76,7 @@ namespace TECNM.Residencias.Forms
             groupBox1.Size = new System.Drawing.Size(247, 99);
             groupBox1.TabIndex = 1;
             groupBox1.TabStop = false;
-            groupBox1.Text = "Base de datos";
+            groupBox1.Text = "Avanzado";
             // 
             // button3
             // 
@@ -96,7 +96,7 @@ namespace TECNM.Residencias.Forms
             button1.Size = new System.Drawing.Size(235, 23);
             button1.TabIndex = 0;
             button1.TabStop = false;
-            button1.Text = "Optimizar";
+            button1.Text = "Optimizar base de datos";
             button1.UseVisualStyleBackColor = true;
             button1.Click += DatabaseOptimize_Click;
             // 
