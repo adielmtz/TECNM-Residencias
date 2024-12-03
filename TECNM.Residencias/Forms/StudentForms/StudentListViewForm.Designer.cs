@@ -265,7 +265,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             // button2
             // 
             button2.Anchor =  System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            button2.Location = new System.Drawing.Point(1159, 6);
+            button2.Location = new System.Drawing.Point(1156, 6);
             button2.Name = "button2";
             button2.Size = new System.Drawing.Size(96, 23);
             button2.TabIndex = 4;
@@ -299,9 +299,9 @@ namespace TECNM.Residencias.Forms.StudentForms
             cb_FilterYear.Anchor =  System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             cb_FilterYear.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             cb_FilterYear.FormattingEnabled = true;
-            cb_FilterYear.Location = new System.Drawing.Point(895, 6);
+            cb_FilterYear.Location = new System.Drawing.Point(953, 6);
             cb_FilterYear.Name = "cb_FilterYear";
-            cb_FilterYear.Size = new System.Drawing.Size(70, 23);
+            cb_FilterYear.Size = new System.Drawing.Size(55, 23);
             cb_FilterYear.TabIndex = 9;
             // 
             // cb_FilterSemester
@@ -310,16 +310,16 @@ namespace TECNM.Residencias.Forms.StudentForms
             cb_FilterSemester.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             cb_FilterSemester.FormattingEnabled = true;
             cb_FilterSemester.Items.AddRange(new object[] { "Todos", "ENE-JUN", "AGO-DIC" });
-            cb_FilterSemester.Location = new System.Drawing.Point(1032, 6);
+            cb_FilterSemester.Location = new System.Drawing.Point(1075, 6);
             cb_FilterSemester.Name = "cb_FilterSemester";
-            cb_FilterSemester.Size = new System.Drawing.Size(121, 23);
+            cb_FilterSemester.Size = new System.Drawing.Size(75, 23);
             cb_FilterSemester.TabIndex = 10;
             // 
             // label2
             // 
             label2.Anchor =  System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             label2.AutoSize = true;
-            label2.Location = new System.Drawing.Point(860, 10);
+            label2.Location = new System.Drawing.Point(918, 10);
             label2.Name = "label2";
             label2.Size = new System.Drawing.Size(29, 15);
             label2.TabIndex = 11;
@@ -329,7 +329,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             // 
             label3.Anchor =  System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             label3.AutoSize = true;
-            label3.Location = new System.Drawing.Point(971, 10);
+            label3.Location = new System.Drawing.Point(1014, 10);
             label3.Name = "label3";
             label3.Size = new System.Drawing.Size(55, 15);
             label3.TabIndex = 12;
