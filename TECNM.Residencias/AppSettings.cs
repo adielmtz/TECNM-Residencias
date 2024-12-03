@@ -53,6 +53,12 @@ internal sealed class AppSettings
         set => SetSetting(nameof(DefaultStudentCareer), value);
     }
 
+    public int DefaultSemesterFilter
+    {
+        get => int.Parse(GetSetting(nameof(DefaultSemesterFilter), -1).Value);
+        set => SetSetting(nameof(DefaultSemesterFilter), value);
+    }
+
     public DateTimeOffset LastStorageBackupDate
     {
         get => DateTimeOffset.Parse(GetSetting(nameof(LastStorageBackupDate), DefaultLastStorageBackupDate).Value);

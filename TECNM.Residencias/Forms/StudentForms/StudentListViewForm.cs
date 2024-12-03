@@ -31,6 +31,12 @@ public sealed partial class StudentListViewForm : Form
     protected override void OnLoad(EventArgs e)
     {
         base.OnLoad(e);
+
+        if (AppSettings.Default.DefaultSemesterFilter >= 0)
+        {
+            cb_FilterSemester.SelectedIndex = AppSettings.Default.DefaultSemesterFilter;
+        }
+
         RefreshList();
     }
 

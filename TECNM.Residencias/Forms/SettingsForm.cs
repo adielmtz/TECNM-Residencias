@@ -1,6 +1,5 @@
 namespace TECNM.Residencias.Forms;
 
-using Microsoft.Data.Sqlite;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -16,11 +15,13 @@ public sealed partial class SettingsForm : Form
         Text = $"Configuración | {App.Name}";
     }
 
-    private void SettingsForm_Load(object sender, EventArgs e)
+    protected override void OnLoad(EventArgs e)
     {
+        base.OnLoad(e);
+
         lbl_SqliteVersion.Text = "SQLite " + GetSqliteVersion();
         lbl_AppVersion.Text = "Versión " + App.Version.ToString(fieldCount: 3);
-        LoadComboBoxItems();
+        LoadSettings();
     }
 
     private void DatabaseOptimize_Click(object sender, EventArgs e)
@@ -60,18 +61,19 @@ public sealed partial class SettingsForm : Form
     {
         AppSettings.Default.Clear();
         AppSettings.Default.Save();
-        LoadComboBoxItems();
+        LoadSettings();
     }
 
     private void SaveAppSettings_Click(object sender, EventArgs e)
     {
         AppSettings.Default.DefaultCompanyType = (CompanyType) cb_CompanyType.SelectedIndex - 1;
         AppSettings.Default.DefaultStudentCareer = ((Career) cb_StudentCareer.SelectedItem!).Id;
+        AppSettings.Default.DefaultSemesterFilter = cb_DefaultSemesterFilter.SelectedIndex - 1;
         AppSettings.Default.Save();
         Close();
     }
 
-    private void LoadComboBoxItems()
+    private void LoadSettings()
     {
         cb_CompanyType.Items.Clear();
         cb_CompanyType.Items.Add("Ninguno");
@@ -100,6 +102,8 @@ public sealed partial class SettingsForm : Form
                 cb_StudentCareer.SelectedIndex = index;
             }
         }
+
+        cb_DefaultSemesterFilter.SelectedIndex = AppSettings.Default.DefaultSemesterFilter + 1;
     }
 
     private string GetSqliteVersion()

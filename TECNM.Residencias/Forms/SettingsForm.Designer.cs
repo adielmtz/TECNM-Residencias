@@ -42,6 +42,8 @@ namespace TECNM.Residencias.Forms
             groupBox3 = new System.Windows.Forms.GroupBox();
             button2 = new System.Windows.Forms.Button();
             groupBox6 = new System.Windows.Forms.GroupBox();
+            label4 = new System.Windows.Forms.Label();
+            cb_DefaultSemesterFilter = new System.Windows.Forms.ComboBox();
             cb_StudentCareer = new System.Windows.Forms.ComboBox();
             label6 = new System.Windows.Forms.Label();
             groupBox5 = new System.Windows.Forms.GroupBox();
@@ -182,14 +184,34 @@ namespace TECNM.Residencias.Forms
             // 
             // groupBox6
             // 
+            groupBox6.Controls.Add(label4);
+            groupBox6.Controls.Add(cb_DefaultSemesterFilter);
             groupBox6.Controls.Add(cb_StudentCareer);
             groupBox6.Controls.Add(label6);
             groupBox6.Location = new System.Drawing.Point(6, 80);
             groupBox6.Name = "groupBox6";
-            groupBox6.Size = new System.Drawing.Size(511, 52);
+            groupBox6.Size = new System.Drawing.Size(511, 83);
             groupBox6.TabIndex = 7;
             groupBox6.TabStop = false;
             groupBox6.Text = "Residentes";
+            // 
+            // label4
+            // 
+            label4.Location = new System.Drawing.Point(6, 45);
+            label4.Name = "label4";
+            label4.Size = new System.Drawing.Size(100, 30);
+            label4.TabIndex = 5;
+            label4.Text = "Filtro de semestre predeterminado";
+            // 
+            // cb_DefaultSemesterFilter
+            // 
+            cb_DefaultSemesterFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            cb_DefaultSemesterFilter.FormattingEnabled = true;
+            cb_DefaultSemesterFilter.Items.AddRange(new object[] { "Automático", "Todos", "ENE-JUN", "AGO-DIC" });
+            cb_DefaultSemesterFilter.Location = new System.Drawing.Point(121, 50);
+            cb_DefaultSemesterFilter.Name = "cb_DefaultSemesterFilter";
+            cb_DefaultSemesterFilter.Size = new System.Drawing.Size(90, 23);
+            cb_DefaultSemesterFilter.TabIndex = 4;
             // 
             // cb_StudentCareer
             // 
@@ -263,7 +285,6 @@ namespace TECNM.Residencias.Forms
             Name = "SettingsForm";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "SettingsForm";
-            Load += SettingsForm_Load;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             groupBox2.ResumeLayout(false);
@@ -298,5 +319,7 @@ namespace TECNM.Residencias.Forms
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label lbl_AppVersion;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ComboBox cb_DefaultSemesterFilter;
     }
 }
