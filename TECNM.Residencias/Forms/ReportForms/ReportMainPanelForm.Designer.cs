@@ -95,6 +95,7 @@ namespace TECNM.Residencias.Forms.ReportForms
             chk_OpenDirectory.TabIndex = 10;
             chk_OpenDirectory.Text = "Abrir carpeta al finalizar";
             chk_OpenDirectory.UseVisualStyleBackColor = true;
+            chk_OpenDirectory.CheckedChanged += OpenDirectory_CheckedChanged;
             // 
             // ReportMainPanelForm
             // 

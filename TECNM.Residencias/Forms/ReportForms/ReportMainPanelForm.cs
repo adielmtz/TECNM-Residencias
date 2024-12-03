@@ -40,6 +40,14 @@ public sealed partial class ReportMainPanelForm : Form
         {
             cb_Semester.SelectedIndex = AppSettings.Default.DefaultSemesterFilter;
         }
+
+        chk_OpenDirectory.Checked = AppSettings.Default.MustOpenReportsDirectory;
+    }
+
+    private void OpenDirectory_CheckedChanged(object sender, EventArgs e)
+    {
+        AppSettings.Default.MustOpenReportsDirectory = chk_OpenDirectory.Checked;
+        AppSettings.Default.Save();
     }
 
     private sealed class SimpleDataGroup
@@ -248,19 +256,19 @@ public sealed partial class ReportMainPanelForm : Form
 
             result.Add(new StudentExcelDto
             {
-                Id              = student.Id,
-                Name            = $"{student.FirstName} {student.LastName}",
-                Specialty       = specialty,
-                Gender          = student.Gender,
-                Semester        = student.Semester,
-                StartDate       = student.StartDate,
-                EndDate         = student.EndDate,
-                Project         = student.Project,
-                Company         = company,
+                Id = student.Id,
+                Name = $"{student.FirstName} {student.LastName}",
+                Specialty = specialty,
+                Gender = student.Gender,
+                Semester = student.Semester,
+                StartDate = student.StartDate,
+                EndDate = student.EndDate,
+                Project = student.Project,
+                Company = company,
                 InternalAdvisor = internalAdvisor,
                 ExternalAdvisor = externalAdvisor,
                 ReviewerAdvisor = reviewerAdvisor,
-                Closed          = student.Closed ? "Sí" : "No"
+                Closed = student.Closed ? "Sí" : "No"
             });
         }
 

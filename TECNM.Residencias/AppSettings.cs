@@ -47,6 +47,12 @@ internal sealed class AppSettings
         set => SetSetting(nameof(DefaultCompanyType), value.ToString());
     }
 
+    public bool MustOpenReportsDirectory
+    {
+        get => bool.Parse(GetSetting(nameof(MustOpenReportsDirectory), true).Value);
+        set => SetSetting(nameof(MustOpenReportsDirectory), value);
+    }
+
     public long DefaultStudentCareer
     {
         get => long.Parse(GetSetting(nameof(DefaultStudentCareer), -1).Value);
