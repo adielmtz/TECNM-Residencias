@@ -73,3 +73,9 @@ public sealed class Advisor
     /// <returns>The full name of the advisor.</returns>
     public override string ToString() => $"{FirstName} {LastName}";
 }
+public enum AdvisorType
+{
+    Internal,
+    External,
+    Reviewer,
+}

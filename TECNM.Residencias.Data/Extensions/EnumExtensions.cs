@@ -9,6 +9,20 @@ using TECNM.Residencias.Data.Entities;
 public static class EnumExtensions
 {
     /// <summary>
+    /// Gets the localized name in spanish for a given <see cref="AdvisorType"/>.
+    /// </summary>
+    /// <param name="type">The <see cref="AdvisorType"/> value.</param>
+    /// <returns>The localized name as string.</returns>
+    /// <exception cref="UnreachableException">Thrown when an unsupported or unknown <see cref="AdvisorType"/> is provided.</exception>
+    public static string GetLocalizedName(this AdvisorType type) => type switch
+    {
+        AdvisorType.Internal => "Interno",
+        AdvisorType.External => "Externo",
+        AdvisorType.Reviewer => "Revisor",
+        _ => throw new UnreachableException(),
+    };
+
+    /// <summary>
     /// Gets the localized name in spanish for a given <see cref="CompanyType"/>.
     /// </summary>
     /// <param name="type">The <see cref="CompanyType"/> value.</param>

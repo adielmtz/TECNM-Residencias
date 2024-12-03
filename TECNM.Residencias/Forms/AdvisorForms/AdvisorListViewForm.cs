@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Extensions;
+using TECNM.Residencias.Forms.StudentForms;
 
 public sealed partial class AdvisorListViewForm : Form
 {
@@ -33,8 +34,17 @@ public sealed partial class AdvisorListViewForm : Form
         var grid = (DataGridView) sender;
         if (grid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
         {
+            var column = grid.Columns[e.ColumnIndex];
             var advisor = (Advisor) grid.Rows[e.RowIndex].Tag!;
-            ShowAdvisorEditDialog(advisor);
+
+            if (column == ListAdvisorActions)
+            {
+                ShowAdvisorEditDialog(advisor);
+            }
+            else if (column == ListAdvisorResidents)
+            {
+                ShowResidentsDialog(advisor);
+            }
         }
     }
 
@@ -46,6 +56,13 @@ public sealed partial class AdvisorListViewForm : Form
     private void ShowAdvisorEditDialog(Advisor? advisor = null)
     {
         using var dialog = new AdvisorEditForm(_company, advisor);
+        dialog.ShowDialog();
+        RefreshList();
+    }
+
+    private void ShowResidentsDialog(Advisor advisor)
+    {
+        using var dialog = new StudentListViewByAdvisorForm(advisor);
         dialog.ShowDialog();
         RefreshList();
     }

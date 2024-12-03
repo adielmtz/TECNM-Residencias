@@ -42,6 +42,7 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             ListAdvisorUpdatedOn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ListAdvisorCreatedOn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ListAdvisorActions = new System.Windows.Forms.DataGridViewButtonColumn();
+            ListAdvisorResidents = new System.Windows.Forms.DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize) dgv_ListView).BeginInit();
             SuspendLayout();
             // 
@@ -52,7 +53,7 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             dgv_ListView.AllowUserToResizeRows = false;
             dgv_ListView.Anchor =  System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             dgv_ListView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgv_ListView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { ListAdvisorName, ListAdvisorSection, ListAdvisorRole, ListAdvisorEmail, ListAdvisorPhone, ListAdvisorPhoneExt, ListAdvisorEnabled, ListAdvisorUpdatedOn, ListAdvisorCreatedOn, ListAdvisorActions });
+            dgv_ListView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { ListAdvisorName, ListAdvisorSection, ListAdvisorRole, ListAdvisorEmail, ListAdvisorPhone, ListAdvisorPhoneExt, ListAdvisorEnabled, ListAdvisorUpdatedOn, ListAdvisorCreatedOn, ListAdvisorActions, ListAdvisorResidents });
             dgv_ListView.Location = new System.Drawing.Point(12, 12);
             dgv_ListView.Name = "dgv_ListView";
             dgv_ListView.ReadOnly = true;
@@ -163,6 +164,14 @@ namespace TECNM.Residencias.Forms.AdvisorForms
             ListAdvisorActions.Text = "Editar";
             ListAdvisorActions.UseColumnTextForButtonValue = true;
             // 
+            // ListAdvisorResidents
+            // 
+            ListAdvisorResidents.HeaderText = "Residentes";
+            ListAdvisorResidents.Name = "ListAdvisorResidents";
+            ListAdvisorResidents.ReadOnly = true;
+            ListAdvisorResidents.Text = "Ver residentes";
+            ListAdvisorResidents.UseColumnTextForButtonValue = true;
+            // 
             // AdvisorListViewForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -195,5 +204,6 @@ namespace TECNM.Residencias.Forms.AdvisorForms
         private System.Windows.Forms.DataGridViewTextBoxColumn ListAdvisorUpdatedOn;
         private System.Windows.Forms.DataGridViewTextBoxColumn ListAdvisorCreatedOn;
         private System.Windows.Forms.DataGridViewButtonColumn ListAdvisorActions;
+        private System.Windows.Forms.DataGridViewButtonColumn ListAdvisorResidents;
     }
 }

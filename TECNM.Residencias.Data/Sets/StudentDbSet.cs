@@ -123,31 +123,6 @@ public sealed class StudentDbSet : DbSet<Student>
     }
 
     /// <summary>
-    /// Retrieves and enumerates all recently modified student records.
-    /// </summary>
-    /// <param name="count">The maximum number of recently modified students to retrieve.</param>
-    /// <returns>
-    /// An <see cref="IEnumerable{T}"/> containing the basic information of the recently
-    /// modified students, sorted by their last update time in descending order.
-    /// </returns>
-    public IEnumerable<StudentLastModifiedDto> EnumerateRecentlyModified(int count)
-    {
-        using var command = CreateCommand("SELECT Id, FirstName, LastName, UpdatedOn FROM Student ORDER BY UpdatedOn DESC LIMIT $p0");
-        command.Parameters.Add("$p0", SqliteType.Integer).Value = count;
-        using var reader = command.ExecuteReader();
-
-        while (reader.Read())
-        {
-            yield return new StudentLastModifiedDto(
-                Id:        reader.GetInt64(0),
-                FirstName: reader.GetString(1),
-                LastName:  reader.GetString(2),
-                UpdatedOn: reader.GetDateTimeOffset(3)
-            );
-        }
-    }
-
-    /// <summary>
     /// Retrieves and enumerates a collection of students enrolled in a specified academic year and semester.
     /// </summary>
     /// <param name="year">The academic year for which to retrieve students. Must be a valid year (e.g., 2023).</param>
@@ -178,6 +153,70 @@ public sealed class StudentDbSet : DbSet<Student>
         while (reader.Read())
         {
             yield return HydrateObject(reader);
+        }
+    }
+
+    public IEnumerable<Student> EnumerateByAdvisor(Advisor advisor, AdvisorType type, int year, string? semester)
+    {
+        using var command = CreateCommand();
+
+        string advisorColumn = type switch
+        {
+            AdvisorType.Internal => "InternalAdvisorId",
+            AdvisorType.External => "ExternalAdvisorId",
+            AdvisorType.Reviewer => "ReviewerAdvisorId",
+            _ => throw new UnreachableException(),
+        };
+
+        string extraParam = "";
+
+        if (semester is not null)
+        {
+            extraParam = "AND Semester = $p2";
+            command.Parameters.Add("$p2", SqliteType.Text).Value = semester!;
+        }
+
+        command.CommandText = $"""
+        SELECT Id,                SpecialtyId, FirstName, LastName, Email,     Phone,             Gender,
+               Semester,          StartDate,   EndDate,   Project,  CompanyId, InternalAdvisorId, ExternalAdvisorId,
+               ReviewerAdvisorId, Section,     Schedule,  Notes,    Closed,    UpdatedOn,         CreatedOn
+        FROM Student
+        WHERE {advisorColumn} = $p0 AND strftime('%Y', StartDate) = $p1 {extraParam}
+        ORDER BY Id
+        """;
+
+        command.Parameters.Add("$p0", SqliteType.Integer).Value = advisor.Id;
+        command.Parameters.Add("$p1", SqliteType.Text).Value = year.ToString();
+        using var reader = command.ExecuteReader();
+
+        while (reader.Read())
+        {
+            yield return HydrateObject(reader);
+        }
+    }
+
+    /// <summary>
+    /// Retrieves and enumerates all recently modified student records.
+    /// </summary>
+    /// <param name="count">The maximum number of recently modified students to retrieve.</param>
+    /// <returns>
+    /// An <see cref="IEnumerable{T}"/> containing the basic information of the recently
+    /// modified students, sorted by their last update time in descending order.
+    /// </returns>
+    public IEnumerable<StudentLastModifiedDto> EnumerateRecentlyModified(int count)
+    {
+        using var command = CreateCommand("SELECT Id, FirstName, LastName, UpdatedOn FROM Student ORDER BY UpdatedOn DESC LIMIT $p0");
+        command.Parameters.Add("$p0", SqliteType.Integer).Value = count;
+        using var reader = command.ExecuteReader();
+
+        while (reader.Read())
+        {
+            yield return new StudentLastModifiedDto(
+                Id: reader.GetInt64(0),
+                FirstName: reader.GetString(1),
+                LastName: reader.GetString(2),
+                UpdatedOn: reader.GetDateTimeOffset(3)
+            );
         }
     }
 

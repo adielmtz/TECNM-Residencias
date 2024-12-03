@@ -26,15 +26,21 @@ CREATE INDEX IX_Student_CompanyId ON Student (
 );
 
 CREATE INDEX IX_Student_InternalAdvisorId ON Student (
-    InternalAdvisorId
+    InternalAdvisorId,
+    strftime('%Y', StartDate),
+    Semester
 );
 
 CREATE INDEX IX_Student_ExternalAdvisorId ON Student (
-    ExternalAdvisorId
+    ExternalAdvisorId,
+    strftime('%Y', StartDate),
+    Semester
 );
 
 CREATE INDEX IX_Student_ReviewerAdvisorId ON Student (
-    ReviewerAdvisorId
+    ReviewerAdvisorId,
+    strftime('%Y', StartDate),
+    Semester
 );
 
 CREATE INDEX IX_Student_LastUpdated ON Student (
@@ -43,9 +49,7 @@ CREATE INDEX IX_Student_LastUpdated ON Student (
 
 CREATE INDEX IX_Student_BySemester_Expr ON Student (
     strftime('%Y', StartDate),
-    Semester,
-    FirstName,
-    LastName
+    Semester
 );
 
 CREATE INDEX IX_Document_TypeId ON Document (
