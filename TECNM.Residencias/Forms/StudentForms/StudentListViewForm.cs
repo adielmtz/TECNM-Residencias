@@ -10,8 +10,6 @@ using TECNM.Residencias.Extensions;
 
 public sealed partial class StudentListViewForm : Form
 {
-    private readonly int _rowsPerPage = App.DefaultRowsPerPage;
-    private int _currentPage = App.DefaultInitialPage;
     private bool _refreshFromSearch = false;
 
     public StudentListViewForm()
@@ -19,6 +17,15 @@ public sealed partial class StudentListViewForm : Form
         InitializeComponent();
         Text = $"Listado de residentes | {App.Name}";
         dgv_ListView.DoubleBuffered(true);
+
+        var today = DateTime.Today;
+        for (int i = today.Year; i >= App.MinimumReportYear; i--)
+        {
+            cb_FilterYear.Items.Add(i);
+        }
+
+        cb_FilterYear.SelectedIndex = 0;
+        cb_FilterSemester.SelectedIndex = today.Month >= 1 && today.Month < 7 ? 1 : 2;
     }
 
     protected override void OnLoad(EventArgs e)
@@ -66,22 +73,10 @@ public sealed partial class StudentListViewForm : Form
         SearchStudents();
     }
 
-    private void ResetSearch_Click(object sender, EventArgs e)
+    private void ApplyFilters_Click(object sender, EventArgs e)
     {
-        _currentPage = App.DefaultInitialPage;
         _refreshFromSearch = false;
-        RefreshList();
-    }
-
-    private void PagePrev_Click(object sender, EventArgs e)
-    {
-        _currentPage = Math.Max(0, _currentPage - 1);
-        RefreshList();
-    }
-
-    private void PageNext_Click(object sender, EventArgs e)
-    {
-        _currentPage++;
+        tb_SearchQuery.ResetText();
         RefreshList();
     }
 
@@ -100,8 +95,16 @@ public sealed partial class StudentListViewForm : Form
             return;
         }
 
+        int year = (int) cb_FilterYear.SelectedItem!;
+        string? semester = (string?) cb_FilterSemester.SelectedItem;
+
+        if (cb_FilterSemester.SelectedIndex == 0)
+        {
+            semester = null;
+        }
+
         using var context = new AppDbContext();
-        IEnumerable<Student> students = context.Students.EnumerateAll(_rowsPerPage, _currentPage);
+        IEnumerable<Student> students = context.Students.EnumerateAll(year, semester);
         PopulateTable(context, students);
     }
 
@@ -117,7 +120,7 @@ public sealed partial class StudentListViewForm : Form
 
         _refreshFromSearch = true;
         using var context = new AppDbContext();
-        IEnumerable<StudentSearchResultDto> searchResults = context.Students.Search(query, _rowsPerPage, _currentPage);
+        IEnumerable<StudentSearchResultDto> searchResults = context.Students.Search(query, 100, 1);
         List<Student> students = [];
 
         foreach (StudentSearchResultDto result in searchResults)
@@ -168,13 +171,11 @@ public sealed partial class StudentListViewForm : Form
         }
 
         dgv_ListView.ClearSelection();
-        btn_PagePrev.Enabled = _currentPage > 1;
-        btn_PageNext.Enabled = count == _rowsPerPage;
         UpdateStatusLabel();
     }
 
     private void UpdateStatusLabel()
     {
-        lbl_StatusLabel.Text = $"Página {_currentPage}; Número de registros: {dgv_ListView.RowCount}";
+        lbl_StatusLabel.Text = $"Número de registros: {dgv_ListView.RowCount}";
     }
 }

@@ -53,10 +53,12 @@ namespace TECNM.Residencias.Forms.StudentForms
             tb_SearchQuery = new System.Windows.Forms.TextBox();
             button1 = new System.Windows.Forms.Button();
             button2 = new System.Windows.Forms.Button();
-            btn_PagePrev = new System.Windows.Forms.Button();
-            btn_PageNext = new System.Windows.Forms.Button();
             button3 = new System.Windows.Forms.Button();
             lbl_StatusLabel = new System.Windows.Forms.Label();
+            cb_FilterYear = new System.Windows.Forms.ComboBox();
+            cb_FilterSemester = new System.Windows.Forms.ComboBox();
+            label2 = new System.Windows.Forms.Label();
+            label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize) dgv_ListView).BeginInit();
             SuspendLayout();
             // 
@@ -236,7 +238,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(12, 9);
+            label1.Location = new System.Drawing.Point(12, 10);
             label1.Name = "label1";
             label1.Size = new System.Drawing.Size(93, 15);
             label1.TabIndex = 1;
@@ -246,13 +248,13 @@ namespace TECNM.Residencias.Forms.StudentForms
             // 
             tb_SearchQuery.Location = new System.Drawing.Point(111, 6);
             tb_SearchQuery.Name = "tb_SearchQuery";
-            tb_SearchQuery.Size = new System.Drawing.Size(360, 23);
+            tb_SearchQuery.Size = new System.Drawing.Size(370, 23);
             tb_SearchQuery.TabIndex = 2;
             tb_SearchQuery.KeyPress += SearchQuery_KeyPress;
             // 
             // button1
             // 
-            button1.Location = new System.Drawing.Point(477, 6);
+            button1.Location = new System.Drawing.Point(487, 6);
             button1.Name = "button1";
             button1.Size = new System.Drawing.Size(75, 23);
             button1.TabIndex = 3;
@@ -263,35 +265,13 @@ namespace TECNM.Residencias.Forms.StudentForms
             // button2
             // 
             button2.Anchor =  System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            button2.Location = new System.Drawing.Point(1132, 6);
+            button2.Location = new System.Drawing.Point(1159, 6);
             button2.Name = "button2";
-            button2.Size = new System.Drawing.Size(120, 23);
+            button2.Size = new System.Drawing.Size(96, 23);
             button2.TabIndex = 4;
-            button2.Text = "Mostrar todo";
+            button2.Text = "Aplicar filtro";
             button2.UseVisualStyleBackColor = true;
-            button2.Click += ResetSearch_Click;
-            // 
-            // btn_PagePrev
-            // 
-            btn_PagePrev.Anchor =  System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
-            btn_PagePrev.Location = new System.Drawing.Point(12, 637);
-            btn_PagePrev.Name = "btn_PagePrev";
-            btn_PagePrev.Size = new System.Drawing.Size(32, 32);
-            btn_PagePrev.TabIndex = 5;
-            btn_PagePrev.Text = "<";
-            btn_PagePrev.UseVisualStyleBackColor = true;
-            btn_PagePrev.Click += PagePrev_Click;
-            // 
-            // btn_PageNext
-            // 
-            btn_PageNext.Anchor =  System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
-            btn_PageNext.Location = new System.Drawing.Point(50, 637);
-            btn_PageNext.Name = "btn_PageNext";
-            btn_PageNext.Size = new System.Drawing.Size(32, 32);
-            btn_PageNext.TabIndex = 6;
-            btn_PageNext.Text = ">";
-            btn_PageNext.UseVisualStyleBackColor = true;
-            btn_PageNext.Click += PageNext_Click;
+            button2.Click += ApplyFilters_Click;
             // 
             // button3
             // 
@@ -308,21 +288,64 @@ namespace TECNM.Residencias.Forms.StudentForms
             // 
             lbl_StatusLabel.Anchor =  System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
             lbl_StatusLabel.AutoSize = true;
-            lbl_StatusLabel.Location = new System.Drawing.Point(88, 646);
+            lbl_StatusLabel.Location = new System.Drawing.Point(12, 646);
             lbl_StatusLabel.Name = "lbl_StatusLabel";
             lbl_StatusLabel.Size = new System.Drawing.Size(53, 15);
             lbl_StatusLabel.TabIndex = 8;
             lbl_StatusLabel.Text = "[STATUS]";
+            // 
+            // cb_FilterYear
+            // 
+            cb_FilterYear.Anchor =  System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            cb_FilterYear.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            cb_FilterYear.FormattingEnabled = true;
+            cb_FilterYear.Location = new System.Drawing.Point(895, 6);
+            cb_FilterYear.Name = "cb_FilterYear";
+            cb_FilterYear.Size = new System.Drawing.Size(70, 23);
+            cb_FilterYear.TabIndex = 9;
+            // 
+            // cb_FilterSemester
+            // 
+            cb_FilterSemester.Anchor =  System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            cb_FilterSemester.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            cb_FilterSemester.FormattingEnabled = true;
+            cb_FilterSemester.Items.AddRange(new object[] { "Todos", "ENE-JUN", "AGO-DIC" });
+            cb_FilterSemester.Location = new System.Drawing.Point(1032, 6);
+            cb_FilterSemester.Name = "cb_FilterSemester";
+            cb_FilterSemester.Size = new System.Drawing.Size(121, 23);
+            cb_FilterSemester.TabIndex = 10;
+            // 
+            // label2
+            // 
+            label2.Anchor =  System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            label2.AutoSize = true;
+            label2.Location = new System.Drawing.Point(860, 10);
+            label2.Name = "label2";
+            label2.Size = new System.Drawing.Size(29, 15);
+            label2.TabIndex = 11;
+            label2.Text = "Año";
+            // 
+            // label3
+            // 
+            label3.Anchor =  System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            label3.AutoSize = true;
+            label3.Location = new System.Drawing.Point(971, 10);
+            label3.Name = "label3";
+            label3.Size = new System.Drawing.Size(55, 15);
+            label3.TabIndex = 12;
+            label3.Text = "Semestre";
             // 
             // StudentListViewForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(1264, 681);
+            Controls.Add(label3);
+            Controls.Add(label2);
+            Controls.Add(cb_FilterSemester);
+            Controls.Add(cb_FilterYear);
             Controls.Add(lbl_StatusLabel);
             Controls.Add(button3);
-            Controls.Add(btn_PageNext);
-            Controls.Add(btn_PagePrev);
             Controls.Add(button2);
             Controls.Add(button1);
             Controls.Add(tb_SearchQuery);
@@ -345,8 +368,6 @@ namespace TECNM.Residencias.Forms.StudentForms
         private System.Windows.Forms.TextBox tb_SearchQuery;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button btn_PagePrev;
-        private System.Windows.Forms.Button btn_PageNext;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.DataGridViewTextBoxColumn StudentId;
         private System.Windows.Forms.DataGridViewTextBoxColumn StudentName;
@@ -368,5 +389,9 @@ namespace TECNM.Residencias.Forms.StudentForms
         private System.Windows.Forms.DataGridViewTextBoxColumn StudentCreatedOn;
         private System.Windows.Forms.DataGridViewButtonColumn ListStudentEdit;
         private System.Windows.Forms.Label lbl_StatusLabel;
+        private System.Windows.Forms.ComboBox cb_FilterYear;
+        private System.Windows.Forms.ComboBox cb_FilterSemester;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
     }
 }
