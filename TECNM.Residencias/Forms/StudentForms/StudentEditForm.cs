@@ -525,6 +525,7 @@ public sealed partial class StudentEditForm : EditForm
             }
         }
 
+        cb_StudentSpecialty.Items.Clear();
         foreach (Specialty specialty in specialties)
         {
             int index = cb_StudentSpecialty.Items.Add(specialty);
