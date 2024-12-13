@@ -17,9 +17,28 @@ public sealed partial class StudentListViewByAdvisorForm : Form
         InitializeComponent();
         Text = $"Listado de residentes | {App.Name}";
         dgv_ListView.DoubleBuffered(true);
+    }
 
+    public StudentListViewByAdvisorForm(Advisor advisor) : this()
+    {
+        _advisor = advisor;
+        Text = $"Listado de residentes de {advisor} | {App.Name}";
+    }
+
+    protected override void OnLoad(EventArgs e)
+    {
+        base.OnLoad(e);
+
+        using var context = new AppDbContext();
+        long? minYear = context.Students.GetMinimumYear();
         var today = DateTime.Today;
-        for (int i = today.Year; i >= App.MinimumReportYear; i--)
+
+        if (!minYear.HasValue)
+        {
+            minYear = today.Year;
+        }
+
+        for (int i = today.Year; i >= minYear; i--)
         {
             cb_FilterYear.Items.Add(i);
         }
@@ -34,17 +53,6 @@ public sealed partial class StudentListViewByAdvisorForm : Form
         }
 
         cb_AdvisorType.SelectedIndex = 0;
-    }
-
-    public StudentListViewByAdvisorForm(Advisor advisor) : this()
-    {
-        _advisor = advisor;
-        Text = $"Listado de residentes de {advisor} | {App.Name}";
-    }
-
-    protected override void OnLoad(EventArgs e)
-    {
-        base.OnLoad(e);
 
         if (AppSettings.Default.DefaultSemesterFilter >= 0)
         {

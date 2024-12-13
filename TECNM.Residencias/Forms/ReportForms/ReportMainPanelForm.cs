@@ -29,7 +29,16 @@ public sealed partial class ReportMainPanelForm : Form
     {
         base.OnLoad(e);
 
-        for (int i = DateTime.Today.Year; i >= App.MinimumReportYear; i--)
+        using var context = new AppDbContext();
+        long? minYear = context.Students.GetMinimumYear();
+        var today = DateTime.Today;
+
+        if (!minYear.HasValue)
+        {
+            minYear = today.Year;
+        }
+
+        for (int i = today.Year; i >= minYear; i--)
         {
             cb_Year.Items.Add(i);
         }

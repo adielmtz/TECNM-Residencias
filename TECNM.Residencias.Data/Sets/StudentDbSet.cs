@@ -220,6 +220,19 @@ public sealed class StudentDbSet : DbSet<Student>
         }
     }
 
+    public long? GetMinimumYear()
+    {
+        using var command = CreateCommand("SELECT CAST(min(strftime('%Y', StartDate)) AS INTEGER) FROM Student LIMIT 1");
+        object? result = command.ExecuteScalar();
+
+        if (result is null || result == DBNull.Value)
+        {
+            return null;
+        }
+
+        return (long) result;
+    }
+
     public override bool Contains(Student entity) => throw new NotImplementedException();
 
     public override bool Add(Student entity)

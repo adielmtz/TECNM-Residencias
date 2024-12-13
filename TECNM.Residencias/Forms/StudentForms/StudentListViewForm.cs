@@ -17,20 +17,28 @@ public sealed partial class StudentListViewForm : Form
         InitializeComponent();
         Text = $"Listado de residentes | {App.Name}";
         dgv_ListView.DoubleBuffered(true);
+    }
 
+    protected override void OnLoad(EventArgs e)
+    {
+        base.OnLoad(e);
+
+        using var context = new AppDbContext();
+        long? minYear = context.Students.GetMinimumYear();
         var today = DateTime.Today;
-        for (int i = today.Year; i >= App.MinimumReportYear; i--)
+
+        if (!minYear.HasValue)
+        {
+            minYear = today.Year;
+        }
+
+        for (int i = today.Year; i >= minYear; i--)
         {
             cb_FilterYear.Items.Add(i);
         }
 
         cb_FilterYear.SelectedIndex = 0;
         cb_FilterSemester.SelectedIndex = today.Month >= 1 && today.Month < 7 ? 1 : 2;
-    }
-
-    protected override void OnLoad(EventArgs e)
-    {
-        base.OnLoad(e);
 
         if (AppSettings.Default.DefaultSemesterFilter >= 0)
         {
