@@ -139,7 +139,7 @@ namespace TECNM.Residencias.Forms
             groupBox5.Size = new System.Drawing.Size(832, 464);
             groupBox5.TabIndex = 6;
             groupBox5.TabStop = false;
-            groupBox5.Text = "Búsqueda rápida";
+            groupBox5.Text = "Buscar residente";
             // 
             // flp_QuickSearchResults
             // 
