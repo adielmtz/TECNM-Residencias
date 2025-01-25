@@ -14,7 +14,38 @@ public sealed class DocumentDbSet : DbSet<Document>
     {
     }
 
-    public override IEnumerable<Document> EnumerateAll() => throw new NotImplementedException();
+    /// <summary>
+    /// Gets the number of Document entries stored in the database.
+    /// </summary>
+    /// <returns>The number of documents.</returns>
+    public long Count()
+    {
+        using var command = CreateCommand("SELECT count(*) FROM Document");
+        object? result = command.ExecuteScalar();
+
+        if (result == null || result == DBNull.Value)
+        {
+            return 0;
+        }
+
+        return (long) result;
+    }
+
+    public override IEnumerable<Document> EnumerateAll()
+    {
+        using var command = CreateCommand("""
+        SELECT Id, StudentId, TypeId, FullPath, OriginalName, Size, Hash, CreatedOn
+        FROM Document
+        ORDER BY StudentId, TypeId, FullPath
+        """);
+
+        using var reader = command.ExecuteReader();
+
+        while (reader.Read())
+        {
+            yield return HydrateObject(reader);
+        }
+    }
 
     /// <summary>
     /// Retrieves and enumerates all entities of type <see cref="Document"/> belonging to the specified <see cref="Student"/>.
