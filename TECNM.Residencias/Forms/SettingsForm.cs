@@ -45,10 +45,9 @@ public sealed partial class SettingsForm : Form
 
         using var sqlite = App.Database.CreateConnection();
 
-        sqlite.Execute("REINDEX;");
-        sqlite.Execute("ANALYZE;");
-        sqlite.Execute("VACUUM;");
-        sqlite.Execute("PRAGMA wal_checkpoint(FULL);");
+        sqlite.Execute("VACUUM");
+        sqlite.Execute("ANALYZE");
+        sqlite.Execute("PRAGMA wal_checkpoint(FULL)");
 
         Enabled = true;
 
