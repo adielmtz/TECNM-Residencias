@@ -31,6 +31,7 @@ namespace TECNM.Residencias.Forms
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
             lbl_SqliteVersion = new System.Windows.Forms.Label();
             groupBox1 = new System.Windows.Forms.GroupBox();
+            button5 = new System.Windows.Forms.Button();
             button3 = new System.Windows.Forms.Button();
             button1 = new System.Windows.Forms.Button();
             groupBox2 = new System.Windows.Forms.GroupBox();
@@ -50,7 +51,6 @@ namespace TECNM.Residencias.Forms
             label5 = new System.Windows.Forms.Label();
             cb_CompanyType = new System.Windows.Forms.ComboBox();
             button4 = new System.Windows.Forms.Button();
-            button5 = new System.Windows.Forms.Button();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
@@ -79,6 +79,17 @@ namespace TECNM.Residencias.Forms
             groupBox1.TabIndex = 1;
             groupBox1.TabStop = false;
             groupBox1.Text = "Avanzado";
+            // 
+            // button5
+            // 
+            button5.Location = new System.Drawing.Point(6, 80);
+            button5.Name = "button5";
+            button5.Size = new System.Drawing.Size(235, 23);
+            button5.TabIndex = 7;
+            button5.TabStop = false;
+            button5.Text = "Comprobar integridad";
+            button5.UseVisualStyleBackColor = true;
+            button5.Click += OpenIntegrityCheckDialog_Click;
             // 
             // button3
             // 
@@ -272,16 +283,6 @@ namespace TECNM.Residencias.Forms
             button4.Text = "Guardar";
             button4.UseVisualStyleBackColor = true;
             button4.Click += SaveAppSettings_Click;
-            // 
-            // button5
-            // 
-            button5.Location = new System.Drawing.Point(6, 80);
-            button5.Name = "button5";
-            button5.Size = new System.Drawing.Size(235, 23);
-            button5.TabIndex = 7;
-            button5.Text = "Comprobar integridad";
-            button5.UseVisualStyleBackColor = true;
-            button5.Click += OpenIntegrityCheckDialog_Click;
             // 
             // SettingsForm
             // 
