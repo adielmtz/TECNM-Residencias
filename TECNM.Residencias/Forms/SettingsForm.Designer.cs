@@ -50,6 +50,7 @@ namespace TECNM.Residencias.Forms
             label5 = new System.Windows.Forms.Label();
             cb_CompanyType = new System.Windows.Forms.ComboBox();
             button4 = new System.Windows.Forms.Button();
+            button5 = new System.Windows.Forms.Button();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
@@ -60,7 +61,7 @@ namespace TECNM.Residencias.Forms
             // lbl_SqliteVersion
             // 
             lbl_SqliteVersion.AutoSize = true;
-            lbl_SqliteVersion.Location = new System.Drawing.Point(6, 77);
+            lbl_SqliteVersion.Location = new System.Drawing.Point(6, 106);
             lbl_SqliteVersion.Name = "lbl_SqliteVersion";
             lbl_SqliteVersion.Size = new System.Drawing.Size(101, 15);
             lbl_SqliteVersion.TabIndex = 0;
@@ -68,12 +69,13 @@ namespace TECNM.Residencias.Forms
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(button5);
             groupBox1.Controls.Add(button3);
             groupBox1.Controls.Add(button1);
             groupBox1.Controls.Add(lbl_SqliteVersion);
             groupBox1.Location = new System.Drawing.Point(541, 12);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new System.Drawing.Size(247, 99);
+            groupBox1.Size = new System.Drawing.Size(247, 128);
             groupBox1.TabIndex = 1;
             groupBox1.TabStop = false;
             groupBox1.Text = "Avanzado";
@@ -271,6 +273,16 @@ namespace TECNM.Residencias.Forms
             button4.UseVisualStyleBackColor = true;
             button4.Click += SaveAppSettings_Click;
             // 
+            // button5
+            // 
+            button5.Location = new System.Drawing.Point(6, 80);
+            button5.Name = "button5";
+            button5.Size = new System.Drawing.Size(235, 23);
+            button5.TabIndex = 7;
+            button5.Text = "Comprobar integridad";
+            button5.UseVisualStyleBackColor = true;
+            button5.Click += OpenIntegrityCheckDialog_Click;
+            // 
             // SettingsForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -321,5 +333,6 @@ namespace TECNM.Residencias.Forms
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox cb_DefaultSemesterFilter;
+        private System.Windows.Forms.Button button5;
     }
 }

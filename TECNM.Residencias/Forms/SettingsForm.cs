@@ -60,6 +60,12 @@ public sealed partial class SettingsForm : Form
         dialog.ShowDialog();
     }
 
+    private void OpenIntegrityCheckDialog_Click(object sender, EventArgs e)
+    {
+        using var dialog = new IntegrityCheckForm();
+        dialog.ShowDialog();
+    }
+
     private void SourceCodeGitHub_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
     {
         var info = new ProcessStartInfo

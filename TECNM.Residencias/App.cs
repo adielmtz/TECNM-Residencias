@@ -11,6 +11,7 @@ internal static class App
 {
     private static readonly string s_rootDirectory;
     private static readonly string s_fileStorageDirectory;
+    private static readonly string s_logsDirectory;
     private static readonly string s_tempStorageDirectory;
     private static readonly string s_dbBackupDirectory;
     private static readonly string s_databaseName;
@@ -24,6 +25,7 @@ internal static class App
         string appDataDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
         s_rootDirectory = Path.Combine(appDataDirectory, "TECNM-Residencias");
         s_fileStorageDirectory = Path.Combine(s_rootDirectory, "Archivo");
+        s_logsDirectory = Path.Combine(s_rootDirectory, "Logs");
         s_tempStorageDirectory = Path.Combine(s_rootDirectory, "Temp");
         s_dbBackupDirectory = Path.Combine(s_fileStorageDirectory, ".db-backups");
 
@@ -51,6 +53,8 @@ internal static class App
 
     public static string FileStorageDirectory => s_fileStorageDirectory;
 
+    public static string LogsDirectory => s_logsDirectory;
+
     public static string TempStorageDirectory => s_tempStorageDirectory;
 
     public static string DatabaseBackupDirectory => s_dbBackupDirectory;
@@ -67,6 +71,7 @@ internal static class App
         {
             Directory.CreateDirectory(RootDirectory);
             Directory.CreateDirectory(FileStorageDirectory);
+            Directory.CreateDirectory(LogsDirectory);
             Directory.CreateDirectory(TempStorageDirectory);
             Directory.CreateDirectory(DatabaseBackupDirectory);
             InitializeDatabase();
