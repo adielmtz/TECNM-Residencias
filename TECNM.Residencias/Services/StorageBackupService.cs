@@ -1,8 +1,6 @@
 namespace TECNM.Residencias.Services;
 
 using System;
-using System.Collections.Generic;
-using System.Formats.Tar;
 using System.IO;
 using System.IO.Compression;
 using System.Threading;
@@ -16,7 +14,7 @@ internal sealed class StorageBackupService
     private readonly string sourceDirectory;
     private readonly string destinationDirectory;
     private readonly DateTime backupDateTime;
-    private IList<string> preparedFiles = [];
+    private FileInfo[] preparedFiles = [];
 
     /// <summary>
     /// Initializes a new instance of the <see cref="StorageBackupService"/> class
@@ -77,13 +75,14 @@ internal sealed class StorageBackupService
     /// <returns>A <see cref="Task"/> that represents the asynchronous operation, containing the total number of files prepared for backup.</returns>
     public async Task<int> PrepareFilesAsync(CancellationToken cancellationToken = default)
     {
-        preparedFiles = await Task.Run(() => Directory.GetFiles(
-            SourceDirectory,
-            "*.*",
-            SearchOption.AllDirectories
-        ), cancellationToken);
+        FileInfo[] fileList = await Task.Run(() =>
+        {
+            var directory = new DirectoryInfo(SourceDirectory);
+            return directory.GetFiles("*.*", SearchOption.AllDirectories);
+        }, cancellationToken);
 
-        return preparedFiles.Count;
+        preparedFiles = fileList;
+        return preparedFiles.Length;
     }
 
     /// <summary>
@@ -94,33 +93,53 @@ internal sealed class StorageBackupService
     /// <returns>A <see cref="Task"/> that represents the asynchronous operation, containing the full path of the created backup file.</returns>
     public async Task<string> ExecuteAsync(IProgress<(string, int)>? progress = null, CancellationToken cancellationToken = default)
     {
-        string filename = $"rp-backup.{BackupDateTime:yyyyMMddHHmmss}.tar.gz";
+        string filename = $"rp-backup.{BackupDateTime:yyyyMMddHHmmss}.zip";
         string fullpath = Path.Combine(DestinationDirectory, filename);
 
-        await using var writer = OpenTarWriter(fullpath);
-        IList<string> files = preparedFiles;
+        using ZipArchive archive = OpenArchiveWriter(fullpath);
+        FileInfo[] files = preparedFiles;
+        CompressionLevel compression = CompressionLevel;
 
-        for (int i = 0; i < files.Count; i++)
+        try
         {
-            string entryFile = files[i];
-            string entryName = Path.GetRelativePath(SourceDirectory, entryFile).Replace('\\', '/');
+            for (int i = 0; i < files.Length; i++)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
 
-            progress?.Report((entryName, i + 1));
-            await writer.WriteEntryAsync(entryFile, entryName, cancellationToken);
+                FileInfo current = files[i];
+                string entryFile = current.FullName;
+                string entryName = Path.GetRelativePath(SourceDirectory, entryFile).Replace('\\', '/');
+                progress?.Report((entryName, i + 1));
+
+                ZipArchiveEntry entry = archive.CreateEntry(entryName, compression);
+                entry.LastWriteTime = current.LastWriteTime;
+
+                await using var reader = current.OpenRead();
+                await using var writer = entry.Open();
+                await reader.CopyToAsync(writer);
+            }
+        }
+        catch (OperationCanceledException)
+        {
+            // Zip archive may be incomplete
+            // and (most-likely) corrupt, so
+            // get rid of it.
+            archive.Dispose();
+            File.Delete(fullpath);
+            throw;
         }
 
         return fullpath;
     }
 
     /// <summary>
-    /// Opens a <see cref="TarWriter"/> for writing a .tar.gz file.
+    /// Opens a <see cref="ZipArchive"/> for writing a .zip file.
     /// </summary>
     /// <param name="filename">The name of the file to create.</param>
-    /// <returns>A <see cref="TarWriter"/> instance for writing to the specified file.</returns>
-    private TarWriter OpenTarWriter(string filename)
+    /// <returns>A <see cref="ZipArchive"/> instance for writing to the specified zip file.</returns>
+    private ZipArchive OpenArchiveWriter(string filename)
     {
-        var fileStream = new FileStream(filename, FileMode.Create, FileAccess.Write, FileShare.None);
-        var gzipStream = new GZipStream(fileStream, CompressionLevel, leaveOpen: false);
-        return new TarWriter(gzipStream, TarEntryFormat.Pax, leaveOpen: false);
+        var stream = new FileStream(filename, FileMode.CreateNew, FileAccess.Write, FileShare.None);
+        return new ZipArchive(stream, ZipArchiveMode.Create, leaveOpen: false);
     }
 }
