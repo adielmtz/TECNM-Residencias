@@ -89,6 +89,7 @@ public sealed partial class SettingsForm : Form
         AppSettings.Default.DefaultCompanyType = (CompanyType) cb_CompanyType.SelectedIndex - 1;
         AppSettings.Default.DefaultStudentCareer = ((Career) cb_StudentCareer.SelectedItem!).Id;
         AppSettings.Default.DefaultSemesterFilter = cb_DefaultSemesterFilter.SelectedIndex - 1;
+        AppSettings.Default.EnableStudentEmailAutocomplete = chk_EnableEmailAutocomplete.Checked;
         AppSettings.Default.Save();
         Close();
     }
@@ -124,6 +125,7 @@ public sealed partial class SettingsForm : Form
         }
 
         cb_DefaultSemesterFilter.SelectedIndex = AppSettings.Default.DefaultSemesterFilter + 1;
+        chk_EnableEmailAutocomplete.Checked = AppSettings.Default.EnableStudentEmailAutocomplete;
     }
 
     private string GetSqliteVersion()

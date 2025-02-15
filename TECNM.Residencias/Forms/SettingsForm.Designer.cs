@@ -51,6 +51,8 @@ namespace TECNM.Residencias.Forms
             label5 = new System.Windows.Forms.Label();
             cb_CompanyType = new System.Windows.Forms.ComboBox();
             button4 = new System.Windows.Forms.Button();
+            label7 = new System.Windows.Forms.Label();
+            chk_EnableEmailAutocomplete = new System.Windows.Forms.CheckBox();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
@@ -197,13 +199,15 @@ namespace TECNM.Residencias.Forms
             // 
             // groupBox6
             // 
+            groupBox6.Controls.Add(chk_EnableEmailAutocomplete);
+            groupBox6.Controls.Add(label7);
             groupBox6.Controls.Add(label4);
             groupBox6.Controls.Add(cb_DefaultSemesterFilter);
             groupBox6.Controls.Add(cb_StudentCareer);
             groupBox6.Controls.Add(label6);
             groupBox6.Location = new System.Drawing.Point(6, 80);
             groupBox6.Name = "groupBox6";
-            groupBox6.Size = new System.Drawing.Size(511, 83);
+            groupBox6.Size = new System.Drawing.Size(511, 125);
             groupBox6.TabIndex = 7;
             groupBox6.TabStop = false;
             groupBox6.Text = "Residentes";
@@ -284,6 +288,23 @@ namespace TECNM.Residencias.Forms
             button4.UseVisualStyleBackColor = true;
             button4.Click += SaveAppSettings_Click;
             // 
+            // label7
+            // 
+            label7.Location = new System.Drawing.Point(6, 85);
+            label7.Name = "label7";
+            label7.Size = new System.Drawing.Size(109, 33);
+            label7.TabIndex = 6;
+            label7.Text = "Autocompletar dirección de email";
+            // 
+            // chk_EnableEmailAutocomplete
+            // 
+            chk_EnableEmailAutocomplete.AutoSize = true;
+            chk_EnableEmailAutocomplete.Location = new System.Drawing.Point(121, 92);
+            chk_EnableEmailAutocomplete.Name = "chk_EnableEmailAutocomplete";
+            chk_EnableEmailAutocomplete.Size = new System.Drawing.Size(15, 14);
+            chk_EnableEmailAutocomplete.TabIndex = 7;
+            chk_EnableEmailAutocomplete.UseVisualStyleBackColor = true;
+            // 
             // SettingsForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -335,5 +356,7 @@ namespace TECNM.Residencias.Forms
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox cb_DefaultSemesterFilter;
         private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.CheckBox chk_EnableEmailAutocomplete;
+        private System.Windows.Forms.Label label7;
     }
 }

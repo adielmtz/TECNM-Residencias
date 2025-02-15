@@ -53,6 +53,12 @@ internal sealed class AppSettings
         set => SetSetting(nameof(MustOpenReportsDirectory), value);
     }
 
+    public bool EnableStudentEmailAutocomplete
+    {
+        get => bool.Parse(GetSetting(nameof(EnableStudentEmailAutocomplete), true).Value);
+        set => SetSetting(nameof(EnableStudentEmailAutocomplete), value);
+    }
+
     public long DefaultStudentCareer
     {
         get => long.Parse(GetSetting(nameof(DefaultStudentCareer), -1).Value);

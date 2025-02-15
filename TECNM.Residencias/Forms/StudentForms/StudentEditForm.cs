@@ -115,9 +115,12 @@ public sealed partial class StudentEditForm : EditForm
 
     private void StudentId_Leave(object sender, EventArgs e)
     {
-        if (mtb_StudentId.Text.Length == 8 && string.IsNullOrEmpty(tb_StudentEmail.Text))
+        if (AppSettings.Default.EnableStudentEmailAutocomplete)
         {
-            tb_StudentEmail.Text = $"L{mtb_StudentId.Text}@cdmadero.tecnm.mx";
+            if (mtb_StudentId.Text.Length == 8 && string.IsNullOrEmpty(tb_StudentEmail.Text))
+            {
+                tb_StudentEmail.Text = $"L{mtb_StudentId.Text}@cdmadero.tecnm.mx";
+            }
         }
     }
 
