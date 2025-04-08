@@ -10,6 +10,7 @@
         <None Remove="Resources\migration_2.sql" />
         <None Remove="Resources\migration_3.sql" />
         <None Remove="Resources\migration_4.sql" />
+        <None Remove="Resources\migration_5.sql" />
     </ItemGroup>
 
     <ItemGroup>
@@ -17,5 +18,6 @@
         <EmbeddedResource Include="Resources\migration_2.sql" />
         <EmbeddedResource Include="Resources\migration_3.sql" />
         <EmbeddedResource Include="Resources\migration_4.sql" />
+        <EmbeddedResource Include="Resources\migration_5.sql" />
     </ItemGroup>
 </Project>

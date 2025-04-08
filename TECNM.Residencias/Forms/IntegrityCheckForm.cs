@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
+using TECNM.Residencias.Services;
 
 public sealed partial class IntegrityCheckForm : EditForm
 {
@@ -222,7 +223,7 @@ public sealed partial class IntegrityCheckForm : EditForm
             pb_Progress.Value = fileCount;
             lbl_FileCount.Text = $"{fileCount} / {count} archivos";
 
-            string path = document.FullPath;
+            string path = StorageService.GetDocumentPath(document);
             string hash = document.Hash;
 
             if (!File.Exists(path))

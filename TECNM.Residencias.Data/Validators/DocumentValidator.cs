@@ -16,7 +16,7 @@ public sealed class DocumentValidator : AbstractValidator<Document>
             .GreaterThan(0)
             .WithMessage("Selecciona el tipo de documento.");
 
-        RuleFor(it => it.FullPath)
+        RuleFor(it => it.Location)
             .NotEmpty()
             .WithName("Ruta del archivo");
 

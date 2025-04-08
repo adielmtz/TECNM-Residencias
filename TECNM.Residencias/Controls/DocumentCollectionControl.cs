@@ -25,8 +25,10 @@ public sealed partial class DocumentCollectionControl : UserControl
         InitializeComponent();
     }
 
-    private void DocumentCollectionControl_Load(object sender, EventArgs e)
+    protected override void OnLoad(EventArgs e)
     {
+        base.OnLoad(e);
+
         if (_documentTypes.Count == 0)
         {
             using var context = new AppDbContext();
@@ -76,7 +78,7 @@ public sealed partial class DocumentCollectionControl : UserControl
         {
             if (control is DocumentListItemControl listItem && listItem.IsNew)
             {
-                await SaveDocument(set, owner, listItem.Document, listItem.DocumentType!);
+                await SaveDocument(set, owner, listItem.FullPath, listItem.Document, listItem.DocumentType!);
             }
         }
 
@@ -112,14 +114,14 @@ public sealed partial class DocumentCollectionControl : UserControl
             int result = set.Remove(document);
             if (result > 0)
             {
-                StorageService.DeleteFile(document.FullPath);
+                StorageService.DeleteDocument(document);
             }
         }
     }
 
-    private async Task SaveDocument(DbSet<Document> set, Student owner, Document original, DocumentType type)
+    private async Task SaveDocument(DbSet<Document> set, Student owner, string fullPath, Document original, DocumentType type)
     {
-        Document stored = await StorageService.SaveFileAsync(owner, original, type);
+        Document stored = await StorageService.SaveFileAsync(owner, fullPath, original, type);
         Debug.Assert(stored.StudentId == owner.Id);
         set.Add(stored);
     }

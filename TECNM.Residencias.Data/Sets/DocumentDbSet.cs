@@ -34,9 +34,9 @@ public sealed class DocumentDbSet : DbSet<Document>
     public override IEnumerable<Document> EnumerateAll()
     {
         using var command = CreateCommand("""
-        SELECT Id, StudentId, TypeId, FullPath, OriginalName, Size, Hash, CreatedOn
+        SELECT Id, StudentId, TypeId, Location, OriginalName, Size, Hash, CreatedOn
         FROM Document
-        ORDER BY StudentId, TypeId, FullPath
+        ORDER BY StudentId, TypeId, Location
         """);
 
         using var reader = command.ExecuteReader();
@@ -55,7 +55,7 @@ public sealed class DocumentDbSet : DbSet<Document>
     public IEnumerable<Document> EnumerateAll(Student student)
     {
         using var command = CreateCommand("""
-        SELECT Id, StudentId, TypeId, FullPath, OriginalName, Size, Hash, CreatedOn
+        SELECT Id, StudentId, TypeId, Location, OriginalName, Size, Hash, CreatedOn
         FROM Document
         WHERE StudentId = $id
         ORDER BY TypeId
@@ -95,14 +95,14 @@ public sealed class DocumentDbSet : DbSet<Document>
     public override bool Add(Document entity)
     {
         using var command = CreateCommand("""
-        INSERT INTO Document (StudentId, TypeId, FullPath, OriginalName, Size, Hash, CreatedOn)
+        INSERT INTO Document (StudentId, TypeId, Location, OriginalName, Size, Hash, CreatedOn)
         VALUES ($p0, $p1, $p2, $p3, $p4, $p5, $p6)
         RETURNING Id
         """);
 
         command.Parameters.Add("$p0", SqliteType.Integer).Value = entity.StudentId;
         command.Parameters.Add("$p1", SqliteType.Integer).Value = entity.TypeId;
-        command.Parameters.Add("$p2", SqliteType.Text).Value    = entity.FullPath;
+        command.Parameters.Add("$p2", SqliteType.Text).Value    = entity.Location;
         command.Parameters.Add("$p3", SqliteType.Text).Value    = entity.OriginalName;
         command.Parameters.Add("$p4", SqliteType.Integer).Value = entity.Size;
         command.Parameters.Add("$p5", SqliteType.Text).Value    = entity.Hash;
@@ -124,7 +124,7 @@ public sealed class DocumentDbSet : DbSet<Document>
         UPDATE Document
         SET StudentId    = $p0,
             TypeId       = $p1,
-            FullPath     = $p2,
+            Location     = $p2,
             OriginalName = $p3,
             Size         = $p4,
             Hash         = $p5
@@ -133,7 +133,7 @@ public sealed class DocumentDbSet : DbSet<Document>
 
         command.Parameters.Add("$p0", SqliteType.Integer).Value = entity.StudentId;
         command.Parameters.Add("$p1", SqliteType.Integer).Value = entity.TypeId;
-        command.Parameters.Add("$p2", SqliteType.Text).Value    = entity.FullPath;
+        command.Parameters.Add("$p2", SqliteType.Text).Value    = entity.Location;
         command.Parameters.Add("$p3", SqliteType.Text).Value    = entity.OriginalName;
         command.Parameters.Add("$p4", SqliteType.Integer).Value = entity.Size;
         command.Parameters.Add("$p5", SqliteType.Text).Value    = entity.Hash;
@@ -159,7 +159,7 @@ public sealed class DocumentDbSet : DbSet<Document>
             Id           = reader.GetInt64(index++),
             StudentId    = reader.GetInt64(index++),
             TypeId       = reader.GetInt64(index++),
-            FullPath     = reader.GetString(index++),
+            Location     = reader.GetString(index++),
             OriginalName = reader.GetString(index++),
             Size         = reader.GetInt64(index++),
             Hash         = reader.GetString(index++),

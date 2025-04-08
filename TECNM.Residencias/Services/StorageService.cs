@@ -10,13 +10,34 @@ using TECNM.Residencias.Data.Entities;
 
 internal static class StorageService
 {
-    public static async Task<Document> SaveFileAsync(Student owner, Document document, DocumentType type)
+    /// <summary>
+    /// Retrieves the full path of the document by combining the application's file storage directory
+    /// with the document's relative location.
+    /// </summary>
+    /// <param name="document">The document object that contains the relative location of the document.</param>
+    /// <returns>The full file path where the document is stored on the system.</returns>
+    public static string GetDocumentPath(Document document)
+    {
+        return Path.Combine(App.FileStorageDirectory, document.Location);
+    }
+
+    /// <summary>
+    /// Converts a full file path to a relative file path with respect to the application's file storage directory.
+    /// </summary>
+    /// <param name="fullname">The full file path of the document.</param>
+    /// <returns>The relative file path from the application's file storage directory to the document.</returns>
+    public static string GetDocumentLocation(string fullname)
+    {
+        return Path.GetRelativePath(App.FileStorageDirectory, fullname);
+    }
+
+    public static async Task<Document> SaveFileAsync(Student owner, string filename, Document document, DocumentType type)
     {
         Debug.Assert(owner.Id > 0);
         Debug.Assert(document.Id == 0);
 
         // Generate temporary file
-        string sourceFileName = document.FullPath;
+        string sourceFileName = filename;
         string tempFileName = Path.Combine(App.TempStorageDirectory, Guid.NewGuid().ToString());
         long size = 0;
         string hash = "";
@@ -35,7 +56,7 @@ internal static class StorageService
             Semester  = owner.Semester,
             Type      = type,
             Hash      = hash,
-            Extension = Path.GetExtension(document.FullPath),
+            Extension = Path.GetExtension(sourceFileName),
         };
 
         Directory.CreateDirectory(builder.Directory);
@@ -45,21 +66,19 @@ internal static class StorageService
         {
             StudentId    = builder.StudentId,
             TypeId       = type.Id,
-            FullPath     = builder.FullPath,
+            Location     = GetDocumentLocation(builder.FullPath),
             OriginalName = document.OriginalName,
             Size         = size,
             Hash         = hash,
         };
     }
 
-    public static void DeleteFile(string filename)
+    public static void DeleteDocument(Document document)
     {
-        if (filename.StartsWith(App.FileStorageDirectory))
-        {
-            File.Delete(filename);
-            string directory = Path.GetDirectoryName(filename)!;
-            DirectoryCleanupService.DeleteDirectoryIfEmpty(directory);
-        }
+        string filename = GetDocumentPath(document);
+        File.Delete(filename);
+        string directory = Path.GetDirectoryName(filename)!;
+        DirectoryCleanupService.DeleteDirectoryIfEmpty(directory);
     }
 
     private static async Task<string> CopyAndComputeHashAsync(Stream source, Stream destination)

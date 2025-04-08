@@ -23,9 +23,9 @@ public sealed class Document
     public long TypeId { get; set; }
 
     /// <summary>
-    /// Gets or sets the document full path on the filesystem.
+    /// Gets or sets the location of the document on the file system.
     /// </summary>
-    public string FullPath { get; set; } = "";
+    public string Location { get; set; } = "";
 
     /// <summary>
     /// Gets or sets the original name of the document.

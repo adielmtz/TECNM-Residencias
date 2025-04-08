@@ -17,7 +17,7 @@ public sealed class DbMigrator : IDisposable
     /// The current version of the database schema. It must only increase.
     /// This number must match the SQL migration scrips numbering.
     /// </summary>
-    public static readonly long CurrentVersion = 4;
+    public static readonly long CurrentVersion = 5;
 
     /// <summary>
     /// The default page size for the SQLite database.

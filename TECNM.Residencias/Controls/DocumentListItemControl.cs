@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
+using TECNM.Residencias.Services;
 
 public partial class DocumentListItemControl : UserControl
 {
@@ -14,6 +15,7 @@ public partial class DocumentListItemControl : UserControl
     private readonly List<DocumentType> _documentTypes = [DocumentTypePlaceholder];
     private Action<DocumentListItemControl>? _onDelete;
     private Document _document = new Document();
+    private string _fullpath = "";
 
     public DocumentListItemControl()
     {
@@ -22,7 +24,8 @@ public partial class DocumentListItemControl : UserControl
 
     public DocumentListItemControl(IReadOnlyList<DocumentType> types, FileInfo fileInfo, Action<DocumentListItemControl> onDelete) : this()
     {
-        _document.FullPath = fileInfo.FullName;
+        _fullpath = fileInfo.FullName;
+        _document.Location = StorageService.GetDocumentLocation(_fullpath);
         _document.OriginalName = fileInfo.Name;
         _document.Size = fileInfo.Length;
         _onDelete = onDelete;
@@ -33,6 +36,7 @@ public partial class DocumentListItemControl : UserControl
     public DocumentListItemControl(IReadOnlyList<DocumentType> types, Document document, Action<DocumentListItemControl> onDelete) : this()
     {
         Debug.Assert(document.Id > 0, "Document must exist in the database and have a valid rowid!");
+        _fullpath = StorageService.GetDocumentPath(document);
         _document = document;
         _onDelete = onDelete;
         lbl_OriginalName.Text = document.OriginalName;
@@ -42,6 +46,8 @@ public partial class DocumentListItemControl : UserControl
     public Document Document => _document;
 
     public DocumentType DocumentType => _documentTypes[cb_DocumentType.SelectedIndex];
+
+    public string FullPath => _fullpath;
 
     public bool IsNew => _document.Id == 0;
 
@@ -79,13 +85,13 @@ public partial class DocumentListItemControl : UserControl
 
     private void OpenFile_Click(object sender, EventArgs e)
     {
-        string path = _document.FullPath;
+        string path = _fullpath;
 
         if (string.IsNullOrEmpty(path) || !File.Exists(path))
         {
             MessageBox.Show(
-                "No se puede abrir el archivo.",
-                "Error",
+                "No se pudo abrir el archivo. Puede que el archivo no exista o se haya movido de lugar.",
+                "Abrir archivo.",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Error
             );
