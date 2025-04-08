@@ -21,6 +21,11 @@ public sealed partial class SettingsForm : Form
 
         lbl_SqliteVersion.Text = "SQLite " + GetSqliteVersion();
         lbl_AppVersion.Text = "Versión " + App.Version.ToString(fieldCount: 3);
+
+#if DEBUG
+        lbl_AppVersion.Text += "-dev";
+#endif
+
         LoadSettings();
     }
 
