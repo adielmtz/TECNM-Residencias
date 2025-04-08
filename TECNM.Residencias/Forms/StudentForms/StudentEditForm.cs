@@ -308,25 +308,14 @@ public sealed partial class StudentEditForm : EditForm
         dialog.RestoreDirectory = true;
         DialogResult result = dialog.ShowDialog();
 
-        if (result == DialogResult.OK)
+        if (result != DialogResult.OK)
         {
-            foreach (string filename in dialog.FileNames)
-            {
-                var info = new FileInfo(filename);
-                if (info.Length == 0)
-                {
-                    MessageBox.Show(
-                        "Se ignorarán los archivos vacíos.",
-                        "Información",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information
-                    );
+            return;
+        }
 
-                    continue;
-                }
-
-                dcc_Documents.Add(info);
-            }
+        foreach (string filename in dialog.FileNames)
+        {
+            dcc_Documents.Add(new FileInfo(filename));
         }
     }
 
