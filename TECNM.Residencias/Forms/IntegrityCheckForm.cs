@@ -68,6 +68,8 @@ public sealed partial class IntegrityCheckForm : EditForm
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information
                 );
+
+                Close();
             }
             else
             {
