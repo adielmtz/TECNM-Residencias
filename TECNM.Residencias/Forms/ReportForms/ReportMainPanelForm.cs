@@ -19,7 +19,6 @@ public sealed partial class ReportMainPanelForm : Form
     public ReportMainPanelForm()
     {
         InitializeComponent();
-        Text = $"Generación de reportes | {App.Name}";
 
         var today = DateTime.Today;
         cb_Semester.SelectedIndex = today.Month >= 1 && today.Month < 7 ? 1 : 2;

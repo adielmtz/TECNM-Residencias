@@ -111,7 +111,7 @@ namespace TECNM.Residencias.Forms.ReportForms
             Icon = (System.Drawing.Icon) resources.GetObject("$this.Icon");
             Name = "ReportMainPanelForm";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            Text = "ReportMainPanelForm";
+            Text = "Generar reporte";
             ResumeLayout(false);
             PerformLayout();
         }
