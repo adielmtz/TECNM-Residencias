@@ -19,16 +19,6 @@ public sealed class DbMigrator : IDisposable
     /// </summary>
     public static readonly long CurrentVersion = 5;
 
-    /// <summary>
-    /// The default page size for the SQLite database.
-    /// </summary>
-    public static readonly long DefaultPageSize = 32768;
-
-    /// <summary>
-    /// The default SQLite journal mode for transactions.
-    /// </summary>
-    public static readonly string DefaultJournalMode = "WAL";
-
     private readonly IDbConnection _connection;
 
     /// <summary>
@@ -40,16 +30,7 @@ public sealed class DbMigrator : IDisposable
     /// <summary>
     /// Gets a value indicating whether there are pending migrations to be applied.
     /// </summary>
-    public bool HasPendingMigrations => UserVersion < CurrentVersion;
-
-    /// <summary>
-    /// Gets or sets the user version of the database schema.
-    /// </summary>
-    public long UserVersion
-    {
-        get => GetPragma<long>("user_version");
-        private set => SetPragma("user_version", value);
-    }
+    public bool HasPendingMigrations => GetUserVersion() < CurrentVersion;
 
     /// <summary>
     /// Releases the resources used by the <see cref="DbMigrator"/> class
@@ -68,8 +49,7 @@ public sealed class DbMigrator : IDisposable
             return;
         }
 
-        long version = UserVersion;
-        ConfigureDatabase();
+        long version = GetUserVersion();
 
         using var transaction = _connection.BeginTransaction();
 
@@ -79,42 +59,39 @@ public sealed class DbMigrator : IDisposable
         }
 
         transaction.Commit();
-        SetPragma("wal_checkpoint", "FULL");
+        FlushWalFile();
     }
 
     /// <summary>
-    /// Executes a <c>PRAGMA</c> command to retrieve a database property.
+    /// Flushes and syncs the WAL file into the main database.
     /// </summary>
-    /// <typeparam name="T">The type of the value to be retrieved.</typeparam>
-    /// <param name="name">The name of the <c>PRAGMA</c> command to execute.</param>
-    /// <returns>The value of the <c>PRAGMA</c>.</returns>
-    private T GetPragma<T>(string name)
+    private void FlushWalFile()
     {
         using var command = _connection.CreateCommand();
-        command.CommandText = $"PRAGMA {name}";
-        return (T) command.ExecuteScalar()!;
-    }
-
-    /// <summary>
-    /// Executes a <c>PRAGMA</c> command to set a database property.
-    /// </summary>
-    /// <typeparam name="T">The type of the value to be set.</typeparam>
-    /// <param name="name">The name of the <c>PRAGMA</c> command to execute.</param>
-    /// <param name="value">The value to set.</param>
-    private void SetPragma<T>(string name, T value)
-    {
-        using var command = _connection.CreateCommand();
-        command.CommandText = $"PRAGMA {name}={value}";
+        command.CommandText = "PRAGMA wal_checkpoint(FULL)";
         command.ExecuteNonQuery();
     }
 
     /// <summary>
-    /// Sets the initial database configuration.
+    /// Gets the user version of the database schema.
     /// </summary>
-    private void ConfigureDatabase()
+    /// <returns>The result of PRAGMA user_version.</returns>
+    private long GetUserVersion()
     {
-        SetPragma("page_size", DefaultPageSize);
-        SetPragma("journal_mode", DefaultJournalMode);
+        using var command = _connection.CreateCommand();
+        command.CommandText = "PRAGMA user_version";
+        return (long) command.ExecuteScalar()!;
+    }
+
+    /// <summary>
+    /// Sets the user version of the database schema.
+    /// </summary>
+    /// <param name="version">The schema version to set.</param>
+    private void SetUserVersion(long version)
+    {
+        using var command = _connection.CreateCommand();
+        command.CommandText = $"PRAGMA user_version={version}";
+        command.ExecuteNonQuery();
     }
 
     /// <summary>
@@ -127,7 +104,7 @@ public sealed class DbMigrator : IDisposable
         using var command = _connection.CreateCommand();
         command.CommandText = sql;
         command.ExecuteNonQuery();
-        UserVersion = version;
+        SetUserVersion(version);
     }
 
     /// <summary>

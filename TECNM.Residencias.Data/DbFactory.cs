@@ -1,6 +1,7 @@
 namespace TECNM.Residencias.Data;
 
 using Microsoft.Data.Sqlite;
+using TECNM.Residencias.Data.Extensions;
 
 /// <summary>
 /// Factory class for creating database connections.
@@ -8,6 +9,16 @@ using Microsoft.Data.Sqlite;
 /// </summary>
 public sealed class DbFactory
 {
+    /// <summary>
+    /// The default page size for the SQLite database.
+    /// </summary>
+    public static readonly long DefaultPageSize = 32768;
+
+    /// <summary>
+    /// The default SQLite journal mode for transactions.
+    /// </summary>
+    public static readonly string DefaultJournalMode = "wal";
+
     private readonly string _dataSource;
     private readonly string _connectionString;
 
@@ -44,9 +55,20 @@ public sealed class DbFactory
     public SqliteConnection CreateConnection()
     {
         var sqlite = new SqliteConnection(ConnectionString);
-        RegisterCollations(sqlite);
         sqlite.Open();
+        ConfigureDatabase(sqlite);
+        RegisterCollations(sqlite);
         return sqlite;
+    }
+
+    /// <summary>
+    /// Sets the initial database configuration.
+    /// </summary>
+    /// <param name="sqlite">The <see cref="SqliteConnection"/> instance to register the collation with.</param>
+    private static void ConfigureDatabase(SqliteConnection sqlite)
+    {
+        sqlite.SetPragma("page_size", DefaultPageSize);
+        sqlite.SetPragma("journal_mode", DefaultJournalMode);
     }
 
     /// <summary>
