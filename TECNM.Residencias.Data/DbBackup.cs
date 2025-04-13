@@ -62,15 +62,11 @@ public sealed class DbBackup : IDisposable
         SqliteConnection source = _source;
         string filename = $"database.db.{BackupDateTime:yyyyMMddHHmmss}.bak";
         string fullpath = Path.Combine(BackupDirectory, filename);
+        var factory = new DbFactory(fullpath);
 
-        using var destination = new SqliteConnection(
-            new SqliteConnectionStringBuilder
-            {
-                DataSource = fullpath,
-            }.ConnectionString
-        );
-
+        using var destination = factory.CreateConnection();
         source.BackupDatabase(destination);
+
         SqliteConnection.ClearPool(destination);
         return fullpath;
     }
