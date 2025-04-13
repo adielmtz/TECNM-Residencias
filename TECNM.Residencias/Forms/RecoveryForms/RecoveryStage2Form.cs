@@ -63,6 +63,7 @@ public sealed partial class RecoveryStage2Form : Form
     private void GoBack_Click(object sender, EventArgs e)
     {
         Debug.Assert(_parent is not null);
+        RecoveryService.SupressNextExitPrompt();
         _parent.Show();
         Close();
     }

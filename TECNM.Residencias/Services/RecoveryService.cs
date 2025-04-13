@@ -7,11 +7,18 @@ using System.Windows.Forms;
 
 internal static class RecoveryService
 {
+    private static bool s_supressPrompt = false;
+
     public static void Initialize()
     {
         // Allow the parent process a grace period to shutdown gracefully before proceeding.
         Thread.Sleep(TimeSpan.FromSeconds(3));
         KillOtherProcesses();
+    }
+
+    public static void SupressNextExitPrompt()
+    {
+        s_supressPrompt = true;
     }
 
     public static void CancelRecoveryProcess_ClickHandler(object? sender, EventArgs e)
@@ -33,6 +40,12 @@ internal static class RecoveryService
 
     public static void CancelRecoveryProcess_FormClosingHandler(FormClosingEventArgs e)
     {
+        if (s_supressPrompt)
+        {
+            s_supressPrompt = false;
+            return;
+        }
+
         DialogResult result = MessageBox.Show(
             """
             ¿Salir del proceso de recuperación?
