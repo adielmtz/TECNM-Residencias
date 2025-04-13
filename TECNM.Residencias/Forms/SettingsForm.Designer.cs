@@ -32,8 +32,8 @@ namespace TECNM.Residencias.Forms
             lbl_SqliteVersion = new System.Windows.Forms.Label();
             groupBox1 = new System.Windows.Forms.GroupBox();
             button5 = new System.Windows.Forms.Button();
-            button3 = new System.Windows.Forms.Button();
             button1 = new System.Windows.Forms.Button();
+            button3 = new System.Windows.Forms.Button();
             groupBox2 = new System.Windows.Forms.GroupBox();
             label3 = new System.Windows.Forms.Label();
             label2 = new System.Windows.Forms.Label();
@@ -43,6 +43,8 @@ namespace TECNM.Residencias.Forms
             groupBox3 = new System.Windows.Forms.GroupBox();
             button2 = new System.Windows.Forms.Button();
             groupBox6 = new System.Windows.Forms.GroupBox();
+            chk_EnableEmailAutocomplete = new System.Windows.Forms.CheckBox();
+            label7 = new System.Windows.Forms.Label();
             label4 = new System.Windows.Forms.Label();
             cb_DefaultSemesterFilter = new System.Windows.Forms.ComboBox();
             cb_StudentCareer = new System.Windows.Forms.ComboBox();
@@ -51,78 +53,77 @@ namespace TECNM.Residencias.Forms
             label5 = new System.Windows.Forms.Label();
             cb_CompanyType = new System.Windows.Forms.ComboBox();
             button4 = new System.Windows.Forms.Button();
-            label7 = new System.Windows.Forms.Label();
-            chk_EnableEmailAutocomplete = new System.Windows.Forms.CheckBox();
+            groupBox4 = new System.Windows.Forms.GroupBox();
+            button6 = new System.Windows.Forms.Button();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
             groupBox6.SuspendLayout();
             groupBox5.SuspendLayout();
+            groupBox4.SuspendLayout();
             SuspendLayout();
             // 
             // lbl_SqliteVersion
             // 
-            lbl_SqliteVersion.AutoSize = true;
-            lbl_SqliteVersion.Location = new System.Drawing.Point(6, 106);
+            lbl_SqliteVersion.Location = new System.Drawing.Point(597, 426);
             lbl_SqliteVersion.Name = "lbl_SqliteVersion";
-            lbl_SqliteVersion.Size = new System.Drawing.Size(101, 15);
+            lbl_SqliteVersion.Size = new System.Drawing.Size(102, 15);
             lbl_SqliteVersion.TabIndex = 0;
             lbl_SqliteVersion.Text = "[SQLITE VERSION]";
+            lbl_SqliteVersion.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // groupBox1
             // 
             groupBox1.Controls.Add(button5);
-            groupBox1.Controls.Add(button3);
             groupBox1.Controls.Add(button1);
-            groupBox1.Controls.Add(lbl_SqliteVersion);
-            groupBox1.Location = new System.Drawing.Point(541, 12);
+            groupBox1.Location = new System.Drawing.Point(504, 12);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new System.Drawing.Size(247, 128);
+            groupBox1.Size = new System.Drawing.Size(284, 82);
             groupBox1.TabIndex = 1;
             groupBox1.TabStop = false;
             groupBox1.Text = "Avanzado";
             // 
             // button5
             // 
-            button5.Location = new System.Drawing.Point(6, 80);
+            button5.Location = new System.Drawing.Point(6, 51);
             button5.Name = "button5";
-            button5.Size = new System.Drawing.Size(235, 23);
+            button5.Size = new System.Drawing.Size(272, 23);
             button5.TabIndex = 7;
             button5.TabStop = false;
             button5.Text = "Comprobar integridad";
             button5.UseVisualStyleBackColor = true;
             button5.Click += OpenIntegrityCheckDialog_Click;
             // 
-            // button3
-            // 
-            button3.Location = new System.Drawing.Point(6, 51);
-            button3.Name = "button3";
-            button3.Size = new System.Drawing.Size(235, 23);
-            button3.TabIndex = 3;
-            button3.TabStop = false;
-            button3.Text = "Copia de seguridad";
-            button3.UseVisualStyleBackColor = true;
-            button3.Click += DatabaseBackup_Click;
-            // 
             // button1
             // 
             button1.Location = new System.Drawing.Point(6, 22);
             button1.Name = "button1";
-            button1.Size = new System.Drawing.Size(235, 23);
+            button1.Size = new System.Drawing.Size(272, 23);
             button1.TabIndex = 0;
             button1.TabStop = false;
             button1.Text = "Optimizar base de datos";
             button1.UseVisualStyleBackColor = true;
             button1.Click += DatabaseOptimize_Click;
             // 
+            // button3
+            // 
+            button3.Location = new System.Drawing.Point(6, 23);
+            button3.Name = "button3";
+            button3.Size = new System.Drawing.Size(272, 23);
+            button3.TabIndex = 3;
+            button3.TabStop = false;
+            button3.Text = "Crear copia de seguridad";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += CreateBackup_Click;
+            // 
             // groupBox2
             // 
             groupBox2.Controls.Add(label3);
             groupBox2.Controls.Add(label2);
             groupBox2.Controls.Add(label1);
-            groupBox2.Location = new System.Drawing.Point(541, 350);
+            groupBox2.Location = new System.Drawing.Point(504, 350);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new System.Drawing.Size(247, 73);
+            groupBox2.Size = new System.Drawing.Size(284, 73);
             groupBox2.TabIndex = 2;
             groupBox2.TabStop = false;
             groupBox2.Text = "Créditos";
@@ -157,7 +158,7 @@ namespace TECNM.Residencias.Forms
             // lbl_AppVersion
             // 
             lbl_AppVersion.AutoSize = true;
-            lbl_AppVersion.Location = new System.Drawing.Point(541, 426);
+            lbl_AppVersion.Location = new System.Drawing.Point(504, 426);
             lbl_AppVersion.Name = "lbl_AppVersion";
             lbl_AppVersion.Size = new System.Drawing.Size(87, 15);
             lbl_AppVersion.TabIndex = 6;
@@ -182,14 +183,14 @@ namespace TECNM.Residencias.Forms
             groupBox3.Controls.Add(button4);
             groupBox3.Location = new System.Drawing.Point(12, 12);
             groupBox3.Name = "groupBox3";
-            groupBox3.Size = new System.Drawing.Size(523, 429);
+            groupBox3.Size = new System.Drawing.Size(486, 429);
             groupBox3.TabIndex = 4;
             groupBox3.TabStop = false;
             groupBox3.Text = "Configuración";
             // 
             // button2
             // 
-            button2.Location = new System.Drawing.Point(387, 400);
+            button2.Location = new System.Drawing.Point(350, 400);
             button2.Name = "button2";
             button2.Size = new System.Drawing.Size(130, 23);
             button2.TabIndex = 8;
@@ -207,10 +208,27 @@ namespace TECNM.Residencias.Forms
             groupBox6.Controls.Add(label6);
             groupBox6.Location = new System.Drawing.Point(6, 80);
             groupBox6.Name = "groupBox6";
-            groupBox6.Size = new System.Drawing.Size(511, 125);
+            groupBox6.Size = new System.Drawing.Size(415, 125);
             groupBox6.TabIndex = 7;
             groupBox6.TabStop = false;
             groupBox6.Text = "Residentes";
+            // 
+            // chk_EnableEmailAutocomplete
+            // 
+            chk_EnableEmailAutocomplete.AutoSize = true;
+            chk_EnableEmailAutocomplete.Location = new System.Drawing.Point(121, 92);
+            chk_EnableEmailAutocomplete.Name = "chk_EnableEmailAutocomplete";
+            chk_EnableEmailAutocomplete.Size = new System.Drawing.Size(15, 14);
+            chk_EnableEmailAutocomplete.TabIndex = 7;
+            chk_EnableEmailAutocomplete.UseVisualStyleBackColor = true;
+            // 
+            // label7
+            // 
+            label7.Location = new System.Drawing.Point(6, 85);
+            label7.Name = "label7";
+            label7.Size = new System.Drawing.Size(109, 33);
+            label7.TabIndex = 6;
+            label7.Text = "Autocompletar dirección de email";
             // 
             // label4
             // 
@@ -254,7 +272,7 @@ namespace TECNM.Residencias.Forms
             groupBox5.Controls.Add(cb_CompanyType);
             groupBox5.Location = new System.Drawing.Point(6, 22);
             groupBox5.Name = "groupBox5";
-            groupBox5.Size = new System.Drawing.Size(511, 52);
+            groupBox5.Size = new System.Drawing.Size(415, 52);
             groupBox5.TabIndex = 6;
             groupBox5.TabStop = false;
             groupBox5.Text = "Empresas";
@@ -288,29 +306,36 @@ namespace TECNM.Residencias.Forms
             button4.UseVisualStyleBackColor = true;
             button4.Click += SaveAppSettings_Click;
             // 
-            // label7
+            // groupBox4
             // 
-            label7.Location = new System.Drawing.Point(6, 85);
-            label7.Name = "label7";
-            label7.Size = new System.Drawing.Size(109, 33);
-            label7.TabIndex = 6;
-            label7.Text = "Autocompletar dirección de email";
+            groupBox4.Controls.Add(button6);
+            groupBox4.Controls.Add(button3);
+            groupBox4.Location = new System.Drawing.Point(504, 100);
+            groupBox4.Name = "groupBox4";
+            groupBox4.Size = new System.Drawing.Size(284, 82);
+            groupBox4.TabIndex = 7;
+            groupBox4.TabStop = false;
+            groupBox4.Text = "Respaldo y restauración";
             // 
-            // chk_EnableEmailAutocomplete
+            // button6
             // 
-            chk_EnableEmailAutocomplete.AutoSize = true;
-            chk_EnableEmailAutocomplete.Location = new System.Drawing.Point(121, 92);
-            chk_EnableEmailAutocomplete.Name = "chk_EnableEmailAutocomplete";
-            chk_EnableEmailAutocomplete.Size = new System.Drawing.Size(15, 14);
-            chk_EnableEmailAutocomplete.TabIndex = 7;
-            chk_EnableEmailAutocomplete.UseVisualStyleBackColor = true;
+            button6.Location = new System.Drawing.Point(6, 52);
+            button6.Name = "button6";
+            button6.Size = new System.Drawing.Size(272, 23);
+            button6.TabIndex = 4;
+            button6.TabStop = false;
+            button6.Text = "Restaurar copia de seguridad";
+            button6.UseVisualStyleBackColor = true;
+            button6.Click += RestoreBackup_Click;
             // 
             // SettingsForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(800, 450);
+            Controls.Add(groupBox4);
             Controls.Add(lbl_AppVersion);
+            Controls.Add(lbl_SqliteVersion);
             Controls.Add(groupBox3);
             Controls.Add(linkLabel1);
             Controls.Add(groupBox2);
@@ -320,7 +345,6 @@ namespace TECNM.Residencias.Forms
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "SettingsForm";
             groupBox1.ResumeLayout(false);
-            groupBox1.PerformLayout();
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
             groupBox3.ResumeLayout(false);
@@ -328,6 +352,7 @@ namespace TECNM.Residencias.Forms
             groupBox6.PerformLayout();
             groupBox5.ResumeLayout(false);
             groupBox5.PerformLayout();
+            groupBox4.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -358,5 +383,7 @@ namespace TECNM.Residencias.Forms
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.CheckBox chk_EnableEmailAutocomplete;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.Button button6;
     }
 }

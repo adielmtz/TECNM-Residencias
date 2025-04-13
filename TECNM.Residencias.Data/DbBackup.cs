@@ -3,6 +3,7 @@ namespace TECNM.Residencias.Data;
 using Microsoft.Data.Sqlite;
 using System;
 using System.IO;
+using TECNM.Residencias.Data.Extensions;
 
 /// <summary>
 /// Represents a database backup operation.
@@ -65,6 +66,7 @@ public sealed class DbBackup : IDisposable
         var factory = new DbFactory(fullpath);
 
         using var destination = factory.CreateConnection();
+        destination.SetPragma("journal_mode", "delete");
         source.BackupDatabase(destination);
 
         SqliteConnection.ClearPool(destination);

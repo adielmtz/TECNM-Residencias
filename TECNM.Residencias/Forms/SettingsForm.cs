@@ -59,10 +59,36 @@ public sealed partial class SettingsForm : Form
         MessageBox.Show("Base de datos optimizada.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
     }
 
-    private void DatabaseBackup_Click(object sender, EventArgs e)
+    private void CreateBackup_Click(object sender, EventArgs e)
     {
         using var dialog = new DialogBackupForm();
         dialog.ShowDialog();
+    }
+
+    private void RestoreBackup_Click(object sender, EventArgs e)
+    {
+        DialogResult result = MessageBox.Show(
+            """
+            Se iniciará el proceso de restauración de respaldo.
+            La aplicación se cerrará y se volverá a iniciar en
+            modo de recuperación.
+            """,
+            "Iniciar proceso de restauración",
+            MessageBoxButtons.OKCancel,
+            MessageBoxIcon.Question
+        );
+
+        if (result != DialogResult.OK)
+        {
+            return;
+        }
+
+        var info = new ProcessStartInfo();
+        info.FileName = Application.ExecutablePath;
+        info.Arguments = "--recovery-mode";
+
+        Process.Start(info);
+        Environment.Exit(0);
     }
 
     private void OpenIntegrityCheckDialog_Click(object sender, EventArgs e)
