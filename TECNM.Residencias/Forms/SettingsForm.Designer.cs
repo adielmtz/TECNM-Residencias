@@ -208,7 +208,7 @@ namespace TECNM.Residencias.Forms
             groupBox6.Controls.Add(label6);
             groupBox6.Location = new System.Drawing.Point(6, 80);
             groupBox6.Name = "groupBox6";
-            groupBox6.Size = new System.Drawing.Size(415, 125);
+            groupBox6.Size = new System.Drawing.Size(474, 125);
             groupBox6.TabIndex = 7;
             groupBox6.TabStop = false;
             groupBox6.Text = "Residentes";
@@ -272,7 +272,7 @@ namespace TECNM.Residencias.Forms
             groupBox5.Controls.Add(cb_CompanyType);
             groupBox5.Location = new System.Drawing.Point(6, 22);
             groupBox5.Name = "groupBox5";
-            groupBox5.Size = new System.Drawing.Size(415, 52);
+            groupBox5.Size = new System.Drawing.Size(474, 52);
             groupBox5.TabIndex = 6;
             groupBox5.TabStop = false;
             groupBox5.Text = "Empresas";
