@@ -15,7 +15,7 @@ public static class SqliteConnectionExtensions
     /// <returns>The number of rows affected by the SQL query.</returns>
     public static int Execute(this SqliteConnection sqlite, string query)
     {
-        using var command = sqlite.CreateCommand();
+        using SqliteCommand command = sqlite.CreateCommand();
         command.CommandText = query;
         return command.ExecuteNonQuery();
     }
@@ -29,7 +29,7 @@ public static class SqliteConnectionExtensions
     /// <returns>The value of the <c>PRAGMA</c>.</returns>
     public static T GetPragma<T>(this SqliteConnection sqlite, string name)
     {
-        using var command = sqlite.CreateCommand();
+        using SqliteCommand command = sqlite.CreateCommand();
         command.CommandText = $"PRAGMA {name}";
         return (T) command.ExecuteScalar()!;
     }
@@ -43,7 +43,7 @@ public static class SqliteConnectionExtensions
     /// <param name="value">The value to set.</param>
     public static void SetPragma<T>(this SqliteConnection sqlite, string name, T value)
     {
-        using var command = sqlite.CreateCommand();
+        using SqliteCommand command = sqlite.CreateCommand();
         command.CommandText = $"PRAGMA {name}={value}";
         command.ExecuteNonQuery();
     }

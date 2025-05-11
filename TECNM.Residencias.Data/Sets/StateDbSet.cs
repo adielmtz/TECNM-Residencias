@@ -1,9 +1,9 @@
 namespace TECNM.Residencias.Data.Sets;
 
-using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Microsoft.Data.Sqlite;
 using TECNM.Residencias.Data;
 using TECNM.Residencias.Data.Entities;
 
@@ -24,9 +24,9 @@ public sealed class StateDbSet : DbSet<State>
     /// <returns>A <see cref="State"/> instance if a state with the specified rowid exists; otherwise <see langword="null"/>.</returns>
     public State? GetState(long id)
     {
-        using var command = CreateCommand("SELECT Id, CountryId, Name FROM State WHERE Id = $id");
+        using SqliteCommand command = CreateCommand("SELECT Id, CountryId, Name FROM State WHERE Id = $id");
         command.Parameters.Add("$id", SqliteType.Integer).Value = id;
-        using var reader = command.ExecuteReader();
+        using SqliteDataReader reader = command.ExecuteReader();
 
         if (reader.Read())
         {
@@ -38,8 +38,8 @@ public sealed class StateDbSet : DbSet<State>
 
     public override IEnumerable<State> EnumerateAll()
     {
-        using var command = CreateCommand("SELECT Id, CountryId, Name ORDER BY CountryId, Name");
-        using var reader = command.ExecuteReader();
+        using SqliteCommand command = CreateCommand("SELECT Id, CountryId, Name ORDER BY CountryId, Name");
+        using SqliteDataReader reader = command.ExecuteReader();
 
         while (reader.Read())
         {
@@ -53,9 +53,7 @@ public sealed class StateDbSet : DbSet<State>
     /// <param name="country">A <see cref="Country"/> instance to filter the states.</param>
     /// <returns>An <see cref="IEnumerable{T}"/> enumerating all the entities.</returns>
     public IEnumerable<State> EnumerateAll(Country country)
-    {
-        return EnumerateAll(country.Id);
-    }
+        => EnumerateAll(country.Id);
 
     /// <summary>
     /// Retrieves and enumerates all entities of type <see cref="State"/> that belongs to the specified country.
@@ -64,9 +62,9 @@ public sealed class StateDbSet : DbSet<State>
     /// <returns>An <see cref="IEnumerable{T}"/> enumerating all the entities.</returns>
     public IEnumerable<State> EnumerateAll(long countryId)
     {
-        using var command = CreateCommand("SELECT Id, CountryId, Name FROM State WHERE CountryId = $cid ORDER BY Name");
+        using SqliteCommand command = CreateCommand("SELECT Id, CountryId, Name FROM State WHERE CountryId = $cid ORDER BY Name");
         command.Parameters.Add("$cid", SqliteType.Integer).Value = countryId;
-        using var reader = command.ExecuteReader();
+        using SqliteDataReader reader = command.ExecuteReader();
 
         while (reader.Read())
         {
@@ -74,15 +72,20 @@ public sealed class StateDbSet : DbSet<State>
         }
     }
 
-    public override bool Contains(State entity) => throw new NotImplementedException();
+    public override bool Contains(State entity)
+        => throw new NotImplementedException();
 
-    public override bool Add(State entity) => throw new NotImplementedException();
+    public override bool Add(State entity)
+        => throw new NotImplementedException();
 
-    public override int Update(State entity) => throw new NotImplementedException();
+    public override int Update(State entity)
+        => throw new NotImplementedException();
 
-    public override bool AddOrUpdate(State entity) => throw new NotImplementedException();
+    public override bool AddOrUpdate(State entity)
+        => throw new NotImplementedException();
 
-    public override int Remove(State entity) => throw new NotImplementedException();
+    public override int Remove(State entity)
+        => throw new NotImplementedException();
 
     protected override State HydrateObject(SqliteDataReader reader)
     {
@@ -90,9 +93,9 @@ public sealed class StateDbSet : DbSet<State>
         int index = 0;
         return new State
         {
-            Id        = reader.GetInt64(index++),
+            Id = reader.GetInt64(index++),
             CountryId = reader.GetInt64(index++),
-            Name      = reader.GetString(index++),
+            Name = reader.GetString(index++),
         };
     }
 }

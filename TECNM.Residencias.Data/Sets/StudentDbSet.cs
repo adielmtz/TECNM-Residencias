@@ -1,9 +1,9 @@
 namespace TECNM.Residencias.Data.Sets;
 
-using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Microsoft.Data.Sqlite;
 using TECNM.Residencias.Data;
 using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Data.Entities.DTO;
@@ -22,7 +22,7 @@ public sealed class StudentDbSet : DbSet<Student>
     /// <returns>A <see cref="Student"/> instance if a student with the specified rowid exists; otherwise <see langword="null"/>.</returns>
     public Student? GetStudent(long id)
     {
-        using var command = CreateCommand("""
+        using SqliteCommand command = CreateCommand("""
         SELECT Id,                SpecialtyId, FirstName, LastName, Email,     Phone,             Gender,
                Semester,          StartDate,   EndDate,   Project,  CompanyId, InternalAdvisorId, ExternalAdvisorId,
                ReviewerAdvisorId, Section,     Schedule,  Notes,    Closed,    UpdatedOn,         CreatedOn
@@ -31,7 +31,7 @@ public sealed class StudentDbSet : DbSet<Student>
         """);
 
         command.Parameters.Add("$id", SqliteType.Integer).Value = id;
-        using var reader = command.ExecuteReader();
+        using SqliteDataReader reader = command.ExecuteReader();
 
         if (reader.Read())
         {
@@ -52,7 +52,7 @@ public sealed class StudentDbSet : DbSet<Student>
     /// </returns>
     public IEnumerable<StudentSearchResultDto> Search(string query, int count, int page)
     {
-        using var command = CreateCommand("""
+        using SqliteCommand command = CreateCommand("""
         SELECT rowid, FirstName, LastName
         FROM StudentSearch
         WHERE StudentSearch MATCH $query OR rowid = $rowid
@@ -64,21 +64,21 @@ public sealed class StudentDbSet : DbSet<Student>
         command.Parameters.Add("$rowid", SqliteType.Integer).Value = TryConvertToRowid(query);
         command.Parameters.Add("$page", SqliteType.Integer).Value = (page - 1) * count;
         command.Parameters.Add("$count", SqliteType.Integer).Value = count;
-        using var reader = command.ExecuteReader();
+        using SqliteDataReader reader = command.ExecuteReader();
 
         while (reader.Read())
         {
             yield return new StudentSearchResultDto(
-                Id:        reader.GetInt64(0),
+                Id: reader.GetInt64(0),
                 FirstName: reader.GetString(1),
-                LastName:  reader.GetString(2)
+                LastName: reader.GetString(2)
             );
         }
     }
 
     public override IEnumerable<Student> EnumerateAll()
     {
-        using var command = CreateCommand("""
+        using SqliteCommand command = CreateCommand("""
         SELECT Id,                SpecialtyId, FirstName, LastName, Email,     Phone,             Gender,
                Semester,          StartDate,   EndDate,   Project,  CompanyId, InternalAdvisorId, ExternalAdvisorId,
                ReviewerAdvisorId, Section,     Schedule,  Notes,    Closed,    UpdatedOn,         CreatedOn
@@ -86,7 +86,7 @@ public sealed class StudentDbSet : DbSet<Student>
         ORDER BY Id
         """);
 
-        using var reader = command.ExecuteReader();
+        using SqliteDataReader reader = command.ExecuteReader();
         while (reader.Read())
         {
             yield return HydrateObject(reader);
@@ -103,7 +103,7 @@ public sealed class StudentDbSet : DbSet<Student>
     /// </returns>
     public IEnumerable<Student> EnumerateAll(int count, int page)
     {
-        using var command = CreateCommand("""
+        using SqliteCommand command = CreateCommand("""
         SELECT Id,                SpecialtyId, FirstName, LastName, Email,     Phone,             Gender,
                Semester,          StartDate,   EndDate,   Project,  CompanyId, InternalAdvisorId, ExternalAdvisorId,
                ReviewerAdvisorId, Section,     Schedule,  Notes,    Closed,    UpdatedOn,         CreatedOn
@@ -114,7 +114,7 @@ public sealed class StudentDbSet : DbSet<Student>
 
         command.Parameters.Add("$page", SqliteType.Integer).Value = (page - 1) * count;
         command.Parameters.Add("$count", SqliteType.Integer).Value = count;
-        using var reader = command.ExecuteReader();
+        using SqliteDataReader reader = command.ExecuteReader();
 
         while (reader.Read())
         {
@@ -130,7 +130,7 @@ public sealed class StudentDbSet : DbSet<Student>
     /// <returns>An <see cref="IEnumerable{T}"/> containing the students that match the specified year and semester.</returns>
     public IEnumerable<Student> EnumerateAll(int year, string? semester)
     {
-        using var command = CreateCommand();
+        using SqliteCommand command = CreateCommand();
         string extraParam = "";
 
         if (semester is not null)
@@ -148,7 +148,7 @@ public sealed class StudentDbSet : DbSet<Student>
         """;
 
         command.Parameters.Add("$p0", SqliteType.Text).Value = year.ToString();
-        using var reader = command.ExecuteReader();
+        using SqliteDataReader reader = command.ExecuteReader();
 
         while (reader.Read())
         {
@@ -158,7 +158,7 @@ public sealed class StudentDbSet : DbSet<Student>
 
     public IEnumerable<Student> EnumerateByAdvisor(Advisor advisor, AdvisorType type, int year, string? semester)
     {
-        using var command = CreateCommand();
+        using SqliteCommand command = CreateCommand();
 
         string advisorColumn = type switch
         {
@@ -187,7 +187,7 @@ public sealed class StudentDbSet : DbSet<Student>
 
         command.Parameters.Add("$p0", SqliteType.Integer).Value = advisor.Id;
         command.Parameters.Add("$p1", SqliteType.Text).Value = year.ToString();
-        using var reader = command.ExecuteReader();
+        using SqliteDataReader reader = command.ExecuteReader();
 
         while (reader.Read())
         {
@@ -205,9 +205,9 @@ public sealed class StudentDbSet : DbSet<Student>
     /// </returns>
     public IEnumerable<StudentLastModifiedDto> EnumerateRecentlyModified(int count)
     {
-        using var command = CreateCommand("SELECT Id, FirstName, LastName, UpdatedOn FROM Student ORDER BY UpdatedOn DESC LIMIT $p0");
+        using SqliteCommand command = CreateCommand("SELECT Id, FirstName, LastName, UpdatedOn FROM Student ORDER BY UpdatedOn DESC LIMIT $p0");
         command.Parameters.Add("$p0", SqliteType.Integer).Value = count;
-        using var reader = command.ExecuteReader();
+        using SqliteDataReader reader = command.ExecuteReader();
 
         while (reader.Read())
         {
@@ -222,7 +222,7 @@ public sealed class StudentDbSet : DbSet<Student>
 
     public long? GetMinimumYear()
     {
-        using var command = CreateCommand("SELECT CAST(min(strftime('%Y', StartDate)) AS INTEGER) FROM Student LIMIT 1");
+        using SqliteCommand command = CreateCommand("SELECT CAST(min(strftime('%Y', StartDate)) AS INTEGER) FROM Student LIMIT 1");
         object? result = command.ExecuteScalar();
 
         if (result is null || result == DBNull.Value)
@@ -233,11 +233,12 @@ public sealed class StudentDbSet : DbSet<Student>
         return (long) result;
     }
 
-    public override bool Contains(Student entity) => throw new NotImplementedException();
+    public override bool Contains(Student entity)
+        => throw new NotImplementedException();
 
     public override bool Add(Student entity)
     {
-        using var command = CreateCommand("""
+        using SqliteCommand command = CreateCommand("""
         INSERT INTO Student (Id,                SpecialtyId, FirstName, LastName, Email,     Phone,             Gender,
                              Semester,          StartDate,   EndDate,   Project,  CompanyId, InternalAdvisorId, ExternalAdvisorId,
                              ReviewerAdvisorId, Section,     Schedule,  Notes,    Closed,    UpdatedOn,         CreatedOn)
@@ -246,31 +247,31 @@ public sealed class StudentDbSet : DbSet<Student>
 
         command.Parameters.Add("$p00", SqliteType.Integer).Value = entity.Id;
         command.Parameters.Add("$p01", SqliteType.Integer).Value = entity.SpecialtyId;
-        command.Parameters.Add("$p02", SqliteType.Text).Value    = entity.FirstName;
-        command.Parameters.Add("$p03", SqliteType.Text).Value    = entity.LastName;
-        command.Parameters.Add("$p04", SqliteType.Text).Value    = entity.Email;
-        command.Parameters.Add("$p05", SqliteType.Text).Value    = entity.Phone;
-        command.Parameters.Add("$p06", SqliteType.Text).Value    = entity.Gender.ToString();
-        command.Parameters.Add("$p07", SqliteType.Text).Value    = entity.Semester;
-        command.Parameters.Add("$p08", SqliteType.Text).Value    = entity.StartDate;
-        command.Parameters.Add("$p09", SqliteType.Text).Value    = entity.EndDate;
-        command.Parameters.Add("$p10", SqliteType.Text).Value    = entity.Project;
+        command.Parameters.Add("$p02", SqliteType.Text).Value = entity.FirstName;
+        command.Parameters.Add("$p03", SqliteType.Text).Value = entity.LastName;
+        command.Parameters.Add("$p04", SqliteType.Text).Value = entity.Email;
+        command.Parameters.Add("$p05", SqliteType.Text).Value = entity.Phone;
+        command.Parameters.Add("$p06", SqliteType.Text).Value = entity.Gender.ToString();
+        command.Parameters.Add("$p07", SqliteType.Text).Value = entity.Semester;
+        command.Parameters.Add("$p08", SqliteType.Text).Value = entity.StartDate;
+        command.Parameters.Add("$p09", SqliteType.Text).Value = entity.EndDate;
+        command.Parameters.Add("$p10", SqliteType.Text).Value = entity.Project;
         command.Parameters.Add("$p11", SqliteType.Integer).SetValue(entity.CompanyId);
         command.Parameters.Add("$p12", SqliteType.Integer).SetValue(entity.InternalAdvisorId);
         command.Parameters.Add("$p13", SqliteType.Integer).SetValue(entity.ExternalAdvisorId);
         command.Parameters.Add("$p14", SqliteType.Integer).SetValue(entity.ReviewerAdvisorId);
-        command.Parameters.Add("$p15", SqliteType.Text).Value    = entity.Section;
-        command.Parameters.Add("$p16", SqliteType.Text).Value    = entity.Schedule;
-        command.Parameters.Add("$p17", SqliteType.Text).Value    = entity.Notes;
+        command.Parameters.Add("$p15", SqliteType.Text).Value = entity.Section;
+        command.Parameters.Add("$p16", SqliteType.Text).Value = entity.Schedule;
+        command.Parameters.Add("$p17", SqliteType.Text).Value = entity.Notes;
         command.Parameters.Add("$p18", SqliteType.Integer).Value = entity.Closed;
-        command.Parameters.Add("$p19", SqliteType.Text).Value    = DateTimeOffset.Now.ToRfc3339();
-        command.Parameters.Add("$p20", SqliteType.Text).Value    = DateTimeOffset.Now.ToRfc3339();
+        command.Parameters.Add("$p19", SqliteType.Text).Value = DateTimeOffset.Now.ToRfc3339();
+        command.Parameters.Add("$p20", SqliteType.Text).Value = DateTimeOffset.Now.ToRfc3339();
         return command.ExecuteNonQuery() == 1;
     }
 
     public override int Update(Student entity)
     {
-        using var command = CreateCommand("""
+        using SqliteCommand command = CreateCommand("""
         UPDATE Student
         SET SpecialtyId       = $p00,
             FirstName         = $p01,
@@ -295,36 +296,34 @@ public sealed class StudentDbSet : DbSet<Student>
         """);
 
         command.Parameters.Add("$p00", SqliteType.Integer).Value = entity.SpecialtyId;
-        command.Parameters.Add("$p01", SqliteType.Text).Value    = entity.FirstName;
-        command.Parameters.Add("$p02", SqliteType.Text).Value    = entity.LastName;
-        command.Parameters.Add("$p03", SqliteType.Text).Value    = entity.Email;
-        command.Parameters.Add("$p04", SqliteType.Text).Value    = entity.Phone;
-        command.Parameters.Add("$p05", SqliteType.Text).Value    = entity.Gender.ToString();
-        command.Parameters.Add("$p06", SqliteType.Text).Value    = entity.Semester;
-        command.Parameters.Add("$p07", SqliteType.Text).Value    = entity.StartDate;
-        command.Parameters.Add("$p08", SqliteType.Text).Value    = entity.EndDate;
-        command.Parameters.Add("$p09", SqliteType.Text).Value    = entity.Project;
+        command.Parameters.Add("$p01", SqliteType.Text).Value = entity.FirstName;
+        command.Parameters.Add("$p02", SqliteType.Text).Value = entity.LastName;
+        command.Parameters.Add("$p03", SqliteType.Text).Value = entity.Email;
+        command.Parameters.Add("$p04", SqliteType.Text).Value = entity.Phone;
+        command.Parameters.Add("$p05", SqliteType.Text).Value = entity.Gender.ToString();
+        command.Parameters.Add("$p06", SqliteType.Text).Value = entity.Semester;
+        command.Parameters.Add("$p07", SqliteType.Text).Value = entity.StartDate;
+        command.Parameters.Add("$p08", SqliteType.Text).Value = entity.EndDate;
+        command.Parameters.Add("$p09", SqliteType.Text).Value = entity.Project;
         command.Parameters.Add("$p10", SqliteType.Integer).SetValue(entity.CompanyId);
         command.Parameters.Add("$p11", SqliteType.Integer).SetValue(entity.InternalAdvisorId);
         command.Parameters.Add("$p12", SqliteType.Integer).SetValue(entity.ExternalAdvisorId);
         command.Parameters.Add("$p13", SqliteType.Integer).SetValue(entity.ReviewerAdvisorId);
-        command.Parameters.Add("$p14", SqliteType.Text).Value    = entity.Section;
-        command.Parameters.Add("$p15", SqliteType.Text).Value    = entity.Schedule;
-        command.Parameters.Add("$p16", SqliteType.Text).Value    = entity.Notes;
+        command.Parameters.Add("$p14", SqliteType.Text).Value = entity.Section;
+        command.Parameters.Add("$p15", SqliteType.Text).Value = entity.Schedule;
+        command.Parameters.Add("$p16", SqliteType.Text).Value = entity.Notes;
         command.Parameters.Add("$p17", SqliteType.Integer).Value = entity.Closed;
-        command.Parameters.Add("$p18", SqliteType.Text).Value    = DateTimeOffset.Now.ToRfc3339();
+        command.Parameters.Add("$p18", SqliteType.Text).Value = DateTimeOffset.Now.ToRfc3339();
         command.Parameters.Add("$pid", SqliteType.Integer).Value = entity.Id;
         return command.ExecuteNonQuery();
     }
 
     public override bool AddOrUpdate(Student entity)
-    {
-        return entity.Id > 0 ? Update(entity) > 0 : Add(entity);
-    }
+        => entity.Id > 0 ? Update(entity) > 0 : Add(entity);
 
     public override int Remove(Student entity)
     {
-        using var command = CreateCommand("DELETE FROM Student WHERE Id = $id");
+        using SqliteCommand command = CreateCommand("DELETE FROM Student WHERE Id = $id");
         command.Parameters.Add("$id", SqliteType.Integer).Value = entity.Id;
         return command.ExecuteNonQuery();
     }
@@ -335,27 +334,27 @@ public sealed class StudentDbSet : DbSet<Student>
         int index = 0;
         return new Student
         {
-            Id                = reader.GetInt64(index++),
-            SpecialtyId       = reader.GetInt64(index++),
-            FirstName         = reader.GetString(index++),
-            LastName          = reader.GetString(index++),
-            Email             = reader.GetString(index++),
-            Phone             = reader.GetString(index++),
-            Gender            = reader.GetEnum<Gender>(index++),
-            Semester          = reader.GetString(index++),
-            StartDate         = reader.GetDateOnly(index++),
-            EndDate           = reader.GetDateOnly(index++),
-            Project           = reader.GetString(index++),
-            CompanyId         = reader.GetInt64(index++),
+            Id = reader.GetInt64(index++),
+            SpecialtyId = reader.GetInt64(index++),
+            FirstName = reader.GetString(index++),
+            LastName = reader.GetString(index++),
+            Email = reader.GetString(index++),
+            Phone = reader.GetString(index++),
+            Gender = reader.GetEnum<Gender>(index++),
+            Semester = reader.GetString(index++),
+            StartDate = reader.GetDateOnly(index++),
+            EndDate = reader.GetDateOnly(index++),
+            Project = reader.GetString(index++),
+            CompanyId = reader.GetInt64(index++),
             InternalAdvisorId = reader.GetOptionalInt64(index++),
             ExternalAdvisorId = reader.GetOptionalInt64(index++),
             ReviewerAdvisorId = reader.GetOptionalInt64(index++),
-            Section           = reader.GetString(index++),
-            Schedule          = reader.GetString(index++),
-            Notes             = reader.GetString(index++),
-            Closed            = reader.GetBoolean(index++),
-            UpdatedOn         = reader.GetDateTimeOffset(index++),
-            CreatedOn         = reader.GetDateTimeOffset(index++),
+            Section = reader.GetString(index++),
+            Schedule = reader.GetString(index++),
+            Notes = reader.GetString(index++),
+            Closed = reader.GetBoolean(index++),
+            UpdatedOn = reader.GetDateTimeOffset(index++),
+            CreatedOn = reader.GetDateTimeOffset(index++),
         };
     }
 

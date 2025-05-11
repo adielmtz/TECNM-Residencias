@@ -24,5 +24,6 @@ public sealed class City
     /// Returns the city name as string representation.
     /// </summary>
     /// <returns>The name of the city.</returns>
-    public override string ToString() => Name;
+    public override string ToString()
+        => Name;
 }

@@ -17,9 +17,7 @@ internal static class StorageService
     /// <param name="document">The document object that contains the relative location of the document.</param>
     /// <returns>The full file path where the document is stored on the system.</returns>
     public static string GetDocumentPath(Document document)
-    {
-        return Path.Combine(App.FileStorageDirectory, document.Location);
-    }
+        => Path.Combine(App.FileStorageDirectory, document.Location);
 
     /// <summary>
     /// Converts a full file path to a relative file path with respect to the application's file storage directory.
@@ -27,9 +25,7 @@ internal static class StorageService
     /// <param name="fullname">The full file path of the document.</param>
     /// <returns>The relative file path from the application's file storage directory to the document.</returns>
     public static string GetDocumentLocation(string fullname)
-    {
-        return Path.GetRelativePath(App.FileStorageDirectory, fullname);
-    }
+        => Path.GetRelativePath(App.FileStorageDirectory, fullname);
 
     public static async Task<Document> SaveFileAsync(Student owner, string filename, Document document, DocumentType type)
     {
@@ -52,10 +48,10 @@ internal static class StorageService
         var builder = new FileNameBuilder
         {
             StudentId = owner.Id,
-            Year      = owner.StartDate.Year,
-            Semester  = owner.Semester,
-            Type      = type,
-            Hash      = hash,
+            Year = owner.StartDate.Year,
+            Semester = owner.Semester,
+            Type = type,
+            Hash = hash,
             Extension = Path.GetExtension(sourceFileName),
         };
 
@@ -64,12 +60,12 @@ internal static class StorageService
 
         return new Document
         {
-            StudentId    = builder.StudentId,
-            TypeId       = type.Id,
-            Location     = GetDocumentLocation(builder.FullPath),
+            StudentId = builder.StudentId,
+            TypeId = type.Id,
+            Location = GetDocumentLocation(builder.FullPath),
             OriginalName = document.OriginalName,
-            Size         = size,
-            Hash         = hash,
+            Size = size,
+            Hash = hash,
         };
     }
 
@@ -83,7 +79,7 @@ internal static class StorageService
 
     private static async Task<string> CopyAndComputeHashAsync(Stream source, Stream destination)
     {
-        using var sha = SHA256.Create();
+        using SHA256 sha = SHA256.Create();
         byte[] buffer = new byte[81920];
         int read = 0;
 

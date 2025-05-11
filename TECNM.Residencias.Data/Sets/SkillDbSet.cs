@@ -1,9 +1,9 @@
 namespace TECNM.Residencias.Data.Sets;
 
-using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Microsoft.Data.Sqlite;
 using TECNM.Residencias.Data;
 using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Data.Extensions;
@@ -16,14 +16,14 @@ public sealed class SkillDbSet : DbSet<Skill>
 
     public int DeleteSkillsOfStudent(Student student)
     {
-        using var command = CreateCommand("DELETE FROM StudentSkills WHERE StudentId = $id");
+        using SqliteCommand command = CreateCommand("DELETE FROM StudentSkills WHERE StudentId = $id");
         command.Parameters.Add("$id", SqliteType.Integer).Value = student.Id;
         return command.ExecuteNonQuery();
     }
 
     public int AddSkillsOfStudent(Student student, IEnumerable<long> skills)
     {
-        using var command = CreateCommand("INSERT INTO StudentSkills (StudentId, SkillId) VALUES ($p0, $p1) ON CONFLICT DO NOTHING");
+        using SqliteCommand command = CreateCommand("INSERT INTO StudentSkills (StudentId, SkillId) VALUES ($p0, $p1) ON CONFLICT DO NOTHING");
         command.Parameters.Add("$p0", SqliteType.Integer).Value = student.Id;
 
         SqliteParameter parameter = command.Parameters.Add("$p1", SqliteType.Integer);
@@ -40,8 +40,8 @@ public sealed class SkillDbSet : DbSet<Skill>
 
     public override IEnumerable<Skill> EnumerateAll()
     {
-        using var command = CreateCommand("SELECT Id, Type, Value FROM Skill ORDER BY Id");
-        using var reader = command.ExecuteReader();
+        using SqliteCommand command = CreateCommand("SELECT Id, Type, Value FROM Skill ORDER BY Id");
+        using SqliteDataReader reader = command.ExecuteReader();
 
         while (reader.Read())
         {
@@ -55,9 +55,7 @@ public sealed class SkillDbSet : DbSet<Skill>
     /// <param name="student">The <see cref="Student"/> instance to filter.</param>
     /// <returns>An <see cref="IEnumerable{T}"/> enumerating all the entities.</returns>
     public IEnumerable<Skill> EnumerateAll(Student student)
-    {
-        return EnumerateAll(student.Id);
-    }
+        => EnumerateAll(student.Id);
 
     /// <summary>
     /// Retrieves and enumerates all skill entities that belong to the specified student.
@@ -66,7 +64,7 @@ public sealed class SkillDbSet : DbSet<Skill>
     /// <returns>An <see cref="IEnumerable{T}"/> enumerating all the entities.</returns>
     public IEnumerable<Skill> EnumerateAll(long studentId)
     {
-        using var command = CreateCommand("""
+        using SqliteCommand command = CreateCommand("""
         SELECT Id, Type, Value
         FROM Skill
         INNER JOIN StudentSkills
@@ -75,7 +73,7 @@ public sealed class SkillDbSet : DbSet<Skill>
         """);
 
         command.Parameters.Add("$p0", SqliteType.Integer).Value = studentId;
-        using var reader = command.ExecuteReader();
+        using SqliteDataReader reader = command.ExecuteReader();
 
         while (reader.Read())
         {
@@ -83,15 +81,20 @@ public sealed class SkillDbSet : DbSet<Skill>
         }
     }
 
-    public override bool Contains(Skill entity) => throw new NotImplementedException();
+    public override bool Contains(Skill entity)
+        => throw new NotImplementedException();
 
-    public override bool Add(Skill entity) => throw new NotImplementedException();
+    public override bool Add(Skill entity)
+        => throw new NotImplementedException();
 
-    public override int Update(Skill entity) => throw new NotImplementedException();
+    public override int Update(Skill entity)
+        => throw new NotImplementedException();
 
-    public override bool AddOrUpdate(Skill entity) => throw new NotImplementedException();
+    public override bool AddOrUpdate(Skill entity)
+        => throw new NotImplementedException();
 
-    public override int Remove(Skill entity) => throw new NotImplementedException();
+    public override int Remove(Skill entity)
+        => throw new NotImplementedException();
 
     protected override Skill HydrateObject(SqliteDataReader reader)
     {
@@ -99,8 +102,8 @@ public sealed class SkillDbSet : DbSet<Skill>
         int index = 0;
         return new Skill
         {
-            Id    = reader.GetInt64(index++),
-            Type  = reader.GetEnum<SkillType>(index++),
+            Id = reader.GetInt64(index++),
+            Type = reader.GetEnum<SkillType>(index++),
             Value = reader.GetString(index++),
         };
     }

@@ -24,5 +24,6 @@ public sealed class State
     /// Returns the state name as string representation.
     /// </summary>
     /// <returns>The name of the state.</returns>
-    public override string ToString() => Name;
+    public override string ToString()
+        => Name;
 }

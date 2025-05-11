@@ -45,17 +45,20 @@ internal sealed class StorageBackupService
     /// <summary>
     /// Gets the source directory containing the files to be backed up.
     /// </summary>
-    public string SourceDirectory => sourceDirectory;
+    public string SourceDirectory
+        => sourceDirectory;
 
     /// <summary>
     /// Gets the destination directory where the backup will be stored.
     /// </summary>
-    public string DestinationDirectory => destinationDirectory;
+    public string DestinationDirectory
+        => destinationDirectory;
 
     /// <summary>
     /// Gets the date and time when the backup is created.
     /// </summary>
-    public DateTime BackupDateTime => backupDateTime;
+    public DateTime BackupDateTime
+        => backupDateTime;
 
     /// <summary>
     /// Gets or sets a value indicating whether to compress the backup files.

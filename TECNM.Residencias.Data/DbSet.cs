@@ -1,7 +1,7 @@
 namespace TECNM.Residencias.Data;
 
-using Microsoft.Data.Sqlite;
 using System.Collections.Generic;
+using Microsoft.Data.Sqlite;
 
 /// <summary>
 /// Represents a generic DbSet for managing a collection of entities of type <typeparamref name="T"/>
@@ -16,12 +16,14 @@ public abstract class DbSet<T> where T : class, new()
     /// Initializes a new instance of the <see cref="DbSet{T}"/> class with a given <see cref="DbContext"/>.
     /// </summary>
     /// <param name="context">The <see cref="DbContext"/> that this DbSet is associated with.</param>
-    protected DbSet(DbContext context) => _context = context;
+    protected DbSet(DbContext context)
+        => _context = context;
 
     /// <summary>
     /// Gets the <see cref="DbContext"/> associated with this DbSet.
     /// </summary>
-    public DbContext Context => _context;
+    public DbContext Context
+        => _context;
 
     /// <summary>
     /// Retrieves and enumerates all entities of type <typeparamref name="T"/> from the underlying database.
@@ -80,7 +82,7 @@ public abstract class DbSet<T> where T : class, new()
     /// A <see cref="SqliteCommand"/> configured with the provided query, if any.</returns>
     protected SqliteCommand CreateCommand(string? query = null)
     {
-        var command = Context.Connection.CreateCommand();
+        SqliteCommand command = Context.Connection.CreateCommand();
 
         if (query is not null)
         {

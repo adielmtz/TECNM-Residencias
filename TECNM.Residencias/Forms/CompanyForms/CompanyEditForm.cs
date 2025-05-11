@@ -1,13 +1,13 @@
 namespace TECNM.Residencias.Forms.CompanyForms;
 
-using FluentValidation;
-using FluentValidation.Results;
-using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
+using FluentValidation;
+using FluentValidation.Results;
+using Microsoft.Data.Sqlite;
 using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Data.Extensions;
 using TECNM.Residencias.Data.Validators;

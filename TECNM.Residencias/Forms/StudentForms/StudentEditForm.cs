@@ -1,14 +1,14 @@
 namespace TECNM.Residencias.Forms.StudentForms;
 
-using FluentValidation;
-using FluentValidation.Results;
-using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using FluentValidation;
+using FluentValidation.Results;
+using Microsoft.Data.Sqlite;
 using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Data.Entities.DTO;
 using TECNM.Residencias.Data.Extensions;
@@ -581,8 +581,8 @@ public sealed partial class StudentEditForm : EditForm
     {
         SetCompany(new Company
         {
-            Id   = company.Id,
-            Rfc  = company.Rfc,
+            Id = company.Id,
+            Rfc = company.Rfc,
             Name = company.Name,
         });
     }
@@ -598,10 +598,10 @@ public sealed partial class StudentEditForm : EditForm
     {
         SetInternalAdvisor(new Advisor
         {
-            Id        = advisorDto.Id,
+            Id = advisorDto.Id,
             CompanyId = advisorDto.CompanyId,
             FirstName = advisorDto.FirstName,
-            LastName  = advisorDto.LastName,
+            LastName = advisorDto.LastName,
         });
     }
 
@@ -616,10 +616,10 @@ public sealed partial class StudentEditForm : EditForm
     {
         SetExternalAdvisor(new Advisor
         {
-            Id        = advisorDto.Id,
+            Id = advisorDto.Id,
             CompanyId = advisorDto.CompanyId,
             FirstName = advisorDto.FirstName,
-            LastName  = advisorDto.LastName,
+            LastName = advisorDto.LastName,
         });
     }
 
@@ -634,10 +634,10 @@ public sealed partial class StudentEditForm : EditForm
     {
         SetReviewerAdvisor(new Advisor
         {
-            Id        = advisorDto.Id,
+            Id = advisorDto.Id,
             CompanyId = advisorDto.CompanyId,
             FirstName = advisorDto.FirstName,
-            LastName  = advisorDto.LastName,
+            LastName = advisorDto.LastName,
         });
     }
 

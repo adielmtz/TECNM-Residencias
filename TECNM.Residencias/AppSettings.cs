@@ -19,7 +19,7 @@ internal sealed class AppSettings
     {
         get
         {
-            if (s_instance == null)
+            if (s_instance is null)
             {
                 using var context = new AppDbContext();
                 var settings = new Dictionary<string, Setting>();
@@ -37,9 +37,7 @@ internal sealed class AppSettings
     }
 
     private AppSettings(IDictionary<string, Setting> settings)
-    {
-        _settings = settings;
-    }
+        => _settings = settings;
 
     public CompanyType DefaultCompanyType
     {
@@ -95,9 +93,11 @@ internal sealed class AppSettings
         set => SetSetting(nameof(DatabaseBackupFrequency), value);
     }
 
-    public bool IsStorageBackupRequired => DateTimeOffset.Now > (LastStorageBackupDate + StorageBackupFrequency);
+    public bool IsStorageBackupRequired
+        => DateTimeOffset.Now > (LastStorageBackupDate + StorageBackupFrequency);
 
-    public bool IsDatabaseBackupRequired => DateTimeOffset.Now > (LastDatabaseBackupDate + DatabaseBackupFrequency);
+    public bool IsDatabaseBackupRequired
+        => DateTimeOffset.Now > (LastDatabaseBackupDate + DatabaseBackupFrequency);
 
     public void Save()
     {
@@ -112,9 +112,7 @@ internal sealed class AppSettings
     }
 
     public void Clear()
-    {
-        _settings.Clear();
-    }
+        => _settings.Clear();
 
     private Setting GetSetting(string name, object defaultValue)
     {

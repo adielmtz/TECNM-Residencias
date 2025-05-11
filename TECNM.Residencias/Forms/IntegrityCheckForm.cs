@@ -1,6 +1,5 @@
 namespace TECNM.Residencias.Forms;
 
-using Microsoft.Data.Sqlite;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -9,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Data.Sqlite;
 using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Services;
 

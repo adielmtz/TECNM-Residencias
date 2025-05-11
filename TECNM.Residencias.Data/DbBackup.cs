@@ -1,8 +1,8 @@
 namespace TECNM.Residencias.Data;
 
-using Microsoft.Data.Sqlite;
 using System;
 using System.IO;
+using Microsoft.Data.Sqlite;
 using TECNM.Residencias.Data.Extensions;
 
 /// <summary>
@@ -42,17 +42,20 @@ public sealed class DbBackup : IDisposable
     /// <summary>
     /// Gets the date and time when the backup is created.
     /// </summary>
-    public DateTime BackupDateTime => _backupDateTime;
+    public DateTime BackupDateTime
+        => _backupDateTime;
 
     /// <summary>
     /// Gets the directory where the backup is saved.
     /// </summary>
-    public string BackupDirectory => _directory;
+    public string BackupDirectory
+        => _directory;
 
     /// <summary>
     /// Disposes the source database.
     /// </summary>
-    public void Dispose() => _source.Dispose();
+    public void Dispose()
+        => _source.Dispose();
 
     /// <summary>
     /// Executes the backup operation and returns the full path of the resulting backup file.
@@ -65,7 +68,7 @@ public sealed class DbBackup : IDisposable
         string fullpath = Path.Combine(BackupDirectory, filename);
         var factory = new DbFactory(fullpath);
 
-        using var destination = factory.CreateConnection();
+        using SqliteConnection destination = factory.CreateConnection();
         destination.SetPragma("journal_mode", "delete");
         source.BackupDatabase(destination);
 

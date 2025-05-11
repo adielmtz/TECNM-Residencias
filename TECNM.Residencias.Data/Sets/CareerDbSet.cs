@@ -1,9 +1,9 @@
 namespace TECNM.Residencias.Data.Sets;
 
-using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Microsoft.Data.Sqlite;
 using TECNM.Residencias.Data;
 using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Data.Extensions;
@@ -21,9 +21,9 @@ public sealed class CareerDbSet : DbSet<Career>
     /// <returns>A <see cref="Career"/> instance if a career with the specified rowid exists; otherwise <see langword="null"/>.</returns>
     public Career? GetCareer(long id)
     {
-        using var command = CreateCommand("SELECT Id, Name, Enabled, UpdatedOn, CreatedOn FROM Career WHERE Id = $id");
+        using SqliteCommand command = CreateCommand("SELECT Id, Name, Enabled, UpdatedOn, CreatedOn FROM Career WHERE Id = $id");
         command.Parameters.Add("$id", SqliteType.Integer).Value = id;
-        using var reader = command.ExecuteReader();
+        using SqliteDataReader reader = command.ExecuteReader();
 
         if (reader.Read())
         {
@@ -35,8 +35,8 @@ public sealed class CareerDbSet : DbSet<Career>
 
     public override IEnumerable<Career> EnumerateAll()
     {
-        using var command = CreateCommand("SELECT Id, Name, Enabled, UpdatedOn, CreatedOn FROM Career ORDER BY Name");
-        using var reader = command.ExecuteReader();
+        using SqliteCommand command = CreateCommand("SELECT Id, Name, Enabled, UpdatedOn, CreatedOn FROM Career ORDER BY Name");
+        using SqliteDataReader reader = command.ExecuteReader();
 
         while (reader.Read())
         {
@@ -55,9 +55,9 @@ public sealed class CareerDbSet : DbSet<Career>
     /// </returns>
     public IEnumerable<Career> EnumerateAll(bool enabled)
     {
-        using var command = CreateCommand("SELECT Id, Name, Enabled, UpdatedOn, CreatedOn FROM Career WHERE Enabled = $p0 ORDER BY Name");
+        using SqliteCommand command = CreateCommand("SELECT Id, Name, Enabled, UpdatedOn, CreatedOn FROM Career WHERE Enabled = $p0 ORDER BY Name");
         command.Parameters.Add("$p0", SqliteType.Integer).Value = enabled;
-        using var reader = command.ExecuteReader();
+        using SqliteDataReader reader = command.ExecuteReader();
 
         while (reader.Read())
         {
@@ -65,20 +65,21 @@ public sealed class CareerDbSet : DbSet<Career>
         }
     }
 
-    public override bool Contains(Career entity) => throw new NotImplementedException();
+    public override bool Contains(Career entity)
+        => throw new NotImplementedException();
 
     public override bool Add(Career entity)
     {
-        using var command = CreateCommand("""
+        using SqliteCommand command = CreateCommand("""
         INSERT INTO Career (Name, Enabled, UpdatedOn, CreatedOn)
         VALUES ($p0, $p1, $p2, $p3)
         RETURNING Id
         """);
 
-        command.Parameters.Add("$p0", SqliteType.Text).Value    = entity.Name;
+        command.Parameters.Add("$p0", SqliteType.Text).Value = entity.Name;
         command.Parameters.Add("$p1", SqliteType.Integer).Value = entity.Enabled;
-        command.Parameters.Add("$p2", SqliteType.Text).Value    = DateTimeOffset.Now.ToRfc3339();
-        command.Parameters.Add("$p3", SqliteType.Text).Value    = DateTimeOffset.Now.ToRfc3339();
+        command.Parameters.Add("$p2", SqliteType.Text).Value = DateTimeOffset.Now.ToRfc3339();
+        command.Parameters.Add("$p3", SqliteType.Text).Value = DateTimeOffset.Now.ToRfc3339();
         object? result = command.ExecuteScalar();
 
         if (result is long rowid)
@@ -92,7 +93,7 @@ public sealed class CareerDbSet : DbSet<Career>
 
     public override int Update(Career entity)
     {
-        using var command = CreateCommand("""
+        using SqliteCommand command = CreateCommand("""
         UPDATE Career
         SET Name      = $p0,
             Enabled   = $p1,
@@ -100,19 +101,18 @@ public sealed class CareerDbSet : DbSet<Career>
         WHERE Id = $id;
         """);
 
-        command.Parameters.Add("$p0", SqliteType.Text).Value    = entity.Name;
+        command.Parameters.Add("$p0", SqliteType.Text).Value = entity.Name;
         command.Parameters.Add("$p1", SqliteType.Integer).Value = entity.Enabled;
-        command.Parameters.Add("$p2", SqliteType.Text).Value    = DateTimeOffset.Now.ToRfc3339();
+        command.Parameters.Add("$p2", SqliteType.Text).Value = DateTimeOffset.Now.ToRfc3339();
         command.Parameters.Add("$id", SqliteType.Integer).Value = entity.Id;
         return command.ExecuteNonQuery();
     }
 
     public override bool AddOrUpdate(Career entity)
-    {
-        return entity.Id > 0 ? Update(entity) > 0 : Add(entity);
-    }
+        => entity.Id > 0 ? Update(entity) > 0 : Add(entity);
 
-    public override int Remove(Career entity) => throw new NotImplementedException();
+    public override int Remove(Career entity)
+        => throw new NotImplementedException();
 
     protected override Career HydrateObject(SqliteDataReader reader)
     {
@@ -120,9 +120,9 @@ public sealed class CareerDbSet : DbSet<Career>
         int index = 0;
         return new Career
         {
-            Id        = reader.GetInt64(index++),
-            Name      = reader.GetString(index++),
-            Enabled   = reader.GetBoolean(index++),
+            Id = reader.GetInt64(index++),
+            Name = reader.GetString(index++),
+            Enabled = reader.GetBoolean(index++),
             UpdatedOn = reader.GetDateTimeOffset(index++),
             CreatedOn = reader.GetDateTimeOffset(index++),
         };

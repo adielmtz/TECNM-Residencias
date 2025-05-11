@@ -25,18 +25,21 @@ public sealed class DbMigrator : IDisposable
     /// Initializes a new instance of the <see cref="DbMigrator"/> class.
     /// </summary>
     /// <param name="connection">The database connection to be migrated.</param>
-    public DbMigrator(IDbConnection connection) => _connection = connection;
+    public DbMigrator(IDbConnection connection)
+        => _connection = connection;
 
     /// <summary>
     /// Gets a value indicating whether there are pending migrations to be applied.
     /// </summary>
-    public bool HasPendingMigrations => GetUserVersion() < CurrentVersion;
+    public bool HasPendingMigrations
+        => GetUserVersion() < CurrentVersion;
 
     /// <summary>
     /// Releases the resources used by the <see cref="DbMigrator"/> class
     /// and closes the database connection.
     /// </summary>
-    public void Dispose() => _connection.Dispose();
+    public void Dispose()
+        => _connection.Dispose();
 
     /// <summary>
     /// Applies any pending migrations to the database.
@@ -51,7 +54,7 @@ public sealed class DbMigrator : IDisposable
 
         long version = GetUserVersion();
 
-        using var transaction = _connection.BeginTransaction();
+        using IDbTransaction transaction = _connection.BeginTransaction();
 
         for (long i = version + 1; i <= CurrentVersion; i++)
         {
@@ -67,7 +70,7 @@ public sealed class DbMigrator : IDisposable
     /// </summary>
     private void FlushWalFile()
     {
-        using var command = _connection.CreateCommand();
+        using IDbCommand command = _connection.CreateCommand();
         command.CommandText = "PRAGMA wal_checkpoint(FULL)";
         command.ExecuteNonQuery();
     }
@@ -78,7 +81,7 @@ public sealed class DbMigrator : IDisposable
     /// <returns>The result of PRAGMA user_version.</returns>
     private long GetUserVersion()
     {
-        using var command = _connection.CreateCommand();
+        using IDbCommand command = _connection.CreateCommand();
         command.CommandText = "PRAGMA user_version";
         return (long) command.ExecuteScalar()!;
     }
@@ -89,7 +92,7 @@ public sealed class DbMigrator : IDisposable
     /// <param name="version">The schema version to set.</param>
     private void SetUserVersion(long version)
     {
-        using var command = _connection.CreateCommand();
+        using IDbCommand command = _connection.CreateCommand();
         command.CommandText = $"PRAGMA user_version={version}";
         command.ExecuteNonQuery();
     }
@@ -101,7 +104,7 @@ public sealed class DbMigrator : IDisposable
     private void ApplyMigration(long version)
     {
         string sql = GetStringResource(version);
-        using var command = _connection.CreateCommand();
+        using IDbCommand command = _connection.CreateCommand();
         command.CommandText = sql;
         command.ExecuteNonQuery();
         SetUserVersion(version);
@@ -116,7 +119,7 @@ public sealed class DbMigrator : IDisposable
     {
         Assembly assembly = typeof(DbMigrator).Assembly;
         string resource = $"TECNM.Residencias.Data.Migrations.Resources.migration_{version}.sql";
-        using var stream = assembly.GetManifestResourceStream(resource);
+        using Stream? stream = assembly.GetManifestResourceStream(resource);
         Trace.Assert(stream is not null, $"Failed to get migration script resource: '{resource}'.");
 
         using var reader = new StreamReader(stream);

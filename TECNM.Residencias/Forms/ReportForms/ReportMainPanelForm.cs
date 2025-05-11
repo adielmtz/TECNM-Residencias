@@ -1,6 +1,5 @@
 namespace TECNM.Residencias.Forms.ReportForms;
 
-using ClosedXML.Excel;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
+using ClosedXML.Excel;
 using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Data.Extensions;
 using TECNM.Residencias.Forms.ReportForms.DTO;

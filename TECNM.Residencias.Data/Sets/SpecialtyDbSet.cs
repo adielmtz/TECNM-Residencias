@@ -1,9 +1,9 @@
 namespace TECNM.Residencias.Data.Sets;
 
-using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Microsoft.Data.Sqlite;
 using TECNM.Residencias.Data;
 using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Data.Extensions;
@@ -21,9 +21,9 @@ public sealed class SpecialtyDbSet : DbSet<Specialty>
     /// <returns>A <see cref="Specialty"/> instance if a specialty with the specified rowid exists; otherwise <see langword="null"/>.</returns>
     public Specialty? GetSpecialty(long id)
     {
-        using var command = CreateCommand("SELECT Id, CareerId, Name, Enabled, UpdatedOn, CreatedOn FROM Specialty WHERE Id = $id");
+        using SqliteCommand command = CreateCommand("SELECT Id, CareerId, Name, Enabled, UpdatedOn, CreatedOn FROM Specialty WHERE Id = $id");
         command.Parameters.Add("$id", SqliteType.Integer).Value = id;
-        using var reader = command.ExecuteReader();
+        using SqliteDataReader reader = command.ExecuteReader();
 
         if (reader.Read())
         {
@@ -35,8 +35,8 @@ public sealed class SpecialtyDbSet : DbSet<Specialty>
 
     public override IEnumerable<Specialty> EnumerateAll()
     {
-        using var command = CreateCommand("SELECT Id, CareerId, Name, Enabled, UpdatedOn, CreatedOn FROM Specialty ORDER BY CareerId, Name");
-        using var reader = command.ExecuteReader();
+        using SqliteCommand command = CreateCommand("SELECT Id, CareerId, Name, Enabled, UpdatedOn, CreatedOn FROM Specialty ORDER BY CareerId, Name");
+        using SqliteDataReader reader = command.ExecuteReader();
 
         while (reader.Read())
         {
@@ -51,7 +51,7 @@ public sealed class SpecialtyDbSet : DbSet<Specialty>
     /// <returns>An <see cref="IEnumerable{T}"/> enumerating all the entities.</returns>
     public IEnumerable<Specialty> EnumerateAll(Career career, bool? enabled = null)
     {
-        using var command = CreateCommand();
+        using SqliteCommand command = CreateCommand();
         string query = "SELECT Id, CareerId, Name, Enabled, UpdatedOn, CreatedOn FROM Specialty WHERE CareerId = $p0 ";
 
         if (enabled is not null)
@@ -62,7 +62,7 @@ public sealed class SpecialtyDbSet : DbSet<Specialty>
 
         command.CommandText = query + "ORDER BY Name";
         command.Parameters.Add("$p0", SqliteType.Integer).Value = career.Id;
-        using var reader = command.ExecuteReader();
+        using SqliteDataReader reader = command.ExecuteReader();
 
         while (reader.Read())
         {
@@ -72,9 +72,9 @@ public sealed class SpecialtyDbSet : DbSet<Specialty>
 
     public IEnumerable<Specialty> EnumerateAll(long careerId)
     {
-        using var command = CreateCommand("SELECT Id, CareerId, Name, Enabled, UpdatedOn, CreatedOn FROM Specialty WHERE CareerId = $p0 ORDER BY Name");
+        using SqliteCommand command = CreateCommand("SELECT Id, CareerId, Name, Enabled, UpdatedOn, CreatedOn FROM Specialty WHERE CareerId = $p0 ORDER BY Name");
         command.Parameters.Add("$p0", SqliteType.Integer).Value = careerId;
-        using var reader = command.ExecuteReader();
+        using SqliteDataReader reader = command.ExecuteReader();
 
         while (reader.Read())
         {
@@ -82,21 +82,22 @@ public sealed class SpecialtyDbSet : DbSet<Specialty>
         }
     }
 
-    public override bool Contains(Specialty entity) => throw new NotImplementedException();
+    public override bool Contains(Specialty entity)
+        => throw new NotImplementedException();
 
     public override bool Add(Specialty entity)
     {
-        using var command = CreateCommand("""
+        using SqliteCommand command = CreateCommand("""
         INSERT INTO Specialty (CareerId, Name, Enabled, UpdatedOn, CreatedOn)
         VALUES ($p0, $p1, $p2, $p3, $p4)
         RETURNING Id
         """);
 
         command.Parameters.Add("$p0", SqliteType.Integer).Value = entity.CareerId;
-        command.Parameters.Add("$p1", SqliteType.Text).Value    = entity.Name;
+        command.Parameters.Add("$p1", SqliteType.Text).Value = entity.Name;
         command.Parameters.Add("$p2", SqliteType.Integer).Value = entity.Enabled;
-        command.Parameters.Add("$p3", SqliteType.Text).Value    = DateTimeOffset.Now.ToRfc3339();
-        command.Parameters.Add("$p4", SqliteType.Text).Value    = DateTimeOffset.Now.ToRfc3339();
+        command.Parameters.Add("$p3", SqliteType.Text).Value = DateTimeOffset.Now.ToRfc3339();
+        command.Parameters.Add("$p4", SqliteType.Text).Value = DateTimeOffset.Now.ToRfc3339();
         object? result = command.ExecuteScalar();
 
         if (result is long rowid)
@@ -110,7 +111,7 @@ public sealed class SpecialtyDbSet : DbSet<Specialty>
 
     public override int Update(Specialty entity)
     {
-        using var command = CreateCommand("""
+        using SqliteCommand command = CreateCommand("""
         UPDATE Specialty
         SET CareerId  = $p0,
             Name      = $p1,
@@ -120,19 +121,18 @@ public sealed class SpecialtyDbSet : DbSet<Specialty>
         """);
 
         command.Parameters.Add("$p0", SqliteType.Integer).Value = entity.CareerId;
-        command.Parameters.Add("$p1", SqliteType.Text).Value    = entity.Name;
+        command.Parameters.Add("$p1", SqliteType.Text).Value = entity.Name;
         command.Parameters.Add("$p2", SqliteType.Integer).Value = entity.Enabled;
-        command.Parameters.Add("$p3", SqliteType.Text).Value    = DateTimeOffset.Now.ToRfc3339();
+        command.Parameters.Add("$p3", SqliteType.Text).Value = DateTimeOffset.Now.ToRfc3339();
         command.Parameters.Add("$id", SqliteType.Integer).Value = entity.Id;
         return command.ExecuteNonQuery();
     }
 
     public override bool AddOrUpdate(Specialty entity)
-    {
-        return entity.Id > 0 ? Update(entity) > 0 : Add(entity);
-    }
+        => entity.Id > 0 ? Update(entity) > 0 : Add(entity);
 
-    public override int Remove(Specialty entity) => throw new NotImplementedException();
+    public override int Remove(Specialty entity)
+        => throw new NotImplementedException();
 
     protected override Specialty HydrateObject(SqliteDataReader reader)
     {
@@ -140,10 +140,10 @@ public sealed class SpecialtyDbSet : DbSet<Specialty>
         int index = 0;
         return new Specialty
         {
-            Id        = reader.GetInt64(index++),
-            CareerId  = reader.GetInt64(index++),
-            Name      = reader.GetString(index++),
-            Enabled   = reader.GetBoolean(index++),
+            Id = reader.GetInt64(index++),
+            CareerId = reader.GetInt64(index++),
+            Name = reader.GetString(index++),
+            Enabled = reader.GetBoolean(index++),
             UpdatedOn = reader.GetDateTimeOffset(index++),
             CreatedOn = reader.GetDateTimeOffset(index++),
         };

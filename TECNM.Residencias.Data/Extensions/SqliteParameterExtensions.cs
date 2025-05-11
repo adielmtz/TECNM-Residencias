@@ -1,7 +1,7 @@
 namespace TECNM.Residencias.Data.Extensions;
 
-using Microsoft.Data.Sqlite;
 using System;
+using Microsoft.Data.Sqlite;
 
 /// <summary>
 /// Provides extension methods for the <see cref="SqliteParameter"/> class.

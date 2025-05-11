@@ -1,11 +1,11 @@
 namespace TECNM.Residencias.Forms.SpecialtyForms;
 
-using FluentValidation;
-using FluentValidation.Results;
-using Microsoft.Data.Sqlite;
 using System;
 using System.Diagnostics;
 using System.Windows.Forms;
+using FluentValidation;
+using FluentValidation.Results;
+using Microsoft.Data.Sqlite;
 using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Data.Validators;
 

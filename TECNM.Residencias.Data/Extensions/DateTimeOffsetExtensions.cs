@@ -15,7 +15,5 @@ public static class DateTimeOffsetExtensions
     /// <param name="dto">The <see cref="DateTimeOffset"/> instance to convert.</param>
     /// <returns>A string representating the date and time in RFC 3339 format.</returns>
     public static string ToRfc3339(this DateTimeOffset dto)
-    {
-        return dto.ToString(DATE_RFC3339);
-    }
+        => dto.ToString(DATE_RFC3339);
 }

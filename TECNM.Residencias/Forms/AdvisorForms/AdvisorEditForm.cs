@@ -1,10 +1,10 @@
 namespace TECNM.Residencias.Forms.AdvisorForms;
 
-using FluentValidation;
-using FluentValidation.Results;
 using System;
 using System.Diagnostics;
 using System.Windows.Forms;
+using FluentValidation;
+using FluentValidation.Results;
 using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Data.Validators;
 
@@ -28,13 +28,13 @@ public sealed partial class AdvisorEditForm : EditForm
         if (entity is not null)
         {
             _advisor = entity;
-            tb_AdvisorFirstName.Text   = entity.FirstName;
-            tb_AdvisorLastName.Text    = entity.LastName;
-            tb_AdvisorSection.Text     = entity.Section;
-            tb_AdvisorRole.Text        = entity.Role;
-            tb_AdvisorEmail.Text       = entity.Email;
-            mtb_AdvisorPhone.Text      = entity.Phone;
-            tb_AdvisorExtension.Text   = entity.Extension;
+            tb_AdvisorFirstName.Text = entity.FirstName;
+            tb_AdvisorLastName.Text = entity.LastName;
+            tb_AdvisorSection.Text = entity.Section;
+            tb_AdvisorRole.Text = entity.Role;
+            tb_AdvisorEmail.Text = entity.Email;
+            mtb_AdvisorPhone.Text = entity.Phone;
+            tb_AdvisorExtension.Text = entity.Extension;
             chk_AdvisorEnabled.Checked = entity.Enabled;
         }
     }
@@ -63,13 +63,13 @@ public sealed partial class AdvisorEditForm : EditForm
 
         advisor.CompanyId = company.Id;
         advisor.FirstName = tb_AdvisorFirstName.Text.Trim();
-        advisor.LastName  = tb_AdvisorLastName.Text.Trim();
-        advisor.Section   = tb_AdvisorSection.Text.Trim();
-        advisor.Role      = tb_AdvisorRole.Text.Trim();
-        advisor.Email     = tb_AdvisorEmail.Text.Trim();
-        advisor.Phone     = mtb_AdvisorPhone.Text.Trim();
+        advisor.LastName = tb_AdvisorLastName.Text.Trim();
+        advisor.Section = tb_AdvisorSection.Text.Trim();
+        advisor.Role = tb_AdvisorRole.Text.Trim();
+        advisor.Email = tb_AdvisorEmail.Text.Trim();
+        advisor.Phone = mtb_AdvisorPhone.Text.Trim();
         advisor.Extension = tb_AdvisorExtension.Text.Trim();
-        advisor.Enabled   = chk_AdvisorEnabled.Checked;
+        advisor.Enabled = chk_AdvisorEnabled.Checked;
 
         ValidationResult result = _validator.Validate(advisor);
 

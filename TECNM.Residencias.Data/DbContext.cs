@@ -1,7 +1,7 @@
 namespace TECNM.Residencias.Data;
 
-using Microsoft.Data.Sqlite;
 using System;
+using Microsoft.Data.Sqlite;
 
 /// <summary>
 /// Represents a base class for database contexts that manage the connection and transactions.
@@ -25,12 +25,8 @@ public abstract class DbContext : IDisposable
     /// <summary>
     /// Gets the SQLite connection associated with this context.
     /// </summary>
-    public SqliteConnection Connection => _connection;
-
-    /// <summary>
-    /// Gets the SQLite transaction associated with the current database connection.
-    /// </summary>
-    protected SqliteTransaction Transaction => _transaction;
+    public SqliteConnection Connection
+        => _connection;
 
     /// <summary>
     /// Diposes the connection and active transaction used by the
@@ -45,10 +41,12 @@ public abstract class DbContext : IDisposable
     /// <summary>
     /// Commits the changes made in the current context.
     /// </summary>
-    public void SaveChanges() => _transaction.Commit();
+    public void SaveChanges()
+        => _transaction.Commit();
 
     /// <summary>
     /// Reverts the changes made in the current context.
     /// </summary>
-    public void RejectChanges() => _transaction.Rollback();
+    public void RejectChanges()
+        => _transaction.Rollback();
 }

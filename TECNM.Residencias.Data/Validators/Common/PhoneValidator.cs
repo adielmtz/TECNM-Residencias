@@ -45,7 +45,5 @@ internal static class PhoneValidator
     /// <see langword="true"/> if the character is valid, otherwise <see langword="false"/>.
     /// </returns>
     private static bool IsValidPhoneNumberChar(char c)
-    {
-        return char.IsDigit(c) || c == ' ' || c == '+' || c == '-';
-    }
+        => char.IsDigit(c) || c == ' ' || c == '+' || c == '-';
 }

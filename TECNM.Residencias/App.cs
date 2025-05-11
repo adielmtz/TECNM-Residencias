@@ -1,9 +1,9 @@
 namespace TECNM.Residencias;
 
-using Microsoft.Data.Sqlite;
 using System;
 using System.IO;
 using System.Reflection;
+using Microsoft.Data.Sqlite;
 using TECNM.Residencias.Data;
 using TECNM.Residencias.Data.Migrations;
 
@@ -37,33 +37,44 @@ internal static class App
         s_version = name.Version!;
     }
 
-    public static int DefaultRowsPerPage => 100;
+    public static int DefaultRowsPerPage 
+        => 100;
 
-    public static int DefaultInitialPage => 1;
+    public static int DefaultInitialPage
+        => 1;
 
-    public static int MinimumReportYear => 1954;
+    public static string Name
+        => "Archivo de residencias | TECNM";
 
-    public static string Name => "Archivo de residencias | TECNM";
+    public static Version Version
+        => s_version;
 
-    public static Version Version => s_version;
+    public static bool Initialized
+        => s_initialized;
 
-    public static bool Initialized => s_initialized;
+    public static string RootDirectory
+        => s_rootDirectory;
 
-    public static string RootDirectory => s_rootDirectory;
+    public static string FileStorageDirectory
+        => s_fileStorageDirectory;
 
-    public static string FileStorageDirectory => s_fileStorageDirectory;
+    public static string LogsDirectory
+        => s_logsDirectory;
 
-    public static string LogsDirectory => s_logsDirectory;
+    public static string TempStorageDirectory
+        => s_tempStorageDirectory;
 
-    public static string TempStorageDirectory => s_tempStorageDirectory;
+    public static string DatabaseBackupDirectory
+        => s_dbBackupDirectory;
 
-    public static string DatabaseBackupDirectory => s_dbBackupDirectory;
+    public static string DatabaseName
+        => s_databaseName;
 
-    public static string DatabaseName => s_databaseName;
+    public static string DatabaseFullName
+        => s_databasePath;
 
-    public static string DatabaseFullName => s_databasePath;
-
-    public static DbFactory Database => s_dbFactory;
+    public static DbFactory Database
+        => s_dbFactory;
 
     public static void Initialize()
     {
@@ -81,7 +92,7 @@ internal static class App
 
     private static void InitializeDatabase()
     {
-        using var sqlite = Database.CreateConnection();
+        using SqliteConnection sqlite = Database.CreateConnection();
         using var migrator = new DbMigrator(sqlite);
 
         if (migrator.HasPendingMigrations)

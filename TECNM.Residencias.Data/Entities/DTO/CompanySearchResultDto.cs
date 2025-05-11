@@ -10,5 +10,6 @@ public sealed record CompanySearchResultDto(
     /// Returns the company name as string representation.
     /// </summary>
     /// <returns>The name of the company.</returns>
-    public override string ToString() => Name;
+    public override string ToString()
+        => Name;
 }

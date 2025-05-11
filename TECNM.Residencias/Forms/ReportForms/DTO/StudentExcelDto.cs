@@ -1,7 +1,7 @@
 namespace TECNM.Residencias.Forms.ReportForms.DTO;
 
-using ClosedXML.Attributes;
 using System;
+using ClosedXML.Attributes;
 using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Data.Extensions;
 

@@ -1,7 +1,5 @@
 namespace TECNM.Residencias.Controls;
 
-using FluentValidation;
-using FluentValidation.Results;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,6 +7,8 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using FluentValidation;
+using FluentValidation.Results;
 using TECNM.Residencias.Data;
 using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Data.Validators;

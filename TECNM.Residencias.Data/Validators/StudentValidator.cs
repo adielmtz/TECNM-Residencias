@@ -1,7 +1,7 @@
 namespace TECNM.Residencias.Data.Validators;
 
-using FluentValidation;
 using System.Text.RegularExpressions;
+using FluentValidation;
 using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Data.Validators.Common;
 
@@ -57,7 +57,5 @@ public sealed class StudentValidator : AbstractValidator<Student>
     }
 
     private bool BeAValidStudentId(long id)
-    {
-        return Regex.IsMatch(id.ToString(), @"\d{2}07\d{4}");
-    }
+        => Regex.IsMatch(id.ToString(), @"\d{2}07\d{4}");
 }
