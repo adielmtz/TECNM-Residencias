@@ -19,34 +19,32 @@ public sealed class DbFactory
     /// </summary>
     public static readonly string DefaultJournalMode = "wal";
 
-    private readonly string _dataSource;
-    private readonly string _connectionString;
+    private readonly SqliteConnectionStringBuilder _builder;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="DbFactory"/> class with the specified data source.
     /// </summary>
     /// <param name="dataSource">The data source for the SQLite database.</param>
     public DbFactory(string dataSource)
-    {
-        _dataSource = dataSource;
-        _connectionString = new SqliteConnectionStringBuilder
+        => _builder = new SqliteConnectionStringBuilder
         {
             DataSource = dataSource,
             ForeignKeys = true,
             DefaultTimeout = 5,
             RecursiveTriggers = true,
-        }.ConnectionString;
-    }
+        };
 
     /// <summary>
     /// Gets the connection data source.
     /// </summary>
-    public string DataSource => _dataSource;
+    public string DataSource
+        => _builder.DataSource;
 
     /// <summary>
     /// Gets the connection string used to connect to the database.
     /// </summary>
-    public string ConnectionString => _connectionString;
+    public string ConnectionString
+        => _builder.ConnectionString;
 
     /// <summary>
     /// Creates and opens a new <see cref="SqliteConnection"/> instance to the database.
@@ -81,7 +79,5 @@ public sealed class DbFactory
     /// It enables the use of the "NOCASE" collation for sorting or comparing string values in SQL queries.
     /// </remarks>
     private static void RegisterCollations(SqliteConnection sqlite)
-    {
-        sqlite.CreateCollation("NOCASE", (a, b) => string.Compare(a, b, ignoreCase: true));
-    }
+        => sqlite.CreateCollation("NOCASE", (a, b) => string.Compare(a, b, ignoreCase: true));
 }
