@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Data.Extensions;
+using TECNM.Residencias.Services;
 
 public sealed partial class SettingsForm : Form
 {
@@ -163,5 +164,23 @@ public sealed partial class SettingsForm : Form
     {
         using var sqlite = App.Database.CreateConnection();
         return sqlite.ServerVersion;
+    }
+
+    private async void DoUpdatesCheck_Click(object sender, EventArgs e)
+    {
+        btn_UpdateCheck.Enabled = false;
+
+        bool available = await AppUpdateService.CheckForUpdatesAsync();
+        if (!available)
+        {
+            MessageBox.Show(
+                "La versión más reciente ya está instalada.",
+                "Información",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information
+            );
+        }
+
+        btn_UpdateCheck.Enabled = true;
     }
 }

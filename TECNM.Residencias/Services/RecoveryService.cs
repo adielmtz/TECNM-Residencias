@@ -61,7 +61,7 @@ internal static class RecoveryService
         }
     }
 
-    private static void KillOtherProcesses()
+    public static void KillOtherProcesses()
     {
         Process self = Process.GetCurrentProcess();
         Process[] processes = Process.GetProcessesByName(self.ProcessName);

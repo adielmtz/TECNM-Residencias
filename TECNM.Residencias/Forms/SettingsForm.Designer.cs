@@ -31,6 +31,7 @@ namespace TECNM.Residencias.Forms
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
             lbl_SqliteVersion = new System.Windows.Forms.Label();
             groupBox1 = new System.Windows.Forms.GroupBox();
+            btn_UpdateCheck = new System.Windows.Forms.Button();
             button5 = new System.Windows.Forms.Button();
             button1 = new System.Windows.Forms.Button();
             button3 = new System.Windows.Forms.Button();
@@ -74,14 +75,26 @@ namespace TECNM.Residencias.Forms
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(btn_UpdateCheck);
             groupBox1.Controls.Add(button5);
             groupBox1.Controls.Add(button1);
             groupBox1.Location = new System.Drawing.Point(504, 12);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new System.Drawing.Size(284, 82);
+            groupBox1.Size = new System.Drawing.Size(284, 110);
             groupBox1.TabIndex = 1;
             groupBox1.TabStop = false;
             groupBox1.Text = "Avanzado";
+            // 
+            // btn_UpdateCheck
+            // 
+            btn_UpdateCheck.Location = new System.Drawing.Point(6, 80);
+            btn_UpdateCheck.Name = "btn_UpdateCheck";
+            btn_UpdateCheck.Size = new System.Drawing.Size(272, 23);
+            btn_UpdateCheck.TabIndex = 8;
+            btn_UpdateCheck.TabStop = false;
+            btn_UpdateCheck.Text = "Buscar actualizaciones";
+            btn_UpdateCheck.UseVisualStyleBackColor = true;
+            btn_UpdateCheck.Click += DoUpdatesCheck_Click;
             // 
             // button5
             // 
@@ -310,9 +323,9 @@ namespace TECNM.Residencias.Forms
             // 
             groupBox4.Controls.Add(button6);
             groupBox4.Controls.Add(button3);
-            groupBox4.Location = new System.Drawing.Point(504, 100);
+            groupBox4.Location = new System.Drawing.Point(504, 128);
             groupBox4.Name = "groupBox4";
-            groupBox4.Size = new System.Drawing.Size(284, 82);
+            groupBox4.Size = new System.Drawing.Size(284, 84);
             groupBox4.TabIndex = 7;
             groupBox4.TabStop = false;
             groupBox4.Text = "Respaldo y restauración";
@@ -385,5 +398,6 @@ namespace TECNM.Residencias.Forms
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button btn_UpdateCheck;
     }
 }

@@ -20,7 +20,7 @@ public sealed partial class MainWindow : Form
         Text = $"Panel de administración | {App.Name}";
     }
 
-    protected override void OnLoad(EventArgs e)
+    protected override async void OnLoad(EventArgs e)
     {
         base.OnLoad(e);
         App.Initialize();
@@ -43,6 +43,8 @@ public sealed partial class MainWindow : Form
         }
 
         LoadLastModifiedStudents();
+
+        await AppUpdateService.CheckForUpdatesAsync();
     }
 
     protected override void OnActivated(EventArgs e)
