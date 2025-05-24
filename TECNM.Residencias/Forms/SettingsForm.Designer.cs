@@ -55,6 +55,10 @@ namespace TECNM.Residencias.Forms
             cb_CompanyType = new System.Windows.Forms.ComboBox();
             button4 = new System.Windows.Forms.Button();
             groupBox4 = new System.Windows.Forms.GroupBox();
+            cb_FullBackup = new System.Windows.Forms.ComboBox();
+            label9 = new System.Windows.Forms.Label();
+            label8 = new System.Windows.Forms.Label();
+            cb_DbBackup = new System.Windows.Forms.ComboBox();
             button6 = new System.Windows.Forms.Button();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
@@ -321,14 +325,53 @@ namespace TECNM.Residencias.Forms
             // 
             // groupBox4
             // 
+            groupBox4.Controls.Add(cb_FullBackup);
+            groupBox4.Controls.Add(label9);
+            groupBox4.Controls.Add(label8);
+            groupBox4.Controls.Add(cb_DbBackup);
             groupBox4.Controls.Add(button6);
             groupBox4.Controls.Add(button3);
             groupBox4.Location = new System.Drawing.Point(504, 128);
             groupBox4.Name = "groupBox4";
-            groupBox4.Size = new System.Drawing.Size(284, 84);
+            groupBox4.Size = new System.Drawing.Size(284, 148);
             groupBox4.TabIndex = 7;
             groupBox4.TabStop = false;
             groupBox4.Text = "Respaldo y restauración";
+            // 
+            // cb_FullBackup
+            // 
+            cb_FullBackup.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            cb_FullBackup.FormattingEnabled = true;
+            cb_FullBackup.Location = new System.Drawing.Point(157, 113);
+            cb_FullBackup.Name = "cb_FullBackup";
+            cb_FullBackup.Size = new System.Drawing.Size(121, 23);
+            cb_FullBackup.TabIndex = 8;
+            // 
+            // label9
+            // 
+            label9.Location = new System.Drawing.Point(6, 109);
+            label9.Name = "label9";
+            label9.Size = new System.Drawing.Size(145, 34);
+            label9.TabIndex = 7;
+            label9.Text = "Recordatorio de copia de seguridad";
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new System.Drawing.Point(6, 83);
+            label8.Name = "label8";
+            label8.Size = new System.Drawing.Size(145, 15);
+            label8.TabIndex = 6;
+            label8.Text = "Respaldar la base de datos";
+            // 
+            // cb_DbBackup
+            // 
+            cb_DbBackup.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            cb_DbBackup.FormattingEnabled = true;
+            cb_DbBackup.Location = new System.Drawing.Point(157, 80);
+            cb_DbBackup.Name = "cb_DbBackup";
+            cb_DbBackup.Size = new System.Drawing.Size(121, 23);
+            cb_DbBackup.TabIndex = 5;
             // 
             // button6
             // 
@@ -366,6 +409,7 @@ namespace TECNM.Residencias.Forms
             groupBox5.ResumeLayout(false);
             groupBox5.PerformLayout();
             groupBox4.ResumeLayout(false);
+            groupBox4.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -399,5 +443,9 @@ namespace TECNM.Residencias.Forms
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button btn_UpdateCheck;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.ComboBox cb_DbBackup;
+        private System.Windows.Forms.ComboBox cb_FullBackup;
+        private System.Windows.Forms.Label label9;
     }
 }

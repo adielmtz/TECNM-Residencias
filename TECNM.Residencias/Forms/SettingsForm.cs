@@ -122,6 +122,23 @@ public sealed partial class SettingsForm : Form
         AppSettings.Default.DefaultStudentCareer = ((Career) cb_StudentCareer.SelectedItem!).Id;
         AppSettings.Default.DefaultSemesterFilter = cb_DefaultSemesterFilter.SelectedIndex - 1;
         AppSettings.Default.EnableStudentEmailAutocomplete = chk_EnableEmailAutocomplete.Checked;
+
+        AppSettings.Default.DatabaseBackupFrequency = cb_DbBackup.SelectedIndex switch
+        {
+            0 => TimeSpan.FromDays(1), // Diario
+            1 => TimeSpan.FromDays(3), // Cada 3 días (default)
+            2 => TimeSpan.FromDays(7), // Semanal
+            _ => throw new UnreachableException(),
+        };
+
+        AppSettings.Default.StorageBackupFrequency = cb_FullBackup.SelectedIndex switch
+        {
+            0 => TimeSpan.FromDays(7),  // Semanal,
+            1 => TimeSpan.FromDays(15), // Quincenal
+            2 => TimeSpan.FromDays(30), // Mensual
+            _ => throw new UnreachableException(),
+        };
+
         AppSettings.Default.Save();
         Close();
     }
@@ -131,6 +148,26 @@ public sealed partial class SettingsForm : Form
         cb_CompanyType.Items.Clear();
         cb_CompanyType.Items.Add("Ninguno");
         cb_CompanyType.SelectedIndex = 0;
+
+        cb_DbBackup.Items.Clear();
+        cb_DbBackup.Items.AddRange(["Todos los días", "Cada 3 días", "Semanalmente"]);
+        cb_DbBackup.SelectedIndex = AppSettings.Default.DatabaseBackupFrequency.Days switch
+        {
+            1 => 0,
+            3 => 1,
+            7 => 2,
+            _ => 1,
+        };
+
+        cb_FullBackup.Items.Clear();
+        cb_FullBackup.Items.AddRange(["Semanalmente", "Cada 15 días", "Mensualmente"]);
+        cb_FullBackup.SelectedIndex = AppSettings.Default.StorageBackupFrequency.Days switch
+        {
+             7 => 0,
+            15 => 1,
+            30 => 2,
+             _ => 2,
+        };
 
         CompanyType[] companyTypes = Enum.GetValues<CompanyType>().OrderBy(it => (int) it).ToArray();
         foreach (CompanyType type in companyTypes)
