@@ -44,7 +44,10 @@ public sealed partial class MainWindow : Form
 
         LoadLastModifiedStudents();
 
-        await AppUpdateService.CheckForUpdatesAsync();
+        if (AppSettings.Default.ShouldCheckForAppUpdates)
+        {
+            await AppUpdateService.CheckForUpdatesAsync();
+        }
     }
 
     protected override void OnActivated(EventArgs e)

@@ -20,6 +20,9 @@ internal static class AppUpdateService
     {
         try
         {
+            AppSettings.Default.LastAppUpdateCheckDate = DateTimeOffset.Now;
+            AppSettings.Default.Save();
+
             GitHubRelease? release = await GetReleaseAsync();
 
             if (release is null)
@@ -28,7 +31,7 @@ internal static class AppUpdateService
             }
 
             GitHubAsset asset = release.Assets.Where(it => it.Name.EndsWith(".exe")).First();
-            string filename = await DownloadUpdateExecutableAsync(asset.BrowserDownloadUrl, asset.Name);
+            string filename = await DownloadInstallerAsync(asset.BrowserDownloadUrl, asset.Name);
 
             DialogResult result = MessageBox.Show(
                 """
@@ -107,7 +110,7 @@ internal static class AppUpdateService
         return list;
     }
 
-    private static async Task<string> DownloadUpdateExecutableAsync(Uri url, string name)
+    private static async Task<string> DownloadInstallerAsync(Uri url, string name)
     {
         using var handler = new HttpClientHandler();
         handler.AllowAutoRedirect = true;

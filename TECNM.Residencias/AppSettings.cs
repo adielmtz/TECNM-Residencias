@@ -9,8 +9,10 @@ internal sealed class AppSettings
 {
     private static readonly string DefaultLastStorageBackupDate = DateTimeOffset.Now.ToRfc3339();
     private static readonly string DefaultLastDatabaseBackupDate = DateTimeOffset.Now.ToRfc3339();
+    private static readonly string DefaultLastAppUpdateCheckDate = DateTimeOffset.Now.ToRfc3339();
     private static readonly TimeSpan DefaultStorageBackupFrequency = TimeSpan.FromDays(30);
     private static readonly TimeSpan DefaultDatabaseBackupFrequency = TimeSpan.FromDays(3);
+    private static readonly TimeSpan DefaultAppUpdateCheckFrequency = TimeSpan.FromDays(30);
 
     private static AppSettings? s_instance;
     private IDictionary<string, Setting> _settings;
@@ -93,11 +95,26 @@ internal sealed class AppSettings
         set => SetSetting(nameof(DatabaseBackupFrequency), value);
     }
 
+    public TimeSpan AppUpdateCheckFrequency
+    {
+        get => TimeSpan.Parse(GetSetting(nameof(AppUpdateCheckFrequency), DefaultAppUpdateCheckFrequency).Value);
+        set => SetSetting(nameof(AppUpdateCheckFrequency), value);
+    }
+
+    public DateTimeOffset LastAppUpdateCheckDate
+    {
+        get => DateTimeOffset.Parse(GetSetting(nameof(LastAppUpdateCheckDate), DefaultLastAppUpdateCheckDate).Value);
+        set => SetSetting(nameof(LastAppUpdateCheckDate), value.ToRfc3339());
+    }
+
     public bool IsStorageBackupRequired
         => DateTimeOffset.Now > (LastStorageBackupDate + StorageBackupFrequency);
 
     public bool IsDatabaseBackupRequired
         => DateTimeOffset.Now > (LastDatabaseBackupDate + DatabaseBackupFrequency);
+
+    public bool ShouldCheckForAppUpdates
+        => DateTimeOffset.Now > (LastAppUpdateCheckDate + AppUpdateCheckFrequency);
 
     public void Save()
     {
