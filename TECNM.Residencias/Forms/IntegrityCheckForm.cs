@@ -286,33 +286,28 @@ public sealed partial class IntegrityCheckForm : EditForm
     private sealed class LogWritter : IAsyncDisposable
     {
         private readonly ListBox _listBox;
-        private readonly StreamWriter _writer;
+        private readonly EventLogger _logger;
 
         public LogWritter(ListBox listBox)
         {
             _listBox = listBox;
             _listBox.Items.Clear();
-
-            string filename = Path.Combine(App.LogsDirectory, $"Integrity_Check.{DateTimeOffset.Now:yyyyMMddHHmmss}.log.txt");
-            var stream = new FileStream(filename, FileMode.Create, FileAccess.Write, FileShare.None);
-            _writer = new StreamWriter(stream, new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
+            _logger = new EventLogger("IntegrityCheck");
         }
 
         public async ValueTask DisposeAsync()
         {
-            await _writer.DisposeAsync();
+            await _logger.DisposeAsync();
         }
 
         public async Task WriteLineAsync(string value)
         {
             ListBox listBox = _listBox;
-            StreamWriter writer = _writer;
+            EventLogger logger = _logger;
 
-            string message = $"{DateTimeOffset.Now:yyyy\\-MM\\-dd HH\\:mm\\:ss} :: {value}";
-            await writer.WriteLineAsync(message);
-            await writer.FlushAsync();
+            await logger.WriteLineAsync(value);
 
-            listBox.Items.Add(message);
+            listBox.Items.Add($"{DateTimeOffset.Now:yyyy\\-MM\\-dd HH\\:mm\\:ss} :: {value}");
             listBox.TopIndex = listBox.Items.Count - 1;
         }
     }
