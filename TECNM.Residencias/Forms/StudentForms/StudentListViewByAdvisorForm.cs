@@ -120,6 +120,11 @@ public sealed partial class StudentListViewByAdvisorForm : Form
         dgv_ListView.Rows.Clear();
         int count = 0;
 
+        if (dgv_ListView.SortedColumn is DataGridViewColumn column)
+        {
+            column.HeaderCell.SortGlyphDirection = SortOrder.None;
+        }
+
         foreach (Student student in students)
         {
             int index = dgv_ListView.Rows.Add();
