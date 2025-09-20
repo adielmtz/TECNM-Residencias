@@ -52,7 +52,6 @@ namespace TECNM.Residencias.Forms.StudentForms
             label1 = new System.Windows.Forms.Label();
             tb_SearchQuery = new System.Windows.Forms.TextBox();
             button1 = new System.Windows.Forms.Button();
-            button2 = new System.Windows.Forms.Button();
             button3 = new System.Windows.Forms.Button();
             lbl_StatusLabel = new System.Windows.Forms.Label();
             cb_FilterYear = new System.Windows.Forms.ComboBox();
@@ -103,7 +102,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             StudentGender.HeaderText = "Sexo";
             StudentGender.Name = "StudentGender";
             StudentGender.ReadOnly = true;
-            StudentGender.Width = 57;
+            StudentGender.Width = 56;
             // 
             // StudentEmail
             // 
@@ -159,7 +158,6 @@ namespace TECNM.Residencias.Forms.StudentForms
             StudentExternalAdvisor.HeaderText = "Asesor externo";
             StudentExternalAdvisor.Name = "StudentExternalAdvisor";
             StudentExternalAdvisor.ReadOnly = true;
-            StudentExternalAdvisor.Width = 101;
             // 
             // StudentReviewer
             // 
@@ -199,7 +197,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             StudentClosed.HeaderText = "Expediente cerrado";
             StudentClosed.Name = "StudentClosed";
             StudentClosed.ReadOnly = true;
-            StudentClosed.Width = 103;
+            StudentClosed.Width = 102;
             // 
             // StudentNotes
             // 
@@ -262,17 +260,6 @@ namespace TECNM.Residencias.Forms.StudentForms
             button1.UseVisualStyleBackColor = true;
             button1.Click += RunQuerySearch_Click;
             // 
-            // button2
-            // 
-            button2.Anchor =  System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            button2.Location = new System.Drawing.Point(1156, 6);
-            button2.Name = "button2";
-            button2.Size = new System.Drawing.Size(96, 23);
-            button2.TabIndex = 4;
-            button2.Text = "Aplicar filtro";
-            button2.UseVisualStyleBackColor = true;
-            button2.Click += ApplyFilters_Click;
-            // 
             // button3
             // 
             button3.Anchor =  System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
@@ -290,7 +277,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             lbl_StatusLabel.AutoSize = true;
             lbl_StatusLabel.Location = new System.Drawing.Point(12, 646);
             lbl_StatusLabel.Name = "lbl_StatusLabel";
-            lbl_StatusLabel.Size = new System.Drawing.Size(53, 15);
+            lbl_StatusLabel.Size = new System.Drawing.Size(55, 15);
             lbl_StatusLabel.TabIndex = 8;
             lbl_StatusLabel.Text = "[STATUS]";
             // 
@@ -299,7 +286,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             cb_FilterYear.Anchor =  System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             cb_FilterYear.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             cb_FilterYear.FormattingEnabled = true;
-            cb_FilterYear.Location = new System.Drawing.Point(953, 6);
+            cb_FilterYear.Location = new System.Drawing.Point(1055, 6);
             cb_FilterYear.Name = "cb_FilterYear";
             cb_FilterYear.Size = new System.Drawing.Size(55, 23);
             cb_FilterYear.TabIndex = 9;
@@ -310,7 +297,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             cb_FilterSemester.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             cb_FilterSemester.FormattingEnabled = true;
             cb_FilterSemester.Items.AddRange(new object[] { "Todos", "ENE-JUN", "AGO-DIC" });
-            cb_FilterSemester.Location = new System.Drawing.Point(1075, 6);
+            cb_FilterSemester.Location = new System.Drawing.Point(1177, 6);
             cb_FilterSemester.Name = "cb_FilterSemester";
             cb_FilterSemester.Size = new System.Drawing.Size(75, 23);
             cb_FilterSemester.TabIndex = 10;
@@ -319,7 +306,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             // 
             label2.Anchor =  System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             label2.AutoSize = true;
-            label2.Location = new System.Drawing.Point(918, 10);
+            label2.Location = new System.Drawing.Point(1020, 10);
             label2.Name = "label2";
             label2.Size = new System.Drawing.Size(29, 15);
             label2.TabIndex = 11;
@@ -329,7 +316,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             // 
             label3.Anchor =  System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             label3.AutoSize = true;
-            label3.Location = new System.Drawing.Point(1014, 10);
+            label3.Location = new System.Drawing.Point(1116, 10);
             label3.Name = "label3";
             label3.Size = new System.Drawing.Size(55, 15);
             label3.TabIndex = 12;
@@ -346,7 +333,6 @@ namespace TECNM.Residencias.Forms.StudentForms
             Controls.Add(cb_FilterYear);
             Controls.Add(lbl_StatusLabel);
             Controls.Add(button3);
-            Controls.Add(button2);
             Controls.Add(button1);
             Controls.Add(tb_SearchQuery);
             Controls.Add(label1);
@@ -367,7 +353,6 @@ namespace TECNM.Residencias.Forms.StudentForms
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox tb_SearchQuery;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.DataGridViewTextBoxColumn StudentId;
         private System.Windows.Forms.DataGridViewTextBoxColumn StudentName;

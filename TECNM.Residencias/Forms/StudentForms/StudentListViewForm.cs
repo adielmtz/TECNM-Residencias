@@ -45,6 +45,8 @@ public sealed partial class StudentListViewForm : Form
             cb_FilterSemester.SelectedIndex = AppSettings.Default.DefaultSemesterFilter;
         }
 
+        cb_FilterYear.SelectedIndexChanged += Filters_SelectedIndexChanged;
+        cb_FilterSemester.SelectedIndexChanged += Filters_SelectedIndexChanged;
         RefreshList();
     }
 
@@ -87,7 +89,7 @@ public sealed partial class StudentListViewForm : Form
         SearchStudents();
     }
 
-    private void ApplyFilters_Click(object sender, EventArgs e)
+    private void Filters_SelectedIndexChanged(object? sender, EventArgs e)
     {
         _refreshFromSearch = false;
         tb_SearchQuery.ResetText();
