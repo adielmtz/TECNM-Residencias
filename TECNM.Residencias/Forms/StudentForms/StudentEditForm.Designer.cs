@@ -80,7 +80,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             gb_Notes = new System.Windows.Forms.GroupBox();
             tb_StudentNotes = new System.Windows.Forms.TextBox();
             gb_Documents = new System.Windows.Forms.GroupBox();
-            dcc_Documents = new Controls.DocumentCollectionControl();
+            dcc_Documents = new TECNM.Residencias.Controls.DocumentCollectionControl();
             button3 = new System.Windows.Forms.Button();
             btn_AddExtras = new System.Windows.Forms.Button();
             btn_DeleteStudent = new System.Windows.Forms.Button();
@@ -148,7 +148,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             label8.AutoSize = true;
             label8.Location = new System.Drawing.Point(6, 68);
             label8.Name = "label8";
-            label8.Size = new System.Drawing.Size(37, 15);
+            label8.Size = new System.Drawing.Size(36, 15);
             label8.TabIndex = 0;
             label8.Text = "Sexo*";
             // 
@@ -202,7 +202,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             label5.AutoSize = true;
             label5.Location = new System.Drawing.Point(365, 68);
             label5.Name = "label5";
-            label5.Size = new System.Drawing.Size(52, 15);
+            label5.Size = new System.Drawing.Size(53, 15);
             label5.TabIndex = 0;
             label5.Text = "Teléfono";
             // 
@@ -421,7 +421,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             label17.AutoSize = true;
             label17.Location = new System.Drawing.Point(6, 244);
             label17.Name = "label17";
-            label17.Size = new System.Drawing.Size(85, 15);
+            label17.Size = new System.Drawing.Size(84, 15);
             label17.TabIndex = 0;
             label17.Text = "Asesor externo";
             // 
@@ -571,7 +571,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             chk_StudentClosed.AutoSize = true;
             chk_StudentClosed.Location = new System.Drawing.Point(308, 533);
             chk_StudentClosed.Name = "chk_StudentClosed";
-            chk_StudentClosed.Size = new System.Drawing.Size(127, 19);
+            chk_StudentClosed.Size = new System.Drawing.Size(126, 19);
             chk_StudentClosed.TabIndex = 18;
             chk_StudentClosed.Text = "Expediente cerrado";
             chk_StudentClosed.UseVisualStyleBackColor = true;
@@ -621,7 +621,7 @@ namespace TECNM.Residencias.Forms.StudentForms
             button3.Name = "button3";
             button3.Size = new System.Drawing.Size(442, 23);
             button3.TabIndex = 1;
-            button3.Text = "Añadir documento";
+            button3.Text = "Agregar documentos";
             button3.UseVisualStyleBackColor = true;
             button3.Click += AddStudentDocument_Click;
             // 
