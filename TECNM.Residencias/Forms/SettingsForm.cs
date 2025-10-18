@@ -50,10 +50,8 @@ public sealed partial class SettingsForm : Form
         Enabled = false;
 
         using var sqlite = App.Database.CreateConnection();
-
-        sqlite.Execute("VACUUM");
-        sqlite.Execute("ANALYZE");
-        sqlite.Execute("PRAGMA wal_checkpoint(FULL)");
+        sqlite.Execute("PRAGMA optimize;");
+        sqlite.Execute("PRAGMA wal_checkpoint(FULL);");
 
         Enabled = true;
 
