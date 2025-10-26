@@ -153,114 +153,51 @@ public sealed partial class StudentEditForm : EditForm
 
     private void ChoseCompany_Click(object sender, EventArgs e)
     {
-        while (true)
+        using var dialog = new CompanyQuickSearchForm();
+        dialog.ShowDialog();
+
+        CompanySearchResultDto? selected = dialog.SelectedCompany;
+        if (selected != null)
         {
-            using var dialog = new CompanyQuickSearchForm();
-            dialog.ShowDialog();
-
-            CompanySearchResultDto? selected = dialog.SelectedCompany;
-            if (selected != null)
-            {
-                SetCompany(selected);
-                break;
-            }
-
-            DialogResult result = MessageBox.Show(
-                "No se seleccionó empresa.",
-                "Información",
-                MessageBoxButtons.RetryCancel,
-                MessageBoxIcon.Information
-            );
-
-            if (result == DialogResult.Cancel)
-            {
-                break;
-            }
+            SetCompany(selected);
         }
     }
 
     private void ChoseInternalAdvisor_Click(object sender, EventArgs e)
     {
-        while (true)
+        using var dialog = new AdvisorQuickSearchForm(CompanyDbSet.MasterRecordRowid);
+        dialog.ShowDialog();
+
+        AdvisorSearchResultDto? selected = dialog.SelectedAdvisor;
+        if (selected != null)
         {
-            using var dialog = new AdvisorQuickSearchForm(CompanyDbSet.MasterRecordRowid);
-            dialog.ShowDialog();
-
-            AdvisorSearchResultDto? selected = dialog.SelectedAdvisor;
-            if (selected != null)
-            {
-                SetInternalAdvisor(selected);
-                break;
-            }
-
-            DialogResult result = MessageBox.Show(
-                "No se seleccionó ningún asesor.",
-                "Información",
-                MessageBoxButtons.RetryCancel,
-                MessageBoxIcon.Information
-            );
-
-            if (result == DialogResult.Cancel)
-            {
-                break;
-            }
+            SetInternalAdvisor(selected);
         }
     }
 
     private void ChoseExternalAdvisor_Click(object sender, EventArgs e)
     {
         Debug.Assert(_company is not null, "Company must be set before allowing this method call!");
-        while (true)
+
+        using var dialog = new AdvisorQuickSearchForm(_company!.Id);
+        dialog.ShowDialog();
+
+        AdvisorSearchResultDto? selected = dialog.SelectedAdvisor;
+        if (selected != null)
         {
-            using var dialog = new AdvisorQuickSearchForm(_company!.Id);
-            dialog.ShowDialog();
-
-            AdvisorSearchResultDto? selected = dialog.SelectedAdvisor;
-            if (selected != null)
-            {
-                SetExternalAdvisor(selected);
-                break;
-            }
-
-            DialogResult result = MessageBox.Show(
-                "No se seleccionó ningún asesor.",
-                "Información",
-                MessageBoxButtons.RetryCancel,
-                MessageBoxIcon.Information
-            );
-
-            if (result == DialogResult.Cancel)
-            {
-                break;
-            }
+            SetExternalAdvisor(selected);
         }
     }
 
     private void ChoseReviewerAdvisor_Click(object sender, EventArgs e)
     {
-        while (true)
+        using var dialog = new AdvisorQuickSearchForm(CompanyDbSet.MasterRecordRowid);
+        dialog.ShowDialog();
+
+        AdvisorSearchResultDto? selected = dialog.SelectedAdvisor;
+        if (selected != null)
         {
-            using var dialog = new AdvisorQuickSearchForm(CompanyDbSet.MasterRecordRowid);
-            dialog.ShowDialog();
-
-            AdvisorSearchResultDto? selected = dialog.SelectedAdvisor;
-            if (selected != null)
-            {
-                SetReviewerAdvisor(selected);
-                break;
-            }
-
-            DialogResult result = MessageBox.Show(
-                "No se seleccionó ningún asesor.",
-                "Información",
-                MessageBoxButtons.RetryCancel,
-                MessageBoxIcon.Information
-            );
-
-            if (result == DialogResult.Cancel)
-            {
-                break;
-            }
+            SetReviewerAdvisor(selected);
         }
     }
 
