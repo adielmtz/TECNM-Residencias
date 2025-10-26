@@ -53,6 +53,9 @@ public sealed partial class DialogBackupForm : EditForm
         string destination = tb_BackupLocation.Text;
         DateTime backupTime = DateTime.Now;
 
+        AppSettings.Default.LastStorageBackupDate = backupTime;
+        AppSettings.Default.Save();
+
         gb_Config.Enabled = false;
         gb_Status.Enabled = true;
 
@@ -64,10 +67,6 @@ public sealed partial class DialogBackupForm : EditForm
         try
         {
             string backupFile = await RunStorageBackupAsync(destination, chk_EnableCompression.Checked, backupTime);
-
-            AppSettings.Default.LastStorageBackupDate = backupTime;
-            AppSettings.Default.Save();
-
             if (chk_OpenBackupFolder.Checked)
             {
                 var info = new ProcessStartInfo();
