@@ -58,6 +58,7 @@ public sealed partial class SpecialtyListViewForm : Form
         IEnumerable<Specialty> specialties = context.Specialties.EnumerateAll(_career);
 
         dgv_ListView.Rows.Clear();
+        dgv_ListView.ResetSort();
 
         foreach (Specialty specialty in specialties)
         {

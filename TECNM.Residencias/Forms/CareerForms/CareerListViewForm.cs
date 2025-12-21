@@ -59,6 +59,7 @@ public sealed partial class CareerListViewForm : Form
         IEnumerable<Career> careers = context.Careers.EnumerateAll();
 
         dgv_ListView.Rows.Clear();
+        dgv_ListView.ResetSort();
 
         foreach (Career career in careers)
         {

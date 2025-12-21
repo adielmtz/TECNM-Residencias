@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities;
 using TECNM.Residencias.Data.Entities.DTO;
+using TECNM.Residencias.Extensions;
 
 public sealed partial class AdvisorQuickSearchForm : Form
 {
@@ -43,6 +44,7 @@ public sealed partial class AdvisorQuickSearchForm : Form
     {
         string query = tb_SearchQuery.Text.Trim();
         dgv_ListView.Rows.Clear();
+        dgv_ListView.ResetSort();
 
         if (query.Length == 0)
         {

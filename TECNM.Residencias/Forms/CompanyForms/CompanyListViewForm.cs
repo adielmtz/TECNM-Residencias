@@ -129,6 +129,7 @@ public sealed partial class CompanyListViewForm : Form
     private void PopulateTable(AppDbContext context, IEnumerable<Company> companies)
     {
         dgv_ListView.Rows.Clear();
+        dgv_ListView.ResetSort();
         int count = 0;
 
         foreach (Company company in companies)

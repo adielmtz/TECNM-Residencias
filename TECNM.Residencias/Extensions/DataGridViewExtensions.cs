@@ -12,4 +12,12 @@ internal static class DataGridViewExtensions
         PropertyInfo? property = type.GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic);
         property?.SetValue(dgv, value, null);
     }
+
+    public static void ResetSort(this DataGridView dgv)
+    {
+        if (dgv.SortedColumn is DataGridViewColumn column)
+        {
+            column.HeaderCell.SortGlyphDirection = SortOrder.None;
+        }
+    }
 }

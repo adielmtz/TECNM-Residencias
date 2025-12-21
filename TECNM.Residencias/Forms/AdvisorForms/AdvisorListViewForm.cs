@@ -77,6 +77,7 @@ public sealed partial class AdvisorListViewForm : Form
     private void PopulateTable(AppDbContext context, IEnumerable<Advisor> advisors)
     {
         dgv_ListView.Rows.Clear();
+        dgv_ListView.ResetSort();
         int count = 0;
 
         foreach (Advisor advisor in advisors)

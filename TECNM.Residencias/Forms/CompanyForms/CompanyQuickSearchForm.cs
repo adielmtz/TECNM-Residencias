@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using TECNM.Residencias.Data.Entities.DTO;
+using TECNM.Residencias.Extensions;
 
 public sealed partial class CompanyQuickSearchForm : Form
 {
@@ -32,6 +33,7 @@ public sealed partial class CompanyQuickSearchForm : Form
     {
         string query = tb_SearchQuery.Text.Trim();
         dgv_ListView.Rows.Clear();
+        dgv_ListView.ResetSort();
 
         if (query.Length == 0)
         {

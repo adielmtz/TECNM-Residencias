@@ -151,12 +151,8 @@ public sealed partial class StudentListViewForm : Form
     private void PopulateTable(AppDbContext context, IEnumerable<Student> students)
     {
         dgv_ListView.Rows.Clear();
+        dgv_ListView.ResetSort();
         int count = 0;
-
-        if (dgv_ListView.SortedColumn is DataGridViewColumn column)
-        {
-            column.HeaderCell.SortGlyphDirection = SortOrder.None;
-        }
 
         foreach (Student student in students)
         {
