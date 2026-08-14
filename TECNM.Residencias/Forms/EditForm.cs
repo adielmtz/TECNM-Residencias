@@ -1,3 +1,4 @@
+using System.ComponentModel;
 namespace TECNM.Residencias.Forms;
 
 using System;
@@ -7,8 +8,10 @@ public class EditForm : Form
 {
     private bool _suppressPrompt = true;
 
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public string CancelPromptTitle { get; set; } = "Confirmar salida";
 
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public string CancelPromptMessage { get; set; } = "¿Salir del formulario? Se perderán los cambios no guardados.";
 
     public Action? CancelledEditHandler;
